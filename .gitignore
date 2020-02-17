@@ -58,3 +58,47 @@ sysinfo.txt
 # Crashlytics generated file
 crashlytics-build.properties
 
+/Assets/PlayServicesResolver/
+/Assets/Plugins/
+/Assets/Parse/
+/Assets/Editor Default Resources/
+/Assets/Firebase/
+/Assets/StreamingAssets/
+Assets/Art.meta
+Assets/Audio.meta
+Assets/Editor Default Resources.meta
+Assets/Firebase.meta
+Assets/Materials.meta
+Assets/Parse.meta
+Assets/PlayServicesResolver.meta
+Assets/Plugins.meta
+Assets/Scenes.meta
+Assets/Scripts.meta
+Assets/StreamingAssets.meta
+ProjectSettings/AudioManager.asset
+ProjectSettings/ClusterInputManager.asset
+ProjectSettings/DynamicsManager.asset
+ProjectSettings/EditorBuildSettings.asset
+ProjectSettings/EditorSettings.asset
+ProjectSettings/GraphicsSettings.asset
+ProjectSettings/GvhProjectSettings.xml
+ProjectSettings/InputManager.asset
+ProjectSettings/NavMeshAreas.asset
+ProjectSettings/NetworkManager.asset
+ProjectSettings/Physics2DSettings.asset
+ProjectSettings/PresetManager.asset
+ProjectSettings/ProjectSettings.asset
+ProjectSettings/ProjectVersion.txt
+ProjectSettings/QualitySettings.asset
+ProjectSettings/TagManager.asset
+ProjectSettings/TimeManager.asset
+ProjectSettings/UnityConnectSettings.asset
+ProjectSettings/VFXManager.asset
+ProjectSettings/XRSettings.asset
+.idea/.idea.HeLovesTheSlots/.idea/contentModel.xml
+.idea/.idea.HeLovesTheSlots/.idea/indexLayout.xml
+.idea/.idea.HeLovesTheSlots/.idea/misc.xml
+.idea/.idea.HeLovesTheSlots/.idea/modules.xml
+.idea/.idea.HeLovesTheSlots/.idea/projectSettingsUpdater.xml
+.idea/.idea.HeLovesTheSlots/.idea/vcs.xml
+.idea/.idea.HeLovesTheSlots/riderModule.iml
