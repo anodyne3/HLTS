@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="513px" height="68.027px" viewBox="0 0 513 68.027" enable-background="new 0 0 513 68.027" xml:space="preserve">
+<g id="Coin_Slot">
+	<linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="318.4976" y1="58.6709" x2="545.4028" y2="58.6709">
+		<stop  offset="0" style="stop-color:#AFAFAD"/>
+		<stop  offset="1" style="stop-color:#555655"/>
+	</linearGradient>
+	
+		<polygon fill="url(#SVGID_1_)" stroke="#000000" stroke-width="1.08" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="
+		475.153,49.313 452.276,49.313 435.392,56.379 418.529,49.313 370.062,49.313 368.165,56.088 364.849,68.027 480.433,68.027 	"/>
+	<linearGradient id="SVGID_2_" gradientUnits="userSpaceOnUse" x1="434.4614" y1="32.3408" x2="481.7092" y2="32.3408">
+		<stop  offset="0" style="stop-color:#AFAFAD"/>
+		<stop  offset="1" style="stop-color:#555655"/>
+	</linearGradient>
+	
+		<polygon fill="url(#SVGID_2_)" stroke="#000000" stroke-width="1.08" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="
+		449.648,31.495 449.648,45.082 471.946,45.082 464.906,19.601 455.216,27.152 	"/>
+	<linearGradient id="SVGID_3_" gradientUnits="userSpaceOnUse" x1="384.9102" y1="32.3408" x2="428.0818" y2="32.3408">
+		<stop  offset="0" style="stop-color:#AFAFAD"/>
+		<stop  offset="1" style="stop-color:#555655"/>
+	</linearGradient>
+	
+		<polygon fill="url(#SVGID_3_)" stroke="#000000" stroke-width="1.08" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="
+		416.726,31.495 415.278,30.358 413.161,28.711 401.467,19.601 396.034,39.115 394.36,45.082 416.726,45.082 416.726,41.631 	"/>
+	
+		<polygon fill="#231F20" stroke="#000000" stroke-width="0.4455" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="
+		370.062,49.313 368.901,40.875 363.937,58.672 364.849,68.027 368.165,56.088 	"/>
+	
+		<polygon fill="#AFAFAD" stroke="#000000" stroke-width="0.4455" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="
+		418.529,49.313 416.726,45.082 394.36,45.082 393.135,40.875 368.901,40.875 370.062,49.313 	"/>
+	
+		<path fill="#AFAFAD" stroke="#000000" stroke-width="0.4455" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="
+		M430.948,0c-17.063,0-26.752,8.018-30.894,16.038h0.011h61.801C457.724,8.018,448.034,0,430.948,0z"/>
+	
+		<polygon fill="#231F20" stroke="#000000" stroke-width="0.4455" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="
+		396.034,39.115 401.467,19.601 400.065,16.038 393.135,40.875 394.36,45.082 	"/>
+	
+		<polygon fill="#757576" stroke="#000000" stroke-width="0.4455" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="
+		413.161,28.711 415.278,30.358 416.726,31.495 414.92,27.643 400.065,16.038 401.467,19.601 	"/>
+	
+		<polygon fill="#555655" stroke="#000000" stroke-width="0.4455" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="
+		416.726,31.495 416.726,41.631 430.958,47.6 446.999,40.875 446.999,27.643 461.877,16.038 461.866,16.038 400.065,16.038 
+		414.92,27.643 	"/>
+	
+		<polygon fill="#828282" stroke="#000000" stroke-width="0.4455" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="
+		449.648,31.495 455.216,27.152 464.906,19.601 461.877,16.038 446.999,27.643 	"/>
+	
+		<polygon fill="#7B7B7B" stroke="#000000" stroke-width="0.4455" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="
+		416.726,41.631 416.726,45.082 418.529,49.313 435.392,56.379 430.958,47.6 	"/>
+	
+		<polygon fill="#9D9D9D" stroke="#000000" stroke-width="0.4455" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="
+		430.958,47.6 435.392,56.379 452.276,49.313 446.999,40.875 	"/>
+	
+		<polygon fill="#231F20" stroke="#000000" stroke-width="0.4455" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="
+		449.648,45.082 449.648,31.495 446.999,27.643 446.999,40.875 	"/>
+	
+		<polygon fill="#AFAFAD" stroke="#000000" stroke-width="0.4455" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="
+		449.648,45.082 452.276,49.313 475.153,49.313 471.946,45.082 	"/>
+</g>
+</svg>
