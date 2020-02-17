@@ -58,3 +58,9 @@ sysinfo.txt
 # Crashlytics generated file
 crashlytics-build.properties
 
+/Assets/PlayServicesResolver/
+/Assets/Plugins/
+/Assets/Parse/
+/Assets/Editor Default Resources/
+/Assets/Firebase/
+/Assets/StreamingAssets/
