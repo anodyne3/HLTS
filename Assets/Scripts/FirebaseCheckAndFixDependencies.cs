@@ -1,11 +1,14 @@
 ﻿using Firebase;
+using Firebase.Auth;
+using Firebase.Unity.Editor;
 using UnityEngine;
 
 public class FirebaseCheckAndFixDependencies : MonoBehaviour
 {
     public FirebaseApp firebaseApp;
+    private static FirebaseAuth _firebaseAuth;
     public bool firebaseReady;
-    
+
     private void Start()
     {
         FirebaseApp.CheckAndFixDependenciesAsync().ContinueWith(task =>
@@ -25,6 +28,33 @@ public class FirebaseCheckAndFixDependencies : MonoBehaviour
                 Debug.LogError($"Could not resolve all Firebase dependencies: {dependencyStatus}");
                 // Firebase Unity SDK is not safe to use here.
             }
+        });
+        
+        firebaseApp.SetEditorDatabaseUrl("https://he-loves-the-slots.firebaseio.com/");
+        
+        Login();
+    }
+
+    public static void Login()
+    {
+        _firebaseAuth = FirebaseAuth.DefaultInstance;
+
+        _firebaseAuth.SignInAnonymouslyAsync().ContinueWith(task =>
+        {
+            if (task.IsCanceled)
+            {
+                Debug.LogError("SignInAnonymouslyAsync was cancelled.");
+                return;
+            }
+
+            if (task.IsFaulted)
+            {
+                Debug.LogError("SignInAnonymouslyAsync encountered an error: " + task.Exception);
+                return;
+            }
+
+            var newUser = task.Result;
+            Debug.LogFormat("User signed in successfully: {0} ({1})", newUser.DisplayName, newUser.UserId);
         });
     }
 }
