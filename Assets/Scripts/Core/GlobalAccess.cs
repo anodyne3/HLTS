@@ -1,13 +1,16 @@
 using Core.Managers;
+using Core.UI;
 using UnityEngine;
+using Core.GameData;
 
 namespace Core
 {
     public class GlobalAccess : MonoBehaviour
     {
-        protected readonly GameManager GameManager = Foundation.GameManager;
-        protected static CameraManager CameraManager => Foundation.GetAssignedClass<CameraManager>();
-        // protected AudioManager AudioManager => Foundation.GetAssignedClass<AudioManager>();
-        protected AudioManager AudioManager => gameObject.AddComponent<AudioManager>();
+        protected static GameManager GameManager => Foundation.GameManager;
+        protected static CameraManager CameraManager => CameraManager.Instance;
+        protected static AudioManager AudioManager => AudioManager.Instance;
+        protected static PlayerData PlayerData => PlayerData.Instance;
+        protected static PanelManager PanelManager => Foundation.GetGlobalClass<PanelManager>();
     }
 }

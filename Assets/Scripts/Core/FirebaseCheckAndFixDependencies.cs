@@ -34,14 +34,12 @@ namespace Core
             });
         
             firebaseApp.SetEditorDatabaseUrl("https://he-loves-the-slots.firebaseio.com/");
-        
-            Login();
-
-            GameManager.LoadMain();
         }
 
         public static void Login()
         {
+            PlayerData.firebaseUser = null;
+            
             _firebaseAuth = FirebaseAuth.DefaultInstance;
         
             _firebaseAuth.SignInAnonymouslyAsync().ContinueWith(task =>
@@ -61,7 +59,9 @@ namespace Core
                 var newUser = task.Result;
                 Debug.LogFormat("User signed in successfully: {0} ({1})", newUser.DisplayName, newUser.UserId);
 
-                GameData.GameData.Instance.firebaseUser = newUser;
+                PlayerData.firebaseUser = newUser;
+                
+                GameManager.LoadMain();
             });
         }
     }

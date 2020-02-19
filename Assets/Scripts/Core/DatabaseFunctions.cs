@@ -1,10 +1,15 @@
+using Core.GameData;
 using Firebase.Database;
 
 namespace Core
 {
-    public class DatabaseFunctions : Singleton
+    public class DatabaseFunctions : Singleton<DatabaseFunctions>
     {
-        private static DatabaseReference DatabaseReference = FirebaseDatabase.DefaultInstance.RootReference;
+        protected DatabaseFunctions()
+        {
+        }
+
+        private static readonly DatabaseReference DatabaseReference = FirebaseDatabase.DefaultInstance.RootReference;
 
         /*public void WriteNewScore(string userId, int score)
         {
@@ -21,10 +26,14 @@ namespace Core
             DatabaseReference.UpdateChildrenAsync(childUpdates);
         }*/
 
-        public static void UserReset()
+        public static void ResetAccount()
         {
-            DatabaseReference.Child("users").Child(GameData.GameData.Instance.firebaseUser.UserId).Child("userData")
+            DatabaseReference.Child("users").Child(PlayerData.firebaseUser.UserId).Child("userData")
                 .Child("userWrites").RemoveValueAsync();
+        }
+
+        public static void LinkAccount()
+        {
         }
     }
 

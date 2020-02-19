@@ -2,15 +2,13 @@ using UnityEngine;
 
 namespace Core.Managers
 {
-    public class CameraManager : GlobalClass
+    public class CameraManager : Singleton<CameraManager>
     {
         private Camera _mainCamera;
         public Camera MainCamera => _mainCamera != null ? _mainCamera : Camera.main;
 
-        public override void Awake()
+        public void Awake()
         {
-            base.Awake();
-            
             _mainCamera = Camera.main;
         }
     }

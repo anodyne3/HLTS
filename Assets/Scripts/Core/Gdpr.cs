@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Core.GameData;
+using Enums;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -16,34 +17,40 @@ namespace Core
         {
             confirmButton.onClick.RemoveAllListeners();
             confirmButton.onClick.AddListener(ConfirmClicked);
-            
+
             CheckConsent();
         }
 
         private void CheckConsent()
         {
-            var consentGiven = PlayerPrefs.HasKey(Constants.ConsentKey) && PlayerPrefs.GetInt(Constants.ConsentKey) == 1;
-            
+            var consentGiven = PlayerPrefs.HasKey(Constants.ConsentKey) &&
+                               PlayerPrefs.GetInt(Constants.ConsentKey) == 1;
+
             if (consentGiven)
                 ClosePanel();
         }
 
         private void ConfirmClicked()
         {
+            AudioManager.PlayClip(SoundEffectType.UiClick);
+
             PlayerPrefs.SetInt(Constants.ConsentKey, 1);
             PlayerPrefs.Save();
 
             ClosePanel();
         }
-        
+
         public void OnPointerClick(PointerEventData eventData)
         {
-            var linkIndex = TMP_TextUtilities.FindIntersectingLink(textComponent, Input.mousePosition, CameraManager.MainCamera);
-            
+            AudioManager.PlayClip(SoundEffectType.UiClick);
+
+            var linkIndex =
+                TMP_TextUtilities.FindIntersectingLink(textComponent, Input.mousePosition, CameraManager.MainCamera);
+
             if (linkIndex == -1) return;
 
             var linkInfo = textComponent.textInfo.linkInfo[linkIndex];
-            
+
             if (linkInfo.GetLinkID() == "TermsOfService") Application.OpenURL(Urls.TermsOfService);
             else if (linkInfo.GetLinkID() == "PrivacyPolicy") Application.OpenURL(Urls.PrivacyPolicy);
         }
@@ -51,7 +58,7 @@ namespace Core
         private void ClosePanel()
         {
             gameObject.SetActive(false);
-            
+
             FirebaseCheckAndFixDependencies.Login();
         }
     }

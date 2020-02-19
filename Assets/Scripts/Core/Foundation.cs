@@ -7,10 +7,9 @@ namespace Core
     public static class Foundation
     {
         public static List<GlobalAccess> Globals = new List<GlobalAccess>();
-        public static GameData.GameData GameData; 
         public static GameManager GameManager;
 
-        public static T GetAssignedClass<T>() where T : GlobalClass
+        public static T GetGlobalClass<T>() where T : GlobalClass
         {
             return Globals.OfType<T>().FirstOrDefault();
         }

@@ -6,5 +6,7 @@ namespace Enums
         CoinDrop,
         UiClick,
         WheelRoll,
+        OpenPanel,
+        ClosePanel,
     }
 }
