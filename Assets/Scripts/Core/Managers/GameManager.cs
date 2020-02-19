@@ -6,8 +6,6 @@ namespace Core.Managers
 {
     public class GameManager : GlobalAccess
     {
-        public Camera mainCamera;
-
         private void Awake()
         {
             Foundation.GameManager = this;
@@ -19,13 +17,19 @@ namespace Core.Managers
         {
             FirebaseCheckAndFixDependencies.Login();
         }
-
-        private void ResetUser()
+        
+        public void ResetUser()
         {
             AudioManager.PlayClip(SoundEffectType.UiClick);
+            DatabaseFunctions.UserReset();
             
             PlayerPrefs.DeleteKey(Constants.ConsentKey);
             SceneManager.LoadScene(0);
+        }
+
+        public static void LoadMain()
+        {
+            SceneManager.LoadScene(1);
         }
     }
 }

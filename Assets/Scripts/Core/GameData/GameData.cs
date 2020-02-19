@@ -1,15 +1,15 @@
+using Firebase.Auth;
 using UnityEngine;
 
 namespace Core.GameData
 {
     public class GameData : ScriptableObject
     {
-        public int playerId;
-        public int playerLevel;
+        public FirebaseUser firebaseUser;
 
         private static GameData _instance;
 
-        public GameData Instance
+        public static GameData Instance
         {
             get
             {
@@ -24,6 +24,7 @@ namespace Core.GameData
         private static GameData CreateDefaultGameData()
         {
             var newGameData = (GameData) CreateInstance(typeof(GameData));
+            newGameData.hideFlags = HideFlags.DontUnloadUnusedAsset;
             return newGameData;
         }
     }
