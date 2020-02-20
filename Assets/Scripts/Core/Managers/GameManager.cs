@@ -25,7 +25,7 @@ namespace Core.Managers
             SceneManager.LoadScene(1);
         }
 
-        public void ResetAccount()
+        public static void ResetAccount()
         {
             AudioManager.PlayClip(SoundEffectType.UiClick);
             DatabaseFunctions.ResetAccount();
@@ -34,23 +34,10 @@ namespace Core.Managers
             SceneManager.LoadScene(0);
         }
 
-        public void LinkAccount()
+        public static void LinkAccount()
         {
             AudioManager.PlayClip(SoundEffectType.UiClick);
             DatabaseFunctions.LinkAccount();
-        }
-
-        public void GrabCoin()
-        {
-        }
-        
-        public void SpendCoin()
-        {
-        }
-
-        public void PullArm()
-        {
-            SlotMachine.OnArmPull();
         }
     }
 }

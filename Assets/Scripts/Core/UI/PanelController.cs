@@ -1,8 +1,6 @@
-﻿using Core.Managers;
-using Enums;
+﻿using Enums;
 using UnityEngine;
 using UnityEngine.UI;
-using Utils;
 
 namespace Core.UI
 {
@@ -28,7 +26,9 @@ namespace Core.UI
         {
             AudioManager.PlayClip(SoundEffectType.ClosePanel);
 
-            GameManager.interactionEnabled = true;
+            if (GameManager != null)
+                GameManager.interactionEnabled = true;
+            
             gameObject.SetActive(false);
         }
 

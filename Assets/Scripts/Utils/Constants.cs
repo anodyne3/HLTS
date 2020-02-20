@@ -1,5 +1,3 @@
-using Boo.Lang;
-
 namespace Utils
 {
     public static class Constants
@@ -8,5 +6,7 @@ namespace Utils
 
         public const string MusicTrackPath = "MusicTracks";
         public const string SoundEffectPath = "SoundEffects";
+
+        public const float ArmPullTriggerAmount = 10.0f;
     }
 }

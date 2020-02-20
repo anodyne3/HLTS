@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using Core.Managers;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -22,6 +23,8 @@ namespace Core.UI
         {
             base.OpenPanel();
 
+            if (PlayerData.firebaseUser == null) return;
+            
             userId.text = PlayerData.firebaseUser.UserId;
         }
 
