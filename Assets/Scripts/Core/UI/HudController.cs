@@ -56,7 +56,8 @@ namespace Core.UI
 
         public void RefreshCoins()
         {
-            coinsAmountText.text = PlayerData.coinsAmount.ToString();
+            var playerData2 = GlobalComponents.Instance.PlayerData2();
+            coinsAmountText.text = playerData2.coinsAmount.ToString();
         }
     }
 }
