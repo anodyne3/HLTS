@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace ScriptableObjects
+namespace MyScriptableObjects
 {
     [CreateAssetMenu]
     public class MusicTrack : ScriptableObject

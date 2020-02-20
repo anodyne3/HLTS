@@ -50,6 +50,7 @@ namespace Core.Managers
 
         public void PullArm()
         {
+            SlotMachine.OnArmPull();
         }
     }
 }

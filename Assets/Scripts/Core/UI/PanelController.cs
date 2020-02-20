@@ -2,6 +2,7 @@
 using Enums;
 using UnityEngine;
 using UnityEngine.UI;
+using Utils;
 
 namespace Core.UI
 {

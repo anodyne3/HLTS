@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using MyScriptableObjects;
+using TMPro;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace Core.UI
@@ -10,6 +12,7 @@ namespace Core.UI
         [SerializeField] private Button grabCoinButton;
         [SerializeField] private Button spendCoinButton;
         [SerializeField] private Button pullArmButton;
+        [SerializeField] private TMP_Text CoinsAmountText;
 
         private void Start()
         {
@@ -23,6 +26,8 @@ namespace Core.UI
             spendCoinButton.onClick.AddListener(SpendCoin);
             pullArmButton.onClick.RemoveAllListeners();
             pullArmButton.onClick.AddListener(PullArm);
+
+            CoinsAmountText.text = PlayerData.CoinsAmount.ToString();
         }
 
         private void OpenMenuPanel()

@@ -1,7 +1,7 @@
 using Enums;
 using UnityEngine;
 
-namespace ScriptableObjects
+namespace MyScriptableObjects
 {
     [CreateAssetMenu]
     public class SoundEffect : ScriptableObject

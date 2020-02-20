@@ -1,3 +1,5 @@
+using Boo.Lang;
+
 namespace Utils
 {
     public static class Constants
