@@ -1,9 +1,7 @@
-using System;
-using Core.GameData;
+using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography;
-using UnityEngine;
+using Core.GameData;
 
 namespace Core
 {
@@ -16,49 +14,55 @@ namespace Core
         {
         }
 
-        private PlayerData _playerData = new GameObject().AddComponent<PlayerData>();
+        private PlayerData _playerData2;
 
         public PlayerData PlayerData2()
         {
-            return _playerData;
+            return _playerData2;
         }
 
-        public Component AddGlobalComponent(Type type)
+        private void Awake()
         {
-            var existingComponent = GetGlobalComponent(type);
+            _playerData2 = new GameObject().AddComponent<PlayerData>();
+            _components.Add(_playerData2);
+        }
+
+        public Component AddGlobalComponent<T>() where T : GlobalAccess
+        {
+            var existingComponent = GetGlobalComponent<T>();
 
             if (existingComponent != null)
             {
-                Debug.LogWarning("[Toolbox] Global component ID \"" + type + "\" already exist! Returning that.");
+                //Debug.LogWarning("[Toolbox] Global component ID \"" + typeof(T) + "\" already exist! Returning that.");
                 return existingComponent;
             }
 
-            var newComponent = gameObject.AddComponent(type);
+            var newComponent = gameObject.AddComponent<T>();
             _components.Add(newComponent);
             return newComponent;
         }
 
-        public void RemoveGlobalComponent(Type type)
+        public void RemoveGlobalComponent<T>() where T : GlobalAccess
         {
-            var existingComponent = GetGlobalComponent(type);
+            var existingComponent = GetGlobalComponent<T>();
             
             if (existingComponent != null)
             {
                 Destroy(existingComponent);
                 _components.Remove(existingComponent);
             }
-            else
-                Debug.LogWarning("[Toolbox] Trying to remove nonexistent component ID \"" + type + "\"! Typo?");
+            // else Debug.LogWarning("[Toolbox] Trying to remove nonexistent component ID \"" + typeof(T) + "\"! Typo?");
         }
 
-        private Component GetGlobalComponent(Type type)
+        private Component GetGlobalComponent<T>() where T : GlobalAccess
         {
             var existingComponent = new Component();
             
-            if (_components.Any(x => x.TryGetComponent(type, out existingComponent)))
+            if (_components.Any(x => x.TryGetComponent(typeof(T), out existingComponent)))
                 return existingComponent;
 
-            Debug.LogWarning("[Toolbox] Global component ID \"" + type + "\" doesn't exist! Typo?");
+            // Debug.LogWarning("[Toolbox] Global component ID \"" + typeof(T) + "\" doesn't exist! Typo?");
+            
             return null;
         }
     }

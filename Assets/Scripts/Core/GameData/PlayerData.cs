@@ -1,6 +1,7 @@
 using Firebase.Auth;
 using MyScriptableObjects;
 using UnityEngine;
+using Utils;
 
 namespace Core.GameData
 {
@@ -11,8 +12,9 @@ namespace Core.GameData
 
         private void Start()
         {
-            var armPullEvent = Resources.Load<GameEvent>("Events/armPullEvent");
-            GameEventListener.NewGameEventListener(gameObject, armPullEvent, DeductCoin);
+            EventManager.NewEventSubscription(Constants.GameEvents.armPullEvent, DeductCoin);
+            // var armPullEvent = Resources.Load<GameEvent>("Events/armPullEvent");
+            // GameEventListener.NewGameEventListener(gameObject, armPullEvent, DeductCoin);
         }
 
         private void DeductCoin()

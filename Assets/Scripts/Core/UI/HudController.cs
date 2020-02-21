@@ -8,7 +8,6 @@ namespace Core.UI
     {
         [SerializeField] private Button menuButton;
         [SerializeField] private Button shopButton;
-        [SerializeField] private Button grabCoinButton;
         [SerializeField] private Button spendCoinButton;
         [SerializeField] private Button pullArmButton;
         [SerializeField] private TMP_Text coinsAmountText;
@@ -19,8 +18,6 @@ namespace Core.UI
             menuButton.onClick.AddListener(OpenMenuPanel);
             shopButton.onClick.RemoveAllListeners();
             shopButton.onClick.AddListener(OpenShopPanel);
-            grabCoinButton.onClick.RemoveAllListeners();
-            grabCoinButton.onClick.AddListener(GrabCoin);
             spendCoinButton.onClick.RemoveAllListeners();
             spendCoinButton.onClick.AddListener(SpendCoin);
             pullArmButton.onClick.RemoveAllListeners();
@@ -39,11 +36,6 @@ namespace Core.UI
             PanelManager.OpenPanelSolo<ShopPanelController>();
         }
 
-        private static void GrabCoin()
-        {
-            CoinTray.GrabCoin();
-        }
-
         private static void SpendCoin()
         {
             SlotMachine.LoadCoin();
@@ -56,8 +48,9 @@ namespace Core.UI
 
         public void RefreshCoins()
         {
-            var playerData2 = GlobalComponents.Instance.PlayerData2();
-            coinsAmountText.text = playerData2.coinsAmount.ToString();
+            coinsAmountText.text = PlayerData.coinsAmount.ToString();
+            /*var playerData2 = GlobalComponents.Instance.PlayerData2();
+            coinsAmountText.text = playerData2.coinsAmount.ToString();*/
         }
     }
 }

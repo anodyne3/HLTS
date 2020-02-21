@@ -9,10 +9,7 @@ namespace Core
 {
     public class SlotMachine : Singleton<SlotMachine>, IDragHandler
     {
-        public GameEvent armPull;
-        public GameEvent coinLoad;
-        public GameEvent wheelResult;
-        public GameEvent wheelRoll;
+
 
         private Collider _coinSlotCollider;
         private Collider _pullArmCollider;
@@ -24,13 +21,7 @@ namespace Core
         //to constants
         private float _wheelSpinTime = 2.0f;
 
-        private void OnEnable()
-        {
-            armPull = Resources.Load<GameEvent>("Events/armPullEvent");
-            coinLoad = Resources.Load<GameEvent>("Events/coinLoadEvent");
-            wheelResult = Resources.Load<GameEvent>("Events/wheelResultEvent");
-            wheelRoll = Resources.Load<GameEvent>("Events/wheelRollEvent");
-        }
+
 
         private void OnCollisionStay(Collision other)
         {
@@ -42,7 +33,7 @@ namespace Core
             coinObject.LoadCoinIntoSlot();
             
             _coinIsLoaded = true;
-            coinLoad.Raise();
+            EventManager.coinLoad.Raise();
         }
 
         public void LoadCoin()
@@ -50,7 +41,7 @@ namespace Core
             if (_coinIsLoaded) return;
 
             _coinIsLoaded = true;
-            coinLoad.Raise();
+            EventManager.coinLoad.Raise();
         }
 
         public void PullArm()
@@ -60,7 +51,7 @@ namespace Core
             if (_coinIsLoaded)
             {
                 _armIsPulled = true;
-                armPull.Raise();
+                EventManager.armPull.Raise();
                 ConsumeCoin();
                 OnWheelRoll();
             }
@@ -81,7 +72,7 @@ namespace Core
         {
             StartCoroutine(RollWheels());
 
-            wheelRoll.Raise();
+            EventManager.wheelRoll.Raise();
         }
 
         private IEnumerator RollWheels()
@@ -105,7 +96,7 @@ namespace Core
             DeterminePayout();
             
             _armIsPulled = false;
-            wheelResult.Raise();
+            EventManager.wheelResult.Raise();
         }
 
         private void DeterminePayout()
