@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using MyScriptableObjects;
 using UnityEngine;
 using UnityEngine.Events;
@@ -6,10 +7,12 @@ namespace Core.Managers
 {
     public class EventManager : GlobalAccess
     {
-        public GameEvent armPull;
-        public GameEvent coinLoad;
-        public GameEvent wheelResult;
-        public GameEvent wheelRoll;
+        [HideInInspector] public GameEvent armPull;
+        [HideInInspector] public GameEvent coinLoad;
+        [HideInInspector] public GameEvent wheelResult;
+        [HideInInspector] public GameEvent wheelRoll;
+        
+        [SerializeField] public List<GameEventListener> gameEventListeners = new List<GameEventListener>();
         
         private void OnEnable()
         {
@@ -19,10 +22,14 @@ namespace Core.Managers
             wheelRoll = Resources.Load<GameEvent>("Events/wheelRollEvent");
         }
         
-        public void NewEventSubscription(string gameEventName, UnityAction action)
+        public void NewEventSubscription(GameObject parentObject, string gameEventName, UnityAction unityAction)
         {
-            var armPullEvent = Resources.Load<GameEvent>("Events/" + gameEventName);
-            GameEventListener.NewGameEventListener(gameObject, armPullEvent, action);
+            var newGameEvent = Resources.Load<GameEvent>("Events/" + gameEventName);
+            var gameEventListener = parentObject.AddComponent<GameEventListener>();
+            gameEventListener.@event = newGameEvent;
+            gameEventListener.@event.RegisterListener(gameEventListener);
+            gameEventListener.response.AddListener(unityAction);
+            gameEventListeners.Add(gameEventListener);
         }
     }
 }

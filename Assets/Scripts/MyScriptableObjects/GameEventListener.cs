@@ -1,9 +1,9 @@
-using UnityEngine;
+using Core;
 using UnityEngine.Events;
 
 namespace MyScriptableObjects
 {
-    public class GameEventListener : MonoBehaviour
+    public class GameEventListener : GlobalAccess
     {
         public GameEvent @event;
         public UnityEvent response;
@@ -11,14 +11,6 @@ namespace MyScriptableObjects
         public GameEventListener()
         {
             response = new UnityEvent();
-        }
-
-        public static void NewGameEventListener(GameObject parentObject, GameEvent gameEvent, UnityAction unityAction)
-        {
-            var gameEventListener = parentObject.AddComponent<GameEventListener>();
-            gameEventListener.@event = gameEvent;
-            gameEventListener.@event.RegisterListener(gameEventListener);
-            gameEventListener.response.AddListener(unityAction);
         }
 
         private void OnEnable()

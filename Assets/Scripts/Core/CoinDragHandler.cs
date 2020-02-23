@@ -6,14 +6,16 @@ namespace Core
     public class CoinDragHandler : GlobalAccess
     {
         private float _deltaX, _deltaY;
-        private Rigidbody2D _rb;
+        private Rigidbody2D _rigidBody2D;
         private bool _moveAllowed;
+        private SpriteRenderer _spriteRenderer;
 
         public Vector2 mousePos;
+        public Rigidbody2D RigidBody2D => _rigidBody2D;
 
         private void Start()
         {
-            _rb = (Rigidbody2D) GetComponent(typeof(Rigidbody2D));
+            _rigidBody2D = (Rigidbody2D) GetComponent(typeof(Rigidbody2D));
         }
 
         private void FixedUpdate()
@@ -70,9 +72,9 @@ namespace Core
             _deltaX = inputPos.x - position.x;
             _deltaY = inputPos.y - position.y;
             _moveAllowed = true;
-            _rb.freezeRotation = true;
-            var sr = (SpriteRenderer) _rb.gameObject.GetComponent(typeof(SpriteRenderer));
-            sr.sortingOrder = 50;
+            _rigidBody2D.freezeRotation = true;
+            _spriteRenderer = (SpriteRenderer) _rigidBody2D.gameObject.GetComponent(typeof(SpriteRenderer));
+            _spriteRenderer.sortingOrder = 50;
             /*_rb.velocity = new Vector2(0, 0);
             GetComponent<CircleCollider2D>().sharedMaterial = null;*/
         }
@@ -80,13 +82,23 @@ namespace Core
         private void OnDragging(Vector2 inputPos)
         {
             if (_moveAllowed)
-                _rb.MovePosition(new Vector2(inputPos.x - _deltaX, inputPos.y - _deltaY));
+                _rigidBody2D.MovePosition(new Vector2(inputPos.x - _deltaX, inputPos.y - _deltaY));
         }
 
         public void OnDragEnd()
         {
             _moveAllowed = false;
-            _rb.freezeRotation = false;
+            _rigidBody2D.freezeRotation = false;
+        }
+
+        public void SetCoinGravity(float value)
+        {
+            _rigidBody2D.gravityScale = value;
+        }
+        
+        public void SetCoinOrderInLayer(int value)
+        {
+            _spriteRenderer.sortingOrder = value;
         }
     }
 }

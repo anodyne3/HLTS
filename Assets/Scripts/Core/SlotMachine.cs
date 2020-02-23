@@ -1,54 +1,37 @@
 using System.Collections;
+using Core.Managers;
 using Enums;
-using MyScriptableObjects;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using Utils;
 
 namespace Core
 {
-    public class SlotMachine : Singleton<SlotMachine>, IDragHandler
+    public class SlotMachine : Singleton<SlotMachine>
     {
-
-
-        private Collider _coinSlotCollider;
-        private Collider _pullArmCollider;
-        
-        [SerializeField] private bool _coinIsLoaded;
+        public bool coinIsLoaded;
         [SerializeField] private bool _armIsPulled;
         [SerializeField] private bool _wheelsAreRolling;
         
         //to constants
         private float _wheelSpinTime = 2.0f;
 
-
-
-        private void OnCollisionStay(Collision other)
+        private void Start()
         {
-            if (_coinIsLoaded) return;
-
-            if (!other.collider.TryGetComponent(out CoinObject coinObject)) return;
-            
-            //room for a load anim or something where the player loses control of the coin and it drops into the slot
-            coinObject.LoadCoinIntoSlot();
-            
-            _coinIsLoaded = true;
-            EventManager.coinLoad.Raise();
+            EventManager.NewEventSubscription(gameObject, Constants.GameEvents.coinLoadEvent, LoadCoin);
         }
 
         public void LoadCoin()
         {
-            if (_coinIsLoaded) return;
+            if (coinIsLoaded) return;
 
-            _coinIsLoaded = true;
-            EventManager.coinLoad.Raise();
+            coinIsLoaded = true;
         }
 
         public void PullArm()
         {
             if (_armIsPulled) return;
 
-            if (_coinIsLoaded)
+            if (coinIsLoaded)
             {
                 _armIsPulled = true;
                 EventManager.armPull.Raise();
@@ -64,7 +47,7 @@ namespace Core
 
         private void ConsumeCoin()
         {
-            _coinIsLoaded = false;
+            coinIsLoaded = false;
             //need new event coinConsumed.Raise();
         }
 
@@ -102,15 +85,6 @@ namespace Core
         private void DeterminePayout()
         {
             
-        }
-
-        public void OnDrag(PointerEventData eventData)
-        {
-            if (eventData.pointerPressRaycast.gameObject.GetComponent(typeof(Collider)) == _pullArmCollider)
-            {
-                if (eventData.delta.y > Constants.ArmPullTriggerAmount)
-                    PullArm();
-            }
         }
     }
 }

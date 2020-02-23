@@ -12,9 +12,7 @@ namespace Utils
 
         public const float WorldSpaceTolerance = 0.01f;
 
-        public static readonly Vector2 CoinSlotStartPosition = new Vector2(0.0f, 100.0f);
-        public static readonly Vector2 CoinSlotDestination = new Vector2(0.0f, 0.0f);
-        public const float CoinLoadSpeed = 1.0f;
+        public const float CoinLoadSpeed = 0.67f;
         
         public const float ArmPullTriggerAmount = 10.0f;
 
