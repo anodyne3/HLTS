@@ -77,6 +77,7 @@ namespace Core
 
             _isDragging = true;
             _deltaYStart = inputPos.y;
+            //_pivotAnimator.speed = 0;
         }
 
         public float ArmPullTriggerAmount = 5.0f;
@@ -87,11 +88,11 @@ namespace Core
         private void OnDragging(Vector2 inputPos)
         {
             if (!_isDragging) return;
-            
+
             deltaY = Mathf.Abs(inputPos.y - _deltaYStart);
-            
+
             playBackTime = ClipTriggerTime * deltaY / ArmPullTriggerAmount;
-            _pivotAnimator.Play("LevelPull", -1, playBackTime);
+            _pivotAnimator.Play("LeverPull", 0, playBackTime);
 
             if (deltaY > ArmLockedTriggerAmount && !_armPullUnlocked)
             {
@@ -103,7 +104,8 @@ namespace Core
             if (deltaY > ArmPullTriggerAmount && _armPullUnlocked)
             {
                 Debug.Log("deltaY > Constants.ArmPullTriggerAmount && _armPullUnlocked");
-                _pivotAnimator.Play("LeverPull",-1,ClipTriggerTime);
+                _pivotAnimator.Play("LeverPull", 0, ClipTriggerTime);
+                _pivotAnimator.speed = 1.0f;
                 EventManager.armPull.Raise();
                 LockArmPull();
             }

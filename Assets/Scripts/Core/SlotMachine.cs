@@ -18,6 +18,7 @@ namespace Core
         private void Start()
         {
             EventManager.NewEventSubscription(gameObject, Constants.GameEvents.coinLoadEvent, LoadCoin);
+            EventManager.NewEventSubscription(gameObject, Constants.GameEvents.armPullEvent, PullArm);
         }
 
         public void LoadCoin()
