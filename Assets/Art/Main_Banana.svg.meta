@@ -18,15 +18,15 @@ ScriptedImporter:
   viewportOptions: 0
   preserveViewport: 0
   advancedMode: 0
-  predefinedResolutionIndex: 1
-  targetResolution: 1080
+  predefinedResolutionIndex: 0
+  targetResolution: 2160
   resolutionMultiplier: 1
-  stepDistance: 10
+  stepDistance: 1.5
   samplingStepDistance: 100
-  maxCordDeviationEnabled: 0
+  maxCordDeviationEnabled: 1
   maxCordDeviation: 1
-  maxTangentAngleEnabled: 0
-  maxTangentAngle: 5
+  maxTangentAngleEnabled: 1
+  maxTangentAngle: 1
   keepTextureAspectRatio: 1
   textureSize: 256
   textureWidth: 256
@@ -34,22 +34,22 @@ ScriptedImporter:
   wrapMode: 0
   filterMode: 1
   sampleCount: 4
-  preserveSVGImageAspect: 0
+  preserveSVGImageAspect: 1
   useSVGPixelsPerUnit: 0
   spriteData:
     TessellationDetail: 0
     SpriteRect:
-      name: 
+      name: Main_Banana
       originalName: 
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       alignment: 0
       border: {x: 0, y: 0, z: 0, w: 0}
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 0
-        height: 0
+        width: 256
+        height: 228
       spriteID: 49245199f890ca340aa829a65da9486f
       internalID: 0
     PhysicsOutlines: []

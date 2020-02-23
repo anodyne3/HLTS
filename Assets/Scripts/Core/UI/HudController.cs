@@ -1,6 +1,7 @@
 ﻿using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Utils;
 
 namespace Core.UI
 {
@@ -8,7 +9,6 @@ namespace Core.UI
     {
         [SerializeField] private Button menuButton;
         [SerializeField] private Button shopButton;
-        [SerializeField] private Button spendCoinButton;
         [SerializeField] private Button pullArmButton;
         [SerializeField] private TMP_Text coinsAmountText;
 
@@ -18,12 +18,12 @@ namespace Core.UI
             menuButton.onClick.AddListener(OpenMenuPanel);
             shopButton.onClick.RemoveAllListeners();
             shopButton.onClick.AddListener(OpenShopPanel);
-            spendCoinButton.onClick.RemoveAllListeners();
-            spendCoinButton.onClick.AddListener(SpendCoin);
             pullArmButton.onClick.RemoveAllListeners();
             pullArmButton.onClick.AddListener(PullArm);
 
             RefreshCoins();
+            
+            EventManager.NewEventSubscription(gameObject, Constants.GameEvents.armPullEvent, RefreshCoins);
         }
 
         private static void OpenMenuPanel()
@@ -36,11 +36,6 @@ namespace Core.UI
             PanelManager.OpenPanelSolo<ShopPanelController>();
         }
 
-        private static void SpendCoin()
-        {
-            SlotMachine.LoadCoin();
-        }
-
         private static void PullArm()
         {
             SlotMachine.PullArm();
@@ -49,8 +44,6 @@ namespace Core.UI
         public void RefreshCoins()
         {
             coinsAmountText.text = PlayerData.coinsAmount.ToString();
-            /*var playerData2 = GlobalComponents.Instance.PlayerData2();
-            coinsAmountText.text = playerData2.coinsAmount.ToString();*/
         }
     }
 }

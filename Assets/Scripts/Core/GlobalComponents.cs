@@ -14,17 +14,18 @@ namespace Core
         {
         }
 
+        /*
         private PlayerData _playerData2;
 
         public PlayerData PlayerData2()
         {
             return _playerData2;
-        }
+        }*/
 
         private void Awake()
         {
-            _playerData2 = new GameObject().AddComponent<PlayerData>();
-            _components.Add(_playerData2);
+            // _playerData2 = new GameObject().AddComponent<PlayerData>();
+            // _components.Add(_playerData2);
         }
 
         public Component AddGlobalComponent<T>() where T : GlobalAccess

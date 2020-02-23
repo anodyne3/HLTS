@@ -11,12 +11,11 @@ namespace Core.GameData
         private void Start()
         {
             EventManager.NewEventSubscription(gameObject, Constants.GameEvents.armPullEvent, DeductCoin);
-            // var armPullEvent = Resources.Load<GameEvent>("Events/armPullEvent");
-            // GameEventListener.NewGameEventListener(gameObject, armPullEvent, DeductCoin);
         }
 
         private void DeductCoin()
         {
+            //make this a database change 
             coinsAmount -= 1;
         }
     }

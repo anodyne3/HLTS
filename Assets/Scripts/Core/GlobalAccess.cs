@@ -13,7 +13,7 @@ namespace Core
         protected static AudioManager AudioManager => AudioManager.Instance;
         protected static PlayerData PlayerData => GlobalComponents.Instance.AddGlobalComponent<PlayerData>() as PlayerData;
 
-        protected static PlayerData PlayerDataDefo;
+        //protected static PlayerData PlayerDataDefo;
         //protected static PlayerData PlayerData => PlayerData.Instance;
         //protected static SlotMachine SlotMachine => SlotMachine.Instance;
         protected static SlotMachine SlotMachine => GlobalComponents.Instance.AddGlobalComponent<SlotMachine>() as SlotMachine;
@@ -23,7 +23,7 @@ namespace Core
 
         private void OnEnable()
         {
-            PlayerDataDefo = GlobalComponents.Instance.PlayerData2();
+            //PlayerDataDefo = GlobalComponents.Instance.PlayerData2();
         }
     }
 }

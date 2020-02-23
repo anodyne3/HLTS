@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using UnityEngine;
 
 namespace Core
@@ -9,13 +10,16 @@ namespace Core
         private Rigidbody2D _rigidBody2D;
         private bool _moveAllowed;
         private SpriteRenderer _spriteRenderer;
+        private CircleCollider2D _coinCollider;
 
         public Vector2 mousePos;
         public Rigidbody2D RigidBody2D => _rigidBody2D;
+        public CircleCollider2D CircleCollider => _coinCollider;
 
         private void Start()
         {
             _rigidBody2D = (Rigidbody2D) GetComponent(typeof(Rigidbody2D));
+            _coinCollider = (CircleCollider2D) GetComponent(typeof(CircleCollider2D));
         }
 
         private void FixedUpdate()
@@ -66,7 +70,7 @@ namespace Core
 
         private void OnDragBegin(Vector2 inputPos)
         {
-            if (GetComponent(typeof(Collider2D)) != Physics2D.OverlapPoint(inputPos)) return;
+            if (_coinCollider != Physics2D.OverlapPoint(inputPos)) return;
 
             var position = transform.position;
             _deltaX = inputPos.x - position.x;
@@ -75,8 +79,8 @@ namespace Core
             _rigidBody2D.freezeRotation = true;
             _spriteRenderer = (SpriteRenderer) _rigidBody2D.gameObject.GetComponent(typeof(SpriteRenderer));
             _spriteRenderer.sortingOrder = 50;
-            /*_rb.velocity = new Vector2(0, 0);
-            GetComponent<CircleCollider2D>().sharedMaterial = null;*/
+            /*_rb.velocity = new Vector2(0, 0);*/
+            _coinCollider.isTrigger = true;
         }
 
         private void OnDragging(Vector2 inputPos)
@@ -87,6 +91,7 @@ namespace Core
 
         public void OnDragEnd()
         {
+            _coinCollider.isTrigger = false;
             _moveAllowed = false;
             _rigidBody2D.freezeRotation = false;
         }

@@ -13,7 +13,7 @@ namespace Core
 
         public AnimationCurve curve = AnimationCurve.Linear(0.0f, 0.0f, 1.0f, 1.0f);
         private float _coinLoadSpeed;
-        
+
         private void OnTriggerStay2D(Collider2D other)
         {
             if (_loadingCoin || SlotMachine.coinIsLoaded) return;
@@ -45,6 +45,7 @@ namespace Core
 
         private IEnumerator MoveCoinIntoSlot()
         {
+            _insertedCoin.CircleCollider.enabled = false;
             var coinStart = _insertedCoin.transform.position;
             var t = 0.0f;
             var animationTimeLength = curve[curve.length - 1].time;
@@ -55,8 +56,7 @@ namespace Core
                 yield return null;
             }
 
-            //change this one the slot art has been split
-            _insertedCoin.SetCoinOrderInLayer(50);
+            _insertedCoin.SetCoinOrderInLayer(11);
             _insertedCoin.SetCoinGravity(1.0f);
 
             while (_insertedCoin.transform.position.y > InsertedCoinFinishPosition.position.y && t <= 5.0f)
