@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using Utils;
 
@@ -21,13 +22,13 @@ namespace Core
             _spriteRenderer = (SpriteRenderer) GetComponent(typeof(SpriteRenderer));
             _armCollider = (Collider2D) GetComponent(typeof(Collider2D));
             _pivotAnimator = (Animator) GetComponentInParent(typeof(Animator));
-            
+
             EventManager.NewEventSubscription(gameObject, Constants.GameEvents.coinLoadEvent, UnlockArmPull);
         }
 
         private void FixedUpdate()
         {
-            #if UNITY_EDITOR
+#if UNITY_EDITOR
             if (Input.GetMouseButtonDown(0))
             {
                 mousePos = CameraManager.MainCamera.ScreenToWorldPoint(Input.mousePosition);
@@ -44,10 +45,10 @@ namespace Core
             {
                 OnDragEnd();
             }
-            #endif
-            
+#endif
+
             if (Input.touchCount <= 0) return;
-            
+
             var touch = Input.GetTouch(0);
             Vector2 touchPos = CameraManager.MainCamera.ScreenToWorldPoint(touch.position);
 
@@ -89,42 +90,55 @@ namespace Core
         {
             if (!_isDragging) return;
 
-            deltaY = Mathf.Abs(inputPos.y - _deltaYStart);
+            deltaY = _deltaYStart - inputPos.y > 0.0f ? _deltaYStart - inputPos.y : 0.0f;
 
             playBackTime = ClipTriggerTime * deltaY / ArmPullTriggerAmount;
             _pivotAnimator.Play("LeverPull", 0, playBackTime);
+            _pivotAnimator.speed = 0.0f;
 
             if (deltaY > ArmLockedTriggerAmount && !_armPullUnlocked)
             {
-                Debug.Log("deltaY > ArmLockedTriggerAmount && !_armPullUnlocked");
-                //play reversed
+                _isDragging = false;
+                OnDragEnd();
+                StartCoroutine(nameof(ResetArmPullToRest));
                 return;
             }
 
             if (deltaY > ArmPullTriggerAmount && _armPullUnlocked)
             {
-                Debug.Log("deltaY > Constants.ArmPullTriggerAmount && _armPullUnlocked");
                 _pivotAnimator.Play("LeverPull", 0, ClipTriggerTime);
                 _pivotAnimator.speed = 1.0f;
                 EventManager.armPull.Raise();
                 LockArmPull();
+                OnDragEnd();
             }
         }
 
         private void OnDragEnd()
         {
             _isDragging = false;
-            deltaY = 0.0f;
         }
 
         private void UnlockArmPull()
         {
             _armPullUnlocked = true;
         }
-        
+
         private void LockArmPull()
         {
             _armPullUnlocked = false;
+        }
+
+        private IEnumerator ResetArmPullToRest()
+        {
+            while (deltaY > 0)
+            {
+                deltaY -= Time.deltaTime * Constants.ArmPullResetSpeed;
+                playBackTime = ClipTriggerTime * deltaY / ArmPullTriggerAmount;
+                _pivotAnimator.Play("LeverPull", 0, playBackTime);
+                _pivotAnimator.speed = 0.0f;
+                yield return null;
+            }
         }
 
         private void SetPullArmLightColor()

@@ -9,7 +9,6 @@ namespace Core.UI
     {
         [SerializeField] private Button menuButton;
         [SerializeField] private Button shopButton;
-        [SerializeField] private Button pullArmButton;
         [SerializeField] private TMP_Text coinsAmountText;
 
         private void Start()
@@ -18,12 +17,10 @@ namespace Core.UI
             menuButton.onClick.AddListener(OpenMenuPanel);
             shopButton.onClick.RemoveAllListeners();
             shopButton.onClick.AddListener(OpenShopPanel);
-            pullArmButton.onClick.RemoveAllListeners();
-            pullArmButton.onClick.AddListener(PullArm);
 
             RefreshCoins();
             
-            EventManager.NewEventSubscription(gameObject, Constants.GameEvents.armPullEvent, RefreshCoins);
+            EventManager.NewEventSubscription(gameObject, Constants.GameEvents.coinConsumeEvent, RefreshCoins);
         }
 
         private static void OpenMenuPanel()
@@ -36,12 +33,7 @@ namespace Core.UI
             PanelManager.OpenPanelSolo<ShopPanelController>();
         }
 
-        private static void PullArm()
-        {
-            SlotMachine.PullArm();
-        }
-
-        public void RefreshCoins()
+        private void RefreshCoins()
         {
             coinsAmountText.text = PlayerData.coinsAmount.ToString();
         }

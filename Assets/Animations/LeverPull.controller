@@ -33,13 +33,7 @@ AnimatorController:
   m_PrefabAsset: {fileID: 0}
   m_Name: LeverPull
   serializedVersion: 5
-  m_AnimatorParameters:
-  - m_Name: playBackTime
-    m_Type: 1
-    m_DefaultFloat: 0
-    m_DefaultInt: 0
-    m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+  m_AnimatorParameters: []
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: Base Layer
@@ -98,7 +92,7 @@ AnimatorState:
   m_SpeedParameterActive: 0
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
-  m_TimeParameterActive: 1
+  m_TimeParameterActive: 0
   m_Motion: {fileID: 7400000, guid: 5b5aa5bdc6e63af458ec830b5fdf0006, type: 2}
   m_Tag: 
   m_SpeedParameter: time

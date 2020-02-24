@@ -1,5 +1,4 @@
-using System.Collections;
-using Core.Managers;
+using System.Linq;
 using Enums;
 using UnityEngine;
 using Utils;
@@ -9,83 +8,96 @@ namespace Core
     public class SlotMachine : Singleton<SlotMachine>
     {
         public bool coinIsLoaded;
+        public int[] result;
+
         [SerializeField] private bool _armIsPulled;
         [SerializeField] private bool _wheelsAreRolling;
-        
-        //to constants
-        private float _wheelSpinTime = 2.0f;
 
         private void Start()
         {
             EventManager.NewEventSubscription(gameObject, Constants.GameEvents.coinLoadEvent, LoadCoin);
             EventManager.NewEventSubscription(gameObject, Constants.GameEvents.armPullEvent, PullArm);
+            EventManager.NewEventSubscription(gameObject, Constants.GameEvents.wheelResultEvent, WheelResult);
         }
 
-        public void LoadCoin()
+        private void LoadCoin()
         {
             if (coinIsLoaded) return;
 
             coinIsLoaded = true;
         }
 
-        public void PullArm()
+        private void PullArm()
         {
             if (_armIsPulled) return;
 
             if (coinIsLoaded)
             {
                 _armIsPulled = true;
-                EventManager.armPull.Raise();
                 ConsumeCoin();
                 OnWheelRoll();
             }
             else
-            {
                 AudioManager.PlayClip(SoundEffectType.ArmPull); //new sound needed for empty pull
-            }
-            
         }
 
         private void ConsumeCoin()
         {
             coinIsLoaded = false;
-            //need new event coinConsumed.Raise();
+            EventManager.coinConsume.Raise();
         }
 
         private void OnWheelRoll()
         {
-            StartCoroutine(RollWheels());
-
-            EventManager.wheelRoll.Raise();
-        }
-
-        private IEnumerator RollWheels()
-        {
             _wheelsAreRolling = true;
-            
-            var t = _wheelSpinTime;
-            while (t > 0)
-            {
-                t -= Time.deltaTime;
-                yield return null;
-            }
-
-            WheelResult();
-            yield return null;
+            EventManager.wheelRoll.Raise();
         }
 
         private void WheelResult()
         {
             _wheelsAreRolling = false;
             DeterminePayout();
-            
+
             _armIsPulled = false;
-            EventManager.wheelResult.Raise();
         }
 
         private void DeterminePayout()
         {
+            if (result.All(x => true))
+                Debug.LogError("LINQ says true");
             
+            if (result[0] == result[1] && result[1] == result[2])
+                switch (result[0])
+                {
+                    case 1:
+                    case 3:
+                    case 6:
+                    case 8:
+                    case 10:
+                        PlayerData.coinsAmount += Constants.PlumsPayout;
+                        break;
+                    case 0:
+                    case 4:
+                    case 7:
+                        PlayerData.coinsAmount += Constants.CherriesPayout;
+                        break;
+                    case 2:
+                    case 9:
+                        PlayerData.coinsAmount += Constants.DiamondsPayout;
+                        break;
+                    case 5:
+                    case 11:
+                        PlayerData.coinsAmount += Constants.BarnanaPayout;
+                        break;
+                }
+
+            if (result.All(x => x == 5 || x == 11))
+            {
+                PlayerData.coinsAmount += Constants.MixedPayout;
+                Debug.LogError("LINQ says mixed payout");
+            }
+            
+            EventManager.wheelResult.Raise();
         }
     }
 }

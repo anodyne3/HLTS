@@ -40,7 +40,7 @@ namespace Core
                 (_insertedCoin.transform.position - InsertedCoinStartPosition.position).sqrMagnitude,
                 0.1f, 0.9f);
             
-            StartCoroutine(MoveCoinIntoSlot());
+            StartCoroutine(nameof(MoveCoinIntoSlot));
         }
 
         private IEnumerator MoveCoinIntoSlot()

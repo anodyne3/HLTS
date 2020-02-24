@@ -10,7 +10,7 @@ namespace Core.GameData
 
         private void Start()
         {
-            EventManager.NewEventSubscription(gameObject, Constants.GameEvents.armPullEvent, DeductCoin);
+            EventManager.NewEventSubscription(gameObject, Constants.GameEvents.coinConsumeEvent, DeductCoin);
         }
 
         private void DeductCoin()
