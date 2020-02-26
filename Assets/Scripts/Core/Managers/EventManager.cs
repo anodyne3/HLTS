@@ -10,7 +10,11 @@ namespace Core.Managers
     {
         [HideInInspector] public GameEvent armPull;
         [HideInInspector] public GameEvent coinConsume;
+        [HideInInspector] public GameEvent coinCreated;
+        [HideInInspector] public GameEvent coinDropped;
         [HideInInspector] public GameEvent coinLoad;
+        [HideInInspector] public GameEvent generateCoin;
+        [HideInInspector] public GameEvent refreshUi;
         [HideInInspector] public GameEvent wheelResult;
         [HideInInspector] public GameEvent wheelRoll;
         
@@ -20,7 +24,11 @@ namespace Core.Managers
         {
             armPull = Resources.Load<GameEvent>("Events/" + Constants.GameEvents.armPullEvent);
             coinConsume = Resources.Load<GameEvent>("Events/" + Constants.GameEvents.coinConsumeEvent);
+            coinCreated = Resources.Load<GameEvent>("Events/" + Constants.GameEvents.coinCreatedEvent);
+            coinDropped = Resources.Load<GameEvent>("Events/" + Constants.GameEvents.coinDroppedEvent);
             coinLoad = Resources.Load<GameEvent>("Events/" + Constants.GameEvents.coinLoadEvent);
+            generateCoin = Resources.Load<GameEvent>("Events/" + Constants.GameEvents.generateCoinEvent);
+            refreshUi = Resources.Load<GameEvent>("Events/" + Constants.GameEvents.refreshUiEvent);
             wheelResult = Resources.Load<GameEvent>("Events/" + Constants.GameEvents.wheelResultEvent);
             wheelRoll = Resources.Load<GameEvent>("Events/" + Constants.GameEvents.wheelRollEvent);
         }

@@ -78,7 +78,6 @@ namespace Core
 
             _isDragging = true;
             _deltaYStart = inputPos.y;
-            //_pivotAnimator.speed = 0;
         }
 
         public float ArmPullTriggerAmount = 5.0f;
@@ -96,7 +95,7 @@ namespace Core
             _pivotAnimator.Play("LeverPull", 0, playBackTime);
             _pivotAnimator.speed = 0.0f;
 
-            if (deltaY > ArmLockedTriggerAmount && !_armPullUnlocked)
+            if (deltaY > ArmLockedTriggerAmount && (!_armPullUnlocked || SlotMachine.wheelsAreRolling))
             {
                 _isDragging = false;
                 OnDragEnd();
@@ -104,14 +103,13 @@ namespace Core
                 return;
             }
 
-            if (deltaY > ArmPullTriggerAmount && _armPullUnlocked)
-            {
-                _pivotAnimator.Play("LeverPull", 0, ClipTriggerTime);
-                _pivotAnimator.speed = 1.0f;
-                EventManager.armPull.Raise();
-                LockArmPull();
-                OnDragEnd();
-            }
+            if (!(deltaY > ArmPullTriggerAmount) || !_armPullUnlocked) return;
+            
+            _pivotAnimator.Play("LeverPull", 0, ClipTriggerTime);
+            _pivotAnimator.speed = 1.0f;
+            EventManager.armPull.Raise();
+            LockArmPull();
+            OnDragEnd();
         }
 
         private void OnDragEnd()

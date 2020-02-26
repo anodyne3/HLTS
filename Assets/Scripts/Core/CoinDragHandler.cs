@@ -1,30 +1,31 @@
 using System;
+using System.CodeDom;
 using System.Diagnostics;
 using UnityEngine;
+using Utils;
 
 namespace Core
 {
     public class CoinDragHandler : GlobalAccess
     {
         private float _deltaX, _deltaY;
-        private Rigidbody2D _rigidBody2D;
         private bool _moveAllowed;
         private SpriteRenderer _spriteRenderer;
-        private CircleCollider2D _coinCollider;
 
-        public Vector2 mousePos;
-        public Rigidbody2D RigidBody2D => _rigidBody2D;
-        public CircleCollider2D CircleCollider => _coinCollider;
+        [HideInInspector] public Vector2 mousePos;
+        public Rigidbody2D RigidBody2D { get; private set; }
+        public CircleCollider2D CircleCollider { get; private set; }
 
-        private void Start()
+        private void Awake()
         {
-            _rigidBody2D = (Rigidbody2D) GetComponent(typeof(Rigidbody2D));
-            _coinCollider = (CircleCollider2D) GetComponent(typeof(CircleCollider2D));
+            _spriteRenderer = (SpriteRenderer) GetComponent(typeof(SpriteRenderer));
+            RigidBody2D = (Rigidbody2D) GetComponent(typeof(Rigidbody2D));
+            CircleCollider = (CircleCollider2D) GetComponent(typeof(CircleCollider2D));
         }
 
         private void FixedUpdate()
         {
-            #if UNITY_EDITOR
+#if UNITY_EDITOR
             if (Input.GetMouseButtonDown(0))
             {
                 mousePos = CameraManager.MainCamera.ScreenToWorldPoint(Input.mousePosition);
@@ -41,10 +42,10 @@ namespace Core
             {
                 OnDragEnd();
             }
-            #endif
-            
+#endif
+
             if (Input.touchCount <= 0) return;
-            
+
             var touch = Input.GetTouch(0);
             Vector2 touchPos = CameraManager.MainCamera.ScreenToWorldPoint(touch.position);
 
@@ -70,37 +71,35 @@ namespace Core
 
         private void OnDragBegin(Vector2 inputPos)
         {
-            if (_coinCollider != Physics2D.OverlapPoint(inputPos)) return;
+            if (CircleCollider != Physics2D.OverlapPoint(inputPos)) return;
 
             var position = transform.position;
             _deltaX = inputPos.x - position.x;
             _deltaY = inputPos.y - position.y;
             _moveAllowed = true;
-            _rigidBody2D.freezeRotation = true;
-            _spriteRenderer = (SpriteRenderer) _rigidBody2D.gameObject.GetComponent(typeof(SpriteRenderer));
+            RigidBody2D.freezeRotation = true;
             _spriteRenderer.sortingOrder = 50;
-            /*_rb.velocity = new Vector2(0, 0);*/
-            _coinCollider.isTrigger = true;
+            CircleCollider.isTrigger = true;
         }
 
         private void OnDragging(Vector2 inputPos)
         {
             if (_moveAllowed)
-                _rigidBody2D.MovePosition(new Vector2(inputPos.x - _deltaX, inputPos.y - _deltaY));
+                RigidBody2D.MovePosition(new Vector2(inputPos.x - _deltaX, inputPos.y - _deltaY));
         }
 
         public void OnDragEnd()
         {
-            _coinCollider.isTrigger = false;
+            CircleCollider.isTrigger = false;
             _moveAllowed = false;
-            _rigidBody2D.freezeRotation = false;
+            RigidBody2D.freezeRotation = false;
         }
 
         public void SetCoinGravity(float value)
         {
-            _rigidBody2D.gravityScale = value;
+            RigidBody2D.gravityScale = value;
         }
-        
+
         public void SetCoinOrderInLayer(int value)
         {
             _spriteRenderer.sortingOrder = value;

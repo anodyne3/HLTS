@@ -20,7 +20,7 @@ namespace Core.UI
 
             RefreshCoins();
             
-            EventManager.NewEventSubscription(gameObject, Constants.GameEvents.coinConsumeEvent, RefreshCoins);
+            EventManager.NewEventSubscription(gameObject, Constants.GameEvents.refreshUiEvent, RefreshCoins);
         }
 
         private static void OpenMenuPanel()
@@ -35,7 +35,7 @@ namespace Core.UI
 
         private void RefreshCoins()
         {
-            coinsAmountText.text = PlayerData.coinsAmount.ToString();
+            coinsAmountText.text = PlayerData.GetPlayerCoinsAmount().ToString();
         }
     }
 }

@@ -12,15 +12,17 @@ namespace Utils
 
         public const float WorldSpaceTolerance = 0.01f;
 
+        public const float SpawnRange = 0.8f;
+        public const float SpawnHeight = -2.0f;
         public const float CoinLoadSpeed = 0.67f;
         
         public const float ArmPullTriggerAmount = 10.0f;
         public const float ArmPullResetSpeed = 1.0f;
         
         //reels
-        public const int TotalSpinTime = 360;
-        public const int RightReelStopTime = 210;
-        public const int MiddleReelStopTime = 90;
+        public const int TotalSpinTime = 330;
+        public const int RightReelStopTime = 180;
+        public const int MiddleReelStopTime = 120;
         public const float FastSpinDegrees = 15.0f;
         public const float MediumSpinDegrees = 5.0f;
         public const float SlowSpinDegrees = 1.0f;
@@ -35,13 +37,16 @@ namespace Utils
         public static readonly GameEvents GameEvents = new GameEvents();
     }
 
-
     [Serializable]
     public class GameEvents
     {
         public string armPullEvent = "armPullEvent";
         public string coinConsumeEvent = "coinConsumeEvent";
+        public string coinCreatedEvent = "coinCreatedEvent";
+        public string coinDroppedEvent = "coinDroppedEvent";
         public string coinLoadEvent = "coinLoadEvent";
+        public string generateCoinEvent = "generateCoinEvent";
+        public string refreshUiEvent = "refreshUiEvent";
         public string wheelResultEvent = "wheelResultEvent";
         public string wheelRollEvent = "wheelRollEvent";
     }

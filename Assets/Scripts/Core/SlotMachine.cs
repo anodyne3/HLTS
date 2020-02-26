@@ -1,5 +1,4 @@
 using System.Linq;
-using Enums;
 using UnityEngine;
 using Utils;
 
@@ -7,11 +6,11 @@ namespace Core
 {
     public class SlotMachine : Singleton<SlotMachine>
     {
-        public bool coinIsLoaded;
+        [HideInInspector] public bool coinIsLoaded;
+        [HideInInspector] public bool wheelsAreRolling;
         public int[] result;
 
-        [SerializeField] private bool _armIsPulled;
-        [SerializeField] private bool _wheelsAreRolling;
+        private bool _armIsPulled;
 
         private void Start()
         {
@@ -29,16 +28,11 @@ namespace Core
 
         private void PullArm()
         {
-            if (_armIsPulled) return;
+            if (_armIsPulled || !coinIsLoaded) return;
 
-            if (coinIsLoaded)
-            {
-                _armIsPulled = true;
-                ConsumeCoin();
-                OnWheelRoll();
-            }
-            else
-                AudioManager.PlayClip(SoundEffectType.ArmPull); //new sound needed for empty pull
+            _armIsPulled = true;
+            ConsumeCoin();
+            OnWheelRoll();
         }
 
         private void ConsumeCoin()
@@ -49,13 +43,13 @@ namespace Core
 
         private void OnWheelRoll()
         {
-            _wheelsAreRolling = true;
+            wheelsAreRolling = true;
             EventManager.wheelRoll.Raise();
         }
 
         private void WheelResult()
         {
-            _wheelsAreRolling = false;
+            wheelsAreRolling = false;
             DeterminePayout();
 
             _armIsPulled = false;
@@ -63,10 +57,12 @@ namespace Core
 
         private void DeterminePayout()
         {
-            if (result.All(x => true))
-                Debug.LogError("LINQ says true");
+            if (result.Distinct().Count() == 1)
+                Debug.LogError("LINQ says distinct.count == 1");
+
+            var payout = 0;
             
-            if (result[0] == result[1] && result[1] == result[2])
+            if (result[0] == result[1] && result[2] == result[1])
                 switch (result[0])
                 {
                     case 1:
@@ -74,30 +70,30 @@ namespace Core
                     case 6:
                     case 8:
                     case 10:
-                        PlayerData.coinsAmount += Constants.PlumsPayout;
+                        payout = Constants.PlumsPayout;
                         break;
                     case 0:
                     case 4:
                     case 7:
-                        PlayerData.coinsAmount += Constants.CherriesPayout;
+                        payout = Constants.CherriesPayout;
                         break;
                     case 2:
                     case 9:
-                        PlayerData.coinsAmount += Constants.DiamondsPayout;
+                        payout = Constants.DiamondsPayout;
                         break;
                     case 5:
                     case 11:
-                        PlayerData.coinsAmount += Constants.BarnanaPayout;
+                        payout = Constants.BarnanaPayout;                        
                         break;
                 }
 
             if (result.All(x => x == 5 || x == 11))
             {
-                PlayerData.coinsAmount += Constants.MixedPayout;
+                payout = Constants.MixedPayout;
                 Debug.LogError("LINQ says mixed payout");
             }
             
-            EventManager.wheelResult.Raise();
+            PlayerData.AddPayout(payout);
         }
     }
 }

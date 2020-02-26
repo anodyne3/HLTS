@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using Utils;
 using Random = UnityEngine.Random;
@@ -10,59 +11,46 @@ namespace Core
         [SerializeField] public Transform fruitReelL;
         [SerializeField] public Transform fruitReelM;
         [SerializeField] public Transform fruitReelR;
-
-        private Vector3 _fruitReelLRotation;
-        private Vector3 _fruitReelMRotation;
-        private Vector3 _fruitReelRRotation;
+        
+        //temp newRoll
+        private int[] newRoll = {0, 0, 0};
 
         private void Start()
         {
             EventManager.NewEventSubscription(gameObject, Constants.GameEvents.wheelRollEvent, WheelRoll);
-            RandomizeReels();
+            //var newRoll = new[] {Random.Range(0, 12), Random.Range(0, 12), Random.Range(0, 12)};
+            RandomizeReels(newRoll);
+        }
+
+        private void RandomizeReels(IReadOnlyList<int> newRoll)
+        {
+            fruitReelL.Rotate(newRoll[0] * 30, 0.0f, 0.0f);
+            fruitReelM.Rotate(newRoll[1] * 30, 0.0f, 0.0f);
+            fruitReelR.Rotate(newRoll[2] * 30, 0.0f, 0.0f);
         }
 
         private void WheelRoll()
         {
-            StartCoroutine(nameof(SpinReel));
+            //var newRoll = new[] {Random.Range(0, 12), Random.Range(0, 12), Random.Range(0, 12)};
+            StartCoroutine(SpinReel(newRoll));
         }
 
-        private void RandomizeReels()
+        private IEnumerator SpinReel(IReadOnlyList<int> newRoll)
         {
-            _fruitReelLRotation = fruitReelL.rotation.eulerAngles;
-            _fruitReelLRotation.x += Random.Range(0, 12) * 30.0f;
-            fruitReelL.rotation = Quaternion.Euler(_fruitReelLRotation);
-
-            _fruitReelMRotation = fruitReelM.rotation.eulerAngles;
-            _fruitReelMRotation.x -= Random.Range(0, 12) * 30.0f;
-            fruitReelM.rotation = Quaternion.Euler(_fruitReelMRotation);
-
-            _fruitReelRRotation = fruitReelR.rotation.eulerAngles;
-            _fruitReelRRotation.x += Random.Range(0, 12) * 30.0f;
-            fruitReelR.rotation = Quaternion.Euler(_fruitReelRRotation);
-        }
-
-        private IEnumerator SpinReel()
-        {
-            var spinDegrees = Constants.TotalSpinTime;
-
-            _fruitReelLRotation = fruitReelL.rotation.eulerAngles;
-            _fruitReelMRotation = fruitReelM.rotation.eulerAngles;
-            _fruitReelRRotation = fruitReelR.rotation.eulerAngles;
+            var spinDegrees = Constants.TotalSpinTime + newRoll[0] * 12;
 
             while (spinDegrees > Constants.RightReelStopTime)
             {
                 spinDegrees -= 1;
 
-                _fruitReelLRotation.x += Constants.FastSpinDegrees;
-                fruitReelL.rotation = Quaternion.Euler(_fruitReelLRotation);
+                fruitReelL.Rotate(-Constants.FastSpinDegrees + newRoll[0] * 2, 0.0f, 0.0f);
 
-                _fruitReelMRotation.x -= Constants.FastSpinDegrees;
-                fruitReelM.rotation = Quaternion.Euler(_fruitReelMRotation);
+                fruitReelM.Rotate(Constants.FastSpinDegrees + newRoll[1] * 2, 0.0f, 0.0f);
 
-                _fruitReelRRotation.x += spinDegrees - 7 <= Constants.RightReelStopTime
-                    ? Constants.FastSpinDegrees * 0.25f
-                    : Constants.FastSpinDegrees;
-                fruitReelR.rotation = Quaternion.Euler(_fruitReelRRotation);
+                fruitReelR.Rotate(
+                    spinDegrees - 7 <= Constants.RightReelStopTime + newRoll[2] * 2
+                        ? -Constants.FastSpinDegrees * 0.25f
+                        : -Constants.FastSpinDegrees, 0.0f, 0.0f);
 
                 yield return new WaitForEndOfFrame();
             }
@@ -71,13 +59,12 @@ namespace Core
             {
                 spinDegrees -= 1;
 
-                _fruitReelLRotation.x += Constants.MediumSpinDegrees;
-                fruitReelL.rotation = Quaternion.Euler(_fruitReelLRotation);
+                fruitReelL.Rotate(-Constants.MediumSpinDegrees, 0.0f, 0.0f);
 
-                _fruitReelMRotation.x -= spinDegrees - 23 <= Constants.MiddleReelStopTime
-                    ? Constants.MediumSpinDegrees * 0.25f
-                    : Constants.MediumSpinDegrees;
-                fruitReelM.rotation = Quaternion.Euler(_fruitReelMRotation);
+                fruitReelM.Rotate(
+                    spinDegrees - 23 <= Constants.MiddleReelStopTime
+                        ? Constants.MediumSpinDegrees * 0.25f
+                        : Constants.MediumSpinDegrees, 0.0f, 0.0f);
 
                 yield return new WaitForEndOfFrame();
             }
@@ -86,13 +73,13 @@ namespace Core
             {
                 spinDegrees -= 1;
 
-                _fruitReelLRotation.x += Constants.SlowSpinDegrees;
-                fruitReelL.rotation = Quaternion.Euler(_fruitReelLRotation);
+                fruitReelL.Rotate(-Constants.SlowSpinDegrees, 0.0f, 0.0f);
 
                 yield return new WaitForEndOfFrame();
             }
 
             SlotMachine.result = GenerateResult();
+            EventManager.wheelResult.Raise();
             yield return null;
         }
 
@@ -100,16 +87,21 @@ namespace Core
         {
             return new[]
             {
+                newRoll[0],
+                newRoll[1],
+                newRoll[2]
+            };
+            /*{
                 ProcessEachResult(fruitReelL.rotation.eulerAngles.x),
                 ProcessEachResult(fruitReelM.rotation.eulerAngles.x),
                 ProcessEachResult(fruitReelR.rotation.eulerAngles.x),
-            };
+            };*/
         }
 
         private static int ProcessEachResult(float value)
         {
-            var remainder = value % 360 / 30;
-            return remainder <= 0 ? Mathf.RoundToInt(remainder) + 12 : Mathf.RoundToInt(remainder);
+            var result = Mathf.RoundToInt(value) / 30;
+            return result <= 0 ? result + 12 : result;
         }
     }
 }

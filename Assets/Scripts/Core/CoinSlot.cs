@@ -6,10 +6,10 @@ namespace Core
 {
     public class CoinSlot : GlobalAccess
     {
-        [SerializeField] private CoinDragHandler _insertedCoin;
-        [SerializeField] private bool _loadingCoin;
-        [SerializeField] private Transform InsertedCoinStartPosition;
-        [SerializeField] private Transform InsertedCoinFinishPosition;
+        private CoinDragHandler _insertedCoin;
+        private bool _loadingCoin;
+        [SerializeField] private Transform insertedCoinStartPosition;
+        [SerializeField] private Transform insertedCoinFinishPosition;
 
         public AnimationCurve curve = AnimationCurve.Linear(0.0f, 0.0f, 1.0f, 1.0f);
         private float _coinLoadSpeed;
@@ -37,7 +37,7 @@ namespace Core
         private void LoadCoin()
         {
             _coinLoadSpeed = Mathf.Clamp(
-                (_insertedCoin.transform.position - InsertedCoinStartPosition.position).sqrMagnitude,
+                (_insertedCoin.transform.position - insertedCoinStartPosition.position).sqrMagnitude,
                 0.1f, 0.9f);
             
             StartCoroutine(nameof(MoveCoinIntoSlot));
@@ -52,14 +52,14 @@ namespace Core
             while (t <= animationTimeLength)
             {
                 t += Time.deltaTime / _coinLoadSpeed;
-                _insertedCoin.transform.position = Vector2.Lerp(coinStart, InsertedCoinStartPosition.position, curve.Evaluate(t));
+                _insertedCoin.transform.position = Vector2.Lerp(coinStart, insertedCoinStartPosition.position, curve.Evaluate(t));
                 yield return null;
             }
 
             _insertedCoin.SetCoinOrderInLayer(11);
             _insertedCoin.SetCoinGravity(1.0f);
 
-            while (_insertedCoin.transform.position.y > InsertedCoinFinishPosition.position.y && t <= 5.0f)
+            while (_insertedCoin.transform.position.y > insertedCoinFinishPosition.position.y && t <= 5.0f)
             {
                 t += Time.deltaTime * Constants.CoinLoadSpeed;
                 
@@ -67,6 +67,7 @@ namespace Core
             }
             
             _insertedCoin.gameObject.SetActive(false);
+            ObjectPoolManager.coinPool.Release(_insertedCoin);
             EventManager.coinLoad.Raise();
             _loadingCoin = false;
         }

@@ -6,7 +6,8 @@ namespace Core.GameData
     public class PlayerData : Singleton<PlayerData>
     {
         public FirebaseUser firebaseUser;
-        public int coinsAmount;
+        //temp
+        public int coinsAmount = 50;
 
         private void Start()
         {
@@ -17,6 +18,19 @@ namespace Core.GameData
         {
             //make this a database change 
             coinsAmount -= 1;
+            EventManager.refreshUi.Raise();
+        }
+        
+        public void AddPayout(int value)
+        {
+            //make this a database change 
+            coinsAmount += value;
+            EventManager.refreshUi.Raise();
+        }
+
+        public int GetPlayerCoinsAmount()
+        {
+            return coinsAmount;
         }
     }
 }

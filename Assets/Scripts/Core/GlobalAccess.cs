@@ -21,8 +21,12 @@ namespace Core
         
         protected static EventManager EventManager => GlobalComponents.Instance.AddGlobalComponent<EventManager>() as EventManager;
 
+        protected static ObjectPoolManager ObjectPoolManager => Foundation.ObjectPoolManager;
+            
+
         private void OnEnable()
         {
+            //Foundation.ObjectPoolManager = new ObjectPoolManager<GlobalAccess>();
             //PlayerDataDefo = GlobalComponents.Instance.PlayerData2();
         }
     }
