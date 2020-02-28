@@ -1,4 +1,7 @@
 using System;
+using Core;
+using Core.GameData;
+using Enums;
 using UnityEngine;
 
 namespace Utils
@@ -26,6 +29,23 @@ namespace Utils
         public const float FastSpinDegrees = 15.0f;
         public const float MediumSpinDegrees = 5.0f;
         public const float SlowSpinDegrees = 1.0f;
+        
+        //fruit
+        public static readonly FruitDefinition[] FruitDefinitions =
+        {
+            new FruitDefinition {Id = 0, FruitType = FruitType.Cherries},
+            new FruitDefinition {Id = 1, FruitType = FruitType.Plum},
+            new FruitDefinition {Id = 2, FruitType = FruitType.Diamond},
+            new FruitDefinition {Id = 3, FruitType = FruitType.Plum},
+            new FruitDefinition {Id = 4, FruitType = FruitType.Cherries},
+            new FruitDefinition {Id = 5, FruitType = FruitType.Banana},
+            new FruitDefinition {Id = 6, FruitType = FruitType.Plum},
+            new FruitDefinition {Id = 7, FruitType = FruitType.Cherries},
+            new FruitDefinition {Id = 8, FruitType = FruitType.Plum},
+            new FruitDefinition {Id = 9, FruitType = FruitType.Diamond},
+            new FruitDefinition {Id = 10, FruitType = FruitType.Plum},
+            new FruitDefinition {Id = 11, FruitType = FruitType.Bar}
+        };
         
         //payout
         public const int PlumsPayout = 25;

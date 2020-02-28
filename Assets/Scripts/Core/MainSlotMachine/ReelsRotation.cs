@@ -1,54 +1,52 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Utils;
 using Random = UnityEngine.Random;
 
-namespace Core
+namespace Core.MainSlotMachine
 {
     public class ReelsRotation : GlobalAccess
     {
         [SerializeField] public Transform fruitReelL;
         [SerializeField] public Transform fruitReelM;
         [SerializeField] public Transform fruitReelR;
-        
-        //temp newRoll
-        private int[] newRoll = {0, 0, 0};
+
+        //temp newRoll, will come from server
+        [SerializeField] private int newRoll;
 
         private void Start()
         {
             EventManager.NewEventSubscription(gameObject, Constants.GameEvents.wheelRollEvent, WheelRoll);
-            //var newRoll = new[] {Random.Range(0, 12), Random.Range(0, 12), Random.Range(0, 12)};
-            RandomizeReels(newRoll);
+            RandomizeReels( /*newRoll*/);
         }
 
-        private void RandomizeReels(IReadOnlyList<int> newRoll)
+        private void RandomizeReels( /*int newRoll*/)
         {
-            fruitReelL.Rotate(newRoll[0] * 30, 0.0f, 0.0f);
-            fruitReelM.Rotate(newRoll[1] * 30, 0.0f, 0.0f);
-            fruitReelR.Rotate(newRoll[2] * 30, 0.0f, 0.0f);
+            fruitReelL.Rotate(newRoll * -30, 0.0f, 0.0f);
+            fruitReelM.Rotate(newRoll * 90, 0.0f, 0.0f);
+            fruitReelR.Rotate(newRoll * -210, 0.0f, 0.0f);
         }
 
-        private void WheelRoll()
+        private void WheelRoll( /*newRoll*/)
         {
-            //var newRoll = new[] {Random.Range(0, 12), Random.Range(0, 12), Random.Range(0, 12)};
+            newRoll = Random.Range(-12, 11);
             StartCoroutine(SpinReel(newRoll));
         }
 
-        private IEnumerator SpinReel(IReadOnlyList<int> newRoll)
+        private IEnumerator SpinReel(int nextRoll)
         {
-            var spinDegrees = Constants.TotalSpinTime + newRoll[0] * 12;
+            var spinDegrees = Constants.TotalSpinTime + 2 * -nextRoll;
 
             while (spinDegrees > Constants.RightReelStopTime)
             {
                 spinDegrees -= 1;
 
-                fruitReelL.Rotate(-Constants.FastSpinDegrees + newRoll[0] * 2, 0.0f, 0.0f);
+                fruitReelL.Rotate(-Constants.FastSpinDegrees, 0.0f, 0.0f);
 
-                fruitReelM.Rotate(Constants.FastSpinDegrees + newRoll[1] * 2, 0.0f, 0.0f);
+                fruitReelM.Rotate(Constants.FastSpinDegrees, 0.0f, 0.0f);
 
                 fruitReelR.Rotate(
-                    spinDegrees - 7 <= Constants.RightReelStopTime + newRoll[2] * 2
+                    spinDegrees - 7 <= Constants.RightReelStopTime
                         ? -Constants.FastSpinDegrees * 0.25f
                         : -Constants.FastSpinDegrees, 0.0f, 0.0f);
 
@@ -78,30 +76,27 @@ namespace Core
                 yield return new WaitForEndOfFrame();
             }
 
-            SlotMachine.result = GenerateResult();
+            GenerateResult();
             EventManager.wheelResult.Raise();
             yield return null;
         }
 
-        private int[] GenerateResult()
+        private void GenerateResult()
         {
-            return new[]
-            {
-                newRoll[0],
-                newRoll[1],
-                newRoll[2]
-            };
-            /*{
-                ProcessEachResult(fruitReelL.rotation.eulerAngles.x),
-                ProcessEachResult(fruitReelM.rotation.eulerAngles.x),
-                ProcessEachResult(fruitReelR.rotation.eulerAngles.x),
-            };*/
-        }
+            if (SlotMachine.result == null)
+                SlotMachine.result = new int[3];
+            
+            SlotMachine.result[0] += newRoll - 5;
+            SlotMachine.result[1] += newRoll - 2;
+            SlotMachine.result[2] += newRoll;
 
-        private static int ProcessEachResult(float value)
-        {
-            var result = Mathf.RoundToInt(value) / 30;
-            return result <= 0 ? result + 12 : result;
+            for (var i = 0; i < SlotMachine.result.Length; i++)
+            {
+                if (SlotMachine.result[i] > 12)
+                    SlotMachine.result[i] -= 12;
+                else if (SlotMachine.result[i] < 0)
+                    SlotMachine.result[i] += 12;
+            }
         }
     }
 }

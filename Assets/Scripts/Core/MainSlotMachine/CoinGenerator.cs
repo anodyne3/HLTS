@@ -4,7 +4,7 @@ using UnityEngine;
 using Utils;
 using Random = UnityEngine.Random;
 
-namespace Core
+namespace Core.MainSlotMachine
 {
     public class CoinGenerator : GlobalAccess
     {
@@ -14,7 +14,7 @@ namespace Core
 
         private void Start()
         {
-            ObjectPoolManager.coinPool = new MyObjectPool<CoinDragHandler>(() => Instantiate(coinPrefab, transform)); 
+            ObjectPoolManager.coinPool = new MyObjectPool<CoinDragHandler>(() => Instantiate(coinPrefab, transform));
             EventManager.NewEventSubscription(gameObject, Constants.GameEvents.generateCoinEvent, UpdateCoins);
             UpdateCoins();
         }
@@ -51,7 +51,7 @@ namespace Core
         private void OnTriggerEnter2D(Collider2D other)
         {
             if (!other.TryGetComponent(typeof(CoinDragHandler), out var droppedObject)) return;
-            
+
             droppedObject.gameObject.SetActive(false);
             ObjectPoolManager.coinPool.Release((CoinDragHandler) droppedObject);
             EventManager.coinDropped.Raise();

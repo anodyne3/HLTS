@@ -1,4 +1,6 @@
+using System;
 using System.Linq;
+using Enums;
 using UnityEngine;
 using Utils;
 
@@ -57,42 +59,44 @@ namespace Core
 
         private void DeterminePayout()
         {
-            if (result.Distinct().Count() == 1)
-                Debug.LogError("LINQ says distinct.count == 1");
-
             var payout = 0;
-            
-            if (result[0] == result[1] && result[2] == result[1])
-                switch (result[0])
+
+            var fruitResult = new FruitType[3];
+
+            for (var i = 0; i < result.Length; i++)
+                fruitResult[i] = Constants.FruitDefinitions.First(x => x.Id == result[i]).FruitType;
+
+            if (fruitResult.Distinct().Count() == 1)
+            {
+                switch (fruitResult[0])
                 {
-                    case 1:
-                    case 3:
-                    case 6:
-                    case 8:
-                    case 10:
+                    case FruitType.Plum:
                         payout = Constants.PlumsPayout;
                         break;
-                    case 0:
-                    case 4:
-                    case 7:
+                    case FruitType.Cherries:
                         payout = Constants.CherriesPayout;
                         break;
-                    case 2:
-                    case 9:
+                    case FruitType.Diamond:
                         payout = Constants.DiamondsPayout;
                         break;
-                    case 5:
-                    case 11:
-                        payout = Constants.BarnanaPayout;                        
+                    case FruitType.Banana:
+                    case FruitType.Bar:
+                        payout = Constants.BarnanaPayout;
                         break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
                 }
-
-            if (result.All(x => x == 5 || x == 11))
-            {
-                payout = Constants.MixedPayout;
-                Debug.LogError("LINQ says mixed payout");
+                
+                Debug.LogError("LINQ says distinct.count == 1 for " + fruitResult[0]);
             }
-            
+
+            if (fruitResult.GroupBy(x => new {FruitType.Banana, FruitType.Bar}).Count() == 3)
+            {
+                Debug.LogError("LINQ says mixed payout");
+                
+                payout = Constants.MixedPayout;
+            }
+
             PlayerData.AddPayout(payout);
         }
     }

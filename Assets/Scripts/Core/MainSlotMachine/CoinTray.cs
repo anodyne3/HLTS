@@ -1,6 +1,6 @@
 using Utils;
 
-namespace Core.UI
+namespace Core.MainSlotMachine
 {
     public class CoinTray : Singleton<CoinTray>
     {

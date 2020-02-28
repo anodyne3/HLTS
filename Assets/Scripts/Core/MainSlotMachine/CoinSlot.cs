@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using Utils;
 
-namespace Core
+namespace Core.MainSlotMachine
 {
     public class CoinSlot : GlobalAccess
     {
@@ -17,12 +17,12 @@ namespace Core
         private void OnTriggerStay2D(Collider2D other)
         {
             if (_loadingCoin || SlotMachine.coinIsLoaded) return;
-            
+
             if (!other.TryGetComponent(typeof(CoinDragHandler), out var component)) return;
-            
+
             _loadingCoin = true;
             _insertedCoin = (CoinDragHandler) component;
-            
+
             TakeControlOfCoin();
             LoadCoin();
         }
@@ -39,7 +39,7 @@ namespace Core
             _coinLoadSpeed = Mathf.Clamp(
                 (_insertedCoin.transform.position - insertedCoinStartPosition.position).sqrMagnitude,
                 0.1f, 0.9f);
-            
+
             StartCoroutine(nameof(MoveCoinIntoSlot));
         }
 
@@ -52,7 +52,8 @@ namespace Core
             while (t <= animationTimeLength)
             {
                 t += Time.deltaTime / _coinLoadSpeed;
-                _insertedCoin.transform.position = Vector2.Lerp(coinStart, insertedCoinStartPosition.position, curve.Evaluate(t));
+                _insertedCoin.transform.position =
+                    Vector2.Lerp(coinStart, insertedCoinStartPosition.position, curve.Evaluate(t));
                 yield return null;
             }
 
@@ -62,10 +63,10 @@ namespace Core
             while (_insertedCoin.transform.position.y > insertedCoinFinishPosition.position.y && t <= 5.0f)
             {
                 t += Time.deltaTime * Constants.CoinLoadSpeed;
-                
+
                 yield return null;
             }
-            
+
             _insertedCoin.gameObject.SetActive(false);
             ObjectPoolManager.coinPool.Release(_insertedCoin);
             EventManager.coinLoad.Raise();

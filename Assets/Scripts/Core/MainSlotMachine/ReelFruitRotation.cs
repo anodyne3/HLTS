@@ -2,7 +2,7 @@
 using UnityEngine;
 using Utils;
 
-namespace Core
+namespace Core.MainSlotMachine
 {
     public class ReelFruitRotation : GlobalAccess
     {
