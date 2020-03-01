@@ -13,6 +13,12 @@ namespace Core.MainSlotMachine
 
         public AnimationCurve curve = AnimationCurve.Linear(0.0f, 0.0f, 1.0f, 1.0f);
         private float _coinLoadSpeed;
+        
+        //temp for testing
+        private void Start()
+        {
+            EventManager.NewEventSubscription(gameObject, Constants.GameEvents.coinInsertEvent, LoadCoin);
+        }
 
         private void OnTriggerStay2D(Collider2D other)
         {

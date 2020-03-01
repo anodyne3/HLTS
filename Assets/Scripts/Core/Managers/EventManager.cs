@@ -8,6 +8,9 @@ namespace Core.Managers
 {
     public class EventManager : GlobalAccess
     {
+        [HideInInspector] public GameEvent autoSlotMode;
+        [HideInInspector] public GameEvent coinInsert;
+        
         [HideInInspector] public GameEvent armPull;
         [HideInInspector] public GameEvent coinConsume;
         [HideInInspector] public GameEvent coinCreated;
@@ -22,6 +25,9 @@ namespace Core.Managers
         
         private void OnEnable()
         {
+            autoSlotMode = Resources.Load<GameEvent>("Events/" + Constants.GameEvents.autoSlotModeEvent);
+            coinInsert = Resources.Load<GameEvent>("Events/" + Constants.GameEvents.coinInsertEvent);
+            
             armPull = Resources.Load<GameEvent>("Events/" + Constants.GameEvents.armPullEvent);
             coinConsume = Resources.Load<GameEvent>("Events/" + Constants.GameEvents.coinConsumeEvent);
             coinCreated = Resources.Load<GameEvent>("Events/" + Constants.GameEvents.coinCreatedEvent);

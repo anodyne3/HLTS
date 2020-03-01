@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Linq;
 using Enums;
 using UnityEngine;
@@ -10,7 +11,7 @@ namespace Core
     {
         [HideInInspector] public bool coinIsLoaded;
         [HideInInspector] public bool wheelsAreRolling;
-        public int[] result;
+        [HideInInspector] public int[] result = new int[3];
 
         private bool _armIsPulled;
 
@@ -19,6 +20,7 @@ namespace Core
             EventManager.NewEventSubscription(gameObject, Constants.GameEvents.coinLoadEvent, LoadCoin);
             EventManager.NewEventSubscription(gameObject, Constants.GameEvents.armPullEvent, PullArm);
             EventManager.NewEventSubscription(gameObject, Constants.GameEvents.wheelResultEvent, WheelResult);
+            EventManager.NewEventSubscription(gameObject, Constants.GameEvents.autoSlotModeEvent, AutoSlotMode);
         }
 
         private void LoadCoin()
@@ -86,18 +88,44 @@ namespace Core
                     default:
                         throw new ArgumentOutOfRangeException();
                 }
-                
+
                 Debug.LogError("LINQ says distinct.count == 1 for " + fruitResult[0]);
             }
 
             if (fruitResult.GroupBy(x => new {FruitType.Banana, FruitType.Bar}).Count() == 3)
             {
                 Debug.LogError("LINQ says mixed payout");
-                
+
                 payout = Constants.MixedPayout;
             }
 
             PlayerData.AddPayout(payout);
+        }
+
+        public bool autoMode;
+
+        private void AutoSlotMode()
+        {
+            if (!autoMode) return;
+
+            StartCoroutine(nameof(PayoutRateTest));
+        }
+
+        private IEnumerator PayoutRateTest()
+        {
+            if (wheelsAreRolling)
+                yield return new WaitUntil(() => wheelsAreRolling == false);
+
+            EventManager.coinInsert.Raise();
+            EventManager.armPull.Raise();
+        }
+
+        private IEnumerator RunSlotCycle()
+        {
+            if (PlayerData.coinsAmount > 0) yield break;
+
+            autoMode = false;
+            yield return null;
         }
     }
 }

@@ -60,6 +60,9 @@ namespace Utils
     [Serializable]
     public class GameEvents
     {
+        public string autoSlotModeEvent = "autoSlotModeEvent";
+        public string coinInsertEvent = "coinInsertEvent";
+        
         public string armPullEvent = "armPullEvent";
         public string coinConsumeEvent = "coinConsumeEvent";
         public string coinCreatedEvent = "coinCreatedEvent";
