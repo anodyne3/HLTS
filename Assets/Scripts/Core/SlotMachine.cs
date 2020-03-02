@@ -1,6 +1,9 @@
 using System;
 using System.Collections;
+using System.Globalization;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using Enums;
 using UnityEngine;
 using Utils;
@@ -92,11 +95,14 @@ namespace Core
                 Debug.LogError("LINQ says distinct.count == 1 for " + fruitResult[0]);
             }
 
-            if (fruitResult.GroupBy(x => new {FruitType.Banana, FruitType.Bar}).Count() == 3)
+            var fruitGroup = fruitResult.Aggregate(0,
+                (total, next) => next == FruitType.Banana || next == FruitType.Bar ? total + 1 : total);
+            
+            if (fruitGroup == 3)
             {
                 Debug.LogError("LINQ says mixed payout");
 
-                payout = Constants.MixedPayout;
+                payout = Constants.BarnanaPayout;
             }
 
             PlayerData.AddPayout(payout);
@@ -106,26 +112,47 @@ namespace Core
 
         private void AutoSlotMode()
         {
-            if (!autoMode) return;
+            if (autoMode) return;
 
+            autoMode = true;
             StartCoroutine(nameof(PayoutRateTest));
         }
 
         private IEnumerator PayoutRateTest()
         {
-            if (wheelsAreRolling)
-                yield return new WaitUntil(() => wheelsAreRolling == false);
+            var waitUntil = new WaitUntil(() => wheelsAreRolling == false);
 
-            EventManager.coinInsert.Raise();
-            EventManager.armPull.Raise();
-        }
+            var timeStarted = Time.time;
 
-        private IEnumerator RunSlotCycle()
-        {
-            if (PlayerData.coinsAmount > 0) yield break;
+            while (PlayerData.coinsAmount > 0)
+            {
+                if (wheelsAreRolling)
+                    yield return waitUntil;
+
+                EventManager.coinInsert.Raise();
+                EventManager.armPull.Raise();
+                _timeElapsed = Time.time - timeStarted;
+                _testCoinsSpent += 1;
+                yield return null;
+            }
 
             autoMode = false;
             yield return null;
+        }
+
+        private int _testCoinsSpent;
+        private float _timeElapsed = 0.0f;
+
+        private void OnGUI()
+        {
+            if (!autoMode) return;
+            
+            var newRect = new Rect(10,10,50,70);
+            
+            GUI.Box(newRect, "Coins Spent:");
+            GUI.Box(new Rect(10,30,50,50), _testCoinsSpent.ToString());
+            GUI.Box(new Rect(70, 10, 50, 70), "Test Duration");
+            GUI.Box(new Rect(70, 10, 50, 70), _timeElapsed.ToString(CultureInfo.InvariantCulture));
         }
     }
 }

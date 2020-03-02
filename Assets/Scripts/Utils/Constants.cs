@@ -51,8 +51,7 @@ namespace Utils
         public const int PlumsPayout = 25;
         public const int CherriesPayout = 150;
         public const int DiamondsPayout = 500;
-        public const int MixedPayout = 2000;
-        public const int BarnanaPayout = 5000;
+        public const int BarnanaPayout = 2500;
 
         public static readonly GameEvents GameEvents = new GameEvents();
     }
