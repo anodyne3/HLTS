@@ -24,7 +24,7 @@ namespace Core.MainSlotMachine
         private void DisableGlow()
         {
             _ballGlowAnimator.speed = 0.0f;
-            _ballGlowAnimator.Play(Constants.LeverBallGlowState,0,0.0f);
+            _ballGlowAnimator.Play(Constants.LeverBallGlowState, 0, 0.0f);
         }
     }
 }
