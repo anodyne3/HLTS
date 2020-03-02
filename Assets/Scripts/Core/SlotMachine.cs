@@ -17,6 +17,11 @@ namespace Core
         [HideInInspector] public int[] result = new int[3];
 
         private bool _armIsPulled;
+        
+        //test variables
+        [HideInInspector] public bool autoMode;
+        private int _testCoinsSpent;
+        private float _timeElapsed = 0.0f;
 
         private void Start()
         {
@@ -108,8 +113,6 @@ namespace Core
             PlayerData.AddPayout(payout);
         }
 
-        public bool autoMode;
-
         private void AutoSlotMode()
         {
             if (autoMode) return;
@@ -120,17 +123,23 @@ namespace Core
 
         private IEnumerator PayoutRateTest()
         {
-            var waitUntil = new WaitUntil(() => wheelsAreRolling == false);
+            var waitUntilWheelsStop = new WaitUntil(() => wheelsAreRolling == false);
+            var waitUntilCoinIsLoaded = new WaitUntil(() => coinIsLoaded);
 
             var timeStarted = Time.time;
 
             while (PlayerData.coinsAmount > 0)
             {
-                if (wheelsAreRolling)
-                    yield return waitUntil;
-
                 EventManager.coinInsert.Raise();
+
+                if (!coinIsLoaded)
+                    yield return waitUntilCoinIsLoaded;
+                
+                if (wheelsAreRolling)
+                    yield return waitUntilWheelsStop;
+                
                 EventManager.armPull.Raise();
+
                 _timeElapsed = Time.time - timeStarted;
                 _testCoinsSpent += 1;
                 yield return null;
@@ -140,19 +149,14 @@ namespace Core
             yield return null;
         }
 
-        private int _testCoinsSpent;
-        private float _timeElapsed = 0.0f;
-
         private void OnGUI()
         {
             if (!autoMode) return;
             
-            var newRect = new Rect(10,10,50,70);
-            
-            GUI.Box(newRect, "Coins Spent:");
-            GUI.Box(new Rect(10,30,50,50), _testCoinsSpent.ToString());
-            GUI.Box(new Rect(70, 10, 50, 70), "Test Duration");
-            GUI.Box(new Rect(70, 10, 50, 70), _timeElapsed.ToString(CultureInfo.InvariantCulture));
+            GUI.Box(new Rect(10,10,100,50), "Coins Spent:");
+            GUI.Box(new Rect(10,30,100,30), _testCoinsSpent.ToString());
+            GUI.Box(new Rect(120, 10, 100, 50), "Test Duration");
+            GUI.Box(new Rect(120, 30, 100, 30), _timeElapsed + "s");
         }
     }
 }

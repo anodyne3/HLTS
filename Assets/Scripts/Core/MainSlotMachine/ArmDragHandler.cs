@@ -8,11 +8,12 @@ namespace Core.MainSlotMachine
     public class ArmDragHandler : GlobalAccess
     {
         private float _deltaYStart;
-        [SerializeField] private bool _armPullUnlocked;
+        private bool _armPullUnlocked;
         private SpriteRenderer _spriteRenderer;
         private Collider2D _armCollider;
         private Animator _pivotAnimator;
         private bool _isDragging;
+        public float playBackTime;
 
         public float deltaY;
         public Vector2 mousePos;
@@ -21,12 +22,12 @@ namespace Core.MainSlotMachine
         {
             _spriteRenderer = (SpriteRenderer) GetComponent(typeof(SpriteRenderer));
             _armCollider = (Collider2D) GetComponent(typeof(Collider2D));
-            _pivotAnimator = (Animator) GetComponentInParent(typeof(Animator));
+            _pivotAnimator = (Animator) transform.parent.GetComponentInParent(typeof(Animator));
 
             EventManager.NewEventSubscription(gameObject, Constants.GameEvents.coinLoadEvent, UnlockArmPull);
         }
 
-        private void FixedUpdate()
+        private void Update()
         {
 #if UNITY_EDITOR
             if (Input.GetMouseButtonDown(0))
@@ -80,41 +81,37 @@ namespace Core.MainSlotMachine
             _deltaYStart = inputPos.y;
         }
 
-        public float ArmPullTriggerAmount = 5.0f;
-        public float ArmLockedTriggerAmount = 2.0f;
-        public float ClipTriggerTime = 0.6f;
-        public float playBackTime;
-
         private void OnDragging(Vector2 inputPos)
         {
             if (!_isDragging) return;
 
             deltaY = _deltaYStart - inputPos.y > 0.0f ? _deltaYStart - inputPos.y : 0.0f;
 
-            playBackTime = ClipTriggerTime * deltaY / ArmPullTriggerAmount;
-            _pivotAnimator.Play("LeverPull", 0, playBackTime);
+            playBackTime = Constants.ClipTriggerTime * deltaY / Constants.ArmPullTriggerAmount;
+            _pivotAnimator.Play(Constants.ArmPullState, 0, playBackTime);
             _pivotAnimator.speed = 0.0f;
 
-            if (deltaY > ArmLockedTriggerAmount && (!_armPullUnlocked || SlotMachine.wheelsAreRolling))
+            if (deltaY > Constants.ArmLockedTriggerAmount && (!_armPullUnlocked || SlotMachine.wheelsAreRolling))
             {
-                _isDragging = false;
                 OnDragEnd();
-                StartCoroutine(nameof(ResetArmPullToRest));
                 return;
             }
 
-            if (!(deltaY > ArmPullTriggerAmount) || !_armPullUnlocked) return;
+            if (!(deltaY > Constants.ArmPullTriggerAmount) || !_armPullUnlocked) return;
             
-            _pivotAnimator.Play("LeverPull", 0, ClipTriggerTime);
+            _pivotAnimator.Play(Constants.ArmPullState, 0, Constants.ClipTriggerTime);
             _pivotAnimator.speed = 1.0f;
             EventManager.armPull.Raise();
-            LockArmPull();
-            OnDragEnd();
+            _isDragging = false;
+            deltaY = 0;
+            _armPullUnlocked = false;
         }
 
         private void OnDragEnd()
         {
             _isDragging = false;
+            
+            StartCoroutine(nameof(ResetArmPullToRest));
         }
 
         private void UnlockArmPull()
@@ -122,27 +119,16 @@ namespace Core.MainSlotMachine
             _armPullUnlocked = true;
         }
 
-        private void LockArmPull()
-        {
-            _armPullUnlocked = false;
-        }
-
         private IEnumerator ResetArmPullToRest()
         {
             while (deltaY > 0)
             {
                 deltaY -= Time.deltaTime * Constants.ArmPullResetSpeed;
-                playBackTime = ClipTriggerTime * deltaY / ArmPullTriggerAmount;
-                _pivotAnimator.Play("LeverPull", 0, playBackTime);
+                playBackTime = Constants.ClipTriggerTime * deltaY / Constants.ArmPullTriggerAmount;
+                _pivotAnimator.Play(Constants.ArmPullState, 0, playBackTime);
                 _pivotAnimator.speed = 0.0f;
                 yield return null;
             }
-        }
-
-        private void SetPullArmLightColor()
-        {
-            //dependant on coin type, set light color
-            //_spriteRenderer.color =   
         }
     }
 }

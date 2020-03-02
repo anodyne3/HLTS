@@ -19,9 +19,14 @@ namespace Utils
         public const float SpawnHeight = -2.0f;
         public const float CoinLoadSpeed = 0.67f;
         
-        public const float ArmPullTriggerAmount = 10.0f;
-        public const float ArmPullResetSpeed = 1.0f;
-        
+        //arm
+        public const float ArmPullTriggerAmount = 5.0f;
+        public const float ArmPullResetSpeed = 6.67f;
+        public const float ArmLockedTriggerAmount = 2.0f;
+        public const float ClipTriggerTime = 0.6f;
+        public const string ArmPullState = "LeverPull";
+        public const string LeverBallGlowState = "LeverBallGlow";
+
         //reels
         public const int TotalSpinTime = 330;
         public const int RightReelStopTime = 180;
