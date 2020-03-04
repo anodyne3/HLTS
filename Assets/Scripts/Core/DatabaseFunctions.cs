@@ -1,10 +1,18 @@
 using Core.GameData;
 using Firebase.Database;
+using Firebase.Functions;
 
 namespace Core
 {
     public class DatabaseFunctions : Singleton<DatabaseFunctions>
     {
+        private FirebaseFunctions _firebaseFunctions;
+        
+        private void Start()
+        {
+            _firebaseFunctions = FirebaseFunctions.DefaultInstance;
+        }
+
         protected DatabaseFunctions()
         {
         }
@@ -28,7 +36,7 @@ namespace Core
 
         public static void ResetAccount()
         {
-            DatabaseReference.Child("users").Child(PlayerData.firebaseUser.UserId).Child("userData")
+            DatabaseReference.Child("users").Child(PlayerData.FirebaseUser.UserId).Child("userData")
                 .Child("userWrites").RemoveValueAsync();
         }
 

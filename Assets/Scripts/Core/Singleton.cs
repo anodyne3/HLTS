@@ -5,7 +5,7 @@ namespace Core
     public abstract class Singleton<T> : GlobalAccess where T : GlobalAccess
     {
         private static bool _shuttingDown = false;
-        private static object _lock = new object();
+        private static readonly object Lock = new object();
         private static T _instance;
 
         public static T Instance
@@ -19,7 +19,7 @@ namespace Core
                     return null;
                 }
 
-                lock (_lock)
+                lock (Lock)
                 {
                     if (_instance != null) return _instance;
                     
@@ -29,11 +29,8 @@ namespace Core
                     
                     _instance = new GameObject().AddComponent<T>();
                     _instance.name = typeof(T) + " (Singleton)";
-                    // var singletonObject = new GameObject();
-                    // _instance = singletonObject.AddComponent<T>();
-                    // singletonObject.name = typeof(T) + " (Singleton)";
 
-                    // Make instance persistent. why
+                    // Make instance persistent. why? for all?
                     DontDestroyOnLoad(_instance.gameObject);
 
                     return _instance;
@@ -50,15 +47,5 @@ namespace Core
         {
             _shuttingDown = true;
         }
-
-        //lazy singleton
-        /*private static readonly Lazy<Singleton> Lazy =
-            new Lazy<Singleton>(() => new GameObject("Singleton").AddComponent<Singleton>());
-
-        protected static Singleton Instance => Lazy.Value;
-
-        protected Singleton()
-        {
-        }*/
     }
 }

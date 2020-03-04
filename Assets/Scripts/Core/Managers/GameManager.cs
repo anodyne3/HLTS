@@ -15,11 +15,6 @@ namespace Core.Managers
             DontDestroyOnLoad(gameObject);
         }
 
-        private void Start()
-        {
-            LoadMain();
-        }
-
         public static void LoadMain()
         {
             SceneManager.LoadScene(1);

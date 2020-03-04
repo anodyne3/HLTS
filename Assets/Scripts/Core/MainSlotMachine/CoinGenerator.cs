@@ -8,7 +8,7 @@ namespace Core.MainSlotMachine
 {
     public class CoinGenerator : GlobalAccess
     {
-        //to const
+        //to const, or make this an unlockable feature
         [SerializeField] private int coinTrayMax = 12;
         [SerializeField] private CoinDragHandler coinPrefab;
 

@@ -59,7 +59,7 @@ namespace Core
         {
             gameObject.SetActive(false);
 
-            FirebaseCheckAndFixDependencies.Login();
+            FirebaseFunctionality.Login();
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Core.Managers;
+﻿using Core.GameData;
+using Core.Managers;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -23,9 +24,9 @@ namespace Core.UI
         {
             base.OpenPanel();
 
-            if (PlayerData.firebaseUser == null) return;
+            if (PlayerData.FirebaseUser == null) return;
             
-            userId.text = PlayerData.firebaseUser.UserId;
+            userId.text = PlayerData.FirebaseUser.UserId;
         }
 
         private void ResetAccount()
