@@ -32,7 +32,7 @@ namespace Core
             _firebaseApp.SetEditorDatabaseUrl("https://he-loves-the-slots.firebaseio.com/");
 
             _firebaseFunc = FirebaseFunctions.DefaultInstance;
-            
+
             EventManager.NewEventSubscription(gameObject, Constants.GameEvents.wheelRollEvent, ReelRoll);
         }
 
@@ -64,13 +64,12 @@ namespace Core
 
         private async void ReelRoll()
         {
-            return;
             await RollReels();
         }
 
         private async Task RollReels()
         {
-            var rollReel = _firebaseFunc.GetHttpsCallable("reelRoll").CallAsync();
+            var rollReel = _firebaseFunc.GetHttpsCallable(Constants.ReelRollCloudFunction).CallAsync();
             await rollReel;
 
             if (rollReel.IsFaulted)
@@ -90,7 +89,7 @@ namespace Core
             }
             else
             {
-                Debug.Log("RollReels success");
+                //Debug.Log("RollReels success");
             }
         }
     }

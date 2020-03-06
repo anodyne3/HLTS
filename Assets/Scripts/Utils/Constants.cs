@@ -9,18 +9,22 @@ namespace Utils
     public static class Constants
     {
         public const string ConsentKey = "ConsentKey";
+        public const float WorldSpaceTolerance = 0.01f;
+
+        //firebase
         public const string PlayerDataPrefix = "users";
         public const string PlayerDataSuffix = "userData";
+        public const string ReelRollCloudFunction = "usersReelRollOnCall";
 
+        //audio
         public const string MusicTrackPath = "MusicTracks";
         public const string SoundEffectPath = "SoundEffects";
 
-        public const float WorldSpaceTolerance = 0.01f;
-
+        //coin
         public const float SpawnRange = 0.8f;
         public const float SpawnHeight = -2.0f;
         public const float CoinLoadSpeed = 0.67f;
-        
+
         //arm
         public const float ArmPullTriggerAmount = 5.0f;
         public const float ArmPullResetSpeed = 6.67f;
@@ -36,7 +40,7 @@ namespace Utils
         public const float FastSpinDegrees = 15.0f;
         public const float MediumSpinDegrees = 5.0f;
         public const float SlowSpinDegrees = 1.0f;
-        
+
         //fruit
         public static readonly FruitDefinition[] FruitDefinitions =
         {
@@ -53,7 +57,7 @@ namespace Utils
             new FruitDefinition {Id = 10, FruitType = FruitType.Plum},
             new FruitDefinition {Id = 11, FruitType = FruitType.Bar}
         };
-        
+
         //payout
         public const int PlumsPayout = 25;
         public const int CherriesPayout = 150;
@@ -69,14 +73,13 @@ namespace Utils
         //for debug only
         public string autoSlotModeEvent = "autoSlotModeEvent";
         public string coinInsertEvent = "coinInsertEvent";
-        
+
         public string armPullEvent = "armPullEvent";
         public string coinConsumeEvent = "coinConsumeEvent";
         public string coinCreatedEvent = "coinCreatedEvent";
         public string coinDroppedEvent = "coinDroppedEvent";
         public string coinLoadEvent = "coinLoadEvent";
         public string generateCoinEvent = "generateCoinEvent";
-        public string loginCompleteEvent = "loginCompleteEvent";
         public string refreshUiEvent = "refreshUiEvent";
         public string wheelResultEvent = "wheelResultEvent";
         public string wheelRollEvent = "wheelRollEvent";
