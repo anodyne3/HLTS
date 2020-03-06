@@ -23,7 +23,6 @@ namespace Core.Managers
         public static void ResetAccount()
         {
             AudioManager.PlayClip(SoundEffectType.UiClick);
-            DatabaseFunctions.ResetAccount();
 
             PlayerPrefs.DeleteKey(Constants.ConsentKey);
             SceneManager.LoadScene(0);
@@ -32,7 +31,6 @@ namespace Core.Managers
         public static void LinkAccount()
         {
             AudioManager.PlayClip(SoundEffectType.UiClick);
-            DatabaseFunctions.LinkAccount();
         }
     }
 }

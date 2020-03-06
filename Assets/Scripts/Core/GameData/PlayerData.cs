@@ -1,36 +1,62 @@
+using System.Collections;
 using Core.Managers;
 using Firebase.Auth;
 using Firebase.Database;
+using UnityEngine;
 using Utils;
 
 namespace Core.GameData
 {
     public class PlayerData : Singleton<PlayerData>
     {
-        public static FirebaseUser FirebaseUser => FirebaseFunctionality.firebaseUser;
+        public FirebaseUser firebaseUser;
         public long coinsAmount;
+        public int[] lastResult;
+        public int[] nextResult;
 
         private FirebaseDatabase _database;
-
+        
         private void Start()
         {
             _database = FirebaseDatabase.DefaultInstance;
             EventManager.NewEventSubscription(gameObject, Constants.GameEvents.coinConsumeEvent, DeductCoin);
         }
 
-        public async void OnLogin()
+        private void StartDatabaseListeners()
         {
-            var rootDataTask = _database
-                .GetReferenceFromUrl("https://he-loves-the-slots.firebaseio.com/users/" + FirebaseUser.UserId +
-                                     "/userData/coinsAmount").GetValueAsync();
-            await rootDataTask;
+            _database.GetReference(Constants.PlayerDataPrefix).Child(firebaseUser.UserId)
+                .Child(Constants.PlayerDataSuffix).ValueChanged += OnPlayerDataChanged;
+        }
 
-            if (rootDataTask.IsCompleted)
+        private void OnDisable()
+        {
+            if (firebaseUser == null) return;
+            
+            _database.GetReference(Constants.PlayerDataPrefix).Child(firebaseUser.UserId)
+                .Child(Constants.PlayerDataSuffix).ValueChanged -= OnPlayerDataChanged;
+        }
+
+        private void OnPlayerDataChanged(object sender, ValueChangedEventArgs args)
+        {
+            if (args.DatabaseError != null)
             {
-                var snapshotValue = rootDataTask.Result.GetValue(false);
-                coinsAmount = (long) snapshotValue;
+                Debug.LogError(args.DatabaseError.Message);
+                return;
             }
 
+            var snapReturn = args.Snapshot.GetRawJsonValue();
+            var snapReturnDict = new PlayerDataDto(snapReturn);
+            lastResult = snapReturnDict.lastResult.ToArray();
+            nextResult = snapReturnDict.nextResult.ToArray();
+            coinsAmount = snapReturnDict.coinsAmount;
+        }
+
+        public IEnumerator OnLogin()
+        {
+            StartDatabaseListeners();
+
+            yield return new WaitUntil(() => lastResult != null);
+            
             GameManager.LoadMain();
         }
 
@@ -44,11 +70,6 @@ namespace Core.GameData
         {
             coinsAmount += value;
             EventManager.refreshUi.Raise();
-        }
-
-        public long GetPlayerCoinsAmount()
-        {
-            return coinsAmount;
         }
     }
 }

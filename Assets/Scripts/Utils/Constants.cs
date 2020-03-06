@@ -9,6 +9,8 @@ namespace Utils
     public static class Constants
     {
         public const string ConsentKey = "ConsentKey";
+        public const string PlayerDataPrefix = "users";
+        public const string PlayerDataSuffix = "userData";
 
         public const string MusicTrackPath = "MusicTracks";
         public const string SoundEffectPath = "SoundEffects";
@@ -64,6 +66,7 @@ namespace Utils
     [Serializable]
     public class GameEvents
     {
+        //for debug only
         public string autoSlotModeEvent = "autoSlotModeEvent";
         public string coinInsertEvent = "coinInsertEvent";
         
@@ -73,6 +76,7 @@ namespace Utils
         public string coinDroppedEvent = "coinDroppedEvent";
         public string coinLoadEvent = "coinLoadEvent";
         public string generateCoinEvent = "generateCoinEvent";
+        public string loginCompleteEvent = "loginCompleteEvent";
         public string refreshUiEvent = "refreshUiEvent";
         public string wheelResultEvent = "wheelResultEvent";
         public string wheelRollEvent = "wheelRollEvent";

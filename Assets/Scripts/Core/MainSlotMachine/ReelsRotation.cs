@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
 using Utils;
-using Random = UnityEngine.Random;
 
 namespace Core.MainSlotMachine
 {
@@ -17,37 +16,35 @@ namespace Core.MainSlotMachine
         private void Start()
         {
             EventManager.NewEventSubscription(gameObject, Constants.GameEvents.wheelRollEvent, WheelRoll);
-            RandomizeReels( /*newRoll*/);
+            SetReelStartingPosition();
         }
 
-        private void RandomizeReels( /*int newRoll*/)
+        private void SetReelStartingPosition()
         {
-            newRoll = new[] {0, 0, 0};
-            fruitReelL.Rotate(newRoll[0] * -30, 0.0f, 0.0f);
-            fruitReelM.Rotate(newRoll[1] * 90, 0.0f, 0.0f);
-            fruitReelR.Rotate(newRoll[2] * -210, 0.0f, 0.0f);
+            newRoll = PlayerData.lastResult;
+            
+            fruitReelL.Rotate(newRoll[0] * 30, 0.0f, 0.0f);
+            fruitReelM.Rotate(newRoll[1] * 30, 0.0f, 0.0f);
+            fruitReelR.Rotate(newRoll[2] * 30, 0.0f, 0.0f);
         }
 
-        private void WheelRoll( /*newRoll*/)
+        private void WheelRoll()
         {
-            newRoll[0] = Random.Range(-12, 11);
-            newRoll[1] = Random.Range(-12, 11);
-            newRoll[2] = Random.Range(-12, 11);
-
-            StartCoroutine(SpinLeftReel(newRoll[0]));
-            StartCoroutine(SpinMiddleReel(newRoll[1]));
-            StartCoroutine(SpinRightReel(newRoll[2]));
+            newRoll = PlayerData.nextResult;
+            
+            StartCoroutine(SpinLeftReel(newRoll[0], PlayerData.lastResult[0]));
+            StartCoroutine(SpinMiddleReel(newRoll[1], PlayerData.lastResult[1]));
+            StartCoroutine(SpinRightReel(newRoll[2], PlayerData.lastResult[2]));
         }
 
-        private IEnumerator SpinLeftReel(int nextRoll)
+        private IEnumerator SpinLeftReel(int nextRoll, int lastResult)
         {
-            var spinDegrees = Constants.TotalSpinTime - 10.0f + 2 * -nextRoll;
+            var spinDegrees = Constants.TotalSpinTime - 10.0f - (nextRoll - lastResult) * 2;
 
             while (spinDegrees > Constants.RightReelStopTime)
             {
                 spinDegrees -= 1;
                 fruitReelL.Rotate(-Constants.FastSpinDegrees, 0.0f, 0.0f);
-
                 yield return new WaitForEndOfFrame();
             }
 
@@ -55,7 +52,6 @@ namespace Core.MainSlotMachine
             {
                 spinDegrees -= 1;
                 fruitReelL.Rotate(-Constants.MediumSpinDegrees, 0.0f, 0.0f);
-
                 yield return new WaitForEndOfFrame();
             }
 
@@ -63,22 +59,20 @@ namespace Core.MainSlotMachine
             {
                 spinDegrees -= 1;
                 fruitReelL.Rotate(-Constants.SlowSpinDegrees, 0.0f, 0.0f);
-
                 yield return new WaitForEndOfFrame();
             }
             
             GenerateResult();
         }
 
-        private IEnumerator SpinMiddleReel(int nextRoll)
+        private IEnumerator SpinMiddleReel(int nextRoll, int lastResult)
         {
-            var spinDegrees = Constants.TotalSpinTime + 4.0f + 2 * nextRoll;
+            var spinDegrees = Constants.TotalSpinTime + 4.0f + (nextRoll - lastResult) * 2;
 
             while (spinDegrees > Constants.RightReelStopTime)
             {
                 spinDegrees -= 1;
                 fruitReelM.Rotate(Constants.FastSpinDegrees, 0.0f, 0.0f);
-
                 yield return new WaitForEndOfFrame();
             }
 
@@ -89,14 +83,13 @@ namespace Core.MainSlotMachine
                     spinDegrees - 23 <= Constants.MiddleReelStopTime
                         ? Constants.MediumSpinDegrees * 0.25f
                         : Constants.MediumSpinDegrees, 0.0f, 0.0f);
-
                 yield return new WaitForEndOfFrame();
             }
         }
 
-        private IEnumerator SpinRightReel(int nextRoll)
+        private IEnumerator SpinRightReel(int nextRoll, int lastResult)
         {
-            var spinDegrees = Constants.TotalSpinTime + 2 * -nextRoll;
+            var spinDegrees = Constants.TotalSpinTime - (nextRoll - lastResult) * 2;
 
             while (spinDegrees > Constants.RightReelStopTime)
             {
@@ -105,7 +98,6 @@ namespace Core.MainSlotMachine
                     spinDegrees - 7 <= Constants.RightReelStopTime
                         ? -Constants.FastSpinDegrees * 0.25f
                         : -Constants.FastSpinDegrees, 0.0f, 0.0f);
-
                 yield return new WaitForEndOfFrame();
             }
         }
@@ -114,10 +106,10 @@ namespace Core.MainSlotMachine
         {
             if (SlotMachine.result == null)
                 SlotMachine.result = new int[3];
-            
-            SlotMachine.result[0] += newRoll[0];
-            SlotMachine.result[1] += newRoll[1];
-            SlotMachine.result[2] += newRoll[2];
+
+            SlotMachine.result[0] = newRoll[0];
+            SlotMachine.result[1] = newRoll[1];
+            SlotMachine.result[2] = newRoll[2];
             
             for (var i = 0; i < SlotMachine.result.Length; i++)
             {
@@ -131,7 +123,7 @@ namespace Core.MainSlotMachine
                 else if (SlotMachine.result[i] < 0)
                     SlotMachine.result[i] += 12;
             }
-            
+
             EventManager.wheelResult.Raise();
         }
     }

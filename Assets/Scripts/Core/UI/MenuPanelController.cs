@@ -24,9 +24,9 @@ namespace Core.UI
         {
             base.OpenPanel();
 
-            if (PlayerData.FirebaseUser == null) return;
+            if (PlayerData.firebaseUser == null) return;
             
-            userId.text = PlayerData.FirebaseUser.UserId;
+            userId.text = PlayerData.firebaseUser.UserId;
         }
 
         private void ResetAccount()

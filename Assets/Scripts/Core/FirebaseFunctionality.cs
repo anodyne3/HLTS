@@ -1,7 +1,10 @@
-﻿using Firebase;
+﻿using System.Threading.Tasks;
+using Firebase;
 using Firebase.Auth;
+using Firebase.Functions;
 using Firebase.Unity.Editor;
 using UnityEngine;
+using Utils;
 
 namespace Core
 {
@@ -9,8 +12,8 @@ namespace Core
     {
         private static FirebaseAuth _firebaseAuth;
         private FirebaseApp _firebaseApp;
+        private FirebaseFunctions _firebaseFunc;
 
-        public FirebaseUser firebaseUser;
         public bool firebaseReady;
 
         private async void Start()
@@ -27,6 +30,10 @@ namespace Core
                 Debug.LogError($"Could not resolve all Firebase dependencies: {dependencyStatus.Result}");
 
             _firebaseApp.SetEditorDatabaseUrl("https://he-loves-the-slots.firebaseio.com/");
+
+            _firebaseFunc = FirebaseFunctions.DefaultInstance;
+            
+            EventManager.NewEventSubscription(gameObject, Constants.GameEvents.wheelRollEvent, ReelRoll);
         }
 
         public async void Login()
@@ -50,8 +57,41 @@ namespace Core
             var newUser = task.Result;
             Debug.LogFormat("User signed in successfully: {0} ({1})", newUser.DisplayName, newUser.UserId);
 
-            firebaseUser = newUser;
-            PlayerData.OnLogin();
+            PlayerData.firebaseUser = newUser;
+
+            StartCoroutine(PlayerData.OnLogin());
+        }
+
+        private async void ReelRoll()
+        {
+            return;
+            await RollReels();
+        }
+
+        private async Task RollReels()
+        {
+            var rollReel = _firebaseFunc.GetHttpsCallable("reelRoll").CallAsync();
+            await rollReel;
+
+            if (rollReel.IsFaulted)
+            {
+                //maybe player message regarding failed internet
+                if (rollReel.Exception == null)
+                    Debug.LogError("reelRoll.Exception is null");
+
+                foreach (var innerException in rollReel.Exception.InnerExceptions)
+                {
+                    if (!(innerException is FunctionsException e)) continue;
+
+                    var code = e.ErrorCode;
+                    var message = e.Message;
+                    Debug.LogError(code + message);
+                }
+            }
+            else
+            {
+                Debug.Log("RollReels success");
+            }
         }
     }
 }

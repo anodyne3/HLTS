@@ -35,7 +35,7 @@ namespace Core.UI
 
         private void RefreshCoins()
         {
-            coinsAmountText.text = PlayerData.GetPlayerCoinsAmount().ToString();
+            coinsAmountText.text = PlayerData.coinsAmount.ToString();
         }
     }
 }
