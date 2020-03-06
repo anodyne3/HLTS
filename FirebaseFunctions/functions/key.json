@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "he-loves-the-slots",
+  "private_key_id": "e571a14fe00be4bb755b4ca6554cc06c1dfd80be",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEuwIBADANBgkqhkiG9w0BAQEFAASCBKUwggShAgEAAoIBAQDUuuDWbdA4v7m3\nUEWmLUcc8yUXpM7wuuC5oC8wjcWce2SqTiQqzh9HN1Fq0kNkwhJTGO4HC3eYRvu2\ngSvnE5ReqO08LziyxpL8Qn3JF6dLXZ/ZxRIef4ctKo9NCrci706e/N+TwYOdzvuU\n3CFXXQO1tnxB+ynLAz304o0rnXAg1iuCV3vEStArOieaXMHrtDtE6lR1lHEk5N/0\nhUhnesyUKLdm8Cj8QyjC4cLew76thmizGyeIk2Z5bxRS0V/ji7kad32LLaiPTfV0\ndONsrHYSuhElSrNyXSfWH4OnwrB2/bW6xLW7KIHwo7tYQ2HASm1lA3IdnNWvclOY\npXcfNtpPAgMBAAECggEAAw3v3oRTIg12sDAh3+H0jHDdTnqaUhCM2312T/8pIDcR\nWfSnRkoRXudnbt44A4FZ3AGWoVlDzVbvlE5EgBvi3H0Wcu/Go6KAR8j4n2OMjmN4\nwRq4SOHR4g8jYZrOyFyhR10gJLH5ntFzAU8r12JJhFlrbVMa5YRVZme+WSr4ijAi\nV8Y+i/b+HcDtlzu4pM62N0ExWh1KQPtNuLMVGAjeMmRPUmtmtAAtfKyQUnwvxUDe\nHOUk79POXu0oV667M5lV2c4wrboW2OjakrmwdVmckY5upZL7A09Bszyn5CVhA7I/\nw4r5MQ7AmF2bkaoeqzMpdGWJXIRMUm0It7Zup7Oa6QKBgQD2Hmy1j7ZUV5bGUa8Z\nNPtXtEyaT+LwKqLdjNe8DzYE/cGbWMqnBL1K+fvSUc7Cp+ejew34GIEgAppBmDjU\nsWFLjc1OPGwv5W3Eh8PkFdtXgH/JBvtdK/9EzFU9P0c/ejDQ+HwnZLer47JPkI7+\nad7j9HKe29TZ//T9h9/t2dr7xQKBgQDdRUmh9zjHzEfgj1Okwt4nUJKuF+qIywqX\nfPOFgv22Gwab/iu7QqQ0ELSzDcVOVW35Pshm8aM5en8NzrUj/7Cy4lmGqJiB6eOY\nsMTOoZyivgcUsvN/AOufb3C8Qpf2i0iNNxCV8ldbmHM1BhbHoy88TBz/UJCHUp+T\nWI1kx5m7AwKBgQCyk+DM3DmveN4th5dE8uxr9qaeUNiY6lbB6i+ehGrttDGGRibE\niOvQOxI8yJ79Hlc0h1TbbuxCDaFfdtPFf+7Yo0sUOUNGfXHn55p7JGDCXLpbYnWA\nZSwS/y/aAM/xfvdsqN9steePEOeQU5NtheP0AqooGdmXU+CvFKemLSx3AQJ/NZaS\nPqehGMJgpgIQP9bx9pOM8pzYMEj8R7P7RlpzF6dz8lOcQ73gBrwFB1hOcKo/+B08\na7IZ1dHU84McW5uRL8Gh7Prn9I6wkEo/X8vEI6XiESFF13xhlDtpEi8Onqcc6xZq\n7eXDQmupey3+VlsvFWtZmnvohN19yDGqDL5KfQKBgBcg+mcITyQddQz0XlX2znUm\n6+1bIl63DXHKK4IXa5t1bPAF2NCkEnIaPcHyC4DPE1wodFuabjnSf2H3Ilb1aOgo\n4zpZsw3sBvVN9OXG9ZKvTSCrIfsHibBHrzYgyzauXzdLjhszbEscBcgVlPp9GHa8\nT3iPwMdRzXbltuBZMovv\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-m3iym@he-loves-the-slots.iam.gserviceaccount.com",
+  "client_id": "116792792642105004911",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-m3iym%40he-loves-the-slots.iam.gserviceaccount.com"
+}
