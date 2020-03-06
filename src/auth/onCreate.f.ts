@@ -1,13 +1,11 @@
 ﻿import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
-import {ref} from "firebase-functions/lib/providers/database";
 
-export const createNewUserDatabaseNode = functions.auth.user().onCreate(async (user) => {
+export default functions.auth.user().onCreate(async (user) => {
     const uid = user.uid;
-    const startingCoins = await admin.database().ref('/constants/constants/startingCoins')
+    const startingCoins = await admin.database().ref('/constants/users/startingCoins')
         .once('value')
         .then(snap => {
-            console.log(snap.ref, snap.val());
             return snap.val();
         });
 
@@ -16,6 +14,6 @@ export const createNewUserDatabaseNode = functions.auth.user().onCreate(async (u
             coinsAmount: startingCoins,
         })
         .then(log => {
-            console.log(startingCoins, ref)
+            console.log(log + startingCoins)
         })
 });
