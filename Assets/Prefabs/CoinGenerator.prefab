@@ -285,11 +285,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59346229d20300b4fa094dfb394f257e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  coinTrayMax: 10
-  spawnRange: 0.8
-  spawnHeight: -2
-  coinPrefab: {fileID: 1780371975306580989, guid: d5a22c29b602c2e488ac1d90465e7041,
+  coinTrayMax: 30
+  coinPrefab: {fileID: 7732569342234217353, guid: c1fd88a8898be1f499d94527399cb75f,
     type: 3}
+  coinPrefabs: []
 --- !u!1 &4466096520426346171
 GameObject:
   m_ObjectHideFlags: 0

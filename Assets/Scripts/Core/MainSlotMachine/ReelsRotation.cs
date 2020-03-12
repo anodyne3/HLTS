@@ -22,6 +22,11 @@ namespace Core.MainSlotMachine
         private void SetReelStartingPosition()
         {
             newRoll = PlayerData.lastResult;
+            if (newRoll == null)
+            {
+                Debug.Log("lastResult was empty");
+                return;
+            }
             
             fruitReelL.Rotate(newRoll[0] * 30, 0.0f, 0.0f);
             fruitReelM.Rotate(newRoll[1] * 30, 0.0f, 0.0f);

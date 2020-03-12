@@ -99,15 +99,17 @@ namespace Core
 
                 Debug.LogError("LINQ says distinct.count == 1 for " + fruitResult[0]);
             }
-
-            var fruitGroup = fruitResult.Aggregate(0,
-                (total, next) => next == FruitType.Banana || next == FruitType.Bar ? total + 1 : total);
-            
-            if (fruitGroup == 3)
+            else
             {
-                Debug.LogError("LINQ says mixed payout");
+                var fruitGroup = fruitResult.Aggregate(0,
+                    (total, next) => next == FruitType.Banana || next == FruitType.Bar ? total + 1 : total);
 
-                payout = Constants.BarnanaPayout;
+                if (fruitGroup == 3)
+                {
+                    Debug.LogError("LINQ says mixed payout");
+
+                    payout = Constants.MixedPayout;
+                }
             }
 
             PlayerData.AddPayout(payout);

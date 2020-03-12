@@ -1,5 +1,5 @@
-﻿using Core.GameData;
-using Core.Managers;
+﻿using Core.Managers;
+using Enums;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,6 +10,7 @@ namespace Core.UI
     {
         [SerializeField] private Button resetAccountButton;
         [SerializeField] private Button linkAccountButton;
+        [SerializeField] private Button unlinkAccountButton;
         public TMP_Text userId;
 
         private void Start()
@@ -18,6 +19,8 @@ namespace Core.UI
             resetAccountButton.onClick.AddListener(ResetAccount);
             linkAccountButton.onClick.RemoveAllListeners();
             linkAccountButton.onClick.AddListener(LinkAccount);
+            unlinkAccountButton.onClick.RemoveAllListeners();
+            unlinkAccountButton.onClick.AddListener(UnlinkAccount);
         }
 
         public override void OpenPanel()
@@ -36,7 +39,14 @@ namespace Core.UI
 
         private void LinkAccount()
         {
-            GameManager.LinkAccount();
+            AudioManager.PlayClip(SoundEffectType.UiClick);
+            FirebaseFunctionality.LinkAccount();
+        }
+        
+        private void UnlinkAccount()
+        {
+            AudioManager.PlayClip(SoundEffectType.UiClick);
+            FirebaseFunctionality.UnlinkAccount();
         }
     }
 }

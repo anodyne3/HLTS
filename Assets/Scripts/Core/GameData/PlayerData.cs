@@ -18,12 +18,12 @@ namespace Core.GameData
         
         private void Start()
         {
-            _database = FirebaseDatabase.DefaultInstance;
             EventManager.NewEventSubscription(gameObject, Constants.GameEvents.coinConsumeEvent, DeductCoin);
         }
 
         private void StartDatabaseListeners()
         {
+            _database = FirebaseDatabase.DefaultInstance;
             _database.GetReference(Constants.PlayerDataPrefix).Child(firebaseUser.UserId)
                 .Child(Constants.PlayerDataSuffix).ValueChanged += OnPlayerDataChanged;
         }

@@ -1,5 +1,4 @@
-﻿using Core.GameData;
-using Enums;
+﻿using Enums;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -59,7 +58,7 @@ namespace Core
         {
             gameObject.SetActive(false);
 
-            FirebaseFunctionality.Login();
+            FirebaseFunctionality.CheckLogin();
         }
     }
 }

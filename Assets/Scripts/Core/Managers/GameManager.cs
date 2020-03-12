@@ -17,7 +17,7 @@ namespace Core.Managers
 
         public static void LoadMain()
         {
-            SceneManager.LoadScene(1);
+            SceneManager.LoadSceneAsynchronously(1);
         }
 
         public static void ResetAccount()
@@ -25,12 +25,7 @@ namespace Core.Managers
             AudioManager.PlayClip(SoundEffectType.UiClick);
 
             PlayerPrefs.DeleteKey(Constants.ConsentKey);
-            SceneManager.LoadScene(0);
-        }
-
-        public static void LinkAccount()
-        {
-            AudioManager.PlayClip(SoundEffectType.UiClick);
+            FirebaseFunctionality.SignOut();
         }
     }
 }

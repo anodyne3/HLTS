@@ -30,18 +30,59 @@ namespace Core
                 Debug.LogError($"Could not resolve all Firebase dependencies: {dependencyStatus.Result}");
 
             _firebaseApp.SetEditorDatabaseUrl("https://he-loves-the-slots.firebaseio.com/");
-
             _firebaseFunc = FirebaseFunctions.DefaultInstance;
 
             EventManager.NewEventSubscription(gameObject, Constants.GameEvents.wheelRollEvent, ReelRoll);
         }
 
-        public async void Login()
+        private void OnDestroy()
+        {
+            if (_firebaseAuth == null) return;
+            
+            _firebaseAuth.StateChanged -= AuthStateChanged;
+            _firebaseAuth = null;
+        }
+        
+        #region user
+
+        private void AuthStateChanged(object sender, System.EventArgs eventArgs)
+        {
+            if (_firebaseAuth.CurrentUser == PlayerData.firebaseUser) return;
+
+            var signedIn = PlayerData.firebaseUser != _firebaseAuth.CurrentUser && _firebaseAuth.CurrentUser != null;
+            if (!signedIn)
+            {
+                if (PlayerData.firebaseUser != null)
+                {
+                    Debug.Log("Signed out " + PlayerData.firebaseUser.UserId);
+                    SignIn();
+                }
+                else
+                {
+                    Debug.Log("Signed out & firebase dependency issue");
+                    SceneManager.LoadSceneAsynchronously(0);
+                }
+
+                return;
+            }
+
+            PlayerData.firebaseUser = _firebaseAuth.CurrentUser;
+            Debug.Log("Signed in " + PlayerData.firebaseUser.UserId);
+            StartCoroutine(PlayerData.OnLogin());
+        }
+
+        public void CheckLogin()
         {
             _firebaseAuth = FirebaseAuth.DefaultInstance;
-            var task = _firebaseAuth.SignInAnonymouslyAsync();
-            await task;
+            _firebaseAuth.StateChanged += AuthStateChanged;
+            AuthStateChanged(this, null);
+        }
 
+        private async void SignIn()
+        {
+            var task = _firebaseAuth.SignInAnonymouslyAsync();
+
+            await task;
             if (task.IsCanceled)
             {
                 Debug.LogError("SignInAnonymouslyAsync was cancelled.");
@@ -56,12 +97,29 @@ namespace Core
 
             var newUser = task.Result;
             Debug.LogFormat("User signed in successfully: {0} ({1})", newUser.DisplayName, newUser.UserId);
-
             PlayerData.firebaseUser = newUser;
-
             StartCoroutine(PlayerData.OnLogin());
         }
 
+        public void SignOut()
+        {
+            _firebaseAuth.SignOut();
+        }
+
+        public void LinkAccount()
+        {
+            //Firebase.Auth.Credential credential = Firebase.Auth.GoogleAuthProvider.GetCredential(googleIdToken, googleAccessToken);
+        }
+        
+        public void UnlinkAccount()
+        {
+            
+        }
+        
+        #endregion
+
+        #region slots
+        
         private async void ReelRoll()
         {
             await RollReels();
@@ -70,8 +128,8 @@ namespace Core
         private async Task RollReels()
         {
             var rollReel = _firebaseFunc.GetHttpsCallable(Constants.ReelRollCloudFunction).CallAsync();
-            await rollReel;
 
+            await rollReel;
             if (rollReel.IsFaulted)
             {
                 //maybe player message regarding failed internet
@@ -87,10 +145,8 @@ namespace Core
                     Debug.LogError(code + message);
                 }
             }
-            else
-            {
-                //Debug.Log("RollReels success");
-            }
         }
+        
+        #endregion
     }
 }

@@ -1,11 +1,10 @@
-using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace Core.Managers
 {
-    public class SceneManager : MonoBehaviour
+    public class SceneManager : Singleton<SceneManager>
     {
-        public static void LoadScene(int sceneId)
+        public void LoadScene(int sceneId)
         {
             UnityEngine.SceneManagement.SceneManager.LoadScene(sceneId, LoadSceneMode.Single);
         }

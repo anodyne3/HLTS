@@ -53,6 +53,8 @@ namespace Core.MainSlotMachine
             if (!other.TryGetComponent(typeof(CoinDragHandler), out var droppedObject)) return;
 
             droppedObject.gameObject.SetActive(false);
+            var droppedCoinDragHandler = (CoinDragHandler) droppedObject;
+            droppedCoinDragHandler.CircleCollider.isTrigger = false;
             ObjectPoolManager.coinPool.Release((CoinDragHandler) droppedObject);
             EventManager.coinDropped.Raise();
         }

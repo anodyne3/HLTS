@@ -8,6 +8,7 @@ namespace Utils
 {
     public static class Constants
     {
+        public const float LoadingSpinnerDegrees = 2.33f;
         public const string ConsentKey = "ConsentKey";
         public const float WorldSpaceTolerance = 0.01f;
 
@@ -62,6 +63,7 @@ namespace Utils
         public const int PlumsPayout = 25;
         public const int CherriesPayout = 150;
         public const int DiamondsPayout = 500;
+        public const int MixedPayout = 1250;
         public const int BarnanaPayout = 2500;
 
         public static readonly GameEvents GameEvents = new GameEvents();
