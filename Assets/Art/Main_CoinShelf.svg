@@ -8,7 +8,7 @@
 		<polygon fill="#AFAFAD" stroke="#000000" stroke-width="1.08" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="
 		494.101,0 18.901,0 10.8,11.396 0,24.76 513,24.76 502.201,11.396 	"/>
 	
-		<linearGradient id="_x21__1_" gradientUnits="userSpaceOnUse" x1="-71.7639" y1="-83.6082" x2="420.9869" y2="-108.8073" gradientTransform="matrix(1 0 0 -1 91.1001 -82.8735)">
+		<linearGradient id="_x21__1_" gradientUnits="userSpaceOnUse" x1="-162.8655" y1="509.2083" x2="329.8863" y2="534.4074" gradientTransform="matrix(1 0 0 1 182.2002 -508.4736)">
 		<stop  offset="0" style="stop-color:#AFAFAD"/>
 		<stop  offset="1" style="stop-color:#555655"/>
 	</linearGradient>
@@ -16,8 +16,8 @@
 		<polygon id="_x21_" fill="url(#_x21__1_)" stroke="#000000" stroke-width="1.08" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="
 		494.101,0 18.901,0 10.8,11.396 0,24.76 513,24.76 502.201,11.396 	"/>
 	
-		<path fill="#992B1F" stroke="#000000" stroke-width="1.08" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="
-		M0,24.76v60.967h513V24.76H0z M480.937,75.602H32.063c-11.742,0-21.264-9.521-21.264-21.263c0-11.743,9.521-21.264,21.264-21.264
-		h448.875c11.743,0,21.263,9.521,21.263,21.264C502.201,66.082,492.68,75.602,480.937,75.602z"/>
+		<path fill="#323232" stroke="#000000" stroke-width="1.08" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="
+		M0,24.76v60.967h513V24.76H0z M480.937,75.602H32.063c-11.742,0-21.265-9.521-21.265-21.263c0-11.743,9.521-21.264,21.265-21.264
+		h448.875c11.743,0,21.263,9.521,21.263,21.264S492.68,75.602,480.937,75.602z"/>
 </g>
 </svg>
