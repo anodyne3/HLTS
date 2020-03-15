@@ -267,7 +267,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 73ddb2958e9cd451c82f37c26efa5eb0, type: 2}
+  - {fileID: 2100000, guid: 4c80f8bab7b549141ac180957d1fbcb1, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -312,8 +312,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c099d90e4448d94c89b0fd4e04c0601, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  parentTransform: {fileID: 6824536340453102983}
-  rotationMultiple: 1
 --- !u!1 &3004431463692440813
 GameObject:
   m_ObjectHideFlags: 0
@@ -364,7 +362,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 73ddb2958e9cd451c82f37c26efa5eb0, type: 2}
+  - {fileID: 2100000, guid: 4c80f8bab7b549141ac180957d1fbcb1, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -409,8 +407,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c099d90e4448d94c89b0fd4e04c0601, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  parentTransform: {fileID: 2119074361539625768}
-  rotationMultiple: 1
 --- !u!1 &3745402175417571245
 GameObject:
   m_ObjectHideFlags: 0
@@ -461,7 +457,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 73ddb2958e9cd451c82f37c26efa5eb0, type: 2}
+  - {fileID: 2100000, guid: 4c80f8bab7b549141ac180957d1fbcb1, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -506,8 +502,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c099d90e4448d94c89b0fd4e04c0601, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  parentTransform: {fileID: 4164003541700823639}
-  rotationMultiple: 1
 --- !u!1 &4180323187968952254
 GameObject:
   m_ObjectHideFlags: 0
@@ -693,7 +687,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 73ddb2958e9cd451c82f37c26efa5eb0, type: 2}
+  - {fileID: 2100000, guid: 4c80f8bab7b549141ac180957d1fbcb1, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -738,8 +732,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c099d90e4448d94c89b0fd4e04c0601, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  parentTransform: {fileID: 4180323189018187025}
-  rotationMultiple: 1
 --- !u!1 &5549328669084596578
 GameObject:
   m_ObjectHideFlags: 0
@@ -790,7 +782,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 73ddb2958e9cd451c82f37c26efa5eb0, type: 2}
+  - {fileID: 2100000, guid: 4c80f8bab7b549141ac180957d1fbcb1, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -835,8 +827,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c099d90e4448d94c89b0fd4e04c0601, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  parentTransform: {fileID: 6288955519436244619}
-  rotationMultiple: 1
 --- !u!1 &5638116160427301149
 GameObject:
   m_ObjectHideFlags: 0
@@ -887,7 +877,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 73ddb2958e9cd451c82f37c26efa5eb0, type: 2}
+  - {fileID: 2100000, guid: 4c80f8bab7b549141ac180957d1fbcb1, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -932,8 +922,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c099d90e4448d94c89b0fd4e04c0601, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  parentTransform: {fileID: 1609167915886882243}
-  rotationMultiple: 1
 --- !u!1 &5705305913796183995
 GameObject:
   m_ObjectHideFlags: 0
@@ -1015,7 +1003,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 73ddb2958e9cd451c82f37c26efa5eb0, type: 2}
+  - {fileID: 2100000, guid: 4c80f8bab7b549141ac180957d1fbcb1, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1060,8 +1048,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c099d90e4448d94c89b0fd4e04c0601, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  parentTransform: {fileID: 7402083171959875262}
-  rotationMultiple: 1
 --- !u!1 &6689976946044720643
 GameObject:
   m_ObjectHideFlags: 0
@@ -1143,7 +1129,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 73ddb2958e9cd451c82f37c26efa5eb0, type: 2}
+  - {fileID: 2100000, guid: 4c80f8bab7b549141ac180957d1fbcb1, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1188,8 +1174,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c099d90e4448d94c89b0fd4e04c0601, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  parentTransform: {fileID: 9049602116451613910}
-  rotationMultiple: 1
 --- !u!1 &7592899705722357328
 GameObject:
   m_ObjectHideFlags: 0
@@ -1240,7 +1224,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 73ddb2958e9cd451c82f37c26efa5eb0, type: 2}
+  - {fileID: 2100000, guid: 4c80f8bab7b549141ac180957d1fbcb1, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1285,8 +1269,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c099d90e4448d94c89b0fd4e04c0601, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  parentTransform: {fileID: 4180323189389958241}
-  rotationMultiple: 1
 --- !u!1 &8394036503062458549
 GameObject:
   m_ObjectHideFlags: 0
@@ -1337,7 +1319,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 73ddb2958e9cd451c82f37c26efa5eb0, type: 2}
+  - {fileID: 2100000, guid: 4c80f8bab7b549141ac180957d1fbcb1, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1382,8 +1364,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c099d90e4448d94c89b0fd4e04c0601, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  parentTransform: {fileID: 7878422138064014842}
-  rotationMultiple: 1
 --- !u!1 &8677644159147761880
 GameObject:
   m_ObjectHideFlags: 0
@@ -1434,7 +1414,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 73ddb2958e9cd451c82f37c26efa5eb0, type: 2}
+  - {fileID: 2100000, guid: 4c80f8bab7b549141ac180957d1fbcb1, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1479,8 +1459,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c099d90e4448d94c89b0fd4e04c0601, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  parentTransform: {fileID: 4180323189290044056}
-  rotationMultiple: 1
 --- !u!1 &8968563907044805702
 GameObject:
   m_ObjectHideFlags: 0
@@ -1531,7 +1509,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 73ddb2958e9cd451c82f37c26efa5eb0, type: 2}
+  - {fileID: 2100000, guid: 4c80f8bab7b549141ac180957d1fbcb1, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1576,5 +1554,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c099d90e4448d94c89b0fd4e04c0601, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  parentTransform: {fileID: 3442144745738954768}
-  rotationMultiple: 1

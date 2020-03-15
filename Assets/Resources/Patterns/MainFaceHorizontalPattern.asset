@@ -10,19 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: be816d81b6db41e1907bd48730fe9efa, type: 3}
-  m_Name: MainFaceRightDownPattern
+  m_Name: MainFaceHorizontalPattern
   m_EditorClassIdentifier: 
-  patternPrefab: {fileID: -840820582831678079, guid: 45eb9581e4d989347a4185c704ec2faa,
+  patternPrefab: {fileID: 6861634358276914609, guid: d7f9644c67a19114fa4fac8048fce01f,
     type: 3}
-  patternTileOffset: {x: 1.2800003, y: 1.28}
-  patternScale: {x: 0.06, y: 0.06}
+  patternScale: 0.06
   patternInstructions:
-  - startingOffset: {x: 0, y: -2, z: 0}
-    widthHeight: {x: 64, y: 4}
-    isFilled: 1
-  - startingOffset: {x: 0, y: 2.15, z: 0}
-    widthHeight: {x: 64, y: 20}
-    isFilled: 0
-  - startingOffset: {x: 0, y: 0.6, z: 0}
-    widthHeight: {x: 64, y: 30}
-    isFilled: 0
+  - startingOffset: {x: 0, y: -1.8111, z: 0}
+    widthHeight: {x: 64, y: 5}
+    isGrid: 1
+    isCentered: 1
+  - startingOffset: {x: 0, y: 0.5313, z: 0}
+    widthHeight: {x: 62, y: 2}
+    isGrid: 1
+    isCentered: 1
+  - startingOffset: {x: 0, y: 2.067367, z: 0}
+    widthHeight: {x: 62, y: 2}
+    isGrid: 1
+    isCentered: 1

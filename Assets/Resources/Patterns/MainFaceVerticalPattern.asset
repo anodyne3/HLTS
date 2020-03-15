@@ -10,22 +10,25 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: be816d81b6db41e1907bd48730fe9efa, type: 3}
-  m_Name: MainFaceLeftUpPattern
+  m_Name: MainFaceVerticalPattern
   m_EditorClassIdentifier: 
-  patternPrefab: {fileID: -840820582831678079, guid: 45eb9581e4d989347a4185c704ec2faa,
+  patternPrefab: {fileID: 6861634358276914609, guid: d7f9644c67a19114fa4fac8048fce01f,
     type: 3}
-  patternTileOffset: {x: 1.2800003, y: 1.28}
-  patternScale: {x: 0.06, y: 0.06}
+  patternScale: 0.06
   patternInstructions:
-  - startingOffset: {x: 0, y: 0, z: 0}
-    widthHeight: {x: 13, y: 30}
-    isFilled: 0
-  - startingOffset: {x: 0.3, y: 0, z: 0}
-    widthHeight: {x: 37, y: 30}
-    isFilled: 0
-  - startingOffset: {x: 0.7, y: 0, z: 0}
-    widthHeight: {x: 13, y: 30}
-    isFilled: 0
-  - startingOffset: {x: 1.56, y: 0, z: 0}
-    widthHeight: {x: 63, y: 19}
-    isFilled: 0
+  - startingOffset: {x: -2.4575, y: -1.6191, z: 0}
+    widthHeight: {x: 1, y: 49}
+    isGrid: 0
+    isCentered: 0
+  - startingOffset: {x: -1.53594, y: -1.619021, z: 0}
+    widthHeight: {x: 2, y: 27}
+    isGrid: 1
+    isCentered: 0
+  - startingOffset: {x: 1.3825, y: -1.619021, z: 0}
+    widthHeight: {x: 2, y: 27}
+    isGrid: 1
+    isCentered: 0
+  - startingOffset: {x: 2.3809, y: -1.6191, z: 0}
+    widthHeight: {x: 1, y: 49}
+    isGrid: 0
+    isCentered: 0

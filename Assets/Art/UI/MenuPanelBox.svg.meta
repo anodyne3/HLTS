@@ -1,0 +1,55 @@
+fileFormatVersion: 2
+guid: 3039e8ec38a567a4c89145e6351e9688
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: 11500000, guid: a57477913897c46af95d590f580878bd, type: 3}
+  svgType: 4
+  texturedSpriteMeshType: 0
+  svgPixelsPerUnit: 100
+  gradientResolution: 64
+  alignment: 0
+  customPivot: {x: 0, y: 0}
+  generatePhysicsShape: 0
+  viewportOptions: 0
+  preserveViewport: 0
+  advancedMode: 0
+  predefinedResolutionIndex: 1
+  targetResolution: 1080
+  resolutionMultiplier: 1
+  stepDistance: 10
+  samplingStepDistance: 100
+  maxCordDeviationEnabled: 0
+  maxCordDeviation: 1
+  maxTangentAngleEnabled: 0
+  maxTangentAngle: 5
+  keepTextureAspectRatio: 0
+  textureSize: 512
+  textureWidth: 256
+  textureHeight: 256
+  wrapMode: 0
+  filterMode: 2
+  sampleCount: 8
+  preserveSVGImageAspect: 1
+  useSVGPixelsPerUnit: 0
+  spriteData:
+    TessellationDetail: 0
+    SpriteRect:
+      name: MenuPanelBoxSprite
+      originalName: 
+      pivot: {x: 0.5004496, y: 0.49930736}
+      alignment: 0
+      border: {x: 45, y: 45, z: 45, w: 45}
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 228
+        height: 231
+      spriteID: cdb48190920baf749ab8183667636063
+      internalID: 0
+    PhysicsOutlines: []

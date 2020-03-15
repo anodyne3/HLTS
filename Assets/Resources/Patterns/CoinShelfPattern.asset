@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be816d81b6db41e1907bd48730fe9efa, type: 3}
   m_Name: CoinShelfPattern
   m_EditorClassIdentifier: 
-  patternPrefab: {fileID: -840820582831678079, guid: 45eb9581e4d989347a4185c704ec2faa,
+  patternPrefab: {fileID: 6861634358276914609, guid: d7f9644c67a19114fa4fac8048fce01f,
     type: 3}
-  patternOffset: {x: 0.06592, y: 0.06592}
-  patternScale: {x: 0.0515, y: 0.0515}
+  patternScale: 0.0515
   patternInstructions:
-  - startingOffset: {x: 0, y: -0.05, z: 0}
+  - startingOffset: {x: 0, y: -0.11428, z: 0}
     widthHeight: {x: 75, y: 7}
-    isFilled: 1
+    isGrid: 1
+    isCentered: 1
