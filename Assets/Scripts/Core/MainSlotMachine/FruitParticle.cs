@@ -38,23 +38,21 @@ namespace Core.MainSlotMachine
             );
         }
 
-        private void Start(){
+        public void Init()
+        {
             StartCoroutine(nameof(LifeTime));
         }
 
         private IEnumerator LifeTime()
         {
-            var waitForEndOfFrame = new WaitForEndOfFrame();
-            
             while (lifeSpan > 0.0f)
             {
                 lifeSpan -= Time.deltaTime;
-                yield return waitForEndOfFrame;
+                yield return null;
             }
             
-            //gameObject.SetActive(false);
+            gameObject.SetActive(false);
             ObjectPoolManager.fruitBurstPool.Release(this);
-            yield return null;
         }
     }
 }

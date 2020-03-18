@@ -22,9 +22,10 @@ namespace Utils
         public const string SoundEffectPath = "SoundEffects";
 
         //resources
-        public const string FruitSpritesPath = "FruitParticles";
+        public const string FruitParticlePrefabsPath = "FruitParticles";
         
         //coin
+        public const int CoinTrayMax = 12;
         public const float SpawnRange = 0.8f;
         public const float SpawnHeight = -2.0f;
         public const float CoinLoadSpeed = 0.67f;
@@ -34,8 +35,11 @@ namespace Utils
         public const float ArmPullResetSpeed = 6.67f;
         public const float ArmLockedTriggerAmount = 2.0f;
         public const float ClipTriggerTime = 0.6f;
+        
+        //animStates
         public const string ArmPullState = "LeverPull";
         public const string LeverBallGlowState = "LeverBallGlow";
+        public const string WinLightState = "WinLight";
 
         //reels
         public const int TotalSpinTime = 330;

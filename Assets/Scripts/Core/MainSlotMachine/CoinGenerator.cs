@@ -8,8 +8,6 @@ namespace Core.MainSlotMachine
 {
     public class CoinGenerator : GlobalAccess
     {
-        //to const, or make this an unlockable feature
-        [SerializeField] private int coinTrayMax = 12;
         [SerializeField] private CoinDragHandler coinPrefab;
 
         private void Start()
@@ -26,10 +24,10 @@ namespace Core.MainSlotMachine
 
         private IEnumerator CreateCoin()
         {
-            while (CoinTray.CoinTrayCounter < PlayerData.coinsAmount && CoinTray.CoinTrayCounter < coinTrayMax)
+            while (CoinTray.CoinTrayCounter < PlayerData.coinsAmount && CoinTray.CoinTrayCounter < Constants.CoinTrayMax)
             {
                 var waitForSeconds = new WaitForSeconds(0.1f);
-                var nextCoin = ObjectPoolManager.coinPool.Get();
+                var nextCoin = (CoinDragHandler) ObjectPoolManager.coinPool.Get().GetComponent(typeof(CoinDragHandler));
                 nextCoin.transform.position = GeneratedSpawnPosition();
                 ResetCoin(nextCoin);
                 EventManager.coinCreated.Raise();

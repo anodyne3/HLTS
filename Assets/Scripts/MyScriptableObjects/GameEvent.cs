@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace MyScriptableObjects
 {
-    [CreateAssetMenu]
+    [CreateAssetMenu(fileName = "Event", menuName = "MyAssets/GameEvent", order = 10)]
     public class GameEvent : ScriptableObject
     {
         private readonly List<GameEventListener> _listeners = new List<GameEventListener>();

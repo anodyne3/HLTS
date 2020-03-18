@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace MyScriptableObjects
 {
-    [CreateAssetMenu]
+    [CreateAssetMenu(fileName = "SoundEffect - ", menuName = "MyAssets/SoundEffect", order = 20)]
     public class SoundEffect : ScriptableObject
     {
         public SoundEffectType soundEffectType;

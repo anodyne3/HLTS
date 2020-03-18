@@ -2,11 +2,12 @@ using UnityEngine;
 
 namespace MyScriptableObjects
 {
-    [CreateAssetMenu(fileName = "patternInstruction", menuName = "MyAssets/PatternInstructions", order = 0)]
+    [CreateAssetMenu(fileName = "Pattern", menuName = "MyAssets/PatternInstructions", order = 50)]
     public class PatternInstruction : ScriptableObject
     {
         public Transform patternPrefab;
         public float patternScale;
+        public int sortingOrder;
         public PatternDetails[] patternInstructions;
 
         private Vector2 _patternTileOffset;
@@ -15,6 +16,7 @@ namespace MyScriptableObjects
         {
             var spriteRenderer = (SpriteRenderer) patternPrefab.GetComponent(typeof(SpriteRenderer));
             _patternTileOffset = spriteRenderer.bounds.size;
+            spriteRenderer.sortingOrder = sortingOrder;
 
             foreach (var instruction in patternInstructions)
             {

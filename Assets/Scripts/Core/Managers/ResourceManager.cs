@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using Core.MainSlotMachine;
 using Enums;
 using UnityEngine;
@@ -10,11 +9,11 @@ namespace Core.Managers
 {
     public class ResourceManager : Singleton<ResourceManager>
     {
-        [SerializeField] private Dictionary<string, FruitParticle> fruitSprites = new Dictionary<string, FruitParticle>();
+        [SerializeField] private Dictionary<string, FruitParticle> fruitParticlePrefabs = new Dictionary<string, FruitParticle>();
 
         private void Awake()
         {
-            PopulateDictionary(fruitSprites, Constants.FruitSpritesPath);
+            PopulateDictionary(fruitParticlePrefabs, Constants.FruitParticlePrefabsPath);
         }
 
         private static void PopulateDictionary<T>(IDictionary<string, T> resourceDictionary, string path)
@@ -29,16 +28,28 @@ namespace Core.Managers
             }
         }
 
-        public FruitParticle GetFruitSprite(FruitType fruitType)
+        public FruitParticle GetFruitParticlePrefab(FruitType fruitType)
         {
             if (fruitType != FruitType.Barnana)
-                return fruitSprites.Where(x => x.Key == fruitType.ToString())
-                    .Select(x => x.Value).FirstOrDefault();
+            {
+                if (fruitParticlePrefabs.TryGetValue(fruitType.ToString(), out var value))
+                    return value;
+            }
 
             var randomSprite = Random.Range(1, 11);
-            return randomSprite % 2 == 1
-                ? fruitSprites.First(x => x.Key == FruitType.Bar.ToString()).Value
-                : fruitSprites.First(x => x.Key == FruitType.Banana.ToString()).Value;
+            
+            if (randomSprite % 2 == 1)
+            {
+                if (fruitParticlePrefabs.TryGetValue(FruitType.Bar.ToString(), out var value))
+                    return value;
+            }
+            else
+            {
+                if (fruitParticlePrefabs.TryGetValue(FruitType.Banana.ToString(), out var value))
+                    return value;
+            }
+
+            return null;
         }
     }
 }

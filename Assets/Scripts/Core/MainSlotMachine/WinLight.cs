@@ -24,7 +24,7 @@ namespace Core.MainSlotMachine
         private void DisableLight()
         {
             _winLightAnimator.speed = 0.0f;
-            _winLightAnimator.Play(Constants.LeverBallGlowState, 0, 0.0f);
+            _winLightAnimator.Play(Constants.WinLightState, 0, 0.0f);
         }
     }
 }

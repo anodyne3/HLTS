@@ -5,17 +5,14 @@ namespace Core.Managers
 {
     public class ObjectPoolManager : Singleton<ObjectPoolManager>//GlobalAccess
     {
-        //private CoinDragHandler _coinPrefab;
-        //private FruitParticle _fruitBurstPrefab;
-        
         public MyObjectPool<CoinDragHandler> coinPool;
         public MyObjectPool<FruitParticle> fruitBurstPool;
 
-        private void Awake()
+        /*private void OnGUI()
         {
-            /*Foundation.ObjectPoolManager = this;
-            
-            DontDestroyOnLoad(gameObject);*/
-        }
+            GUI.Box(new Rect(10,10,100,50), "ObjectsCount:");
+            if (fruitBurstPool == null) return;
+            GUI.Box(new Rect(10,30,100,30), fruitBurstPool._objects.Count.ToString());
+        }*/
     }
 }

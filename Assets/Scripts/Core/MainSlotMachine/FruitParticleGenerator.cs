@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections;
-using Boo.Lang;
+﻿using System.Collections;
 using Core.UI;
 using UnityEngine;
 using Utils;
@@ -15,8 +13,6 @@ namespace Core.MainSlotMachine
         [SerializeField] private FruitBurst[] fruitBursts;
         [SerializeField] private Vector2 startingVelocity;
         [SerializeField] private float lifeSpan;
-
-        private List<Coroutine> _particleEmitters = new List<Coroutine>();
 
         private void Start()
         {
@@ -46,8 +42,7 @@ namespace Core.MainSlotMachine
             var fruitBurstsLength = fruitBursts.Length;
             for (var i = 0; i < fruitBurstsLength; i++)
             {
-                var newParticleEmitter = StartCoroutine(nameof(EmitParticles), fruitBursts[i]);
-                _particleEmitters.Add(newParticleEmitter);
+                StartCoroutine(nameof(EmitParticles), fruitBursts[i]);
             }
         }
 
@@ -55,7 +50,7 @@ namespace Core.MainSlotMachine
         {
             if (SlotMachine.payout == FruitType.None) return;
 
-            fruitPrefab = ResourceManager.GetFruitSprite(SlotMachine.payout);
+            fruitPrefab = ResourceManager.GetFruitParticlePrefab(SlotMachine.payout);
         }
 
         private void StopEmitter()
@@ -77,10 +72,12 @@ namespace Core.MainSlotMachine
                     fruitBurst.burstAmountMax + 1);
                 for (var i = 0; i < particleAmount; i++)
                 {
-                    var newParticle = ObjectPoolManager.fruitBurstPool.Get();
+                    var newParticle = (FruitParticle) ObjectPoolManager.fruitBurstPool.Get().GetComponent(typeof(FruitParticle));
                     newParticle.lifeSpan = lifeSpan;
                     newParticle.transform.position = transformPosition;
                     newParticle.rigidBody2D.velocity = startingVelocity;
+                    newParticle.gameObject.SetActive(true);
+                    newParticle.Init();
 
                     //newParticle.spriteRenderer.sprite = ResourceManager.GetFruitSprite(SlotMachine.payout).spriteRenderer.sprite;
                     newParticle.spriteRenderer.sortingOrder += ObjectPoolManager.fruitBurstPool.PoolCount();
