@@ -21,6 +21,9 @@ namespace Utils
         public const string MusicTrackPath = "MusicTracks";
         public const string SoundEffectPath = "SoundEffects";
 
+        //resources
+        public const string FruitSpritesPath = "FruitParticles";
+        
         //coin
         public const float SpawnRange = 0.8f;
         public const float SpawnHeight = -2.0f;
@@ -65,6 +68,11 @@ namespace Utils
         public const int DiamondsPayout = 500;
         public const int MixedPayout = 1250;
         public const int BarnanaPayout = 2500;
+        
+        //payoutWords
+        public const string JackpotMessage = "Jackpot!";
+        public const string YouWinMessage = "You Win!";
+        public const string PayoutWordsState = "PayoutWords";
 
         public static readonly GameEvents GameEvents = new GameEvents();
     }
@@ -82,6 +90,8 @@ namespace Utils
         public string coinDroppedEvent = "coinDroppedEvent";
         public string coinLoadEvent = "coinLoadEvent";
         public string generateCoinEvent = "generateCoinEvent";
+        public string payoutFinishEvent = "payoutFinishEvent";
+        public string payoutStartEvent = "payoutStartEvent";
         public string refreshUiEvent = "refreshUiEvent";
         public string wheelResultEvent = "wheelResultEvent";
         public string wheelRollEvent = "wheelRollEvent";

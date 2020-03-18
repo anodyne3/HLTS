@@ -17,10 +17,12 @@ namespace Core.Managers
         [HideInInspector] public GameEvent coinDropped;
         [HideInInspector] public GameEvent coinLoad;
         [HideInInspector] public GameEvent generateCoin;
+        [HideInInspector] public GameEvent payoutFinish;
+        [HideInInspector] public GameEvent payoutStart;
         [HideInInspector] public GameEvent refreshUi;
         [HideInInspector] public GameEvent wheelResult;
         [HideInInspector] public GameEvent wheelRoll;
-        
+
         [SerializeField] public List<GameEventListener> gameEventListeners = new List<GameEventListener>();
         
         private void OnEnable()
@@ -34,6 +36,8 @@ namespace Core.Managers
             coinDropped = Resources.Load<GameEvent>("Events/" + Constants.GameEvents.coinDroppedEvent);
             coinLoad = Resources.Load<GameEvent>("Events/" + Constants.GameEvents.coinLoadEvent);
             generateCoin = Resources.Load<GameEvent>("Events/" + Constants.GameEvents.generateCoinEvent);
+            payoutFinish = Resources.Load<GameEvent>("Events/" + Constants.GameEvents.payoutFinishEvent);
+            payoutStart = Resources.Load<GameEvent>("Events/" + Constants.GameEvents.payoutStartEvent);
             refreshUi = Resources.Load<GameEvent>("Events/" + Constants.GameEvents.refreshUiEvent);
             wheelResult = Resources.Load<GameEvent>("Events/" + Constants.GameEvents.wheelResultEvent);
             wheelRoll = Resources.Load<GameEvent>("Events/" + Constants.GameEvents.wheelRollEvent);

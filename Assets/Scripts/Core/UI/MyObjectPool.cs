@@ -3,10 +3,9 @@ using System.Collections.Concurrent;
 
 namespace Core.UI
 {
-    [Serializable]
     public class MyObjectPool <T>
     {
-        private readonly ConcurrentBag<T> _objects;
+        private ConcurrentBag<T> _objects;
         private Func<T> _objectGenerator;
 
         public MyObjectPool(Func<T> objectGenerator)
@@ -25,6 +24,11 @@ namespace Core.UI
         public void Release(T item)
         {
             _objects.Add(item);
+        }
+
+        public int PoolCount()
+        {
+            return _objects.Count;
         }
     }
 }

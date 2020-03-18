@@ -28,11 +28,12 @@ namespace Core.MainSlotMachine
         {
             while (CoinTray.CoinTrayCounter < PlayerData.coinsAmount && CoinTray.CoinTrayCounter < coinTrayMax)
             {
+                var waitForSeconds = new WaitForSeconds(0.1f);
                 var nextCoin = ObjectPoolManager.coinPool.Get();
                 nextCoin.transform.position = GeneratedSpawnPosition();
                 ResetCoin(nextCoin);
                 EventManager.coinCreated.Raise();
-                yield return new WaitForSeconds(0.1f);
+                yield return waitForSeconds;
             }
         }
 

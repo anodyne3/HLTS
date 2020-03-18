@@ -13,10 +13,11 @@ namespace Core
 
         private IEnumerator Spin()
         {
+            var waitForEndOfFrame = new WaitForEndOfFrame();
             while (gameObject.activeInHierarchy)
             {
                 transform.Rotate(0.0f, 0.0f, -Constants.LoadingSpinnerDegrees);
-                yield return new WaitForEndOfFrame();
+                yield return waitForEndOfFrame;
             }
         }
     }

@@ -7,6 +7,7 @@ namespace Core.UI
     public class PanelController : GlobalAccess
     {
         [SerializeField] private Button closeButton;
+        [SerializeField] private Button backgroundButton;
 
         public virtual void OpenPanel()
         {
@@ -20,9 +21,14 @@ namespace Core.UI
 
             closeButton.onClick.RemoveAllListeners();
             closeButton.onClick.AddListener(ClosePanel);
+            
+            if (backgroundButton == null) return;
+
+            backgroundButton.onClick.RemoveAllListeners();
+            backgroundButton.onClick.AddListener(ClosePanel);
         }
 
-        private void ClosePanel()
+        protected virtual void ClosePanel()
         {
             AudioManager.PlayClip(SoundEffectType.ClosePanel);
 

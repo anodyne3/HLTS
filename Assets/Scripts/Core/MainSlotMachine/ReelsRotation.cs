@@ -12,6 +12,8 @@ namespace Core.MainSlotMachine
 
         //temp newRoll, will come from server
         [SerializeField] private int[] newRoll;
+        private WaitForEndOfFrame _waitForEndOfFrame = new WaitForEndOfFrame(); 
+
 
         private void Start()
         {
@@ -50,21 +52,21 @@ namespace Core.MainSlotMachine
             {
                 spinDegrees -= 1;
                 fruitReelL.Rotate(-Constants.FastSpinDegrees, 0.0f, 0.0f);
-                yield return new WaitForEndOfFrame();
+                yield return _waitForEndOfFrame;
             }
 
             while (spinDegrees > Constants.MiddleReelStopTime)
             {
                 spinDegrees -= 1;
                 fruitReelL.Rotate(-Constants.MediumSpinDegrees, 0.0f, 0.0f);
-                yield return new WaitForEndOfFrame();
+                yield return _waitForEndOfFrame;
             }
 
             while (spinDegrees > 0)
             {
                 spinDegrees -= 1;
                 fruitReelL.Rotate(-Constants.SlowSpinDegrees, 0.0f, 0.0f);
-                yield return new WaitForEndOfFrame();
+                yield return _waitForEndOfFrame;
             }
             
             GenerateResult();
@@ -78,7 +80,7 @@ namespace Core.MainSlotMachine
             {
                 spinDegrees -= 1;
                 fruitReelM.Rotate(Constants.FastSpinDegrees, 0.0f, 0.0f);
-                yield return new WaitForEndOfFrame();
+                yield return _waitForEndOfFrame;
             }
 
             while (spinDegrees > Constants.MiddleReelStopTime)
@@ -88,7 +90,7 @@ namespace Core.MainSlotMachine
                     spinDegrees - 23 <= Constants.MiddleReelStopTime
                         ? Constants.MediumSpinDegrees * 0.25f
                         : Constants.MediumSpinDegrees, 0.0f, 0.0f);
-                yield return new WaitForEndOfFrame();
+                yield return _waitForEndOfFrame;
             }
         }
 
@@ -103,7 +105,7 @@ namespace Core.MainSlotMachine
                     spinDegrees - 7 <= Constants.RightReelStopTime
                         ? -Constants.FastSpinDegrees * 0.25f
                         : -Constants.FastSpinDegrees, 0.0f, 0.0f);
-                yield return new WaitForEndOfFrame();
+                yield return _waitForEndOfFrame;
             }
         }
 

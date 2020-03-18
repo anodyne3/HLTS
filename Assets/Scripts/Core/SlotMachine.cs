@@ -1,9 +1,5 @@
-using System;
 using System.Collections;
-using System.Globalization;
 using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using Enums;
 using UnityEngine;
 using Utils;
@@ -15,7 +11,8 @@ namespace Core
         [HideInInspector] public bool coinIsLoaded;
         [HideInInspector] public bool wheelsAreRolling;
         [HideInInspector] public int[] result = new int[3];
-
+        [HideInInspector] public FruitType payout;
+ 
         private bool _armIsPulled;
         
         //test variables
@@ -69,8 +66,8 @@ namespace Core
 
         private void DeterminePayout()
         {
-            var payout = 0;
-
+            payout = FruitType.None;
+            
             var fruitResult = new FruitType[3];
 
             for (var i = 0; i < result.Length; i++)
@@ -78,7 +75,8 @@ namespace Core
 
             if (fruitResult.Distinct().Count() == 1)
             {
-                switch (fruitResult[0])
+                payout = fruitResult[0];
+                /*switch (fruitResult[0])
                 {
                     case FruitType.Plum:
                         payout = Constants.PlumsPayout;
@@ -95,7 +93,7 @@ namespace Core
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();
-                }
+                }*/
 
                 Debug.LogError("LINQ says distinct.count == 1 for " + fruitResult[0]);
             }
@@ -106,13 +104,14 @@ namespace Core
 
                 if (fruitGroup == 3)
                 {
+                    payout = FruitType.Barnana;
+                    //payout = Constants.MixedPayout;
+                    
                     Debug.LogError("LINQ says mixed payout");
-
-                    payout = Constants.MixedPayout;
                 }
             }
 
-            PlayerData.AddPayout(payout);
+            EventManager.payoutStart.Raise();
         }
 
         private void AutoSlotMode()

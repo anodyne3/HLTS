@@ -2,10 +2,12 @@ namespace Enums
 {
     public enum FruitType
     {
-        Plum = 0,
-        Cherries = 1,
-        Diamond = 2,
-        Banana = 3,
-        Bar = 4
+        None = 0,
+        Plum = 1,
+        Cherries = 2,
+        Diamond = 3,
+        Banana = 4,
+        Bar = 5,
+        Barnana = 6,
     }
 }

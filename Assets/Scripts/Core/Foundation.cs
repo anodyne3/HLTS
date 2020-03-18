@@ -8,7 +8,7 @@ namespace Core
     {
         public static List<GlobalAccess> Globals = new List<GlobalAccess>();
         public static GameManager GameManager;
-        public static ObjectPoolManager ObjectPoolManager;
+        //public static ObjectPoolManager ObjectPoolManager;
 
         public static T GetGlobalClass<T>() where T : GlobalClass
         {
