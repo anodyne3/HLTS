@@ -20,7 +20,8 @@ MonoBehaviour:
       LayerMask:
         serializedVersion: 2
         m_Bits: 0
-      PassNames: []
+      PassNames:
+      - 
     overrideMaterial: {fileID: 0}
     overrideMaterialPassIndex: 0
     overrideDepthState: 0
@@ -73,4 +74,3 @@ MonoBehaviour:
     passOperation: 0
     failOperation: 0
     zFailOperation: 0
-  m_ShadowTransparentReceive: 1

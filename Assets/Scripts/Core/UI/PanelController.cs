@@ -9,6 +9,20 @@ namespace Core.UI
         [SerializeField] private Button closeButton;
         [SerializeField] private Button backgroundButton;
 
+        public virtual void Start()
+        {
+            if (closeButton != null)
+            {
+                closeButton.onClick.RemoveAllListeners();
+                closeButton.onClick.AddListener(ClosePanel);
+            }
+
+            if (backgroundButton == null) return;
+
+            backgroundButton.onClick.RemoveAllListeners();
+            backgroundButton.onClick.AddListener(ClosePanel);
+        }
+
         public virtual void OpenPanel()
         {
             AudioManager.PlayClip(SoundEffectType.OpenPanel);
@@ -16,16 +30,6 @@ namespace Core.UI
 
             if (GameManager != null)
                 GameManager.interactionEnabled = false;
-
-            if (closeButton == null) return;
-
-            closeButton.onClick.RemoveAllListeners();
-            closeButton.onClick.AddListener(ClosePanel);
-            
-            if (backgroundButton == null) return;
-
-            backgroundButton.onClick.RemoveAllListeners();
-            backgroundButton.onClick.AddListener(ClosePanel);
         }
 
         protected virtual void ClosePanel()
@@ -40,8 +44,8 @@ namespace Core.UI
 
         public void OnDestroy()
         {
-            if (PanelManager != null && PanelManager.AllPanels.Contains(this))
-                PanelManager.AllPanels.Remove(this);
+            if (PanelManager != null && PanelManager.allPanels.Contains(this))
+                PanelManager.allPanels.Remove(this);
         }
     }
 }

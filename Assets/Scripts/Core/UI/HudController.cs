@@ -21,11 +21,17 @@ namespace Core.UI
             RefreshCoins();
             
             EventManager.NewEventSubscription(gameObject, Constants.GameEvents.refreshUiEvent, RefreshCoins);
+            EventManager.NewEventSubscription(gameObject, Constants.GameEvents.payoutStartEvent, OpenPayoutPanel);
         }
 
         private static void OpenMenuPanel()
         {
             PanelManager.OpenPanelSolo<MenuPanelController>();
+        }
+
+        private static void OpenPayoutPanel()
+        {
+            PanelManager.OpenPanelSolo<PayoutPanelController>();
         }
 
         private static void OpenShopPanel()

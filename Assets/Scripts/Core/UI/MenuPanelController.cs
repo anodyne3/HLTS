@@ -15,6 +15,7 @@ namespace Core.UI
 
         private void Start()
         {
+            base.Start();
             resetAccountButton.onClick.RemoveAllListeners();
             resetAccountButton.onClick.AddListener(ResetAccount);
             linkAccountButton.onClick.RemoveAllListeners();

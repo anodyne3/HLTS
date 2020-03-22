@@ -75,8 +75,8 @@ namespace Core.MainSlotMachine
                     var newParticle = (FruitParticle) ObjectPoolManager.fruitBurstPool.Get().GetComponent(typeof(FruitParticle));
                     newParticle.lifeSpan = lifeSpan;
                     newParticle.transform.position = transformPosition;
-                    newParticle.rigidBody2D.velocity = startingVelocity;
                     newParticle.gameObject.SetActive(true);
+                    newParticle.rigidBody2D.velocity = startingVelocity;
                     newParticle.Init();
 
                     //newParticle.spriteRenderer.sprite = ResourceManager.GetFruitSprite(SlotMachine.payout).spriteRenderer.sprite;

@@ -483,6 +483,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   closeButton: {fileID: 0}
   backgroundButton: {fileID: 6730408285604477388}
+  payoutWords: {fileID: 4377467845544998232}
+  payoutMessage: {fileID: 3421613201100188480}
+  messageAnimationCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!95 &6533219459754550861
 Animator:
   serializedVersion: 3

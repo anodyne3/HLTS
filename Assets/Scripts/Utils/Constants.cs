@@ -40,6 +40,8 @@ namespace Utils
         public const string ArmPullState = "LeverPull";
         public const string LeverBallGlowState = "LeverBallGlow";
         public const string WinLightState = "WinLight";
+        public const string PayoutWordsState = "PayoutWords";
+        public const string PayoutMessageState = "PayoutMessage";
 
         //reels
         public const int TotalSpinTime = 330;
@@ -76,7 +78,6 @@ namespace Utils
         //payoutWords
         public const string JackpotMessage = "Jackpot!";
         public const string YouWinMessage = "You Win!";
-        public const string PayoutWordsState = "PayoutWords";
 
         public static readonly GameEvents GameEvents = new GameEvents();
     }
