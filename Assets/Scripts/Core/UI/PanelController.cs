@@ -8,7 +8,17 @@ namespace Core.UI
     {
         [SerializeField] private Button closeButton;
         [SerializeField] private Button backgroundButton;
+        public TMP_TextAnimation[] _textAnimations;
 
+        public virtual void Awake()
+        {
+            var _textAnimationsLength = _textAnimations.Length;
+            for (var i = 0; i < _textAnimationsLength; i++)
+            {
+                _textAnimations[i].Init();
+            }
+        }
+        
         public virtual void Start()
         {
             if (closeButton != null)
@@ -30,6 +40,16 @@ namespace Core.UI
 
             if (GameManager != null)
                 GameManager.interactionEnabled = false;
+        }
+
+        protected void StartTextAnimations()
+        {
+            var textAnimationsLength = _textAnimations.Length;
+            for (var i = 0; i < textAnimationsLength; i++)
+            {
+                _textAnimations[i].vertexAnimation.RefreshTargetText();
+                StartCoroutine(_textAnimations[i].vertexAnimation.AnimateTargetText());
+            }
         }
 
         protected virtual void ClosePanel()

@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67f1d8f25ab57904bb99cd528671d938, type: 3}
+  m_Name: payoutMessage
+  m_EditorClassIdentifier: 
+  AnimatePosition: 1
+  vertexStartPositionOffset: {x: 0, y: -400}
+  AnimateRotation: 1
+  vertexRotation: {x: 0, y: 0, z: 360}
+  AnimateScale: 1
+  vertexStartScale: {x: 0.01, y: 0.01, z: 0}
+  MoveOriginalOffScreen: 1
+  GetMeOffScreen: {x: 0, y: 1000}
+  animTime: 2
+  animateFromTextPivot: 1
+  targetText: {fileID: 0}

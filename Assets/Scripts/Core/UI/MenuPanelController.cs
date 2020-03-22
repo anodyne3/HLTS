@@ -8,14 +8,17 @@ namespace Core.UI
 {
     public class MenuPanelController : PanelController
     {
+        [SerializeField] private TMP_Text menuTitleText;
         [SerializeField] private Button resetAccountButton;
         [SerializeField] private Button linkAccountButton;
         [SerializeField] private Button unlinkAccountButton;
+
         public TMP_Text userId;
 
-        private void Start()
+        public override void Start()
         {
             base.Start();
+
             resetAccountButton.onClick.RemoveAllListeners();
             resetAccountButton.onClick.AddListener(ResetAccount);
             linkAccountButton.onClick.RemoveAllListeners();
@@ -27,24 +30,26 @@ namespace Core.UI
         public override void OpenPanel()
         {
             base.OpenPanel();
+            
+            StartTextAnimations();
 
             if (PlayerData.firebaseUser == null) return;
-            
+
             userId.text = PlayerData.firebaseUser.UserId;
         }
 
-        private void ResetAccount()
+        private static void ResetAccount()
         {
             GameManager.ResetAccount();
         }
 
-        private void LinkAccount()
+        private static void LinkAccount()
         {
             AudioManager.PlayClip(SoundEffectType.UiClick);
             FirebaseFunctionality.LinkAccount();
         }
-        
-        private void UnlinkAccount()
+
+        private static void UnlinkAccount()
         {
             AudioManager.PlayClip(SoundEffectType.UiClick);
             FirebaseFunctionality.UnlinkAccount();

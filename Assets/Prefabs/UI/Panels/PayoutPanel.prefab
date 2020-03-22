@@ -32,11 +32,11 @@ RectTransform:
   m_Father: {fileID: 6730408285621786047}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0}
-  m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1022, y: 400}
-  m_Pivot: {x: 0.5, y: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -90, y: -1200}
+  m_SizeDelta: {x: 1022, y: 280}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8142687616478825350
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -133,13 +133,13 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 4377467845544998232}
-    characterCount: 5
+    characterCount: 0
     spriteCount: 0
     spaceCount: 0
-    wordCount: 1
+    wordCount: 0
     linkCount: 0
-    lineCount: 1
-    pageCount: 1
+    lineCount: 0
+    pageCount: 0
     materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
@@ -168,7 +168,7 @@ GameObject:
   - component: {fileID: 3100629513882133268}
   - component: {fileID: 3421613201100188480}
   m_Layer: 5
-  m_Name: WinningMessage
+  m_Name: PayoutMessage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -188,11 +188,11 @@ RectTransform:
   m_Father: {fileID: 6730408285621786047}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 1}
-  m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -60}
-  m_SizeDelta: {x: 1022, y: 400}
-  m_Pivot: {x: 0.5, y: 1}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -90, y: 840}
+  m_SizeDelta: {x: 1150, y: 200}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3100629513882133268
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -255,7 +255,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 512
   m_fontStyle: 16
-  m_textAlignment: 514
+  m_textAlignment: 258
   m_characterSpacing: 3.74
   m_wordSpacing: 0
   m_lineSpacing: 0
@@ -439,14 +439,13 @@ GameObject:
   m_Component:
   - component: {fileID: 6730408285621786047}
   - component: {fileID: 2347845554986566800}
-  - component: {fileID: 6533219459754550861}
   m_Layer: 5
   m_Name: PayoutPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &6730408285621786047
 RectTransform:
   m_ObjectHideFlags: 0
@@ -485,28 +484,8 @@ MonoBehaviour:
   backgroundButton: {fileID: 6730408285604477388}
   payoutWords: {fileID: 4377467845544998232}
   payoutMessage: {fileID: 3421613201100188480}
-  messageAnimationCurve:
-    serializedVersion: 2
-    m_Curve: []
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
---- !u!95 &6533219459754550861
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6730408285621786046}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 9e0b6cba044cbff428066f412d001410, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  _textAnimations:
+  - vertexAnimation: {fileID: 11400000, guid: 54daf8156c59eee4ab2541d5c4e5428f, type: 2}
+    text: {fileID: 3421613201100188480}
+  - vertexAnimation: {fileID: 11400000, guid: 88208a9d45c73d748b50378f125cc776, type: 2}
+    text: {fileID: 4377467845544998232}
