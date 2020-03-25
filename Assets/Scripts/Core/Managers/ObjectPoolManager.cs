@@ -1,12 +1,10 @@
-﻿using Core.MainSlotMachine;
-using Core.UI;
+﻿using Core.UI;
 
 namespace Core.Managers
 {
-    public class ObjectPoolManager : Singleton<ObjectPoolManager>//GlobalAccess
+    public class ObjectPoolManager : Singleton<ObjectPoolManager>
     {
         public MyObjectPool<CoinDragHandler> coinPool;
-        public MyObjectPool<FruitParticle> fruitBurstPool;
 
         /*private void OnGUI()
         {

@@ -23,6 +23,7 @@ namespace Utils
 
         //resources
         public const string FruitParticlePrefabsPath = "FruitParticles";
+        public const string FruitParticleSpritesPath = "FruitSprites";
         
         //coin
         public const int CoinTrayMax = 12;
@@ -55,17 +56,17 @@ namespace Utils
         public static readonly FruitDefinition[] FruitDefinitions =
         {
             new FruitDefinition {Id = 0, FruitType = FruitType.Cherries},
-            new FruitDefinition {Id = 1, FruitType = FruitType.Plum},
-            new FruitDefinition {Id = 2, FruitType = FruitType.Diamond},
-            new FruitDefinition {Id = 3, FruitType = FruitType.Plum},
+            new FruitDefinition {Id = 1, FruitType = FruitType.Plums},
+            new FruitDefinition {Id = 2, FruitType = FruitType.Diamantes},
+            new FruitDefinition {Id = 3, FruitType = FruitType.Plums},
             new FruitDefinition {Id = 4, FruitType = FruitType.Cherries},
-            new FruitDefinition {Id = 5, FruitType = FruitType.Banana},
-            new FruitDefinition {Id = 6, FruitType = FruitType.Plum},
+            new FruitDefinition {Id = 5, FruitType = FruitType.Bananas},
+            new FruitDefinition {Id = 6, FruitType = FruitType.Plums},
             new FruitDefinition {Id = 7, FruitType = FruitType.Cherries},
-            new FruitDefinition {Id = 8, FruitType = FruitType.Plum},
-            new FruitDefinition {Id = 9, FruitType = FruitType.Diamond},
-            new FruitDefinition {Id = 10, FruitType = FruitType.Plum},
-            new FruitDefinition {Id = 11, FruitType = FruitType.Bar}
+            new FruitDefinition {Id = 8, FruitType = FruitType.Plums},
+            new FruitDefinition {Id = 9, FruitType = FruitType.Diamantes},
+            new FruitDefinition {Id = 10, FruitType = FruitType.Plums},
+            new FruitDefinition {Id = 11, FruitType = FruitType.Bars}
         };
 
         //payout

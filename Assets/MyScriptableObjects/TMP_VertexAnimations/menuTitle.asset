@@ -12,14 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67f1d8f25ab57904bb99cd528671d938, type: 3}
   m_Name: menuTitle
   m_EditorClassIdentifier: 
-  AnimatePosition: 0
+  AnimatePosition: 1
   vertexStartPositionOffset: {x: 0, y: 0}
   AnimateRotation: 1
   vertexRotation: {x: 0, y: 180, z: 0}
   AnimateScale: 0
   vertexStartScale: {x: 0, y: 0, z: 0}
-  MoveOriginalOffScreen: 0
-  GetMeOffScreen: {x: 0, y: 0}
+  MoveOriginalOffScreen: 1
+  GetMeOffScreen: {x: 0, y: 1000}
   animTime: 0.5
   animateFromTextPivot: 0
   targetText: {fileID: 0}

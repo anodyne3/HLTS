@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Utils;
 
 namespace Core.UI
 {
@@ -15,6 +16,8 @@ namespace Core.UI
             foreach (Transform panel in transform)
                 if (panel.TryGetComponent(out PanelController panelController))
                     allPanels.Add(panelController);
+            
+            EventManager.NewEventSubscription(gameObject, Constants.GameEvents.payoutStartEvent, OpenPayoutPanel);
         }
         
         public void OpenPanelSolo<T>(params object[] args) where T : PanelController
@@ -32,6 +35,11 @@ namespace Core.UI
         {
             return (from Transform t in transform select t.GetComponent<T>()).FirstOrDefault(currentPopup =>
                 currentPopup != null);
+        }
+
+        private void OpenPayoutPanel()
+        {
+            OpenPanelSolo<PayoutPanelController>();
         }
     }
 }

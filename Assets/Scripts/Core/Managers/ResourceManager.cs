@@ -1,23 +1,42 @@
+using System;
 using System.Collections.Generic;
-using Core.MainSlotMachine;
 using Enums;
 using UnityEngine;
 using Utils;
+using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
 
 namespace Core.Managers
 {
     public class ResourceManager : Singleton<ResourceManager>
     {
-        [SerializeField] private Dictionary<string, FruitParticle> fruitParticlePrefabs = new Dictionary<string, FruitParticle>();
+        [SerializeField] private Dictionary<string, Sprite> fruitParticleSprites = new Dictionary<string, Sprite>();
+
+        private readonly List<IMyDictionaries> AllDictionaries = new List<IMyDictionaries>();
+
+        private interface IMyDictionaries
+        {
+        }
+
+        private class DictionaryReference<T> : IMyDictionaries
+        {
+            public readonly IDictionary<string, T> reference;
+            public Type Type => typeof(T);
+            private T Value;
+
+            public DictionaryReference(IDictionary<string, T> dictionary)
+            {
+                reference = dictionary;
+            }
+        }
 
         private void Awake()
         {
-            PopulateDictionary(fruitParticlePrefabs, Constants.FruitParticlePrefabsPath);
+            PopulateDictionary(fruitParticleSprites, Constants.FruitParticleSpritesPath);
         }
 
-        private static void PopulateDictionary<T>(IDictionary<string, T> resourceDictionary, string path)
-            where T : Object
+        //load all resources from a path in the Resources folder, and add them to a dictionary
+        private void PopulateDictionary<T>(IDictionary<string, T> resourceDictionary, string path) where T : Object
         {
             var resources = Resources.LoadAll<T>(path);
 
@@ -26,30 +45,38 @@ namespace Core.Managers
             {
                 resourceDictionary.Add(resources[i].name, resources[i]);
             }
+
+            var newDictionaryReference = new DictionaryReference<T>(resourceDictionary);
+            AllDictionaries.Add(newDictionaryReference);
         }
 
-        public FruitParticle GetFruitParticlePrefab(FruitType fruitType)
+        //return an object from it's equivalent dictionary
+        private T GetResource<T>(string keyString) where T : Object
         {
-            if (fruitType != FruitType.Barnana)
+            var AllDictionariesCount = AllDictionaries.Count;
+            for (var i = 0; i < AllDictionariesCount; i++)
             {
-                if (fruitParticlePrefabs.TryGetValue(fruitType.ToString(), out var value))
-                    return value;
-            }
+                var dictionaryReference = AllDictionaries[i] as DictionaryReference<T>;
+                if (dictionaryReference == null || dictionaryReference.Type != typeof(T)) continue;
 
-            var randomSprite = Random.Range(1, 11);
-            
-            if (randomSprite % 2 == 1)
-            {
-                if (fruitParticlePrefabs.TryGetValue(FruitType.Bar.ToString(), out var value))
-                    return value;
-            }
-            else
-            {
-                if (fruitParticlePrefabs.TryGetValue(FruitType.Banana.ToString(), out var value))
+                if (dictionaryReference.reference.TryGetValue(keyString, out var value))
                     return value;
             }
 
             return null;
+        }
+
+        //return a Sprite from its dictionary according to it's FruitType
+        public Sprite GetFruitParticleSprite(FruitType fruitType)
+        {
+            if (fruitType != FruitType.Barnana)
+                return GetResource<Sprite>(fruitType + "Sprite");
+
+            var randomSprite = Random.Range(1, 11);
+
+            return randomSprite % 2 == 1
+                ? GetResource<Sprite>(FruitType.Bars + "Sprite")
+                : GetResource<Sprite>(FruitType.Bananas + "Sprite");
         }
     }
 }

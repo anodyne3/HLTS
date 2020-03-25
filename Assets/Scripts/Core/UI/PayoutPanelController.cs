@@ -7,8 +7,8 @@ namespace Core.UI
 {
     public class PayoutPanelController : PanelController
     {
-        [SerializeField] private TMP_Text payoutWords;
-        [SerializeField] private TMP_Text payoutMessage;
+        [SerializeField] private TMP_Text payoutMessageText;
+        [SerializeField] private TMP_Text payoutTypeText;
 
         public override void OpenPanel()
         {
@@ -19,12 +19,12 @@ namespace Core.UI
 
         private void RefreshPanel()
         {
-            payoutMessage.text = SlotMachine.payout == FruitType.Bar || SlotMachine.payout == FruitType.Banana ||
+            payoutMessageText.text = SlotMachine.payout == FruitType.Bars || SlotMachine.payout == FruitType.Bananas ||
                                  SlotMachine.payout == FruitType.Barnana
                 ? Constants.JackpotMessage
                 : Constants.YouWinMessage;
 
-            payoutWords.text = SlotMachine.payout.ToString();
+            payoutTypeText.text = SlotMachine.payout.ToString();
 
             StartTextAnimations();
         }

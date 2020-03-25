@@ -94,24 +94,21 @@ namespace Core
                     default:
                         throw new ArgumentOutOfRangeException();
                 }*/
-
-                Debug.LogError("LINQ says distinct.count == 1 for " + fruitResult[0]);
             }
             else
             {
                 var fruitGroup = fruitResult.Aggregate(0,
-                    (total, next) => next == FruitType.Banana || next == FruitType.Bar ? total + 1 : total);
+                    (total, next) => next == FruitType.Bananas || next == FruitType.Bars ? total + 1 : total);
 
                 if (fruitGroup == 3)
                 {
                     payout = FruitType.Barnana;
                     //payout = Constants.MixedPayout;
-                    
-                    Debug.LogError("LINQ says mixed payout");
                 }
             }
 
-            EventManager.payoutStart.Raise();
+            if (payout != FruitType.None)
+                EventManager.payoutStart.Raise();
         }
 
         private void AutoSlotMode()

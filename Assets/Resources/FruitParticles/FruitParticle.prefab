@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &8502543280526229249
+--- !u!1 &5111046729001659966
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,24 +8,24 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 3484040342730244410}
-  - component: {fileID: 7661737777750493561}
-  - component: {fileID: -3241030151597786251}
-  - component: {fileID: 7138798406250597966}
+  - component: {fileID: 8891174462984318974}
+  - component: {fileID: 2920407177229067785}
+  - component: {fileID: 8256166200605842612}
+  - component: {fileID: -4748719097947262186}
   m_Layer: 0
-  m_Name: Bar
+  m_Name: FruitParticle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &3484040342730244410
+--- !u!4 &8891174462984318974
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8502543280526229249}
+  m_GameObject: {fileID: 5111046729001659966}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 4.51, y: -0.3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -33,13 +33,13 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &7661737777750493561
+--- !u!212 &2920407177229067785
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8502543280526229249}
+  m_GameObject: {fileID: 5111046729001659966}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -72,26 +72,26 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 3286163911610860551, guid: dd8b3a63829fb674fbb3e2ddce88c599,
+  m_Sprite: {fileID: 3286163911610860551, guid: 2a463dd36b747ec418cdc6d7d666d418,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1.13191, y: 0.63310003}
+  m_Size: {x: 0.8671516, y: 0.82790977}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!50 &-3241030151597786251
+--- !u!50 &8256166200605842612
 Rigidbody2D:
   serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8502543280526229249}
+  m_GameObject: {fileID: 5111046729001659966}
   m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
@@ -105,24 +105,21 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &7138798406250597966
+--- !u!114 &-4748719097947262186
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8502543280526229249}
+  m_GameObject: {fileID: 5111046729001659966}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c2fc575493d34a2baeeacbb2a6f6e5bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spriteRenderer: {fileID: 0}
+  particleSettings: {fileID: 11400000, guid: a9490e5ae8d8c9c4ca576f28a02149d0, type: 2}
   rigidBody2D: {fileID: 0}
-  orderInLayer: 103
+  sprite: {fileID: 0}
   lifeSpan: 3
-  scaleMinMax: {x: 0.3, y: 1}
-  minRotation: {x: 0, y: 0, z: 0}
-  maxRotation: {x: 0, y: 0, z: 180}
-  gravityModifier: 0.4
-  angularVelocityMinMax: {x: 15, y: 60}
+  spriteRenderer: {fileID: 0}
+  orderInLayer: 103

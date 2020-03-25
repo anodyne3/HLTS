@@ -15,7 +15,7 @@ MonoBehaviour:
   patternPrefab: {fileID: 6861634358276914609, guid: d7f9644c67a19114fa4fac8048fce01f,
     type: 3}
   patternScale: 0.075
-  sortingOrder: 11
+  sortingOrder: 12
   patternInstructions:
   - startingOffset: {x: 0, y: -0.11428, z: 0}
     widthHeight: {x: 52, y: 5}

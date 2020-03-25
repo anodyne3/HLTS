@@ -59,13 +59,13 @@ namespace MyScriptableObjects
                 targetTextTransform.localPosition = startPosition;
             }
 
-            //create cheap temp variables for looping
-            characterAnimTime = animTime / _textInfo.characterCount;
-            _inverseAnimTime = 1 / characterAnimTime;
             //update the message text
             _textInfo = targetText.textInfo;
             //update the text mesh
             targetText.ForceMeshUpdate();
+            //create cheap temp variables for looping
+            characterAnimTime = animTime / _textInfo.characterCount;
+            _inverseAnimTime = 1 / characterAnimTime;
             //create a cache of the vertices
             _cachedMeshInfo = _textInfo.CopyMeshInfoVertexData();
             //create cheap characterInfo reference for looping
