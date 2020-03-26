@@ -1,6 +1,6 @@
 ﻿using System.Collections;
+using Core.Managers;
 using Core.UI;
-using Enums;
 using MyScriptableObjects;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -12,45 +12,28 @@ namespace Core.CustomParticleGenerator
         [SerializeField] private CustomParticle fruitPrefab;
         [SerializeField] private ParticleBurst[] fruitBursts;
 
-        private MyObjectPool<CustomParticle> particlePool;
-
-        private void OnEnable()
-        {
-            // StartEmitter();
-        }
-
-        private void OnDisable()
-        {
-            // StopEmitter();
-        }
+        private MyObjectPool<CustomParticle> _particlePool;
 
         private void Start()
         {
-            particlePool = CreateObjectPool<CustomParticle>(fruitPrefab);
+            _particlePool = ObjectPoolManager.CreateObjectPool<CustomParticle>(fruitPrefab, transform);
         }
 
+        /*
         private MyObjectPool<T> CreateObjectPool<T>(CustomParticle prefab) where T : CustomParticle
         {
             var newPool = new MyObjectPool<T>(() => Instantiate((T)prefab, transform));
             return newPool;
         }
+        */
 
         public void StartEmitter()
         {
-            RefreshParticles();
-
             var fruitBurstsLength = fruitBursts.Length;
             for (var i = 0; i < fruitBurstsLength; i++)
             {
                 StartCoroutine(nameof(EmitParticles), fruitBursts[i]);
             }
-        }
-
-        private void RefreshParticles()
-        {
-            if (SlotMachine.payout == FruitType.None) return;
-
-            // fruitPrefab.sprite = ResourceManager.GetFruitParticleSprite(SlotMachine.payout);
         }
 
         public void StopEmitter()
@@ -76,7 +59,7 @@ namespace Core.CustomParticleGenerator
                     fruitBurst.burstAmountMax + 1);
                 for (var i = 0; i < particleAmount; i++)
                 {
-                    var newParticle = (CustomParticle) particlePool.Get().GetComponent(typeof(CustomParticle));
+                    var newParticle = (CustomParticle) _particlePool.Get().GetComponent(typeof(CustomParticle));
                     newParticle.lifeSpan = fruitBurst.lifeSpan;
                     newParticle.sprite = payoutSprite;
                     newParticle.transform.position = startingPosition;
@@ -86,7 +69,7 @@ namespace Core.CustomParticleGenerator
                         Random.Range(fruitBurst.startVelocityMin.y , fruitBurst.startVelocityMax.y)
                         );
                     newParticle.rigidBody2D.velocity = randomStartingVelocity;
-                    newParticle.Init(particlePool);
+                    newParticle.Init(_particlePool);
                 }
                 
                 if (fruitBurst.cycles > 0)

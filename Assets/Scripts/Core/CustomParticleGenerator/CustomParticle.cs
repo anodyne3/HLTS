@@ -10,10 +10,10 @@ namespace Core.CustomParticleGenerator
         public ParticleSettings particleSettings;
         
         [HideInInspector] public Rigidbody2D rigidBody2D;
-        /*[HideInInspector] */public Sprite sprite;
+        [HideInInspector] public Sprite sprite;
         [HideInInspector] public float lifeSpan;
 
-        private MyObjectPool<CustomParticle> particleObjectPool;
+        private MyObjectPool<CustomParticle> _particleObjectPool;
 
         public virtual void Awake()
         {
@@ -30,12 +30,12 @@ namespace Core.CustomParticleGenerator
             );
         }
 
-        public virtual void Init(MyObjectPool<CustomParticle> ObjectPool)
+        public virtual void Init(MyObjectPool<CustomParticle> objectPool)
         {
             rigidBody2D.AddTorque(
                 Random.Range(particleSettings.angularVelocityMinMax.x, particleSettings.angularVelocityMinMax.y),
                 ForceMode2D.Impulse);
-            particleObjectPool = ObjectPool;
+            _particleObjectPool = objectPool;
             StartCoroutine(nameof(LifeTime));
         }
 
@@ -49,7 +49,7 @@ namespace Core.CustomParticleGenerator
             }
 
             gameObject.SetActive(false);
-            particleObjectPool.Release(this);
+            _particleObjectPool.Release(this);
         }
     }
 }

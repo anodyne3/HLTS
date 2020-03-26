@@ -16,11 +16,6 @@ namespace Core.GameData
 
         private FirebaseDatabase _database;
         
-        private void Start()
-        {
-            EventManager.NewEventSubscription(gameObject, Constants.GameEvents.coinConsumeEvent, DeductCoin);
-        }
-
         private void StartDatabaseListeners()
         {
             _database = FirebaseDatabase.DefaultInstance;
@@ -58,18 +53,6 @@ namespace Core.GameData
             yield return new WaitUntil(() => lastResult != null);
             
             GameManager.LoadMain();
-        }
-
-        private void DeductCoin()
-        {
-            coinsAmount -= 1;
-            EventManager.refreshUi.Raise();
-        }
-
-        public void AddPayout(int value)
-        {
-            coinsAmount += value;
-            EventManager.refreshUi.Raise();
         }
     }
 }

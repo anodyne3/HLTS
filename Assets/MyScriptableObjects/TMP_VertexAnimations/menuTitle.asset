@@ -19,7 +19,7 @@ MonoBehaviour:
   AnimateScale: 0
   vertexStartScale: {x: 0, y: 0, z: 0}
   MoveOriginalOffScreen: 1
-  GetMeOffScreen: {x: 0, y: 1000}
+  GetMeOffScreen: {x: 0, y: 1100}
   animTime: 0.5
   animateFromTextPivot: 0
   targetText: {fileID: 0}

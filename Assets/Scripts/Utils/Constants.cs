@@ -1,8 +1,6 @@
 using System;
 using Core;
-using Core.GameData;
 using Enums;
-using UnityEngine;
 
 namespace Utils
 {
@@ -20,9 +18,13 @@ namespace Utils
         //audio
         public const string MusicTrackPath = "MusicTracks";
         public const string SoundEffectPath = "SoundEffects";
+        
+        //ui rect
+        public const float CoinsBackgroundBaseWidth = 300.0f;
+        public const float CoinsBackgroundWidthMultiplier = 50.0f;
+        public const float SizeDeltaTweenDuration = 0.267f;
 
         //resources
-        public const string FruitParticlePrefabsPath = "FruitParticles";
         public const string FruitParticleSpritesPath = "FruitSprites";
         
         //coin
@@ -41,8 +43,6 @@ namespace Utils
         public const string ArmPullState = "LeverPull";
         public const string LeverBallGlowState = "LeverBallGlow";
         public const string WinLightState = "WinLight";
-        public const string PayoutWordsState = "PayoutWords";
-        public const string PayoutMessageState = "PayoutMessage";
 
         //reels
         public const int TotalSpinTime = 330;
