@@ -10,41 +10,41 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b24095dc18074a278263b9b45befaec4, type: 3}
-  m_Name: addCurrencyTweenSetting
+  m_Name: deductCurrencyTweenSetting
   m_EditorClassIdentifier: 
-  tweenDuration: 1.666
-  delayBetweenInstance: 0.133
+  tweenDuration: 1.333
+  delayBetweenInstance: 0
   moveCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
       value: 0
-      inSlope: 0
-      outSlope: 0
+      inSlope: 3.403327
+      outSlope: 3.403327
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0
+      outWeight: 0.079166666
     - serializedVersion: 3
       time: 1
       value: 1
-      inSlope: 2
-      outSlope: 2
-      tangentMode: 0
+      inSlope: 1.3898203
+      outSlope: -0.020267054
+      tangentMode: 1
       weightedMode: 0
-      inWeight: 0
-      outWeight: 0
+      inWeight: 0.14166665
+      outWeight: 1
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  spawnZoneRadius: 250
-  moveOffset: 0
-  punchAmount: {x: 0.333, y: 0.333, z: 0.333}
-  punchDuration: 0.333
-  punchVibrato: 1
-  punchElasticity: 1
-  fadeDuration: 0
-  fadeStartDelay: 0
+  spawnZoneRadius: 0
+  moveOffset: 200
+  punchAmount: {x: 0, y: 0, z: 0}
+  punchDuration: 0
+  punchVibrato: 0
+  punchElasticity: 0
+  fadeDuration: 0.267
+  fadeStartDelay: 1
   fadeEndValue: 0
   sizeDeltaDuration: 0.267

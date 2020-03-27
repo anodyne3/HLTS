@@ -5,9 +5,9 @@ namespace Core.Managers
 {
     public class AudioManager : Singleton<AudioManager>
     {
-        protected AudioManager()
+        /*protected AudioManager()
         {
-        }
+        }*/
 
         private AudioSource _audioSource;
 
@@ -18,7 +18,7 @@ namespace Core.Managers
 
         public void PlayClip(SoundEffectType soundEffectType)
         {
-            var soundEffect = ResourceManager.GetSoundEffect(soundEffectType); 
+            var soundEffect = ResourceManager.GetSoundEffect(soundEffectType);
             if (soundEffect == null) return;
 
             _audioSource.clip = soundEffect;

@@ -2,20 +2,21 @@ namespace Core
 {
     public class GlobalClass : GlobalAccess
     {
-        private static void AssignClass(GlobalAccess common)
+        public virtual void Awake()
         {
-            Foundation.Globals.Add(common);
+            AssignClass(this);
         }
 
         public virtual void OnDestroy()
         {
-            if (Foundation.Globals.Contains(this))
-                Foundation.Globals.Remove(this);
+            if (!Foundation.Globals.Contains(this)) return;
+            
+            Foundation.Globals.Remove(this);
         }
 
-        public virtual void Awake()
+        private static void AssignClass(GlobalAccess common)
         {
-            AssignClass(this);
+            Foundation.Globals.Add(common);
         }
     }
 }

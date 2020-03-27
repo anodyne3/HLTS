@@ -9,11 +9,13 @@ namespace Core
     public class GlobalAccess : MonoBehaviour
     {
         protected static GameManager GameManager => Foundation.GameManager;
-        protected static ObjectPoolManager ObjectPoolManager => GlobalComponents.Instance.AddGlobalComponent<ObjectPoolManager>() as ObjectPoolManager;
-        // protected static ObjectPoolManager ObjectPoolManager => Foundation.ObjectPoolManager;
+        protected static HudController HudController => Foundation.GetGlobalClass<HudController>();
         protected static PanelManager PanelManager => Foundation.GetGlobalClass<PanelManager>();
-        protected static CameraManager CameraManager => CameraManager.Instance;
-        protected static AudioManager AudioManager => AudioManager.Instance;
+        protected static CameraManager CameraManager => Foundation.GetGlobalClass<CameraManager>();
+        // protected static CameraManager CameraManager => CameraManager.Instance;
+        protected static AudioManager AudioManager => GlobalComponents.Instance.AddGlobalComponent<AudioManager>() as AudioManager;
+        // protected static AudioManager AudioManager => AudioManager.Instance;
+        protected static ObjectPoolManager ObjectPoolManager => GlobalComponents.Instance.AddGlobalComponent<ObjectPoolManager>() as ObjectPoolManager;
         protected static FirebaseFunctionality FirebaseFunctionality => GlobalComponents.Instance.AddGlobalComponent<FirebaseFunctionality>() as FirebaseFunctionality;
         protected static SceneManager SceneManager => GlobalComponents.Instance.AddGlobalComponent<SceneManager>() as SceneManager;
         protected static ResourceManager ResourceManager => GlobalComponents.Instance.AddGlobalComponent<ResourceManager>() as ResourceManager;

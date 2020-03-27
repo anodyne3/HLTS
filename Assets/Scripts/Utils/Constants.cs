@@ -22,7 +22,6 @@ namespace Utils
         //ui rect
         public const float CoinsBackgroundBaseWidth = 300.0f;
         public const float CoinsBackgroundWidthMultiplier = 50.0f;
-        public const float SizeDeltaTweenDuration = 0.267f;
 
         //resources
         public const string FruitParticleSpritesPath = "FruitSprites";
@@ -69,13 +68,6 @@ namespace Utils
             new FruitDefinition {Id = 11, FruitType = FruitType.Bars}
         };
 
-        //payout
-        public const int PlumsPayout = 25;
-        public const int CherriesPayout = 150;
-        public const int DiamondsPayout = 500;
-        public const int MixedPayout = 1250;
-        public const int BarnanaPayout = 2500;
-        
         //payoutWords
         public const string JackpotMessage = "Jackpot!";
         public const string YouWinMessage = "You Win!";
