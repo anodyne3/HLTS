@@ -15,7 +15,18 @@ namespace Core.GameData
         public int[] nextResult;
 
         private FirebaseDatabase _database;
-        
+
+        private void Start()
+        {
+            EventManager.NewEventSubscription(gameObject, Constants.GameEvents.coinConsumeEvent, DeductCoin);
+        }
+
+        private void DeductCoin()
+        {
+            coinsAmount -= 1;
+            EventManager.refreshUi.Raise();
+        }
+
         private void StartDatabaseListeners()
         {
             _database = FirebaseDatabase.DefaultInstance;

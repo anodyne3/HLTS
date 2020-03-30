@@ -18,7 +18,7 @@ namespace Core
         //test variables
         [HideInInspector] public bool autoMode;
         private int _testCoinsSpent;
-        private float _timeElapsed = 0.0f;
+        private float _timeElapsed;
 
         private void Start()
         {
@@ -76,24 +76,6 @@ namespace Core
             if (fruitResult.Distinct().Count() == 1)
             {
                 payout = fruitResult[0];
-                /*switch (fruitResult[0])
-                {
-                    case FruitType.Plum:
-                        payout = Constants.PlumsPayout;
-                        break;
-                    case FruitType.Cherries:
-                        payout = Constants.CherriesPayout;
-                        break;
-                    case FruitType.Diamond:
-                        payout = Constants.DiamondsPayout;
-                        break;
-                    case FruitType.Banana:
-                    case FruitType.Bar:
-                        payout = Constants.BarnanaPayout;
-                        break;
-                    default:
-                        throw new ArgumentOutOfRangeException();
-                }*/
             }
             else
             {
@@ -103,7 +85,6 @@ namespace Core
                 if (fruitGroup == 3)
                 {
                     payout = FruitType.Barnana;
-                    //payout = Constants.MixedPayout;
                 }
             }
 

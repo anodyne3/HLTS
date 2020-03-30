@@ -23,7 +23,6 @@ namespace Core.UI
         [SerializeField] private Transform currencyIcon;
         [SerializeField] private Transform currencySpawnPosition;
         [SerializeField] private TweenSetting addCurrencyTweenSetting;
-        [SerializeField] private TweenSetting deductCurrencyTweenSetting;
         [SerializeField] private DeductCurrencyPrefab deductCurrencyPrefab;
         
         private MyObjectPool<Transform> _tweenCurrencyPool;
@@ -42,8 +41,9 @@ namespace Core.UI
             menuButton.onClick.AddListener(OpenMenuPanel);
             shopButton.onClick.RemoveAllListeners();
             shopButton.onClick.AddListener(OpenShopPanel);
-            
-            coinsAmountText.text = PlayerData.coinsAmount.ToString();
+
+            CoinsAmount = PlayerData.coinsAmount;
+            coinsAmountText.text = CoinsAmount.ToString();
             ResizeCurrencySizeDelta();
 
             EventManager.NewEventSubscription(gameObject, Constants.GameEvents.refreshUiEvent, RefreshCoins);

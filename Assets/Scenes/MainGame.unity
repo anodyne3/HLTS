@@ -1690,30 +1690,35 @@ PrefabInstance:
       propertyPath: m_Name
       value: EventManagerButtons
       objectReference: {fileID: 0}
+    - target: {fileID: 1126541690638136065, guid: a095c0eaaf065e040a00e3e3c503053a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1434844835187742436, guid: a095c0eaaf065e040a00e3e3c503053a,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1434844835187742436, guid: a095c0eaaf065e040a00e3e3c503053a,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1434844835187742436, guid: a095c0eaaf065e040a00e3e3c503053a,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 128
       objectReference: {fileID: 0}
     - target: {fileID: 1434844835187742436, guid: a095c0eaaf065e040a00e3e3c503053a,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 246
       objectReference: {fileID: 0}
     - target: {fileID: 1434844835187742436, guid: a095c0eaaf065e040a00e3e3c503053a,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 246
       objectReference: {fileID: 0}
     - target: {fileID: 1851003034848609807, guid: a095c0eaaf065e040a00e3e3c503053a,
         type: 3}
@@ -1793,7 +1798,7 @@ PrefabInstance:
     - target: {fileID: 7735346657221419937, guid: a095c0eaaf065e040a00e3e3c503053a,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 246
       objectReference: {fileID: 0}
     - target: {fileID: 7735346657221419937, guid: a095c0eaaf065e040a00e3e3c503053a,
         type: 3}
