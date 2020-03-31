@@ -96,7 +96,7 @@ namespace Core.Managers
         {
             if (_soundEffects.Length < 1)
             {
-                Debug.LogError("empty soundEffect");
+                // Debug.LogError("empty soundEffect");
                 return null;
             }
 
@@ -108,7 +108,7 @@ namespace Core.Managers
                     return soundClip.soundEffectArray[Random.Range(0, soundClip.soundEffectArray.Length)];
             }
 
-            Debug.LogError("empty soundEffectArray");
+            // Debug.LogError("empty soundEffectArray");
             return null;
         }
 

@@ -111,7 +111,7 @@ namespace Core.UI
                         () => currencyInstance.gameObject.SetActive(true))
                     .Insert(i * addCurrencyTweenSetting.delayBetweenInstance,
                         currencyInstance.DOMove(currencyIcon.position,
-                                addCurrencyTweenSetting.tweenDuration)
+                                addCurrencyTweenSetting.moveDuration)
                             .SetEase(addCurrencyTweenSetting.moveCurve)
                             .OnComplete(() =>
                             {
@@ -123,8 +123,8 @@ namespace Core.UI
             }
 
             //increment the coinsAmountText to the new amount
-            var addingCurrencyDuration = sequence.Duration(false) - addCurrencyTweenSetting.tweenDuration;
-            sequence.Insert(addCurrencyTweenSetting.tweenDuration,
+            var addingCurrencyDuration = sequence.Duration(false) - addCurrencyTweenSetting.moveDuration;
+            sequence.Insert(addCurrencyTweenSetting.moveDuration,
                 DOTween.To(() => CoinsAmount, x => CoinsAmount = x, PlayerData.coinsAmount,
                     addingCurrencyDuration).OnComplete(() =>
                 {

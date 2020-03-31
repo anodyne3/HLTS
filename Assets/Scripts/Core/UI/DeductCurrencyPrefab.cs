@@ -29,7 +29,7 @@ namespace Core.UI
             _deductSequence
                 .SetAutoKill(false)
                 .SetRecyclable(true)
-                .Insert(0.0f, transform.DOLocalMove(doMoveOffset, tweenSettings.tweenDuration).SetEase(tweenSettings.moveCurve))
+                .Insert(0.0f, transform.DOLocalMove(doMoveOffset, tweenSettings.moveDuration).SetEase(tweenSettings.moveCurve))
                 .Insert(tweenSettings.fadeStartDelay, currencyImage.DOFade(tweenSettings.fadeEndValue, tweenSettings.fadeDuration))
                 .Insert(tweenSettings.fadeStartDelay, currencyText.DOFade(tweenSettings.fadeEndValue, tweenSettings.fadeDuration))
                 .AppendCallback(() =>

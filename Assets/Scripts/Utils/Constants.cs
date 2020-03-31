@@ -9,6 +9,7 @@ namespace Utils
         public const float LoadingSpinnerDegrees = 2.33f;
         public const string ConsentKey = "ConsentKey";
         public const float WorldSpaceTolerance = 0.01f;
+        public const float FloatTolerance = 0.001f;
 
         //firebase
         public const string PlayerDataPrefix = "users";
@@ -19,7 +20,7 @@ namespace Utils
         public const string MusicTrackPath = "MusicTracks";
         public const string SoundEffectPath = "SoundEffects";
         
-        //ui rect
+        //ui
         public const float CoinsBackgroundBaseWidth = 300.0f;
         public const float CoinsBackgroundWidthMultiplier = 50.0f;
 

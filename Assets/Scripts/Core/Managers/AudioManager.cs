@@ -5,6 +5,9 @@ namespace Core.Managers
 {
     public class AudioManager : Singleton<AudioManager>
     {
+        [SerializeField] public bool soundsDisabled;
+        [SerializeField] public bool musicDisabled;
+        
         /*protected AudioManager()
         {
         }*/

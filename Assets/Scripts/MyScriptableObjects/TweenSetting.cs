@@ -4,29 +4,33 @@ using Random = UnityEngine.Random;
 
 namespace MyScriptableObjects
 {
-    [CreateAssetMenu(fileName = "TweenSetting", menuName = "MyAssets/TweenSetting", order = 0)]
+    [CreateAssetMenu(fileName = "TweenSetting", menuName = "MyAssets/TweenSettings/TweenSetting", order = 55)]
     public class TweenSetting : ScriptableObject
     {
         [Header("Move")]
-        [SerializeField] public float tweenDuration;
-        [SerializeField] public float delayBetweenInstance;
-        [SerializeField] public AnimationCurve moveCurve;
-        [SerializeField] public float spawnZoneRadius;
-        [SerializeField] public float moveOffset;
+        public float moveDuration;
+        public float delayBetweenInstance;
+        public AnimationCurve moveCurve;
+        public float spawnZoneRadius;
+        public float moveOffset;
 
         [Header("Punch")]
-        [SerializeField] private Vector3 punchAmount;
-        [SerializeField] private float punchDuration;
-        [SerializeField] private int punchVibrato;
-        [SerializeField] private float punchElasticity;
+        [SerializeField] private TweenPunchSetting punchSetting;
 
         [Header("Fade")]
-        [SerializeField] public float fadeDuration;
-        [SerializeField] public float fadeStartDelay;
-        [SerializeField] public float fadeEndValue;
+        public float fadeDuration;
+        public float fadeStartDelay;
+        public float fadeEndValue;
 
         [Header("SizeDelta")]
-        [SerializeField] public float sizeDeltaDuration;
+        public float sizeDeltaDuration;
+
+        [Header("Scale")]
+        public Vector3 scaleStartValue;
+        public Vector3 scaleEndValue;
+        public float scaleDuration;
+
+        public Ease sequenceEasing;
 
         private Tweener _punchTween;
 
@@ -57,10 +61,10 @@ namespace MyScriptableObjects
             }
 
             _punchTween = punchTarget.DOPunchScale(
-                punchAmount,
-                punchDuration,
-                punchVibrato,
-                punchElasticity);
+                punchSetting.punchAmount,
+                punchSetting.punchDuration,
+                punchSetting.punchVibrato,
+                punchSetting.punchElasticity);
         }
     }
 }

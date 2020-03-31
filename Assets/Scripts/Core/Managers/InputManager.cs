@@ -4,19 +4,19 @@ using UnityEngine;
 namespace Core.Managers
 {
     public class InputManager : GlobalAccess
-    {/*
-        public Vector3 Dragging()
+    {
+        protected void Dragging()
         {
 #if UNITY_EDITOR
             if (Input.GetMouseButtonDown(0))
             {
-                mousePos = CameraManager.MainCamera.ScreenToWorldPoint(Input.mousePosition);
+                var mousePos = CameraManager.MainCamera.ScreenToWorldPoint(Input.mousePosition);
                 OnDragBegin(mousePos);
             }
 
             if (Input.GetMouseButton(0))
             {
-                mousePos = CameraManager.MainCamera.ScreenToWorldPoint(Input.mousePosition);
+                var mousePos = CameraManager.MainCamera.ScreenToWorldPoint(Input.mousePosition);
                 OnDragging(mousePos);
             }
 
@@ -49,6 +49,21 @@ namespace Core.Managers
                 default:
                     throw new ArgumentOutOfRangeException();
             }
-        }*/
+        }
+
+        protected virtual void OnDragBegin(Vector2 inputPos)
+        {
+            
+        }
+
+        protected virtual void OnDragging(Vector2 inputPos)
+        {
+            
+        }
+        
+        public virtual void OnDragEnd()
+        {
+            CameraManager.draggingDisabled = false;
+        }
     }
 }

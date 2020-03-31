@@ -1,9 +1,10 @@
 using System;
+using Core.Managers;
 using UnityEngine;
 
 namespace Core
 {
-    public class CoinDragHandler : GlobalAccess
+    public class CoinDragHandler : InputManager
     {
         private float _deltaX, _deltaY;
         private bool _moveAllowed;
@@ -22,7 +23,8 @@ namespace Core
 
         private void FixedUpdate()
         {
-#if UNITY_EDITOR
+            Dragging();
+/*#if UNITY_EDITOR
             if (Input.GetMouseButtonDown(0))
             {
                 mousePos = CameraManager.MainCamera.ScreenToWorldPoint(Input.mousePosition);
@@ -63,12 +65,16 @@ namespace Core
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
-            }
+            }*/
         }
 
-        private void OnDragBegin(Vector2 inputPos)
+        protected override void OnDragBegin(Vector2 inputPos)
         {
+            base.OnDragBegin(inputPos);
+            
             if (CircleCollider != Physics2D.OverlapPoint(inputPos)) return;
+
+            CameraManager.draggingDisabled = true;
 
             var position = transform.position;
             _deltaX = inputPos.x - position.x;
@@ -79,14 +85,18 @@ namespace Core
             CircleCollider.isTrigger = true;
         }
 
-        private void OnDragging(Vector2 inputPos)
+        protected override void OnDragging(Vector2 inputPos)
         {
+            base.OnDragging(inputPos);
+            
             if (_moveAllowed)
                 RigidBody2D.MovePosition(new Vector2(inputPos.x - _deltaX, inputPos.y - _deltaY));
         }
 
-        public void OnDragEnd()
+        public override void OnDragEnd()
         {
+            base.OnDragEnd();
+            
             CircleCollider.isTrigger = false;
             _moveAllowed = false;
             RigidBody2D.freezeRotation = false;

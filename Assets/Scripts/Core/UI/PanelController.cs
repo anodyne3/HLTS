@@ -1,4 +1,5 @@
-﻿using Enums;
+﻿using DG.Tweening;
+using Enums;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,17 +9,19 @@ namespace Core.UI
     {
         [SerializeField] private Button closeButton;
         [SerializeField] private Button backgroundButton;
-        public TMP_TextAnimation[] _textAnimations;
+        [SerializeField] private TMP_TextAnimation[] textAnimations;
+        public RectTransform panelTransform;
+        private float _defaultLocalPositionY;
 
         public virtual void Awake()
         {
-            var _textAnimationsLength = _textAnimations.Length;
-            for (var i = 0; i < _textAnimationsLength; i++)
+            var textAnimationsLength = textAnimations.Length;
+            for (var i = 0; i < textAnimationsLength; i++)
             {
-                _textAnimations[i].Init();
+                textAnimations[i].Init();
             }
         }
-        
+
         public virtual void Start()
         {
             if (closeButton != null)
@@ -36,19 +39,35 @@ namespace Core.UI
         public virtual void OpenPanel()
         {
             AudioManager.PlayClip(SoundEffectType.OpenPanel);
-            gameObject.SetActive(true);
 
-            if (GameManager != null)
-                GameManager.interactionEnabled = false;
+            panelTransform.localScale = PanelManager.closePanelTweenSettings.scaleStartValue;
+            _defaultLocalPositionY = panelTransform.localPosition.y;
+            var panelOffset = PanelManager.OpenPanelCount() * PanelManager.openPanelTweenSettings.moveOffset +
+                              _defaultLocalPositionY;
+            var openPanelSequence = DOTween.Sequence();
+            openPanelSequence.Append(panelTransform
+                    .DOLocalMoveY(panelOffset, PanelManager.openPanelTweenSettings.moveDuration))
+                .InsertCallback(0.0f, () => PanelManager.openPanelTweenSettings.DoPunch(panelTransform))
+                .SetEase(PanelManager.openPanelTweenSettings.sequenceEasing)
+                .SetAutoKill(false)
+                .SetRecyclable(true)
+                .OnComplete(StartTextAnimations)
+                .PrependCallback(() =>
+                {
+                    if (GameManager != null)
+                        GameManager.interactionEnabled = false;
+
+                    gameObject.SetActive(true);
+                });
         }
 
         protected void StartTextAnimations()
         {
-            var textAnimationsLength = _textAnimations.Length;
+            var textAnimationsLength = textAnimations.Length;
             for (var i = 0; i < textAnimationsLength; i++)
             {
-                _textAnimations[i].vertexAnimation.RefreshTargetText();
-                StartCoroutine(_textAnimations[i].vertexAnimation.AnimateTargetText());
+                textAnimations[i].vertexAnimation.RefreshTargetText();
+                StartCoroutine(textAnimations[i].vertexAnimation.AnimateTargetText());
             }
         }
 
@@ -56,10 +75,23 @@ namespace Core.UI
         {
             AudioManager.PlayClip(SoundEffectType.ClosePanel);
 
-            if (GameManager != null)
-                GameManager.interactionEnabled = true;
-            
-            gameObject.SetActive(false);
+            var closePanelSequence = DOTween.Sequence();
+            closePanelSequence.Append(panelTransform
+                    .DOLocalMoveY(_defaultLocalPositionY, PanelManager.closePanelTweenSettings.moveDuration))
+                .Insert(0.0f, panelTransform.DOScale(PanelManager.closePanelTweenSettings.scaleEndValue,
+                    PanelManager.closePanelTweenSettings.scaleDuration))
+                .SetEase(PanelManager.closePanelTweenSettings.sequenceEasing)
+                .SetAutoKill(false)
+                .SetRecyclable(true)
+                .OnComplete(() =>
+                {
+                    gameObject.SetActive(false);
+
+                    if (GameManager != null)
+                        GameManager.interactionEnabled = true;
+
+                    panelTransform.localScale = PanelManager.openPanelTweenSettings.scaleStartValue;
+                });
         }
 
         public void OnDestroy()

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using MyScriptableObjects;
 using UnityEngine;
 using Utils;
 
@@ -8,6 +9,8 @@ namespace Core.UI
     public class PanelManager : GlobalClass
     {
         public readonly List<PanelController> allPanels = new List<PanelController>();
+        public TweenSetting openPanelTweenSettings;
+        public TweenSetting closePanelTweenSettings;
 
         public override void Awake()
         {
@@ -19,7 +22,12 @@ namespace Core.UI
             
             EventManager.NewEventSubscription(gameObject, Constants.GameEvents.payoutStartEvent, OpenPayoutPanel);
         }
-        
+
+        private void OpenPayoutPanel()
+        {
+            OpenPanelSolo<PayoutPanelController>();
+        }
+
         public void OpenPanelSolo<T>(params object[] args) where T : PanelController
         {
             foreach (var panel in allPanels)
@@ -37,9 +45,26 @@ namespace Core.UI
                 currentPopup != null);
         }
 
-        private void OpenPayoutPanel()
+        public void OpenSubPanel<T>() where T : PanelController
         {
-            OpenPanelSolo<PayoutPanelController>();
+            var requiredPanel = GetPanel<T>();
+            requiredPanel.transform.SetAsLastSibling();
+            requiredPanel.OpenPanel();
         }
+
+        public int OpenPanelCount()
+        {
+            var openPanelCount = 0;
+
+            var allPanelsCount = allPanels.Count;
+            for (var i = 0; i < allPanelsCount; i++)
+            {
+                var panel = allPanels[i];
+                if (panel.isActiveAndEnabled)
+                    openPanelCount++;
+            }
+
+            return openPanelCount;
+        } 
     }
 }

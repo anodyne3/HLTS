@@ -1,11 +1,12 @@
 using System;
 using System.Collections;
+using Core.Managers;
 using UnityEngine;
 using Utils;
 
 namespace Core.MainSlotMachine
 {
-    public class ArmDragHandler : GlobalAccess
+    public class ArmDragHandler : InputManager
     {
         private float _deltaYStart;
         private bool _armPullUnlocked;
@@ -73,16 +74,22 @@ namespace Core.MainSlotMachine
             }
         }
 
-        private void OnDragBegin(Vector2 inputPos)
+        protected override void OnDragBegin(Vector2 inputPos)
         {
+            base.OnDragBegin(inputPos);
+            
             if (_armCollider != Physics2D.OverlapPoint(inputPos)) return;
+            
+            CameraManager.draggingDisabled = true;
 
             _isDragging = true;
             _deltaYStart = inputPos.y;
         }
 
-        private void OnDragging(Vector2 inputPos)
+        protected override void OnDragging(Vector2 inputPos)
         {
+            base.OnDragging(inputPos);
+            
             if (!_isDragging) return;
 
             deltaY = _deltaYStart - inputPos.y > 0.0f ? _deltaYStart - inputPos.y : 0.0f;
@@ -107,8 +114,10 @@ namespace Core.MainSlotMachine
             _armPullUnlocked = false;
         }
 
-        private void OnDragEnd()
+        public override void OnDragEnd()
         {
+            base.OnDragEnd();
+                
             _isDragging = false;
             
             StartCoroutine(nameof(ResetArmPullToRest));

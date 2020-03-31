@@ -468,6 +468,41 @@ MonoBehaviour:
   - {fileID: 0}
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!1 &5632045902644199369
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2274697044446168162}
+  m_Layer: 0
+  m_Name: EmptyContent
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &2274697044446168162
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5632045902644199369}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 6730408285621786047}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 8.5, y: 17.5}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &6730408285604477390
 GameObject:
   m_ObjectHideFlags: 0
@@ -617,6 +652,7 @@ RectTransform:
   - {fileID: 6796018842468858221}
   - {fileID: 1173538498884225411}
   - {fileID: 4551548374967275767}
+  - {fileID: 2274697044446168162}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -639,11 +675,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   closeButton: {fileID: 0}
   backgroundButton: {fileID: 6730408285604477388}
-  _textAnimations:
-  - vertexAnimation: {fileID: 11400000, guid: 54daf8156c59eee4ab2541d5c4e5428f, type: 2}
-    text: {fileID: 3421613201100188480}
-  - vertexAnimation: {fileID: 11400000, guid: 88208a9d45c73d748b50378f125cc776, type: 2}
-    text: {fileID: 4377467845544998232}
+  textAnimations: []
+  panelTransform: {fileID: 2274697044446168162}
   payoutMessageText: {fileID: 3421613201100188480}
   payoutAmountText: {fileID: 5443219302182099646}
   payoutTypeText: {fileID: 4377467845544998232}
