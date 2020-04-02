@@ -11,6 +11,7 @@ namespace Core.UI
         [SerializeField] private Button backgroundButton;
         [SerializeField] private TMP_TextAnimation[] textAnimations;
         public RectTransform panelTransform;
+        // private Image backgroundImage;
         private float _defaultLocalPositionY;
 
         public virtual void Awake()
@@ -47,7 +48,9 @@ namespace Core.UI
             var openPanelSequence = DOTween.Sequence();
             openPanelSequence.Append(panelTransform
                     .DOLocalMoveY(panelOffset, PanelManager.openPanelTweenSettings.moveDuration))
-                .InsertCallback(0.0f, () => PanelManager.openPanelTweenSettings.DoPunch(panelTransform))
+                .InsertCallback(0.0f, () => PanelManager.openPanelTweenSettings.DoPunch(panelTransform, false))
+                .InsertCallback(PanelManager.openPanelTweenSettings.fadeStartDelay, 
+                    () => PanelManager.openPanelTweenSettings.DoFade(backgroundButton.image, false))
                 .SetEase(PanelManager.openPanelTweenSettings.sequenceEasing)
                 .SetAutoKill(false)
                 .SetRecyclable(true)
@@ -80,6 +83,8 @@ namespace Core.UI
                     .DOLocalMoveY(_defaultLocalPositionY, PanelManager.closePanelTweenSettings.moveDuration))
                 .Insert(0.0f, panelTransform.DOScale(PanelManager.closePanelTweenSettings.scaleEndValue,
                     PanelManager.closePanelTweenSettings.scaleDuration))
+                .InsertCallback(PanelManager.closePanelTweenSettings.fadeStartDelay, 
+                    () => PanelManager.closePanelTweenSettings.DoFade(backgroundButton.image, false))
                 .SetEase(PanelManager.closePanelTweenSettings.sequenceEasing)
                 .SetAutoKill(false)
                 .SetRecyclable(true)

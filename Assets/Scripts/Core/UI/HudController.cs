@@ -87,7 +87,7 @@ namespace Core.UI
 
         private static Vector2 ResizeCurrencyRectByDigitCount(RectTransform rect, long amount)
         {
-            var digitCount = Math.Floor(Math.Log10(amount) + 1);
+            var digitCount = Math.Floor(Math.Log10(Mathf.Abs(amount)) + 1);
             return new Vector2(double.IsInfinity(digitCount)
                 ? Constants.CoinsBackgroundBaseWidth + Constants.CoinsBackgroundWidthMultiplier
                 : (float) digitCount * Constants.CoinsBackgroundWidthMultiplier +

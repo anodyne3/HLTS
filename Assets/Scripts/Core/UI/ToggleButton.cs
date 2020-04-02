@@ -13,6 +13,7 @@ namespace Core.UI
             [SerializeField] private SVGImage image;
             [SerializeField] private TMP_Text text;
             [SerializeField] private TweenPunchSetting punchSetting;
+            private Tweener _punchTween;
             
             public void RefreshToggle(bool value, bool start = false)
             {
@@ -20,8 +21,8 @@ namespace Core.UI
                 text.text = value ? "off" : "on";
                 
                 if (start) return;
-                
-                transform.DOPunchScale(punchSetting.punchAmount, punchSetting.punchDuration);
+
+                punchSetting.DoPunch(transform, false);
             }
     }
 }

@@ -1,5 +1,6 @@
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 namespace MyScriptableObjects
@@ -18,9 +19,8 @@ namespace MyScriptableObjects
         [SerializeField] private TweenPunchSetting punchSetting;
 
         [Header("Fade")]
-        public float fadeDuration;
+        [SerializeField] private TweenFadeSetting fadeSetting;
         public float fadeStartDelay;
-        public float fadeEndValue;
 
         [Header("SizeDelta")]
         public float sizeDeltaDuration;
@@ -33,6 +33,7 @@ namespace MyScriptableObjects
         public Ease sequenceEasing;
 
         private Tweener _punchTween;
+        private Tweener _fadeTween;
 
         public static int GetSpawnAmount(long difference)
         {
@@ -53,18 +54,19 @@ namespace MyScriptableObjects
             return Random.insideUnitCircle * spawnZoneRadius;
         }
 
-        public void DoPunch(Transform punchTarget)
+        public void DoPunch(Transform punchTarget, bool pooled = true)
         {
-            if (_punchTween != null && !_punchTween.IsComplete())
-            {
-                _punchTween.Kill(true);
-            }
+            punchSetting.DoPunch(punchTarget, pooled);
+        }
 
-            _punchTween = punchTarget.DOPunchScale(
-                punchSetting.punchAmount,
-                punchSetting.punchDuration,
-                punchSetting.punchVibrato,
-                punchSetting.punchElasticity);
+        public void DoFade(Image target, bool pooled = true)
+        {
+            fadeSetting.DoFade(target, pooled);
+        }
+        
+        public void DoFade(CanvasGroup target, bool pooled = true)
+        {
+            fadeSetting.DoFade(target, pooled);
         }
     }
 }

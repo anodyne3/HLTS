@@ -931,6 +931,24 @@ PrefabInstance:
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 7243324766535440047, guid: 243f378e5bc108943b0a2e8206fee06f,
     type: 3}
+--- !u!1 &842636123 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 115758091855604096, guid: 75cc8dcd0800ac6468c0e40b72568891,
+    type: 3}
+  m_PrefabInstance: {fileID: 2967262591416004153}
+  m_PrefabAsset: {fileID: 0}
+--- !u!225 &842636125
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 842636123}
+  m_Enabled: 1
+  m_Alpha: 0
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
 --- !u!1 &898665169
 GameObject:
   m_ObjectHideFlags: 0
@@ -1397,7 +1415,7 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 2967262591416004153}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 842636123}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 49bcb2a2e38941d0b0fb88618ce5bd3a, type: 3}
@@ -2690,6 +2708,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 3615232436311421509, guid: ef174a91a96503c489209d78b4bdeed2,
+        type: 3}
+      propertyPath: m_Color.a
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3615232437710488138, guid: ef174a91a96503c489209d78b4bdeed2,
         type: 3}
       propertyPath: m_textInfo.characterCount
@@ -2829,6 +2852,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1926677}
     m_Modifications:
+    - target: {fileID: 115758091855604096, guid: 75cc8dcd0800ac6468c0e40b72568891,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2967262593289803974, guid: 75cc8dcd0800ac6468c0e40b72568891,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2939,6 +2967,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Coins
       objectReference: {fileID: 0}
+    - target: {fileID: 8644053049839773570, guid: 75cc8dcd0800ac6468c0e40b72568891,
+        type: 3}
+      propertyPath: currencyRect
+      value: 
+      objectReference: {fileID: 842636125}
+    - target: {fileID: 8644053049839773570, guid: 75cc8dcd0800ac6468c0e40b72568891,
+        type: 3}
+      propertyPath: canvasGroup
+      value: 
+      objectReference: {fileID: 842636125}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 75cc8dcd0800ac6468c0e40b72568891, type: 3}
 --- !u!212 &2977090816661485376
@@ -3572,6 +3610,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6143310349778794754, guid: 2277168955780154eb51e35875b6ec4e,
+        type: 3}
+      propertyPath: m_Color.a
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2277168955780154eb51e35875b6ec4e, type: 3}
 --- !u!1001 &6250179194458711889
@@ -3714,6 +3757,11 @@ PrefabInstance:
     - target: {fileID: 5259340874845701981, guid: 6bd204fdd01209443b42051035a0ab08,
         type: 3}
       propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5259340874997424174, guid: 6bd204fdd01209443b42051035a0ab08,
+        type: 3}
+      propertyPath: m_Color.a
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5259340876258349089, guid: 6bd204fdd01209443b42051035a0ab08,
@@ -4246,6 +4294,11 @@ PrefabInstance:
     - target: {fileID: 6625211010354448426, guid: f2bdf3651051d4e4bb4b99855533d793,
         type: 3}
       propertyPath: m_textInfo.pageCount
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8848716585604701868, guid: f2bdf3651051d4e4bb4b99855533d793,
+        type: 3}
+      propertyPath: m_Color.a
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8848716585689709022, guid: f2bdf3651051d4e4bb4b99855533d793,

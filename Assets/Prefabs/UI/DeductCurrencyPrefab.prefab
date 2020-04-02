@@ -165,6 +165,7 @@ GameObject:
   m_Component:
   - component: {fileID: 118165841232091793}
   - component: {fileID: 6834227725064851278}
+  - component: {fileID: 3907571716638605635}
   m_Layer: 5
   m_Name: DeductCurrencyPrefab
   m_TagString: Untagged
@@ -205,9 +206,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49bcb2a2e38941d0b0fb88618ce5bd3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currencyImage: {fileID: 7118561632877473714}
+  canvasGroup: {fileID: 0}
   currencyText: {fileID: 9203999041801649634}
   tweenSettings: {fileID: 11400000, guid: da4a16a2d1cc03c448accfada72f73b5, type: 2}
+--- !u!225 &3907571716638605635
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2933695778107359564}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
 --- !u!1 &4843028791300043085
 GameObject:
   m_ObjectHideFlags: 0

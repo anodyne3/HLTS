@@ -56,7 +56,9 @@ namespace Core.Managers
         {
             base.OnDragEnd();
 
-            // GameManager.interactionEnabled = true;
+            if (GameManager == null) return;
+            
+            GameManager.interactionEnabled = true;
         }
 
         private void Update()

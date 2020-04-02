@@ -1,13 +1,14 @@
 using DG.Tweening;
 using MyScriptableObjects;
 using TMPro;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace Core.UI
 {
     public class DeductCurrencyPrefab : GlobalAccess
     {
-        public Image currencyImage;
+        public CanvasGroup canvasGroup;
         public TMP_Text currencyText;
         public TweenSetting tweenSettings;
         private Sequence _deductSequence;
@@ -17,7 +18,6 @@ namespace Core.UI
             currencyText.text = amount.ToString();
             var doMoveOffset = transform.localPosition;
             doMoveOffset.y -= tweenSettings.moveOffset;
-            gameObject.SetActive(true);
 
             if (_deductSequence != null)
             {
@@ -30,11 +30,10 @@ namespace Core.UI
                 .SetAutoKill(false)
                 .SetRecyclable(true)
                 .Insert(0.0f, transform.DOLocalMove(doMoveOffset, tweenSettings.moveDuration).SetEase(tweenSettings.moveCurve))
-                .Insert(tweenSettings.fadeStartDelay, currencyImage.DOFade(tweenSettings.fadeEndValue, tweenSettings.fadeDuration))
-                .Insert(tweenSettings.fadeStartDelay, currencyText.DOFade(tweenSettings.fadeEndValue, tweenSettings.fadeDuration))
+                .InsertCallback(0.0f, () => canvasGroup.alpha = 1.0f)
+                .InsertCallback(tweenSettings.fadeStartDelay, () => tweenSettings.DoFade(canvasGroup))
                 .AppendCallback(() =>
                 {
-                    gameObject.SetActive(false);
                     HudController.ResizeCurrencySizeDelta();
                 });
         }

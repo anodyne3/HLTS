@@ -16,6 +16,8 @@ namespace Core.Managers
 
         private void OnEnable()
         {
+            if (CameraManager == null) return;
+            
             _audioSource = (AudioSource) CameraManager.MainCamera.GetComponent(typeof(AudioSource));
         }
 

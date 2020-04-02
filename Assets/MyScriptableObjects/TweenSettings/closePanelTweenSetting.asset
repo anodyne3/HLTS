@@ -22,13 +22,9 @@ MonoBehaviour:
     m_RotationOrder: 4
   spawnZoneRadius: 0
   moveOffset: -150
-  punchAmount: {x: 5, y: 0.6, z: -0.6}
-  punchDuration: 0.333
-  punchVibrato: 3
-  punchElasticity: 1
-  fadeDuration: 0
+  punchSetting: {fileID: 0}
+  fadeSetting: {fileID: 11400000, guid: 2247f6c1c5b94a44c9ce097d43bfcba9, type: 2}
   fadeStartDelay: 0
-  fadeEndValue: 0
   sizeDeltaDuration: 0.267
   scaleStartValue: {x: 1, y: 1, z: 1}
   scaleEndValue: {x: 0.5, y: 0.5, z: 0.5}

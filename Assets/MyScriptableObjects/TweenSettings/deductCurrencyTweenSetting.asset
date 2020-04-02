@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b24095dc18074a278263b9b45befaec4, type: 3}
   m_Name: deductCurrencyTweenSetting
   m_EditorClassIdentifier: 
-  tweenDuration: 1.333
+  moveDuration: 1.333
   delayBetweenInstance: 0
   moveCurve:
     serializedVersion: 2
@@ -40,11 +40,11 @@ MonoBehaviour:
     m_RotationOrder: 4
   spawnZoneRadius: 0
   moveOffset: 200
-  punchAmount: {x: 0, y: 0, z: 0}
-  punchDuration: 0
-  punchVibrato: 0
-  punchElasticity: 0
-  fadeDuration: 0.267
+  punchSetting: {fileID: 0}
+  fadeSetting: {fileID: 11400000, guid: 9a1ef62b9b034774ba8cfaa111ef7456, type: 2}
   fadeStartDelay: 1
-  fadeEndValue: 0
   sizeDeltaDuration: 0.267
+  scaleStartValue: {x: 0, y: 0, z: 0}
+  scaleEndValue: {x: 0, y: 0, z: 0}
+  scaleDuration: 0
+  sequenceEasing: 0

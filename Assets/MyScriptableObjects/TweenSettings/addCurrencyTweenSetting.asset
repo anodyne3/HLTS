@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b24095dc18074a278263b9b45befaec4, type: 3}
   m_Name: addCurrencyTweenSetting
   m_EditorClassIdentifier: 
-  moveDuration: 0
+  moveDuration: 1.666
   delayBetweenInstance: 0.133
   moveCurve:
     serializedVersion: 2
@@ -41,9 +41,8 @@ MonoBehaviour:
   spawnZoneRadius: 250
   moveOffset: 0
   punchSetting: {fileID: 11400000, guid: 41a58f3bfeb08e643b82d6c3bbcacb87, type: 2}
-  fadeDuration: 0
+  fadeSetting: {fileID: 0}
   fadeStartDelay: 0
-  fadeEndValue: 0
   sizeDeltaDuration: 0.267
   scaleStartValue: {x: 0, y: 0, z: 0}
   scaleEndValue: {x: 0, y: 0, z: 0}

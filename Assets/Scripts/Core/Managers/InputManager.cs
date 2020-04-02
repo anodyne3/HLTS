@@ -63,7 +63,8 @@ namespace Core.Managers
         
         public virtual void OnDragEnd()
         {
-            CameraManager.draggingDisabled = false;
+            if (Input.GetMouseButtonUp(0))
+                CameraManager.draggingDisabled = false;
         }
     }
 }
