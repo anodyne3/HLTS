@@ -1,9 +1,8 @@
-using Core.Managers;
 using UnityEngine;
 
 namespace Core
 {
-    public class CoinDragHandler : InputManager
+    public class CoinDragHandler : GlobalAccess
     {
         private float _deltaX, _deltaY;
         private bool _moveAllowed;
@@ -22,12 +21,13 @@ namespace Core
 
         private void FixedUpdate()
         {
-            Dragging();
+            // Dragging();
         }
 
-        protected override void OnDragBegin(Vector2 inputPos)
+        protected void OnDragBegin(Vector2 inputPos)
+        // protected override void OnDragBegin(Vector2 inputPos)
         {
-            base.OnDragBegin(inputPos);
+            // base.OnDragBegin(inputPos);
             
             if (CircleCollider != Physics2D.OverlapPoint(inputPos)) return;
 
@@ -42,17 +42,19 @@ namespace Core
             CircleCollider.isTrigger = true;
         }
 
-        protected override void OnDragging(Vector2 inputPos)
+        protected void OnDragging(Vector2 inputPos, Vector2 inputDelta)
+        // protected override void OnDragging(Vector2 inputPos, Vector2 inputDelta)
         {
-            base.OnDragging(inputPos);
+            // base.OnDragging(inputPos, inputDelta);
             
             if (_moveAllowed)
                 RigidBody2D.MovePosition(new Vector2(inputPos.x - _deltaX, inputPos.y - _deltaY));
         }
 
-        public override void OnDragEnd()
+        public void OnDragEnd()
+        // public override void OnDragEnd()
         {
-            base.OnDragEnd();
+            // base.OnDragEnd();
             
             CircleCollider.isTrigger = false;
             _moveAllowed = false;

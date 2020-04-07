@@ -20,6 +20,7 @@ namespace Core.Managers
         [HideInInspector] public GameEvent payoutFinish;
         [HideInInspector] public GameEvent payoutStart;
         [HideInInspector] public GameEvent refreshUi;
+        [HideInInspector] public GameEvent userEarnedReward;
         [HideInInspector] public GameEvent wheelResult;
         [HideInInspector] public GameEvent wheelRoll;
 
@@ -39,6 +40,7 @@ namespace Core.Managers
             payoutFinish = Resources.Load<GameEvent>("Events/" + Constants.GameEvents.payoutFinishEvent);
             payoutStart = Resources.Load<GameEvent>("Events/" + Constants.GameEvents.payoutStartEvent);
             refreshUi = Resources.Load<GameEvent>("Events/" + Constants.GameEvents.refreshUiEvent);
+            userEarnedReward = Resources.Load<GameEvent>("Events/" + Constants.GameEvents.userEarnedRewardEvent);
             wheelResult = Resources.Load<GameEvent>("Events/" + Constants.GameEvents.wheelResultEvent);
             wheelRoll = Resources.Load<GameEvent>("Events/" + Constants.GameEvents.wheelRollEvent);
         }

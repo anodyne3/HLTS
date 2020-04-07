@@ -15,6 +15,7 @@ namespace Utils
         public const string PlayerDataPrefix = "users";
         public const string PlayerDataSuffix = "userData";
         public const string ReelRollCloudFunction = "usersReelRollOnCall";
+        public const string AdRewardClaimCloudFunction = "usersAdRewardClaimOnCall";
 
         //audio
         public const string MusicTrackPath = "MusicTracks";
@@ -91,6 +92,7 @@ namespace Utils
         public string generateCoinEvent = "generateCoinEvent";
         public string payoutFinishEvent = "payoutFinishEvent";
         public string payoutStartEvent = "payoutStartEvent";
+        public string userEarnedRewardEvent = "userEarnedRewardEvent";
         public string refreshUiEvent = "refreshUiEvent";
         public string wheelResultEvent = "wheelResultEvent";
         public string wheelRollEvent = "wheelRollEvent";

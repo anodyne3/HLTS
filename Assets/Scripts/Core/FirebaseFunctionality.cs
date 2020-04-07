@@ -32,17 +32,18 @@ namespace Core
             _firebaseApp.SetEditorDatabaseUrl("https://he-loves-the-slots.firebaseio.com/");
             _firebaseFunc = FirebaseFunctions.DefaultInstance;
 
-            EventManager.NewEventSubscription(gameObject, Constants.GameEvents.wheelRollEvent, ReelRoll);
+            EventManager.NewEventSubscription(gameObject, Constants.GameEvents.wheelRollEvent, RollReels);
+            EventManager.NewEventSubscription(gameObject, Constants.GameEvents.userEarnedRewardEvent, ClaimAdReward);
         }
 
         private void OnDestroy()
         {
             if (_firebaseAuth == null) return;
-            
+
             _firebaseAuth.StateChanged -= AuthStateChanged;
             _firebaseAuth = null;
         }
-        
+
         #region user
 
         private void AuthStateChanged(object sender, System.EventArgs eventArgs)
@@ -110,43 +111,67 @@ namespace Core
         {
             //Firebase.Auth.Credential credential = Firebase.Auth.GoogleAuthProvider.GetCredential(googleIdToken, googleAccessToken);
         }
-        
+
         public void UnlinkAccount()
         {
-            
         }
-        
+
         #endregion
 
         #region slots
-        
-        private async void ReelRoll()
+
+        private async void RollReels()
         {
-            await RollReels();
+            await ReelRoll();
         }
 
-        private async Task RollReels()
+        private async Task ReelRoll()
         {
             var rollReel = _firebaseFunc.GetHttpsCallable(Constants.ReelRollCloudFunction).CallAsync();
 
             await rollReel;
             if (rollReel.IsFaulted)
             {
-                //maybe player message regarding failed internet
-                if (rollReel.Exception == null)
-                    Debug.LogError("reelRoll.Exception is null");
-
-                foreach (var innerException in rollReel.Exception.InnerExceptions)
-                {
-                    if (!(innerException is FunctionsException e)) continue;
-
-                    var code = e.ErrorCode;
-                    var message = e.Message;
-                    Debug.LogError(code + message);
-                }
+                //maybe show message to player regarding failed internet
+                HandleFunctionError(rollReel);
             }
         }
-        
+
+        private async void ClaimAdReward()
+        {
+            await AdRewardClaim();
+        }
+
+        private async Task AdRewardClaim()
+        {
+            var adRewardClaim = _firebaseFunc.GetHttpsCallable(Constants.AdRewardClaimCloudFunction).CallAsync();
+
+            await adRewardClaim;
+            if (adRewardClaim.IsFaulted)
+            {
+                //maybe show message to player regarding some issue
+                HandleFunctionError(adRewardClaim);
+            }
+        }
+
+        private static void HandleFunctionError(Task httpsCallableResult)
+        {
+            if (httpsCallableResult.Exception == null)
+            {
+                Debug.LogError("adRewardClaim.Exception is null");
+                return;
+            }
+
+            foreach (var innerException in httpsCallableResult.Exception.InnerExceptions)
+            {
+                if (!(innerException is FunctionsException e)) continue;
+
+                var code = e.ErrorCode;
+                var message = e.Message;
+                Debug.LogError(code + message);
+            }
+        }
+
         #endregion
     }
 }

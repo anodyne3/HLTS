@@ -1,4 +1,6 @@
-﻿using Enums;
+﻿using System;
+using Core.Input;
+using Enums;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -7,8 +9,8 @@ using Utils;
 
 namespace Core
 {
-    public class Gdpr : GlobalAccess, IPointerClickHandler
-    {
+    public class Gdpr : GlobalAccess//, IPointerClickHandler
+        {
         [SerializeField] private Button confirmButton;
         [SerializeField] public TMP_Text textComponent;
 
@@ -16,8 +18,15 @@ namespace Core
         {
             confirmButton.onClick.RemoveAllListeners();
             confirmButton.onClick.AddListener(ConfirmClicked);
-
+            
+            InputManager.Pressed += OnPressed;
+            
             CheckConsent();
+        }
+
+        private void OnDisable()
+        {
+            InputManager.Pressed -= OnPressed;
         }
 
         private void CheckConsent()
@@ -39,12 +48,13 @@ namespace Core
             ClosePanel();
         }
 
-        public void OnPointerClick(PointerEventData eventData)
+        private void OnPressed(PointerInput pointerInput)
+        // public void OnPointerClick(PointerEventData eventData)
         {
             AudioManager.PlayClip(SoundEffectType.UiClick);
 
             var linkIndex =
-                TMP_TextUtilities.FindIntersectingLink(textComponent, Input.mousePosition, CameraManager.MainCamera);
+                TMP_TextUtilities.FindIntersectingLink(textComponent, pointerInput.position, CameraManager.MainCamera);
 
             if (linkIndex == -1) return;
 

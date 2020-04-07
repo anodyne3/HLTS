@@ -12,7 +12,9 @@ namespace Core
         protected static HudController HudController => Foundation.GetGlobalClass<HudController>();
         protected static PanelManager PanelManager => Foundation.GetGlobalClass<PanelManager>();
         protected static CameraManager CameraManager => Foundation.GetGlobalClass<CameraManager>();
-        // protected static CameraManager CameraManager => CameraManager.Instance;
+        protected static InputManager InputManager => GlobalComponents.Instance.AddGlobalComponent<InputManager>() as InputManager;
+        protected static AdManager AdManager => GlobalComponents.Instance.AddGlobalComponent<AdManager>() as AdManager;
+        
         protected static AudioManager AudioManager => GlobalComponents.Instance.AddGlobalComponent<AudioManager>() as AudioManager;
         // protected static AudioManager AudioManager => AudioManager.Instance;
         protected static ObjectPoolManager ObjectPoolManager => GlobalComponents.Instance.AddGlobalComponent<ObjectPoolManager>() as ObjectPoolManager;

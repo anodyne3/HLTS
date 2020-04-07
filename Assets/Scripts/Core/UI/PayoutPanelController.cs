@@ -1,6 +1,7 @@
 using Enums;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using Utils;
 
 namespace Core.UI
@@ -10,6 +11,19 @@ namespace Core.UI
         [SerializeField] private TMP_Text payoutMessageText;
         [SerializeField] private TMP_Text payoutAmountText;
         [SerializeField] private TMP_Text payoutTypeText;
+        [SerializeField] private Button doublePayoutForAdButton;
+
+        private long _payoutAmount;
+
+        public override void Start()
+        {
+            base.Start();
+            
+            // doublePayoutForAdButton.onClick.RemoveAllListeners();
+            // doublePayoutForAdButton.onClick.AddListener(AdManager.ShowRewardedAd);
+            
+            EventManager.NewEventSubscription(gameObject, Constants.GameEvents.userEarnedRewardEvent, RewardEarned);
+        }
 
         public override void OpenPanel()
         {
@@ -26,11 +40,20 @@ namespace Core.UI
                 ? Constants.JackpotMessage
                 : Constants.YouWinMessage;
 
-            payoutAmountText.text = (PlayerData.coinsAmount - HudController.CoinsAmount).ToString();
+            _payoutAmount = PlayerData.coinsAmount - HudController.CoinsAmount;
+
+            payoutAmountText.text = _payoutAmount.ToString();
 
             payoutTypeText.text = SlotMachine.payout.ToString();
 
             StartTextAnimations();
+        }
+
+        private void RewardEarned()
+        {
+            PlayerData.coinsAmount += _payoutAmount;
+            
+            RefreshPanel();
         }
 
         protected override void ClosePanel()

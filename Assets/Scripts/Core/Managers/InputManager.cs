@@ -1,70 +1,144 @@
 using System;
+using Core.Input;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
+using Touch = UnityEngine.InputSystem.EnhancedTouch.Touch;
 
 namespace Core.Managers
 {
-    public class InputManager : GlobalAccess
+    public class InputManager : Singleton<InputManager>
     {
-        protected void Dragging()
+        public float armDragMultiplier = 0.01f;
+
+        public event Action<PointerInput> Pressed;
+        public event Action<PointerInput> Dragged;
+        public event Action<PointerInput> Released;
+        public event Action<float> Scrolled;
+        public event Action<Touch, Touch> Pinched; 
+        
+        private InputActions _inputActions;
+        
+        //maybe set these with #ifs
+        private bool _useMouse = true;
+        private bool _usePen;
+        private bool _useTouch;
+
+        private bool _isDragging;
+        public Vector2 startPosition;
+        public Vector2 dragDelta;
+
+        private void Awake()
         {
-#if UNITY_EDITOR
-            if (Input.GetMouseButtonDown(0))
+            _inputActions = new InputActions();
+            
+            _inputActions.Pointer.point.performed += OnAction;
+            _inputActions.Pointer.point.canceled += OnAction;
+            _inputActions.Pointer.point.performed += OnPinch;
+            _inputActions.Pointer.point.canceled += OnPinch;
+            _inputActions.Pointer.scroll.performed += OnScroll;
+            _inputActions.Pointer.scroll.canceled += OnScroll;
+            
+            SyncBindingMask();
+        }
+
+        private void Start()
+        {
+            // EnhancedTouchSupport.Enable();
+
+            _inputActions.Enable();
+        }
+
+        private void OnDisable()
+        {
+            _inputActions?.Disable();
+        }
+
+        private void OnAction(InputAction.CallbackContext context)
+        {
+            // var control = context.control;
+            // var device = control.device;
+
+            /* var isMouseInput = device is Mouse;
+            var isPenInput = !isMouseInput && device is Pen;*/
+
+            var drag = context.ReadValue<PointerInput>();
+            /*if (isMouseInput)
+                drag.inputId = Helpers.LeftMouseInputId;
+            else if (isPenInput)
+                drag.inputId = Helpers.PenInputId;*/
+
+            if (drag.contact && !_isDragging)
             {
-                var mousePos = CameraManager.MainCamera.ScreenToWorldPoint(Input.mousePosition);
-                OnDragBegin(mousePos);
+                Pressed?.Invoke(drag);
+                _isDragging = true;
             }
-
-            if (Input.GetMouseButton(0))
+            else if (drag.contact && _isDragging)
             {
-                var mousePos = CameraManager.MainCamera.ScreenToWorldPoint(Input.mousePosition);
-                OnDragging(mousePos);
+                Dragged?.Invoke(drag);
             }
-
-            if (Input.GetMouseButtonUp(0))
+            else
             {
-                OnDragEnd();
-            }
-#endif
-
-            if (Input.touchCount <= 0) return;
-
-            var touch = Input.GetTouch(0);
-            Vector2 touchPos = CameraManager.MainCamera.ScreenToWorldPoint(touch.position);
-
-            switch (touch.phase)
-            {
-                case TouchPhase.Began:
-                    OnDragBegin(touchPos);
-                    break;
-                case TouchPhase.Moved:
-                    OnDragging(touchPos);
-                    break;
-                case TouchPhase.Ended:
-                    OnDragEnd();
-                    break;
-                case TouchPhase.Stationary:
-                    break;
-                case TouchPhase.Canceled:
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
+                Released?.Invoke(drag);
+                _isDragging = false;
             }
         }
 
-        protected virtual void OnDragBegin(Vector2 inputPos)
+        private void OnScroll(InputAction.CallbackContext context)
         {
-            
+            var control = context.control;
+            var device = control.device;
+
+            var isMouseInput = device is Mouse;
+            // var isTouchInput = device is Touchscreen;
+
+            if (isMouseInput)
+                Scrolled?.Invoke(context.ReadValue<float>());
+            // else if (isTouchInput)
+            //     Pinched?.Invoke(context.ReadValue<PointerInput>());
         }
 
-        protected virtual void OnDragging(Vector2 inputPos)
+        private void OnPinch(InputAction.CallbackContext context)
         {
+            if (Touch.activeTouches.Count < 2) return;
             
+            var control = context.control;
+            var device = control.device;
+
+            var isTouchInput = device is Touchscreen;
+
+            if (!isTouchInput) return;
+
+            var touch0 = Touch.activeTouches[0];
+            var touch1 = Touch.activeTouches[1];
+            
+            Pinched?.Invoke(touch0, touch1);
         }
         
-        public virtual void OnDragEnd()
+
+        private void SyncBindingMask()
         {
-            if (Input.GetMouseButtonUp(0))
-                CameraManager.draggingDisabled = false;
+            if (_inputActions == null)
+                return;
+
+            if (_useMouse && _usePen && _useTouch)
+            {
+                _inputActions.bindingMask = null;
+                return;
+            }
+
+            _inputActions.bindingMask = InputBinding.MaskByGroups(new[]
+            {
+                _useMouse ? "Mouse" : null,
+                _usePen ? "Pen" : null,
+                _useTouch ? "Touch" : null
+            });
         }
     }
+}
+
+public static class Helpers
+{
+    public const int LeftMouseInputId = PointerInputModule.kMouseLeftId;
+    public const int PenInputId = int.MinValue;
 }
