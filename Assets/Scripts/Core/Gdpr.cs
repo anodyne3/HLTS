@@ -48,13 +48,13 @@ namespace Core
             ClosePanel();
         }
 
-        private void OnPressed(PointerInput pointerInput)
+        private void OnPressed(Vector2 pointerPosition)
         // public void OnPointerClick(PointerEventData eventData)
         {
             AudioManager.PlayClip(SoundEffectType.UiClick);
 
             var linkIndex =
-                TMP_TextUtilities.FindIntersectingLink(textComponent, pointerInput.position, CameraManager.MainCamera);
+                TMP_TextUtilities.FindIntersectingLink(textComponent, pointerPosition, CameraManager.MainCamera);
 
             if (linkIndex == -1) return;
 

@@ -37,7 +37,7 @@ namespace Core.MainSlotMachine
         {
             _insertedCoin.SetCoinGravity(0.0f);
             _insertedCoin.RigidBody2D.velocity = Vector2.zero;
-            _insertedCoin.OnDragEnd();
+            _insertedCoin.OnReleased();
         }
 
         private void LoadCoin()

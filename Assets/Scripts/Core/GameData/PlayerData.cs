@@ -10,7 +10,7 @@ namespace Core.GameData
     public class PlayerData : Singleton<PlayerData>
     {
         public FirebaseUser firebaseUser;
-        public long coinsAmount;
+        public long coinsAmount = 10;
         public int[] lastResult;
         public int[] nextResult;
 

@@ -35,10 +35,11 @@ namespace Utils
         public const float CoinLoadSpeed = 0.67f;
 
         //arm
-        public const float ArmPullTriggerAmount = 5.0f;
-        public const float ArmPullResetSpeed = 6.67f;
-        public const float ArmLockedTriggerAmount = 2.0f;
-        public const float ClipTriggerTime = 0.6f;
+        public const float ArmDragMultiplier = 0.267f;
+        public const float ArmPullTriggerAmount = 0.667f;
+        public const float ArmPullResetSpeed = 1.667f;
+        public const float ArmLockedTriggerAmount = 0.4f;
+        public const float ClipTriggerTime = 0.666f;
         
         //animStates
         public const string ArmPullState = "LeverPull";
