@@ -9,6 +9,7 @@ namespace Core.UI
     {
         [SerializeField] private Button closeButton;
         [SerializeField] private Button backgroundButton;
+        [SerializeField] private Image backgroundImage;
         [SerializeField] private TMP_TextAnimation[] textAnimations;
         public RectTransform panelTransform;
         // private Image backgroundImage;
@@ -21,6 +22,9 @@ namespace Core.UI
             {
                 textAnimations[i].Init();
             }
+            
+            if (backgroundButton == null) return;
+            backgroundImage = (Image) backgroundButton.GetComponent(typeof(Image));
         }
 
         public virtual void Start()
@@ -49,8 +53,9 @@ namespace Core.UI
             openPanelSequence.Append(panelTransform
                     .DOLocalMoveY(panelOffset, PanelManager.openPanelTweenSettings.moveDuration))
                 .InsertCallback(0.0f, () => PanelManager.openPanelTweenSettings.DoPunch(panelTransform, false))
-                .InsertCallback(PanelManager.openPanelTweenSettings.fadeStartDelay, 
-                    () => PanelManager.openPanelTweenSettings.DoFade(backgroundButton.image, false))
+                .Insert(PanelManager.openPanelTweenSettings.fadeStartDelay, backgroundImage.DOFade(0.66f, 1.0f))
+                // .InsertCallback(PanelManager.openPanelTweenSettings.fadeStartDelay, 
+                //     () => PanelManager.openPanelTweenSettings.DoFade(backgroundButton.image, false))
                 .SetEase(PanelManager.openPanelTweenSettings.sequenceEasing)
                 .SetAutoKill(false)
                 .SetRecyclable(true)
@@ -83,8 +88,9 @@ namespace Core.UI
                     .DOLocalMoveY(_defaultLocalPositionY, PanelManager.closePanelTweenSettings.moveDuration))
                 .Insert(0.0f, panelTransform.DOScale(PanelManager.closePanelTweenSettings.scaleEndValue,
                     PanelManager.closePanelTweenSettings.scaleDuration))
-                .InsertCallback(PanelManager.closePanelTweenSettings.fadeStartDelay, 
-                    () => PanelManager.closePanelTweenSettings.DoFade(backgroundButton.image, false))
+                .Insert(PanelManager.openPanelTweenSettings.fadeStartDelay, backgroundButton.image.DOFade(0.0f, 0.333f))
+                /*.InsertCallback(PanelManager.closePanelTweenSettings.fadeStartDelay, 
+                    () => PanelManager.closePanelTweenSettings.DoFade(backgroundButton.image, false))*/
                 .SetEase(PanelManager.closePanelTweenSettings.sequenceEasing)
                 .SetAutoKill(false)
                 .SetRecyclable(true)

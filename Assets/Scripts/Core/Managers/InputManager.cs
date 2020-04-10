@@ -20,7 +20,7 @@ namespace Core.Managers
         //maybe set these with #ifs
         private bool _useMouse = true;
         private bool _usePen;
-        private bool _useTouch;
+        private bool _useTouch = true;
 
         private bool _isDragging;
         public Vector2 startPosition;
@@ -55,6 +55,8 @@ namespace Core.Managers
         private void OnAction(InputAction.CallbackContext context)
         {
             var drag = context.ReadValue<PointerInput>();
+            
+            if (CameraManager == null) return;
 
             if (drag.contact && !_isDragging)
             {

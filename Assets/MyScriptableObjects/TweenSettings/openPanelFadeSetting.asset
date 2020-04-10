@@ -13,5 +13,4 @@ MonoBehaviour:
   m_Name: openPanelFadeSetting
   m_EditorClassIdentifier: Assembly-CSharp:MyScriptableObjects:TweenFadeSetting
   fadeDuration: 1
-  fadeStartValue: 0
-  fadeEndValue: 0.66
+  fadeEndValue: 0.666

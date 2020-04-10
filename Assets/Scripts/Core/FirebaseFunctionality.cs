@@ -48,28 +48,41 @@ namespace Core
 
         private void AuthStateChanged(object sender, System.EventArgs eventArgs)
         {
-            if (_firebaseAuth.CurrentUser == PlayerData.firebaseUser) return;
+            if (!firebaseReady) Debug.Log("firebase not ready");
 
-            var signedIn = PlayerData.firebaseUser != _firebaseAuth.CurrentUser && _firebaseAuth.CurrentUser != null;
-            if (!signedIn)
+            if (_firebaseAuth.CurrentUser == null)
             {
-                if (PlayerData.firebaseUser != null)
-                {
-                    Debug.Log("Signed out " + PlayerData.firebaseUser.UserId);
-                    SignIn();
-                }
-                else
-                {
-                    Debug.Log("Signed out & firebase dependency issue");
-                    SceneManager.LoadSceneAsynchronously(0);
-                }
-
+                SignIn();
                 return;
             }
 
-            PlayerData.firebaseUser = _firebaseAuth.CurrentUser;
-            Debug.Log("Signed in " + PlayerData.firebaseUser.UserId);
-            StartCoroutine(PlayerData.OnLogin());
+            if (_firebaseAuth.CurrentUser != PlayerData.firebaseUser)
+            {
+                var signedIn = PlayerData.firebaseUser != _firebaseAuth.CurrentUser &&
+                               _firebaseAuth.CurrentUser != null;
+                if (!signedIn)
+                {
+                    if (PlayerData.firebaseUser != null)
+                    {
+                        Debug.Log("Signed out " + PlayerData.firebaseUser.UserId);
+                        // SignIn();
+                    }
+                    else if (!firebaseReady) 
+                    {
+                        Debug.Log("Signed out & firebase dependency issue");
+                        SceneManager.LoadSceneAsynchronously(0);
+                    }
+                    
+                    //return;
+                }
+
+                PlayerData.firebaseUser = _firebaseAuth.CurrentUser;
+                if (signedIn)
+                {
+                    Debug.Log("Signed in " + PlayerData.firebaseUser.UserId);
+                    StartCoroutine(PlayerData.OnLogin());
+                }
+            }
         }
 
         public void CheckLogin()
@@ -82,8 +95,9 @@ namespace Core
         private async void SignIn()
         {
             var task = _firebaseAuth.SignInAnonymouslyAsync();
-
+            Debug.LogError("awaitingAnonymousSignIn");
             await task;
+            Debug.LogError("task AnonymousSignInComplete");
             if (task.IsCanceled)
             {
                 Debug.LogError("SignInAnonymouslyAsync was cancelled.");

@@ -57,6 +57,8 @@ namespace Core
 
         public void OnReleased()
         {
+            if (CircleCollider == null) return;
+            
             CircleCollider.isTrigger = false;
             _moveAllowed = false;
             RigidBody2D.freezeRotation = false;

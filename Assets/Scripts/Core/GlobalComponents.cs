@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 using Core.GameData;
+using Core.Managers;
 
 namespace Core
 {
@@ -17,6 +18,8 @@ namespace Core
         {
             _components.Add(gameObject.AddComponent<FirebaseFunctionality>());
             _components.Add(gameObject.AddComponent<PlayerData>());
+            _components.Add(gameObject.AddComponent<AdManager>());
+            _components.Add(gameObject.AddComponent<SlotMachine>());
         }
 
         public Component AddGlobalComponent<T>() where T : GlobalAccess

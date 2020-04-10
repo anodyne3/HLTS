@@ -9,8 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: fc3f05f9e53e40a0b3da69f81a55d980, type: 3}
   m_Name: deductCurrencyFadeSetting
-  m_EditorClassIdentifier: Assembly-CSharp:MyScriptableObjects:TweenFadeSetting
+  m_EditorClassIdentifier: 
   fadeDuration: 0.267
   fadeEndValue: 0

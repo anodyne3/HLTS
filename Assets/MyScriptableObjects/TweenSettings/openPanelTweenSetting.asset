@@ -23,7 +23,7 @@ MonoBehaviour:
   spawnZoneRadius: 0
   moveOffset: -150
   punchSetting: {fileID: 11400000, guid: 51a5aefc97ce6a242b07a9215bdff27c, type: 2}
-  fadeSetting: {fileID: 11400000, guid: 3c44ffc92245fcd40bef74fcbed72e8c, type: 2}
+  fadeSetting: {fileID: 11400000, guid: 9aa60c6134b2a8947b8bfa54d884c799, type: 2}
   fadeStartDelay: 0
   sizeDeltaDuration: 0.333
   scaleStartValue: {x: 1, y: 1, z: 1}

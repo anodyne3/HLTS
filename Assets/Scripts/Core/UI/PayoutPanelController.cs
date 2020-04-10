@@ -19,8 +19,8 @@ namespace Core.UI
         {
             base.Start();
             
-            // doublePayoutForAdButton.onClick.RemoveAllListeners();
-            // doublePayoutForAdButton.onClick.AddListener(AdManager.ShowRewardedAd);
+            doublePayoutForAdButton.onClick.RemoveAllListeners();
+            doublePayoutForAdButton.onClick.AddListener(AdManager.ShowRewardedAd);
             
             EventManager.NewEventSubscription(gameObject, Constants.GameEvents.userEarnedRewardEvent, RewardEarned);
         }

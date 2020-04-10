@@ -16,15 +16,12 @@ MonoBehaviour:
   cameraAbove: {x: 0, y: 0.35, z: 0}
   zoomMax: 7.5
   zoomMin: 0.35
-  pivoterBase: {x: 0, y: 0, z: 0}
   panRange: 5
   pivotLerpSpeed: 5
-  panLerpSpeed: 0.5
   zoomLerpSpeed: 10
   zoomMultiplier: 100
   panMultiplier: 1
-  dragRateTop: 0.005
-  dpiCompensate: 1
+  dragRateTop: 5
   cazRate: 0.04
-  pinchRate: 0.08
-  pinchIgnore: 1.25
+  pinchRate: 0.0004
+  pinchIgnore: 0.00125

@@ -74,18 +74,14 @@ namespace Core
                 fruitResult[i] = Constants.FruitDefinitions.First(x => x.Id == result[i]).FruitType;
 
             if (fruitResult.Distinct().Count() == 1)
-            {
                 payout = fruitResult[0];
-            }
             else
             {
                 var fruitGroup = fruitResult.Aggregate(0,
                     (total, next) => next == FruitType.Bananas || next == FruitType.Bars ? total + 1 : total);
 
                 if (fruitGroup == 3)
-                {
                     payout = FruitType.Barnana;
-                }
             }
 
             if (payout != FruitType.None)

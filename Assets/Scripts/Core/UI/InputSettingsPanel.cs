@@ -10,7 +10,6 @@ namespace Core.UI
         [SerializeField] private CameraSettings cameraSettings;
 
         [SerializeField] private TMP_InputField dragRateTop;
-        [SerializeField] private TMP_InputField dpiCompensate;
         [SerializeField] private TMP_InputField pivotLerpSpeed;
         [SerializeField] private TMP_InputField zoomLerpSpeed;
         [SerializeField] private TMP_InputField zoomMultiplier;
@@ -19,7 +18,7 @@ namespace Core.UI
         [SerializeField] private TMP_InputField panRange;
         [SerializeField] private TMP_InputField pinchRate;
         [SerializeField] private TMP_InputField pinchIgnore;
-
+/*
         [SerializeField] private TMP_InputField cameraOffsetX;
         [SerializeField] private TMP_InputField cameraOffsetY;
         [SerializeField] private TMP_InputField cameraOffsetZ;
@@ -31,15 +30,14 @@ namespace Core.UI
         [SerializeField] private TMP_InputField pivoterBaseX;
         [SerializeField] private TMP_InputField pivoterBaseY;
         [SerializeField] private TMP_InputField pivoterBaseZ;
-
+*/
         [SerializeField] private Button updateSettingsButton;
 
         public override void Awake()
         {
             base.Awake();
 
-            /*dragRateTop.text = cameraSettings.dragRateTop.ToString();
-            dpiCompensate.text = cameraSettings.dpiCompensate.ToString();
+            dragRateTop.text = cameraSettings.dragRateTop.ToString();
             pivotLerpSpeed.text = cameraSettings.pivotLerpSpeed.ToString();
             zoomLerpSpeed.text = cameraSettings.zoomLerpSpeed.ToString();
             zoomMultiplier.text = cameraSettings.zoomMultiplier.ToString();
@@ -48,7 +46,7 @@ namespace Core.UI
             panRange.text = cameraSettings.panRange.ToString();
             pinchRate.text = cameraSettings.pinchRate.ToString();
             pinchIgnore.text = cameraSettings.pinchIgnore.ToString();
-            cameraOffsetX.text = cameraSettings.cameraOffset.x.ToString();
+            /*cameraOffsetX.text = cameraSettings.cameraOffset.x.ToString();
             cameraOffsetY.text = cameraSettings.cameraOffset.y.ToString();
             cameraOffsetZ.text = cameraSettings.cameraOffset.z.ToString();
             cameraAboveX.text = cameraSettings.cameraAbove.x.ToString();
@@ -59,6 +57,13 @@ namespace Core.UI
             pivoterBaseX.text = cameraSettings.pivoterBase.x.ToString();
             pivoterBaseY.text = cameraSettings.pivoterBase.y.ToString();
             pivoterBaseZ.text = cameraSettings.pivoterBase.z.ToString();*/
+
+            var settingsParent = panelTransform.GetChild(1).transform;
+            foreach (Transform setting in settingsParent)
+            {
+                var header = (TMP_Text) setting.GetChild(1).GetComponent(typeof(TMP_Text));
+                header.text = setting.name;
+            }
         }
 
         public override void Start()
@@ -71,8 +76,7 @@ namespace Core.UI
 
         private void UpdateSettings()
         {
-            /*cameraSettings.dragRateTop = float.Parse(dragRateTop.text);
-            cameraSettings.dpiCompensate = float.Parse(dpiCompensate.text);
+            cameraSettings.dragRateTop = float.Parse(dragRateTop.text);
             cameraSettings.pivotLerpSpeed = float.Parse(pivotLerpSpeed.text);
             cameraSettings.zoomLerpSpeed = float.Parse(zoomLerpSpeed.text);
             cameraSettings.zoomMultiplier = float.Parse(zoomMultiplier.text);
@@ -81,7 +85,7 @@ namespace Core.UI
             cameraSettings.panRange = float.Parse(panRange.text);
             cameraSettings.pinchRate = float.Parse(pinchRate.text);
             cameraSettings.pinchIgnore = float.Parse(pinchIgnore.text);
-            cameraSettings.zoomMax = float.Parse(zoomMax.text);
+            /*cameraSettings.zoomMax = float.Parse(zoomMax.text);
             cameraSettings.zoomMin = float.Parse(zoomMin.text);
             cameraSettings.cameraOffset.x = float.Parse(cameraOffsetX.text);
             cameraSettings.cameraOffset.y = float.Parse(cameraOffsetY.text);
@@ -93,6 +97,5 @@ namespace Core.UI
             cameraSettings.pivoterBase.y = float.Parse(pivoterBaseY.text);
             cameraSettings.pivoterBase.z = float.Parse(pivoterBaseZ.text);*/
         }
-            
     }
 }

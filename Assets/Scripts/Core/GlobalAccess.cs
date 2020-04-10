@@ -16,7 +16,6 @@ namespace Core
         protected static AdManager AdManager => GlobalComponents.Instance.AddGlobalComponent<AdManager>() as AdManager;
         
         protected static AudioManager AudioManager => GlobalComponents.Instance.AddGlobalComponent<AudioManager>() as AudioManager;
-        // protected static AudioManager AudioManager => AudioManager.Instance;
         protected static ObjectPoolManager ObjectPoolManager => GlobalComponents.Instance.AddGlobalComponent<ObjectPoolManager>() as ObjectPoolManager;
         protected static FirebaseFunctionality FirebaseFunctionality => GlobalComponents.Instance.AddGlobalComponent<FirebaseFunctionality>() as FirebaseFunctionality;
         protected static SceneManager SceneManager => GlobalComponents.Instance.AddGlobalComponent<SceneManager>() as SceneManager;

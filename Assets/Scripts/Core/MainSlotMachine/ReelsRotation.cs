@@ -12,8 +12,7 @@ namespace Core.MainSlotMachine
 
         //temp newRoll, will come from server
         [SerializeField] private int[] newRoll;
-        private WaitForEndOfFrame _waitForEndOfFrame = new WaitForEndOfFrame(); 
-
+        private WaitForEndOfFrame _waitForEndOfFrame = new WaitForEndOfFrame();
 
         private void Start()
         {
@@ -48,7 +47,7 @@ namespace Core.MainSlotMachine
 
         private IEnumerator SpinLeftReel(int nextRoll, int lastResult)
         {
-            var spinDegrees = Constants.TotalSpinTime - 10.0f - (nextRoll - lastResult) * 2;
+            var spinDegrees = Constants.TotalSpinTime - 6 - (nextRoll - lastResult) * 2;
 
             while (spinDegrees > Constants.RightReelStopTime)
             {
@@ -76,7 +75,7 @@ namespace Core.MainSlotMachine
 
         private IEnumerator SpinMiddleReel(int nextRoll, int lastResult)
         {
-            var spinDegrees = Constants.TotalSpinTime + 4.0f + (nextRoll - lastResult) * 2;
+            var spinDegrees = Constants.TotalSpinTime + 4 + (nextRoll - lastResult) * 2;
 
             while (spinDegrees > Constants.RightReelStopTime)
             {
