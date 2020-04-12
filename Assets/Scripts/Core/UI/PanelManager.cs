@@ -11,6 +11,8 @@ namespace Core.UI
         public readonly List<PanelController> allPanels = new List<PanelController>();
         public TweenSetting openPanelTweenSettings;
         public TweenSetting closePanelTweenSettings;
+        public TweenFadeSetting openPanelFadeSettings;
+        public TweenFadeSetting closePanelFadeSettings;
 
         public override void Awake()
         {

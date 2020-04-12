@@ -1,5 +1,6 @@
 ﻿using DG.Tweening;
 using Enums;
+using MyScriptableObjects;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,10 +11,10 @@ namespace Core.UI
         [SerializeField] private Button closeButton;
         [SerializeField] private Button backgroundButton;
         [SerializeField] private TMP_TextAnimation[] textAnimations;
-        
+        [SerializeField] private TweenPunchSetting closeButtonPunchSetting;
+
         public RectTransform panelTransform;
-        
-        private Image _backgroundImage;
+
         private float _defaultLocalPositionY;
 
         public virtual void Awake()
@@ -31,6 +32,7 @@ namespace Core.UI
             {
                 closeButton.onClick.RemoveAllListeners();
                 closeButton.onClick.AddListener(ClosePanel);
+                closeButtonPunchSetting = (TweenPunchSetting) Resources.Load("TweenSettings/closeButtonPunchSetting");
             }
 
             if (backgroundButton == null) return;
@@ -41,9 +43,6 @@ namespace Core.UI
 
         public virtual void OpenPanel()
         {
-            if (_backgroundImage == null && backgroundButton != null)
-                _backgroundImage = (Image) backgroundButton.GetComponent(typeof(Image));
-            
             AudioManager.PlayClip(SoundEffectType.OpenPanel);
 
             panelTransform.localScale = PanelManager.closePanelTweenSettings.scaleStartValue;
@@ -58,11 +57,14 @@ namespace Core.UI
                         GameManager.interactionEnabled = false;
 
                     gameObject.SetActive(true);
+                    Canvas.ForceUpdateCanvases();
                 })
-                .Insert(0.0f, panelTransform.DOLocalMoveY(panelOffset, PanelManager.openPanelTweenSettings.moveDuration))
+                .Insert(0.0f,
+                    panelTransform.DOLocalMoveY(panelOffset, PanelManager.openPanelTweenSettings.moveDuration))
                 .InsertCallback(0.0f, () => PanelManager.openPanelTweenSettings.DoPunch(panelTransform, false))
-                .Insert(PanelManager.openPanelTweenSettings.fadeStartDelay, _backgroundImage.DOFade(0.66f, 1.0f))
-                .InsertCallback(PanelManager.openPanelTweenSettings.fadeStartDelay, () => PanelManager.openPanelTweenSettings.DoFade(backgroundButton.image, false))
+                .Insert(PanelManager.openPanelTweenSettings.fadeStartDelay,
+                    backgroundButton.image.DOFade(PanelManager.openPanelFadeSettings.fadeEndValue,
+                        PanelManager.openPanelFadeSettings.fadeDuration))
                 .SetEase(PanelManager.openPanelTweenSettings.sequenceEasing)
                 .SetAutoKill(false)
                 .SetRecyclable(true)
@@ -72,7 +74,7 @@ namespace Core.UI
         protected void StartTextAnimations()
         {
             if (!gameObject.activeInHierarchy) return;
-            
+
             var textAnimationsLength = textAnimations.Length;
             for (var i = 0; i < textAnimationsLength; i++)
             {
@@ -83,14 +85,20 @@ namespace Core.UI
 
         protected virtual void ClosePanel()
         {
+            if (closeButton != null)
+                closeButtonPunchSetting.DoPunch(closeButton.transform, false);
+
             AudioManager.PlayClip(SoundEffectType.ClosePanel);
 
             var closePanelSequence = DOTween.Sequence();
-            closePanelSequence.Insert(0.0f, panelTransform.DOLocalMoveY(_defaultLocalPositionY, PanelManager.closePanelTweenSettings.moveDuration))
+            closePanelSequence.Insert(0.0f,
+                    panelTransform.DOLocalMoveY(_defaultLocalPositionY,
+                        PanelManager.closePanelTweenSettings.moveDuration))
                 .Insert(0.0f, panelTransform.DOScale(PanelManager.closePanelTweenSettings.scaleEndValue,
                     PanelManager.closePanelTweenSettings.scaleDuration))
-                .InsertCallback(PanelManager.closePanelTweenSettings.fadeStartDelay, 
-                    () => PanelManager.closePanelTweenSettings.DoFade(backgroundButton.image, false))
+                .Insert(PanelManager.closePanelTweenSettings.fadeStartDelay,
+                    backgroundButton.image.DOFade(PanelManager.closePanelFadeSettings.fadeEndValue,
+                        PanelManager.closePanelFadeSettings.fadeDuration))
                 .SetEase(PanelManager.closePanelTweenSettings.sequenceEasing)
                 .SetAutoKill(false)
                 .SetRecyclable(true)

@@ -12,16 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 495df9640d927884eb70ba647833e498, type: 3}
   m_Name: mainCameraOffset
   m_EditorClassIdentifier: 
-  cameraOffset: {x: 0, y: 0, z: 0}
-  cameraAbove: {x: 0, y: 0.35, z: 0}
   zoomMax: 7.5
   zoomMin: 0.35
   panRange: 5
-  pivotLerpSpeed: 5
-  zoomLerpSpeed: 10
-  zoomMultiplier: 100
-  panMultiplier: 1
-  dragRateTop: 5
-  cazRate: 0.04
-  pinchRate: 0.0004
+  panLerpSpeed: 5
+  panMultiplier: 7
+  zoomLerpSpeed: 7
+  zoomMultiplier: 0.02
+  pinchRate: 1.5
   pinchIgnore: 0.00125

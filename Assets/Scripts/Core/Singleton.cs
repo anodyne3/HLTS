@@ -4,7 +4,7 @@ namespace Core
 {
     public abstract class Singleton<T> : GlobalAccess where T : GlobalAccess
     {
-        private static bool _shuttingDown = false;
+        private static bool _shuttingDown;
         private static readonly object Lock = new object();
         private static T _instance;
 
@@ -30,7 +30,7 @@ namespace Core
                     _instance = new GameObject().AddComponent<T>();
                     _instance.name = typeof(T) + " (Singleton)";
 
-                    // Make instance persistent. why? for all?
+                    // Make instance persistent. why if globalComponents manages them?
                     DontDestroyOnLoad(_instance.gameObject);
 
                     return _instance;

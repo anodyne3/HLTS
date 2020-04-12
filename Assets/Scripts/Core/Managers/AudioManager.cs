@@ -23,6 +23,8 @@ namespace Core.Managers
 
         public void PlayClip(SoundEffectType soundEffectType)
         {
+            if (soundsDisabled) return;
+            
             var soundEffect = ResourceManager.GetSoundEffect(soundEffectType);
             if (soundEffect == null) return;
 

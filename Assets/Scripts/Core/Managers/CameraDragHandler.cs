@@ -1,4 +1,3 @@
-using System;
 using MyScriptableObjects;
 using UnityEngine;
 using Utils;
@@ -9,18 +8,22 @@ namespace Core.Managers
     public class CameraDragHandler : GlobalAccess
     {
         [SerializeField] private CameraSettings mainCameraOffsets;
-        [SerializeField] private bool _cameraChanged;
-        [SerializeField] private float _zoomPercentPan;
-        [SerializeField] private float _zoomPercentInverse;
 
+        private bool _cameraChanged;
+        private float _zoomPercent;
+        private float _zoomCurrent;
+        private float _adjustedPanMultiplier;
+        private float _adjustedZoomMultiplier;
+        private float _adjustedPanRange;
+        private float _zoomTotalRange;
         private float NewOrthographicSize { get; set; }
         private Vector3 _newLocalPosition;
-
-#if UNITY_ANDROID
+        
+        //android properties
         private Vector2 _pinchPositionDelta;
         private float _pinchZoom;
         private float _deltaMagnitudeDiff;
-#endif
+        private bool _isPinching;
 
         private void Start()
         {
@@ -31,10 +34,14 @@ namespace Core.Managers
             InputManager.Dragged += OnDragged;
             InputManager.Released += OnReleased;
             InputManager.Pinched += PinchZoom;
+
+            _zoomTotalRange = mainCameraOffsets.zoomMax - mainCameraOffsets.zoomMin;
         }
 
         private void OnDisable()
         {
+            if (InputManager == null) return;
+            
             InputManager.Scrolled -= OnScrolled;
             InputManager.Pressed -= OnPressed;
             InputManager.Dragged -= OnDragged;
@@ -47,8 +54,10 @@ namespace Core.Managers
             CenterAsZoom(scrollAmount);
         }
 
-        private static void OnPressed(Vector2 pointerPosition)
+        private void OnPressed(Vector2 pointerPosition)
         {
+            _isPinching = false;
+            
             if (CameraManager.draggingDisabled) return;
 
             InputManager.startPosition = pointerPosition;
@@ -78,60 +87,45 @@ namespace Core.Managers
 
         private void CameraPanning(Vector2 dragData)
         {
-            // GameManager.interactionEnabled = false;
+            if (_isPinching) return;
+            
+            if (GameManager != null)
+                GameManager.interactionEnabled = false;
 
-            var zoomMaxLessZoom = mainCameraOffsets.zoomMax - CameraManager.MainCamera.orthographicSize;
-            var zoomTotalRange = mainCameraOffsets.zoomMax - mainCameraOffsets.zoomMin;
+            _newLocalPosition.x += dragData.x * _adjustedPanMultiplier;
+            _newLocalPosition.x = Mathf.Clamp(_newLocalPosition.x, -_adjustedPanRange, _adjustedPanRange);
+            _newLocalPosition.y += dragData.y * _adjustedPanMultiplier;
+            _newLocalPosition.y = Mathf.Clamp(_newLocalPosition.y, -_adjustedPanRange, _adjustedPanRange);
 
-            _zoomPercentPan = zoomMaxLessZoom / zoomTotalRange;
-
-            if (Math.Abs(zoomMaxLessZoom) < Constants.FloatTolerance)
-                _zoomPercentInverse = 0;
-            else
-                _zoomPercentInverse = zoomTotalRange / zoomMaxLessZoom;
-
-            _newLocalPosition.x += dragData.x * mainCameraOffsets.dragRateTop * _zoomPercentInverse;
-            _newLocalPosition.x = Mathf.Clamp(_newLocalPosition.x, -mainCameraOffsets.panRange * _zoomPercentPan,
-                mainCameraOffsets.panRange * _zoomPercentPan);
-            _newLocalPosition.y += dragData.y * mainCameraOffsets.dragRateTop * _zoomPercentInverse;
-            _newLocalPosition.y = Mathf.Clamp(_newLocalPosition.y, -mainCameraOffsets.panRange * _zoomPercentPan,
-                mainCameraOffsets.panRange * _zoomPercentPan);
-
-            if ((transform.localPosition - _newLocalPosition).sqrMagnitude > Constants.FloatTolerance)
+            if ((transform.localPosition - _newLocalPosition).sqrMagnitude > Constants.WorldSpaceTolerance)
                 _cameraChanged = true;
         }
 
         private void CenterAsZoom(float zoomData)
         {
-            NewOrthographicSize =
-                CameraManager.MainCamera.orthographicSize - zoomData * mainCameraOffsets.zoomMultiplier;
-            NewOrthographicSize = Mathf.Clamp(NewOrthographicSize,
-                mainCameraOffsets.zoomMin, mainCameraOffsets.zoomMax);
-            _zoomPercentPan = (mainCameraOffsets.zoomMax - NewOrthographicSize) *
-                              (1 / (float.IsNaN(mainCameraOffsets.zoomMin) ? 1 : mainCameraOffsets.zoomMin));
-            _newLocalPosition = transform.localPosition;
+            _adjustedZoomMultiplier = _zoomPercent > 0.0f
+                ? mainCameraOffsets.zoomMultiplier * (1.0f - _zoomPercent)
+                : mainCameraOffsets.zoomMultiplier;
+            NewOrthographicSize = CameraManager.MainCamera.orthographicSize - zoomData * _adjustedZoomMultiplier;
+            NewOrthographicSize = Mathf.Clamp(NewOrthographicSize, mainCameraOffsets.zoomMin, mainCameraOffsets.zoomMax);
+
+            _zoomCurrent = mainCameraOffsets.zoomMax - NewOrthographicSize;
+            _zoomPercent = _zoomCurrent / _zoomTotalRange;
+
+            _adjustedPanMultiplier = _zoomPercent > 0.0f
+                ? mainCameraOffsets.panMultiplier * (1.0f - _zoomPercent)
+                : mainCameraOffsets.panMultiplier;
+
+            _adjustedPanRange = mainCameraOffsets.panRange * _zoomPercent;
+
             if (zoomData < 0.0f)
             {
                 //Debug.Log("zP < 0"); //ZoomOut
-                _newLocalPosition.x -= _newLocalPosition.x * _zoomPercentPan * mainCameraOffsets.panMultiplier;
-                _newLocalPosition.x = Mathf.Clamp(_newLocalPosition.x, -mainCameraOffsets.panRange * _zoomPercentPan,
-                    mainCameraOffsets.panRange * _zoomPercentPan);
-                _newLocalPosition.y -= _newLocalPosition.y * _zoomPercentPan * mainCameraOffsets.panMultiplier;
-                _newLocalPosition.y = Mathf.Clamp(_newLocalPosition.y,
-                    -mainCameraOffsets.panRange * _zoomPercentPan,
-                    mainCameraOffsets.panRange * _zoomPercentPan);
+                _newLocalPosition.x *= _zoomPercent;
+                _newLocalPosition.y *= _zoomPercent;
             }
-            else
-            {
-                //Debug.Log("zP > 0"); //ZoomIn
-                _newLocalPosition.x += Screen.width * 0.5f / Screen.width * CameraManager.MainCamera.aspect *
-                                       mainCameraOffsets.cazRate;
-                _newLocalPosition.x = Mathf.Clamp(_newLocalPosition.x, -mainCameraOffsets.panRange,
-                    mainCameraOffsets.panRange);
-                _newLocalPosition.y += Screen.height * 0.5f / Screen.height * mainCameraOffsets.cazRate;
-                _newLocalPosition.y = Mathf.Clamp(_newLocalPosition.y, -mainCameraOffsets.panRange,
-                    mainCameraOffsets.panRange);
-            }
+
+            if (CameraManager == null) return;
 
             if (Mathf.Abs(CameraManager.MainCamera.orthographicSize - NewOrthographicSize) > Constants.FloatTolerance)
                 _cameraChanged = true;
@@ -142,20 +136,19 @@ namespace Core.Managers
             if (!_cameraChanged) return;
 
             transform.localPosition = Vector3.Lerp(
-                transform.localPosition, _newLocalPosition, Time.deltaTime * mainCameraOffsets.pivotLerpSpeed);
+                transform.localPosition, _newLocalPosition, Time.deltaTime * mainCameraOffsets.panLerpSpeed);
 
             CameraManager.MainCamera.orthographicSize = Mathf.Lerp(CameraManager.MainCamera.orthographicSize,
                 NewOrthographicSize, Time.deltaTime * mainCameraOffsets.zoomLerpSpeed);
 
             if (Mathf.Abs(CameraManager.MainCamera.orthographicSize - NewOrthographicSize) < Constants.FloatTolerance &&
-                (transform.localPosition - _newLocalPosition).sqrMagnitude < Constants.FloatTolerance)
-            {
+                (transform.localPosition - _newLocalPosition).sqrMagnitude < Constants.WorldSpaceTolerance)
                 _cameraChanged = false;
-            }
         }
 
         private void PinchZoom(Touch touchZero, Touch touchOne)
         {
+            _isPinching = false;
             _pinchPositionDelta = (touchZero.delta + touchOne.delta) * 0.5f;
 
             var touchZeroPrevPos = touchZero.screenPosition - touchZero.delta;
@@ -173,6 +166,7 @@ namespace Core.Managers
             else if (Mathf.Abs(_pinchZoom) > mainCameraOffsets.pinchIgnore)
             {
                 CenterAsZoom(_pinchZoom);
+                _isPinching = true;
             }
         }
     }

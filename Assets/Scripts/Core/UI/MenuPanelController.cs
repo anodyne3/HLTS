@@ -40,7 +40,7 @@ namespace Core.UI
 
         private static void ResetAccount()
         {
-            GameManager.ResetAccount();
+            PanelManager.OpenSubPanel<ConfirmResetPanelController>();
         }
 
         private static void LinkAccount()

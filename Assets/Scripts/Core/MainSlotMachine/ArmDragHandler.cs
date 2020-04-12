@@ -25,11 +25,11 @@ namespace Core.MainSlotMachine
             InputManager.Dragged += OnDragged;
             InputManager.Released += OnReleased;
         }
-        
+
         private void OnDestroy()
         {
             if (InputManager == null) return;
-            
+
             InputManager.Pressed -= OnPressed;
             InputManager.Dragged -= OnDragged;
             InputManager.Released -= OnReleased;
@@ -38,7 +38,7 @@ namespace Core.MainSlotMachine
         private void OnPressed(Vector2 pointerPosition)
         {
             if (_armCollider != Physics2D.OverlapPoint(pointerPosition)) return;
-            
+
             CameraManager.draggingDisabled = true;
 
             _isDragging = true;
@@ -47,8 +47,8 @@ namespace Core.MainSlotMachine
 
         private void OnDragged(Vector2 pointerPosition)
         {
-            if (!_isDragging) return;    
-            
+            if (!_isDragging) return;
+
             _deltaY = _deltaYStart - pointerPosition.y > 0.0f ? _deltaYStart - pointerPosition.y : 0.0f;
             if (_deltaY < 0.0f) return;
 
@@ -66,7 +66,7 @@ namespace Core.MainSlotMachine
             }
 
             if (!(_deltaY > Constants.ArmPullTriggerAmount) || !_armPullUnlocked) return;
-            
+
             _pivotAnimator.Play(Constants.ArmPullState, 0, Constants.ClipTriggerTime);
             _pivotAnimator.speed = 1.0f;
             EventManager.armPull.Raise();
@@ -74,11 +74,11 @@ namespace Core.MainSlotMachine
             _deltaY = 0;
             _armPullUnlocked = false;
         }
-        
+
         private void OnReleased()
         {
             Release();
-            
+
             CameraManager.draggingDisabled = false;
         }
 
@@ -86,7 +86,7 @@ namespace Core.MainSlotMachine
         {
             if (_isDragging)
                 StartCoroutine(nameof(ResetArmPullToRest));
-            
+
             _isDragging = false;
         }
 

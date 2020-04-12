@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 67f1d8f25ab57904bb99cd528671d938, type: 3}
-  m_Name: inputSettingsTitle
+  m_Name: confirmResetTitle
   m_EditorClassIdentifier: 
   AnimatePosition: 1
   vertexStartPositionOffset: {x: 0, y: 0}
@@ -19,7 +19,7 @@ MonoBehaviour:
   AnimateScale: 0
   vertexStartScale: {x: 0, y: 0, z: 0}
   MoveOriginalOffScreen: 0
-  GetMeOffScreen: {x: 0, y: 1500}
+  GetMeOffScreen: {x: 0, y: 1100}
   animTime: 2.333
   animateFromTextPivot: 0
   targetText: {fileID: 0}

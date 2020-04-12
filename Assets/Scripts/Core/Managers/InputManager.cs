@@ -35,7 +35,6 @@ namespace Core.Managers
             _inputActions.Pointer.point.performed += OnPinch;
             _inputActions.Pointer.point.canceled += OnPinch;
             _inputActions.Pointer.scroll.performed += OnScroll;
-            _inputActions.Pointer.scroll.canceled += OnScroll;
 
             SyncBindingMask();
         }
@@ -80,20 +79,16 @@ namespace Core.Managers
             var device = control.device;
 
             var isMouseInput = device is Mouse;
-            // var isTouchInput = device is Touchscreen;
 
             if (isMouseInput)
                 Scrolled?.Invoke(context.ReadValue<float>());
-            // else if (isTouchInput)
-            //     Pinched?.Invoke(context.ReadValue<PointerInput>());
         }
 
         private void OnPinch(InputAction.CallbackContext context)
         {
             if (Touch.activeTouches.Count < 2) return;
 
-            var control = context.control;
-            var device = control.device;
+            var device = context.control.device;
 
             var isTouchInput = device is Touchscreen;
 

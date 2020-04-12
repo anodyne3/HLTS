@@ -8,8 +8,8 @@ namespace Core
         private bool _moveAllowed;
         private SpriteRenderer _spriteRenderer;
 
-        [HideInInspector] public Rigidbody2D RigidBody2D { get; private set; }
-        [HideInInspector] public CircleCollider2D CircleCollider { get; private set; }
+        public Rigidbody2D RigidBody2D { get; private set; }
+        public CircleCollider2D CircleCollider { get; private set; }
 
         private void Awake()
         {
@@ -38,10 +38,6 @@ namespace Core
             if (CircleCollider != Physics2D.OverlapPoint(pointerPosition)) return;
 
             CameraManager.draggingDisabled = true;
-
-            // var position = transform.position;
-            // _deltaX = pointerPosition.x - position.x;
-            // _deltaY = pointerPosition.y - position.y;
             _moveAllowed = true;
             RigidBody2D.freezeRotation = true;
             _spriteRenderer.sortingOrder = 50;

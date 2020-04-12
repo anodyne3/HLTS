@@ -9,8 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fc3f05f9e53e40a0b3da69f81a55d980, type: 3}
-  m_Name: openPanelFadeSetting
+  m_Script: {fileID: 11500000, guid: fa3c22a74eca48a5839fa03435c9c821, type: 3}
+  m_Name: closeButtonPunchSetting
   m_EditorClassIdentifier: 
-  fadeDuration: 1
-  fadeEndValue: 0.666
+  punchAmount: {x: 0.267, y: 0.267, z: 0.267}
+  punchDuration: 0.133
+  punchVibrato: 0
+  punchElasticity: 0

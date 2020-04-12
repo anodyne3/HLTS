@@ -9,6 +9,7 @@ namespace Core
     public class GlobalComponents : Singleton<GlobalComponents>
     {
         private readonly List<Component> _components = new List<Component>();
+        private bool _shuttingDown;
 
         protected GlobalComponents()
         {
@@ -24,6 +25,9 @@ namespace Core
 
         public Component AddGlobalComponent<T>() where T : GlobalAccess
         {
+            if (_shuttingDown)
+                return null;
+            
             var existingComponent = GetGlobalComponent<T>();
 
             if (existingComponent != null)
@@ -49,6 +53,16 @@ namespace Core
             var existingComponent = new Component();
 
             return _components.Any(x => x.TryGetComponent(typeof(T), out existingComponent)) ? existingComponent : null;
+        }
+        
+        private void OnApplicationQuit()
+        {
+            _shuttingDown = true;
+        }
+
+        private void OnDestroy()
+        {
+            _shuttingDown = true;
         }
     }
 }
