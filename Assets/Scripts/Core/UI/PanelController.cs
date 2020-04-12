@@ -9,10 +9,11 @@ namespace Core.UI
     {
         [SerializeField] private Button closeButton;
         [SerializeField] private Button backgroundButton;
-        [SerializeField] private Image backgroundImage;
         [SerializeField] private TMP_TextAnimation[] textAnimations;
+        
         public RectTransform panelTransform;
-        // private Image backgroundImage;
+        
+        private Image _backgroundImage;
         private float _defaultLocalPositionY;
 
         public virtual void Awake()
@@ -22,9 +23,6 @@ namespace Core.UI
             {
                 textAnimations[i].Init();
             }
-            
-            if (backgroundButton == null) return;
-            backgroundImage = (Image) backgroundButton.GetComponent(typeof(Image));
         }
 
         public virtual void Start()
@@ -43,6 +41,9 @@ namespace Core.UI
 
         public virtual void OpenPanel()
         {
+            if (_backgroundImage == null && backgroundButton != null)
+                _backgroundImage = (Image) backgroundButton.GetComponent(typeof(Image));
+            
             AudioManager.PlayClip(SoundEffectType.OpenPanel);
 
             panelTransform.localScale = PanelManager.closePanelTweenSettings.scaleStartValue;
@@ -50,27 +51,28 @@ namespace Core.UI
             var panelOffset = PanelManager.OpenPanelCount() * PanelManager.openPanelTweenSettings.moveOffset +
                               _defaultLocalPositionY;
             var openPanelSequence = DOTween.Sequence();
-            openPanelSequence.Append(panelTransform
-                    .DOLocalMoveY(panelOffset, PanelManager.openPanelTweenSettings.moveDuration))
-                .InsertCallback(0.0f, () => PanelManager.openPanelTweenSettings.DoPunch(panelTransform, false))
-                .Insert(PanelManager.openPanelTweenSettings.fadeStartDelay, backgroundImage.DOFade(0.66f, 1.0f))
-                // .InsertCallback(PanelManager.openPanelTweenSettings.fadeStartDelay, 
-                //     () => PanelManager.openPanelTweenSettings.DoFade(backgroundButton.image, false))
-                .SetEase(PanelManager.openPanelTweenSettings.sequenceEasing)
-                .SetAutoKill(false)
-                .SetRecyclable(true)
-                .OnComplete(StartTextAnimations)
-                .PrependCallback(() =>
+            openPanelSequence
+                .InsertCallback(0.0f, () =>
                 {
                     if (GameManager != null)
                         GameManager.interactionEnabled = false;
 
                     gameObject.SetActive(true);
-                });
+                })
+                .Insert(0.0f, panelTransform.DOLocalMoveY(panelOffset, PanelManager.openPanelTweenSettings.moveDuration))
+                .InsertCallback(0.0f, () => PanelManager.openPanelTweenSettings.DoPunch(panelTransform, false))
+                .Insert(PanelManager.openPanelTweenSettings.fadeStartDelay, _backgroundImage.DOFade(0.66f, 1.0f))
+                .InsertCallback(PanelManager.openPanelTweenSettings.fadeStartDelay, () => PanelManager.openPanelTweenSettings.DoFade(backgroundButton.image, false))
+                .SetEase(PanelManager.openPanelTweenSettings.sequenceEasing)
+                .SetAutoKill(false)
+                .SetRecyclable(true)
+                .OnComplete(StartTextAnimations);
         }
 
         protected void StartTextAnimations()
         {
+            if (!gameObject.activeInHierarchy) return;
+            
             var textAnimationsLength = textAnimations.Length;
             for (var i = 0; i < textAnimationsLength; i++)
             {
@@ -84,13 +86,11 @@ namespace Core.UI
             AudioManager.PlayClip(SoundEffectType.ClosePanel);
 
             var closePanelSequence = DOTween.Sequence();
-            closePanelSequence.Append(panelTransform
-                    .DOLocalMoveY(_defaultLocalPositionY, PanelManager.closePanelTweenSettings.moveDuration))
+            closePanelSequence.Insert(0.0f, panelTransform.DOLocalMoveY(_defaultLocalPositionY, PanelManager.closePanelTweenSettings.moveDuration))
                 .Insert(0.0f, panelTransform.DOScale(PanelManager.closePanelTweenSettings.scaleEndValue,
                     PanelManager.closePanelTweenSettings.scaleDuration))
-                .Insert(PanelManager.openPanelTweenSettings.fadeStartDelay, backgroundButton.image.DOFade(0.0f, 0.333f))
-                /*.InsertCallback(PanelManager.closePanelTweenSettings.fadeStartDelay, 
-                    () => PanelManager.closePanelTweenSettings.DoFade(backgroundButton.image, false))*/
+                .InsertCallback(PanelManager.closePanelTweenSettings.fadeStartDelay, 
+                    () => PanelManager.closePanelTweenSettings.DoFade(backgroundButton.image, false))
                 .SetEase(PanelManager.closePanelTweenSettings.sequenceEasing)
                 .SetAutoKill(false)
                 .SetRecyclable(true)
