@@ -6,11 +6,10 @@ namespace Core.MainSlotMachine
 {
     public class ReelsRotation : GlobalAccess
     {
-        [SerializeField] public Transform fruitReelL;
-        [SerializeField] public Transform fruitReelM;
-        [SerializeField] public Transform fruitReelR;
+        [SerializeField] private Transform fruitReelL;
+        [SerializeField] private Transform fruitReelM;
+        [SerializeField] private Transform fruitReelR;
 
-        //temp newRoll, will come from server
         [SerializeField] private int[] newRoll;
         private WaitForEndOfFrame _waitForEndOfFrame = new WaitForEndOfFrame();
 

@@ -14,7 +14,6 @@ namespace Core
         protected static CameraManager CameraManager => Foundation.GetGlobalClass<CameraManager>();
         protected static InputManager InputManager => GlobalComponents.Instance.AddGlobalComponent<InputManager>() as InputManager;
         protected static AdManager AdManager => GlobalComponents.Instance.AddGlobalComponent<AdManager>() as AdManager;
-        
         protected static AudioManager AudioManager => GlobalComponents.Instance.AddGlobalComponent<AudioManager>() as AudioManager;
         protected static ObjectPoolManager ObjectPoolManager => GlobalComponents.Instance.AddGlobalComponent<ObjectPoolManager>() as ObjectPoolManager;
         protected static FirebaseFunctionality FirebaseFunctionality => GlobalComponents.Instance.AddGlobalComponent<FirebaseFunctionality>() as FirebaseFunctionality;
