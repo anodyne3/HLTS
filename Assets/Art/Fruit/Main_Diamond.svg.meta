@@ -18,11 +18,11 @@ ScriptedImporter:
   viewportOptions: 0
   preserveViewport: 0
   advancedMode: 0
-  predefinedResolutionIndex: 0
-  targetResolution: 2160
+  predefinedResolutionIndex: 4
+  targetResolution: 60
   resolutionMultiplier: 1
-  stepDistance: 10
-  samplingStepDistance: 100
+  stepDistance: 50000
+  samplingStepDistance: 3
   maxCordDeviationEnabled: 0
   maxCordDeviation: 1
   maxTangentAngleEnabled: 0

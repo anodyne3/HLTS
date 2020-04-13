@@ -43,7 +43,7 @@ namespace Core.MainSlotMachine
         private static void ResetCoin(CoinDragHandler nextCoin)
         {
             nextCoin.CircleCollider.enabled = true;
-            nextCoin.SetCoinOrderInLayer(0);
+            nextCoin.SetCoinOrderInLayer(Constants.CoinStartingSortingOrder);
             nextCoin.gameObject.SetActive(true);
         }
 

@@ -63,7 +63,7 @@ namespace Core.MainSlotMachine
                 yield return null;
             }
 
-            _insertedCoin.SetCoinOrderInLayer(11);
+            _insertedCoin.SetCoinOrderInLayer(Constants.CoinInsertedSortingOrder);
             _insertedCoin.SetCoinGravity(1.0f);
 
             while (_insertedCoin.transform.position.y > insertedCoinFinishPosition.position.y && t <= 5.0f)

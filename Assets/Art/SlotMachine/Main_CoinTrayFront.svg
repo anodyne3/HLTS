@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="513px" height="69.742px" viewBox="0 0 513 69.742" enable-background="new 0 0 513 69.742" xml:space="preserve">
+<g id="Payout_Tray">
+	<g>
+		
+			<path fill="#DCDBDB" stroke="#000000" stroke-width="1.08" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="
+			M175.177,58.05H7.642C3.835,58.05,0,54.216,0,50.41V21.601c0,3.807,3.835,7.641,7.642,7.641h164.7l2.7,27
+			C175.042,56.859,175.096,57.457,175.177,58.05z"/>
+		
+			<path fill="#DCDBDB" stroke="#000000" stroke-width="1.08" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="
+			M513,21.601V50.41c0,3.809-3.835,7.641-7.643,7.641H337.823c0.08-0.592,0.137-1.188,0.137-1.809l2.697-27h164.7
+			C509.165,29.241,513,25.407,513,21.601z"/>
+	</g>
+	
+		<path fill="#231F20" stroke="#000000" stroke-width="1.08" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="
+		M337.823,58.05c-0.863,6.615-6.535,11.691-13.363,11.691H188.542c-6.832,0-12.502-5.076-13.365-11.691
+		c0.757,3.511,5.725,7.021,13.365,7.021H324.46C331.288,65.068,336.96,62.02,337.823,58.05z"/>
+</g>
+</svg>

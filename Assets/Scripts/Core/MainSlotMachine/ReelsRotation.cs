@@ -46,7 +46,7 @@ namespace Core.MainSlotMachine
 
         private IEnumerator SpinLeftReel(int nextRoll, int lastResult)
         {
-            var spinDegrees = Constants.TotalSpinTime - 6 - (nextRoll - lastResult) * 2;
+            var spinDegrees = Constants.TotalSpinTime - 10 - (nextRoll - lastResult) * 2;
 
             while (spinDegrees > Constants.RightReelStopTime)
             {

@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 namespace Core.UI
 {
-    public class ConfirmResetPanelController : PanelController
+    public class ConfirmRewardAdPanelController : PanelController
     {
         [SerializeField] private Button confirmButton;
         [SerializeField] private Button cancelButton;
@@ -15,15 +15,17 @@ namespace Core.UI
             base.Start();
         
             confirmButton.onClick.RemoveAllListeners();
-            confirmButton.onClick.AddListener(ConfirmReset);
+            confirmButton.onClick.AddListener(ConfirmRewardAd);
             cancelButton.onClick.RemoveAllListeners();
             cancelButton.onClick.AddListener(ClosePanel);
         }
 
-        private void ConfirmReset()
+        private void ConfirmRewardAd()
         {
             punchSetting.DoPunch(confirmButton.transform, false);
-            // GameManager.ResetAccount();
+            AdManager.ShowRewardedAd();
+            
+            base.ClosePanel();
         }
 
         protected override void ClosePanel()

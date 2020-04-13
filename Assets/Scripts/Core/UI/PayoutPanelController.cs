@@ -11,7 +11,7 @@ namespace Core.UI
         [SerializeField] private TMP_Text payoutMessageText;
         [SerializeField] private TMP_Text payoutAmountText;
         [SerializeField] private TMP_Text payoutTypeText;
-        [SerializeField] private Button doublePayoutForAdButton;
+        public Button doublePayoutForAdButton;
 
         private long _payoutAmount;
 
@@ -19,8 +19,9 @@ namespace Core.UI
         {
             base.Start();
             
+            backgroundButton.onClick.RemoveAllListeners();
             doublePayoutForAdButton.onClick.RemoveAllListeners();
-            doublePayoutForAdButton.onClick.AddListener(AdManager.ShowRewardedAd);
+            doublePayoutForAdButton.onClick.AddListener(ConfirmShowAd);
             
             EventManager.NewEventSubscription(gameObject, Constants.GameEvents.userEarnedRewardEvent, RewardEarned);
         }
@@ -28,6 +29,8 @@ namespace Core.UI
         public override void OpenPanel()
         {
             base.OpenPanel();
+
+            doublePayoutForAdButton.enabled = AdManager.DoublePayoutAdIsLoaded();
 
             RefreshPanel();
         }
@@ -49,8 +52,15 @@ namespace Core.UI
             StartTextAnimations();
         }
 
+        private static void ConfirmShowAd()
+        {
+            PanelManager.OpenSubPanel<ConfirmRewardAdPanelController>();
+        }
+        
         private void RewardEarned()
         {
+            if (AdManager.Reward == null) return;
+            
             PlayerData.coinsAmount += _payoutAmount;
             
             RefreshPanel();

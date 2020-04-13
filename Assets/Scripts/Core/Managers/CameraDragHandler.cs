@@ -10,7 +10,7 @@ namespace Core.Managers
         [SerializeField] private CameraSettings mainCameraOffsets;
 
         private bool _cameraChanged;
-        private float _zoomPercent;
+        [SerializeField] private float _zoomPercent;
         private float _zoomCurrent;
         private float _adjustedPanMultiplier;
         private float _adjustedZoomMultiplier;
@@ -121,8 +121,16 @@ namespace Core.Managers
             if (zoomData < 0.0f)
             {
                 //Debug.Log("zP < 0"); //ZoomOut
+#if UNITY_EDITOR_WIN
                 _newLocalPosition.x *= _zoomPercent;
                 _newLocalPosition.y *= _zoomPercent;
+#elif UNITY_ANDROID
+                if (Mathf.Abs(_newLocalPosition.x) > _adjustedPanRange)
+                    _newLocalPosition.x *= _zoomPercent;
+                
+                if (Mathf.Abs(_newLocalPosition.y) > _adjustedPanRange)
+                    _newLocalPosition.y *= _zoomPercent;
+#endif
             }
 
             if (CameraManager == null) return;

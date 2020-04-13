@@ -33,6 +33,9 @@ namespace Utils
         public const float SpawnRange = 0.8f;
         public const float SpawnHeight = -2.0f;
         public const float CoinLoadSpeed = 0.67f;
+        public const int CoinStartingSortingOrder = 1;
+        public const int CoinInsertedSortingOrder = 11;
+        public const int CoinPressedSortingOrder = 14;
 
         //arm
         public const float ArmDragMultiplier = 0.267f;
@@ -47,9 +50,9 @@ namespace Utils
         public const string WinLightState = "WinLight";
 
         //reels
-        public const int TotalSpinTime = 174;
-        public const int RightReelStopTime = 120;
-        public const int MiddleReelStopTime = 60;
+        public const int TotalSpinTime = 330;//174
+        public const int RightReelStopTime = 180;//120
+        public const int MiddleReelStopTime = 120;//60
         public const float FastSpinDegrees = 15.0f;
         public const float MediumSpinDegrees = 5.0f;
         public const float SlowSpinDegrees = 1.0f;

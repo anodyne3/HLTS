@@ -403,6 +403,7 @@ MonoBehaviour:
   textAnimations:
   - vertexAnimation: {fileID: 11400000, guid: 3a5129f9e6fcf35479aa9e96005424d3, type: 2}
     text: {fileID: 8848716586491096739}
+  closeButtonPunchSetting: {fileID: 0}
   panelTransform: {fileID: 8848716586817149291}
   resetAccountButton: {fileID: 8848716587072399400}
   linkAccountButton: {fileID: 1299150477586898011}
@@ -797,6 +798,21 @@ PrefabInstance:
       propertyPath: m_TargetGraphic
       value: 
       objectReference: {fileID: 5446665166327699107}
+    - target: {fileID: 5409038390775721980, guid: ea550874155c84f4c8dde0db7cf7c3c0,
+        type: 3}
+      propertyPath: m_Transition
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5409038390775721980, guid: ea550874155c84f4c8dde0db7cf7c3c0,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5409038390775721980, guid: ea550874155c84f4c8dde0db7cf7c3c0,
+        type: 3}
+      propertyPath: m_Interactable
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5409038391986960621, guid: ea550874155c84f4c8dde0db7cf7c3c0,
         type: 3}
       propertyPath: m_Name
@@ -1369,6 +1385,16 @@ PrefabInstance:
       propertyPath: m_TargetGraphic
       value: 
       objectReference: {fileID: 171287600352810433}
+    - target: {fileID: 5409038390775721980, guid: ea550874155c84f4c8dde0db7cf7c3c0,
+        type: 3}
+      propertyPath: m_Transition
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5409038390775721980, guid: ea550874155c84f4c8dde0db7cf7c3c0,
+        type: 3}
+      propertyPath: m_Interactable
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5409038391986960621, guid: ea550874155c84f4c8dde0db7cf7c3c0,
         type: 3}
       propertyPath: m_Name

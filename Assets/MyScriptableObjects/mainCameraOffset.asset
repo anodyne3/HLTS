@@ -16,8 +16,8 @@ MonoBehaviour:
   zoomMin: 0.35
   panRange: 5
   panLerpSpeed: 5
-  panMultiplier: 7
+  panMultiplier: 5
   zoomLerpSpeed: 7
   zoomMultiplier: 0.02
-  pinchRate: 1.5
+  pinchRate: 2
   pinchIgnore: 0.00125

@@ -1,4 +1,5 @@
 using UnityEngine;
+using Utils;
 
 namespace Core
 {
@@ -10,12 +11,14 @@ namespace Core
 
         public Rigidbody2D RigidBody2D { get; private set; }
         public CircleCollider2D CircleCollider { get; private set; }
+        private CircleCollider2D _circleTrigger;
 
         private void Awake()
         {
             _spriteRenderer = (SpriteRenderer) GetComponent(typeof(SpriteRenderer));
             RigidBody2D = (Rigidbody2D) GetComponent(typeof(Rigidbody2D));
             CircleCollider = (CircleCollider2D) GetComponent(typeof(CircleCollider2D));
+            _circleTrigger = (CircleCollider2D) transform.GetChild(0).GetComponent(typeof(CircleCollider2D));
             
             InputManager.Pressed += OnPressed;
             InputManager.Dragged += OnDragged;
@@ -35,12 +38,12 @@ namespace Core
 
         private void OnPressed(Vector2 pointerPosition)
         {
-            if (CircleCollider != Physics2D.OverlapPoint(pointerPosition)) return;
+            if (_circleTrigger != Physics2D.OverlapPoint(pointerPosition)) return;
 
             CameraManager.draggingDisabled = true;
             _moveAllowed = true;
             RigidBody2D.freezeRotation = true;
-            _spriteRenderer.sortingOrder = 50;
+            _spriteRenderer.sortingOrder = Constants.CoinPressedSortingOrder;
             CircleCollider.isTrigger = true;
             SetCoinGravity(0.0f);
         }
