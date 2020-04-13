@@ -22,15 +22,13 @@ namespace Core.UI
             backgroundButton.onClick.RemoveAllListeners();
             doublePayoutForAdButton.onClick.RemoveAllListeners();
             doublePayoutForAdButton.onClick.AddListener(ConfirmShowAd);
-            
-            EventManager.NewEventSubscription(gameObject, Constants.GameEvents.userEarnedRewardEvent, RewardEarned);
         }
 
         public override void OpenPanel()
         {
             base.OpenPanel();
 
-            doublePayoutForAdButton.enabled = AdManager.DoublePayoutAdIsLoaded();
+            doublePayoutForAdButton.gameObject.SetActive(AdManager.DoublePayoutAdIsLoaded());
 
             RefreshPanel();
         }
@@ -56,14 +54,22 @@ namespace Core.UI
         {
             PanelManager.OpenSubPanel<ConfirmRewardAdPanelController>();
         }
-        
-        private void RewardEarned()
+
+        private void ProcessReward()
         {
-            if (AdManager.Reward == null) return;
-            
             PlayerData.coinsAmount += _payoutAmount;
+            doublePayoutForAdButton.gameObject.SetActive(false);
             
             RefreshPanel();
+
+            AdManager.reward = null;
+        }
+
+        private void OnApplicationPause(bool pauseStatus)
+        {
+            if (pauseStatus || AdManager.reward == null) return;
+            
+            ProcessReward();
         }
 
         protected override void ClosePanel()

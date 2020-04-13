@@ -48,8 +48,6 @@ namespace Core
 
         private void AuthStateChanged(object sender, System.EventArgs eventArgs)
         {
-            if (!firebaseReady) Debug.Log("firebase not ready");
-
             if (_firebaseAuth.CurrentUser == null)
             {
                 SignIn();
@@ -63,25 +61,17 @@ namespace Core
                 if (!signedIn)
                 {
                     if (PlayerData.firebaseUser != null)
-                    {
                         Debug.Log("Signed out " + PlayerData.firebaseUser.UserId);
-                        // SignIn();
-                    }
                     else if (!firebaseReady) 
                     {
                         Debug.Log("Signed out & firebase dependency issue");
                         SceneManager.LoadSceneAsynchronously(0);
                     }
-                    
-                    //return;
                 }
 
                 PlayerData.firebaseUser = _firebaseAuth.CurrentUser;
                 if (signedIn)
-                {
-                    Debug.Log("Signed in " + PlayerData.firebaseUser.UserId);
                     StartCoroutine(PlayerData.OnLogin());
-                }
             }
         }
 

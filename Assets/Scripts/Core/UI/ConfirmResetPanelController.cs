@@ -1,4 +1,5 @@
-﻿using MyScriptableObjects;
+﻿using Core.Managers;
+using MyScriptableObjects;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -23,7 +24,7 @@ namespace Core.UI
         private void ConfirmReset()
         {
             punchSetting.DoPunch(confirmButton.transform, false);
-            // GameManager.ResetAccount();
+            GameManager.ResetAccount();
         }
 
         protected override void ClosePanel()

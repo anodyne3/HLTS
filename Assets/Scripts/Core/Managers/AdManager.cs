@@ -1,5 +1,4 @@
 using System;
-using Core.UI;
 using GoogleMobileAds.Api;
 using UnityEngine;
 
@@ -8,6 +7,8 @@ namespace Core.Managers
     public class AdManager : Singleton<AdManager>
     {
         private RewardedAd _rewardedAd;
+        public Reward reward;
+        private EventManager _eventManager;
         
 #if UNITY_ANDROID
         private const string TestRewardedAdId = "ca-app-pub-3940256099942544/5224354917";
@@ -23,35 +24,17 @@ namespace Core.Managers
         {
             MobileAds.Initialize(initStatus => { });
 
-            /*_rewardedAd = new RewardedAd(TestRewardedAdId);
-
-            // Called when an ad request has successfully loaded.
-            _rewardedAd.OnAdLoaded += HandleRewardedAdLoaded;
-            // Called when an ad request failed to load.
-            _rewardedAd.OnAdFailedToLoad += HandleRewardedAdFailedToLoad;
-            // Called when an ad is shown.
-            _rewardedAd.OnAdOpening += HandleRewardedAdOpening;
-            // Called when an ad request failed to show.
-            _rewardedAd.OnAdFailedToShow += HandleRewardedAdFailedToShow;
-            // Called when the user should be rewarded for interacting with the ad.
-            _rewardedAd.OnUserEarnedReward += HandleUserEarnedReward;
-            // Called when the ad is closed.
-            _rewardedAd.OnAdClosed += HandleRewardedAdClosed;*/
-
             CreateAndLoadRewardedAd();
+            _eventManager = EventManager;
         }
 
         private void CreateAndLoadRewardedAd()
         {
             _rewardedAd = new RewardedAd(TestRewardedAdId);
 
-            // Called when an ad request has successfully loaded.
-            _rewardedAd.OnAdLoaded += HandleRewardedAdLoaded;
             // Called when an ad request failed to load.
             _rewardedAd.OnAdFailedToLoad += HandleRewardedAdFailedToLoad;
             // Called when an ad is shown.
-            _rewardedAd.OnAdOpening += HandleRewardedAdOpening;
-            // Called when an ad request failed to show.
             _rewardedAd.OnAdFailedToShow += HandleRewardedAdFailedToShow;
             // Called when the user should be rewarded for interacting with the ad.
             _rewardedAd.OnUserEarnedReward += HandleUserEarnedReward;
@@ -61,7 +44,7 @@ namespace Core.Managers
             var request = new AdRequest.Builder().Build();
             _rewardedAd.LoadAd(request);
         }
-
+        
         public void ShowRewardedAd()
         {
             if (!_rewardedAd.IsLoaded()) return;
@@ -69,19 +52,9 @@ namespace Core.Managers
             _rewardedAd.Show();
         }
 
-        private void HandleRewardedAdLoaded(object sender, EventArgs e)
-        {
-            Debug.LogError("ad loaded");
-        }
-
         private void HandleRewardedAdFailedToLoad(object sender, AdErrorEventArgs e)
         {
             Debug.LogError("ad failed to load");
-        }
-
-        private void HandleRewardedAdOpening(object sender, EventArgs e)
-        {
-            Debug.LogError("ad opening");
         }
 
         private void HandleRewardedAdFailedToShow(object sender, AdErrorEventArgs e)
@@ -91,16 +64,12 @@ namespace Core.Managers
         
         private void HandleUserEarnedReward(object sender, Reward e)
         {
-            Debug.LogError("ad earned reward: " + e.Amount + "," + e.Type);
-            Reward = e;
+            reward = e;
+            _eventManager.userEarnedReward.Raise();
         }
-
-        public Reward Reward { get; private set; }
 
         private void HandleRewardedAdClosed(object sender, EventArgs e)
         {
-            Debug.LogError("ad closed");
-            EventManager.userEarnedReward.Raise();
             CreateAndLoadRewardedAd();
         }
 

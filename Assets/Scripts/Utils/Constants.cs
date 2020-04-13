@@ -87,6 +87,7 @@ namespace Utils
         //for debug only
         public string autoSlotModeEvent = "autoSlotModeEvent";
         public string coinInsertEvent = "coinInsertEvent";
+        public string testEvent = "testEvent";
 
         public string armPullEvent = "armPullEvent";
         public string coinConsumeEvent = "coinConsumeEvent";
@@ -96,8 +97,8 @@ namespace Utils
         public string generateCoinEvent = "generateCoinEvent";
         public string payoutFinishEvent = "payoutFinishEvent";
         public string payoutStartEvent = "payoutStartEvent";
-        public string userEarnedRewardEvent = "userEarnedRewardEvent";
         public string refreshUiEvent = "refreshUiEvent";
+        public string userEarnedRewardEvent = "userEarnedRewardEvent";
         public string wheelResultEvent = "wheelResultEvent";
         public string wheelRollEvent = "wheelRollEvent";
     }

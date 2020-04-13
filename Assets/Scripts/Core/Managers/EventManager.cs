@@ -10,6 +10,7 @@ namespace Core.Managers
     {
         [HideInInspector] public GameEvent autoSlotMode;
         [HideInInspector] public GameEvent coinInsert;
+        [HideInInspector] public GameEvent testEvent;
         
         [HideInInspector] public GameEvent armPull;
         [HideInInspector] public GameEvent coinConsume;
@@ -30,6 +31,7 @@ namespace Core.Managers
         {
             autoSlotMode = Resources.Load<GameEvent>("Events/" + Constants.GameEvents.autoSlotModeEvent);
             coinInsert = Resources.Load<GameEvent>("Events/" + Constants.GameEvents.coinInsertEvent);
+            testEvent = Resources.Load<GameEvent>("Events/" + Constants.GameEvents.testEvent);
             
             armPull = Resources.Load<GameEvent>("Events/" + Constants.GameEvents.armPullEvent);
             coinConsume = Resources.Load<GameEvent>("Events/" + Constants.GameEvents.coinConsumeEvent);
