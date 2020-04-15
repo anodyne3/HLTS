@@ -75,7 +75,7 @@ namespace Core.Managers
 
         public bool DoublePayoutAdIsLoaded()
         {
-            return _rewardedAd.IsLoaded();
+            return _rewardedAd?.IsLoaded() ?? false;
         }
     }
 }

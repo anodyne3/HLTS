@@ -66,7 +66,6 @@ namespace Core.UI
                     backgroundButton.image.DOFade(PanelManager.openPanelFadeSettings.fadeEndValue,
                         PanelManager.openPanelFadeSettings.fadeDuration))
                 .SetEase(PanelManager.openPanelTweenSettings.sequenceEasing)
-                .SetAutoKill(false)
                 .SetRecyclable(true)
                 .OnComplete(StartTextAnimations);
         }
@@ -100,7 +99,6 @@ namespace Core.UI
                     backgroundButton.image.DOFade(PanelManager.closePanelFadeSettings.fadeEndValue,
                         PanelManager.closePanelFadeSettings.fadeDuration))
                 .SetEase(PanelManager.closePanelTweenSettings.sequenceEasing)
-                .SetAutoKill(false)
                 .SetRecyclable(true)
                 .OnComplete(() =>
                 {

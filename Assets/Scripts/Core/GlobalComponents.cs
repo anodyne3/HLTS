@@ -19,7 +19,7 @@ namespace Core
         {
             _components.Add(gameObject.AddComponent<FirebaseFunctionality>());
             _components.Add(gameObject.AddComponent<PlayerData>());
-            _components.Add(gameObject.AddComponent<AdManager>());
+            // _components.Add(gameObject.AddComponent<AdManager>());
             _components.Add(gameObject.AddComponent<SlotMachine>());
         }
 

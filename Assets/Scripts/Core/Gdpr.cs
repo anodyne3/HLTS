@@ -1,9 +1,7 @@
-﻿using System;
-using Core.Input;
+﻿using Core.GameData;
 using Enums;
 using TMPro;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using Utils;
 
@@ -26,15 +24,14 @@ namespace Core
 
         private void OnDisable()
         {
+            if (InputManager == null) return;
+            
             InputManager.Pressed -= OnPressed;
         }
 
         private void CheckConsent()
         {
-            var consentGiven = PlayerPrefs.HasKey(Constants.ConsentKey) &&
-                               PlayerPrefs.GetInt(Constants.ConsentKey) == 1;
-
-            if (consentGiven)
+            if (PlayerData.ConsentGiven)
                 ClosePanel();
         }
 
@@ -68,7 +65,7 @@ namespace Core
         {
             gameObject.SetActive(false);
 
-            FirebaseFunctionality.CheckLogin();
+            FirebaseFunctionality.Init();
         }
     }
 }

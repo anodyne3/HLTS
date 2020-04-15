@@ -1,8 +1,4 @@
-﻿using Enums;
-using UnityEngine;
-using Utils;
-
-namespace Core.Managers
+﻿namespace Core.Managers
 {
     public class GameManager : GlobalAccess
     {
@@ -18,14 +14,6 @@ namespace Core.Managers
         public static void LoadMain()
         {
             SceneManager.LoadSceneAsynchronously(1);
-        }
-
-        public static void ResetAccount()
-        {
-            AudioManager.PlayClip(SoundEffectType.UiClick);
-
-            PlayerPrefs.DeleteKey(Constants.ConsentKey);
-            FirebaseFunctionality.SignOut();
         }
     }
 }

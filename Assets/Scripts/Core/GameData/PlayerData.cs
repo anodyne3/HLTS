@@ -9,6 +9,7 @@ namespace Core.GameData
 {
     public class PlayerData : Singleton<PlayerData>
     {
+        public static bool ConsentGiven => PlayerPrefs.HasKey(Constants.ConsentKey) && PlayerPrefs.GetInt(Constants.ConsentKey) == 1;
         public FirebaseUser firebaseUser;
         public long coinsAmount = 10;
         public int[] lastResult;
@@ -33,23 +34,37 @@ namespace Core.GameData
             _database.GetReference(Constants.PlayerDataPrefix).Child(firebaseUser.UserId)
                 .Child(Constants.PlayerDataSuffix).ValueChanged += OnPlayerDataChanged;
         }
-
-        private void OnDisable()
+        
+        public void StopDatabaseListeners()
         {
-            if (firebaseUser == null) return;
+            if (firebaseUser == null || firebaseUser.UserId == string.Empty) return;
             
             _database.GetReference(Constants.PlayerDataPrefix).Child(firebaseUser.UserId)
                 .Child(Constants.PlayerDataSuffix).ValueChanged -= OnPlayerDataChanged;
         }
 
+        private void OnDisable()
+        {
+            StopDatabaseListeners();
+        }
+
         private void OnPlayerDataChanged(object sender, ValueChangedEventArgs args)
         {
+            if (sender != null)
+                Debug.Log(sender.ToString());
+            
             if (args.DatabaseError != null)
             {
                 Debug.LogError(args.DatabaseError.Message);
                 return;
             }
 
+            if (string.IsNullOrEmpty(args.Snapshot.GetRawJsonValue()))
+            {
+                Debug.Log("Empty Snapshot: " + args.Snapshot.Key);
+                return;
+            }
+            
             var snapReturn = args.Snapshot.GetRawJsonValue();
             var snapReturnDict = new PlayerDataDto(snapReturn);
             lastResult = snapReturnDict.lastResult.ToArray();

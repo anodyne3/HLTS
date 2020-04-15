@@ -1,4 +1,7 @@
 ﻿using System.Threading.Tasks;
+using Core.GameData;
+using Core.MainSlotMachine;
+using DG.Tweening;
 using Firebase;
 using Firebase.Auth;
 using Firebase.Functions;
@@ -13,10 +16,11 @@ namespace Core
         private static FirebaseAuth _firebaseAuth;
         private FirebaseApp _firebaseApp;
         private FirebaseFunctions _firebaseFunc;
+        private GameObject _gameEventListeners;
 
         public bool firebaseReady;
 
-        private async void Start()
+        public async void Init()
         {
             var dependencyStatus = FirebaseApp.CheckAndFixDependenciesAsync();
             await dependencyStatus;
@@ -25,15 +29,18 @@ namespace Core
             {
                 _firebaseApp = FirebaseApp.DefaultInstance;
                 firebaseReady = true;
+                CheckLogin();
             }
             else
                 Debug.LogError($"Could not resolve all Firebase dependencies: {dependencyStatus.Result}");
 
-            _firebaseApp.SetEditorDatabaseUrl("https://he-loves-the-slots.firebaseio.com/");
+            _firebaseApp.SetEditorDatabaseUrl(Constants.FirebaseDatabaseUrl);
             _firebaseFunc = FirebaseFunctions.DefaultInstance;
-
-            EventManager.NewEventSubscription(gameObject, Constants.GameEvents.wheelRollEvent, RollReels);
-            EventManager.NewEventSubscription(gameObject, Constants.GameEvents.userEarnedRewardEvent, ClaimAdReward);
+            
+            _gameEventListeners = new GameObject("FirebaseGameEventListeners");
+            _gameEventListeners.transform.SetParent(transform);
+            EventManager.NewEventSubscription(_gameEventListeners, Constants.GameEvents.wheelRollEvent, RollReels);
+            EventManager.NewEventSubscription(_gameEventListeners, Constants.GameEvents.userEarnedRewardEvent, ClaimAdReward);
         }
 
         private void OnDestroy()
@@ -46,36 +53,42 @@ namespace Core
 
         #region user
 
+        private bool _signingIn;
+
         private void AuthStateChanged(object sender, System.EventArgs eventArgs)
         {
-            if (_firebaseAuth.CurrentUser == null)
+            if (_firebaseAuth.CurrentUser == null && !_signingIn)
             {
+                Debug.Log("No user signed in");
                 SignIn();
                 return;
             }
+            
+            if (_firebaseAuth.CurrentUser == PlayerData.firebaseUser) return;
 
-            if (_firebaseAuth.CurrentUser != PlayerData.firebaseUser)
+            var signedIn = PlayerData.firebaseUser != _firebaseAuth.CurrentUser &&
+                           _firebaseAuth.CurrentUser != null;
+            
+            if (!signedIn)
             {
-                var signedIn = PlayerData.firebaseUser != _firebaseAuth.CurrentUser &&
-                               _firebaseAuth.CurrentUser != null;
-                if (!signedIn)
+                if (PlayerData.firebaseUser != null)
                 {
-                    if (PlayerData.firebaseUser != null)
-                        Debug.Log("Signed out " + PlayerData.firebaseUser.UserId);
-                    else if (!firebaseReady) 
-                    {
-                        Debug.Log("Signed out & firebase dependency issue");
-                        SceneManager.LoadSceneAsynchronously(0);
-                    }
+                    Debug.Log("Signed out " + PlayerData.firebaseUser.UserId);
                 }
-
-                PlayerData.firebaseUser = _firebaseAuth.CurrentUser;
-                if (signedIn)
-                    StartCoroutine(PlayerData.OnLogin());
+                
+                if (!firebaseReady || !PlayerData.ConsentGiven)
+                {
+                    Debug.Log("Signed out - firebaseReady:" + firebaseReady + "; consentGiven:" + PlayerData.ConsentGiven);
+                }
             }
+
+            PlayerData.firebaseUser = _firebaseAuth.CurrentUser;
+            
+            if (signedIn)
+                StartCoroutine(PlayerData.OnLogin());
         }
 
-        public void CheckLogin()
+        private void CheckLogin()
         {
             _firebaseAuth = FirebaseAuth.DefaultInstance;
             _firebaseAuth.StateChanged += AuthStateChanged;
@@ -84,10 +97,9 @@ namespace Core
 
         private async void SignIn()
         {
+            _signingIn = true;
             var task = _firebaseAuth.SignInAnonymouslyAsync();
-            Debug.LogError("awaitingAnonymousSignIn");
             await task;
-            Debug.LogError("task AnonymousSignInComplete");
             if (task.IsCanceled)
             {
                 Debug.LogError("SignInAnonymouslyAsync was cancelled.");
@@ -101,13 +113,43 @@ namespace Core
             }
 
             var newUser = task.Result;
+            _signingIn = _firebaseAuth.CurrentUser != null;
             Debug.LogFormat("User signed in successfully: {0} ({1})", newUser.DisplayName, newUser.UserId);
-            PlayerData.firebaseUser = newUser;
-            StartCoroutine(PlayerData.OnLogin());
+        }
+
+        public void ResetAccount()
+        {
+            PlayerPrefs.DeleteKey(Constants.ConsentKey);
+            PlayerData.StopDatabaseListeners();
+            GlobalComponents.Instance.RemoveGlobalComponent<PlayerData>();
+            DeleteAccount();
+            Destroy(_gameEventListeners);
+            GlobalComponents.Instance.RemoveGlobalComponent<FirebaseFunctionality>();
+            GlobalComponents.Instance.RemoveGlobalComponent<CoinTray>();
+            GlobalComponents.Instance.RemoveGlobalComponent<SlotMachine>();
+            SceneManager.LoadSceneAsynchronously(0);
+            DOTween.Clear();
+        }
+
+        private void DeleteAccount()
+        {
+            _firebaseAuth.CurrentUser?.DeleteAsync().ContinueWith(task => {
+                if (task.IsCanceled) {
+                    Debug.LogError("DeleteAsync was canceled.");
+                    return;
+                }
+                if (task.IsFaulted) {
+                    Debug.LogError("DeleteAsync encountered an error: " + task.Exception);
+                    return;
+                }
+
+                Debug.Log("User deleted successfully.");
+            });
         }
 
         public void SignOut()
         {
+            // PlayerData.StopDatabaseListeners();
             _firebaseAuth.SignOut();
         }
 

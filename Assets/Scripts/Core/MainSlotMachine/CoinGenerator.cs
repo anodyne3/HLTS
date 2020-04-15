@@ -24,9 +24,10 @@ namespace Core.MainSlotMachine
 
         private IEnumerator CreateCoin()
         {
+            var waitForSeconds = new WaitForSeconds(0.1f);
+            
             while (CoinTray.CoinTrayCounter < PlayerData.coinsAmount && CoinTray.CoinTrayCounter < Constants.CoinTrayMax)
             {
-                var waitForSeconds = new WaitForSeconds(0.1f);
                 var nextCoin = (CoinDragHandler) ObjectPoolManager.coinPool.Get().GetComponent(typeof(CoinDragHandler));
                 nextCoin.transform.position = GeneratedSpawnPosition();
                 ResetCoin(nextCoin);

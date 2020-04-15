@@ -1,4 +1,4 @@
-﻿using Core.Managers;
+﻿using Enums;
 using MyScriptableObjects;
 using UnityEngine;
 using UnityEngine.UI;
@@ -23,8 +23,10 @@ namespace Core.UI
 
         private void ConfirmReset()
         {
+            AudioManager.PlayClip(SoundEffectType.UiClick);
+            
             punchSetting.DoPunch(confirmButton.transform, false);
-            GameManager.ResetAccount();
+            FirebaseFunctionality.ResetAccount();
         }
 
         protected override void ClosePanel()

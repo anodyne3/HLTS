@@ -31,7 +31,7 @@ namespace Core.UI
                 .SetRecyclable(true)
                 .Insert(0.0f, transform.DOLocalMove(doMoveOffset, tweenSettings.moveDuration).SetEase(tweenSettings.moveCurve))
                 .InsertCallback(0.0f, () => canvasGroup.alpha = 1.0f)
-                .InsertCallback(tweenSettings.fadeStartDelay, () => tweenSettings.DoFade(canvasGroup))
+                .InsertCallback(tweenSettings.fadeStartDelay, () => tweenSettings.DoFade(canvasGroup, false))
                 .AppendCallback(() =>
                 {
                     HudController.ResizeCurrencySizeDelta();

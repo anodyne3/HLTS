@@ -47,7 +47,7 @@ namespace Core.Managers
             wheelRoll = Resources.Load<GameEvent>("Events/" + Constants.GameEvents.wheelRollEvent);
         }
         
-        public void NewEventSubscription(GameObject parentObject, string gameEventName, UnityAction unityAction)
+        public GameEventListener NewEventSubscription(GameObject parentObject, string gameEventName, UnityAction unityAction)
         {
             var newGameEvent = Resources.Load<GameEvent>("Events/" + gameEventName);
             var gameEventListener = parentObject.AddComponent<GameEventListener>();
@@ -55,6 +55,8 @@ namespace Core.Managers
             gameEventListener.@event.RegisterListener(gameEventListener);
             gameEventListener.response.AddListener(unityAction);
             gameEventListeners.Add(gameEventListener);
+
+            return gameEventListener;
         }
     }
 }

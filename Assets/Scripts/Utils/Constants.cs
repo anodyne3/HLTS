@@ -16,6 +16,7 @@ namespace Utils
         public const string PlayerDataSuffix = "userData";
         public const string ReelRollCloudFunction = "usersReelRollOnCall";
         public const string AdRewardClaimCloudFunction = "usersAdRewardClaimOnCall";
+        public const string FirebaseDatabaseUrl = "https://he-loves-the-slots.firebaseio.com/"; 
 
         //audio
         public const string MusicTrackPath = "MusicTracks";
