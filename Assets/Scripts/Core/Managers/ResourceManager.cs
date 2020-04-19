@@ -13,11 +13,13 @@ namespace Core.Managers
     {
         private readonly Dictionary<string, Sprite> fruitParticleSprites = new Dictionary<string, Sprite>();
         private readonly Dictionary<string, MusicTrack> musicTracks = new Dictionary<string, MusicTrack>();
+        // private readonly Dictionary<string, ShopProduct> shopProducts = new Dictionary<string, ShopProduct>();
 
         private SoundEffect[] _soundEffects;
         private MusicTrack[] _musicTracks;
+        public ShopProduct[] shopProducts;
 
-        private readonly List<IMyDictionaries> AllDictionaries = new List<IMyDictionaries>();
+        private readonly List<IMyDictionaries> _allDictionaries = new List<IMyDictionaries>();
 
         private interface IMyDictionaries
         {
@@ -42,6 +44,7 @@ namespace Core.Managers
 
             _soundEffects = Resources.LoadAll<SoundEffect>(Constants.SoundEffectPath);
             _musicTracks = Resources.LoadAll<MusicTrack>(Constants.MusicTrackPath);
+            shopProducts = Resources.LoadAll<ShopProduct>(Constants.ShopProductPath);
         }
 
         //load all resources from a path in the Resources folder, and add them to a dictionary
@@ -56,17 +59,17 @@ namespace Core.Managers
             }
 
             var newDictionaryReference = new DictionaryReference<T>(resourceDictionary);
-            AllDictionaries.Add(newDictionaryReference);
+            _allDictionaries.Add(newDictionaryReference);
         }
 
         //return an object from it's equivalent dictionary
         private T GetResource<T>(string keyString) where T : Object
         {
-            var AllDictionariesCount = AllDictionaries.Count;
+            var allDictionariesCount = _allDictionaries.Count;
             var dictionaryReference = new DictionaryReference<T>(null);
-            for (var i = 0; i < AllDictionariesCount; i++)
+            for (var i = 0; i < allDictionariesCount; i++)
             {
-                dictionaryReference = AllDictionaries[i] as DictionaryReference<T>;
+                dictionaryReference = _allDictionaries[i] as DictionaryReference<T>;
                 if (dictionaryReference == null || dictionaryReference.Type != typeof(T)) continue;
 
                 if (dictionaryReference.reference.TryGetValue(keyString, out var value))
@@ -100,8 +103,8 @@ namespace Core.Managers
                 return null;
             }
 
-            var _soundEffectsLength = _soundEffects.Length;
-            for (var i = 0; i < _soundEffectsLength; i++)
+            var soundEffectsLength = _soundEffects.Length;
+            for (var i = 0; i < soundEffectsLength; i++)
             {
                 var soundClip = _soundEffects[i];
                 if (soundClip.soundEffectType == soundEffectType && soundClip.soundEffectArray.Length > 0)

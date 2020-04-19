@@ -11,7 +11,7 @@ namespace Core.UI
         [SerializeField] private Button closeButton;
         [SerializeField] protected Button backgroundButton;
         [SerializeField] private TMP_TextAnimation[] textAnimations;
-        private TweenPunchSetting _closeButtonPunchSetting;
+        [HideInInspector] public TweenPunchSetting closeButtonPunchSetting;
 
         public RectTransform panelTransform;
 
@@ -32,7 +32,7 @@ namespace Core.UI
             {
                 closeButton.onClick.RemoveAllListeners();
                 closeButton.onClick.AddListener(ClosePanel);
-                _closeButtonPunchSetting = (TweenPunchSetting) Resources.Load("TweenSettings/closeButtonPunchSetting");
+                closeButtonPunchSetting = (TweenPunchSetting) Resources.Load("TweenSettings/closeButtonPunchSetting");
             }
 
             if (backgroundButton == null) return;
@@ -85,7 +85,7 @@ namespace Core.UI
         protected virtual void ClosePanel()
         {
             if (closeButton != null)
-                _closeButtonPunchSetting.DoPunch(closeButton.transform, false);
+                closeButtonPunchSetting.DoPunch(closeButton.transform, false);
 
             AudioManager.PlayClip(SoundEffectType.ClosePanel);
 

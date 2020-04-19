@@ -16,18 +16,20 @@ namespace Utils
         public const string PlayerDataSuffix = "userData";
         public const string ReelRollCloudFunction = "usersReelRollOnCall";
         public const string AdRewardClaimCloudFunction = "usersAdRewardClaimOnCall";
-        public const string FirebaseDatabaseUrl = "https://he-loves-the-slots.firebaseio.com/"; 
+        public const string FirebaseDatabaseUrl = "https://he-loves-the-slots.firebaseio.com/";
+        public const string PrivacyPolicyUrl = "https://he-loves-the-slots.web.app/PrivacyPolicy.html";
+        public const string TermsAndConditionsUrl = "https://he-loves-the-slots.web.app/TermsAndConditions.html";
 
-        //audio
-        public const string MusicTrackPath = "MusicTracks";
-        public const string SoundEffectPath = "SoundEffects";
-        
         //ui
         public const float CoinsBackgroundBaseWidth = 300.0f;
         public const float CoinsBackgroundWidthMultiplier = 50.0f;
 
         //resources
         public const string FruitParticleSpritesPath = "FruitSprites";
+        public const string SoundEffectPath = "SoundEffects";
+        public const string MusicTrackPath = "MusicTracks";
+        public const string ShopProductPath = "ShopProducts";
+        
         
         //coin
         public const int CoinTrayMax = 12;

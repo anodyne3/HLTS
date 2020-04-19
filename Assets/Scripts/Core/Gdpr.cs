@@ -1,31 +1,32 @@
 ﻿using Core.GameData;
+using Core.UI;
 using Enums;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 using Utils;
 
 namespace Core
 {
-    public class Gdpr : GlobalAccess//, IPointerClickHandler
-        {
-        [SerializeField] private Button confirmButton;
-        [SerializeField] public TMP_Text textComponent;
+    public class Gdpr : PanelController
+    {
+        [SerializeField] private TMP_Text textComponent;
 
-        private void Start()
+        public override void Start()
         {
-            confirmButton.onClick.RemoveAllListeners();
-            confirmButton.onClick.AddListener(ConfirmClicked);
-            
+            base.Start();
+
+            backgroundButton.onClick.RemoveAllListeners();
+
             InputManager.Pressed += OnPressed;
-            
+
             CheckConsent();
+            StartTextAnimations();
         }
 
         private void OnDisable()
         {
             if (InputManager == null) return;
-            
+
             InputManager.Pressed -= OnPressed;
         }
 
@@ -35,20 +36,11 @@ namespace Core
                 ClosePanel();
         }
 
-        private void ConfirmClicked()
-        {
-            AudioManager.PlayClip(SoundEffectType.UiClick);
-
-            PlayerPrefs.SetInt(Constants.ConsentKey, 1);
-            PlayerPrefs.Save();
-
-            ClosePanel();
-        }
-
         private void OnPressed(Vector2 pointerPosition)
-        // public void OnPointerClick(PointerEventData eventData)
         {
             AudioManager.PlayClip(SoundEffectType.UiClick);
+
+            pointerPosition = CameraManager.MainCamera.WorldToScreenPoint(pointerPosition);
 
             var linkIndex =
                 TMP_TextUtilities.FindIntersectingLink(textComponent, pointerPosition, CameraManager.MainCamera);
@@ -57,13 +49,16 @@ namespace Core
 
             var linkInfo = textComponent.textInfo.linkInfo[linkIndex];
 
-            if (linkInfo.GetLinkID() == "TermsOfService") Application.OpenURL(Urls.TermsOfService);
-            else if (linkInfo.GetLinkID() == "PrivacyPolicy") Application.OpenURL(Urls.PrivacyPolicy);
+            if (linkInfo.GetLinkID() == "TermsOfService") Application.OpenURL(Constants.TermsAndConditionsUrl);
+            else if (linkInfo.GetLinkID() == "PrivacyPolicy") Application.OpenURL(Constants.PrivacyPolicyUrl);
         }
 
-        private void ClosePanel()
+        protected override void ClosePanel()
         {
-            gameObject.SetActive(false);
+            base.ClosePanel();
+
+            PlayerPrefs.SetInt(Constants.ConsentKey, 1);
+            PlayerPrefs.Save();
 
             FirebaseFunctionality.Init();
         }
