@@ -395,7 +395,7 @@ RectTransform:
   m_GameObject: {fileID: 3615232437710488136}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.6, y: 1, z: 1}
+  m_LocalScale: {x: 0.7, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3615232436484636908}
   m_RootOrder: 0
@@ -403,7 +403,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -256, y: 0}
+  m_SizeDelta: {x: -64, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3615232437710488139
 CanvasRenderer:
@@ -460,12 +460,12 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 113.2
+  m_fontSize: 96
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 18
-  m_fontSizeMax: 144
+  m_fontSizeMax: 96
   m_fontStyle: 16
   m_textAlignment: 514
   m_characterSpacing: 0
@@ -644,7 +644,7 @@ PrefabInstance:
     - target: {fileID: 8425346432965912280, guid: c168aa6ca0713b24ca93d24a49d4a03d,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 128
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8425346432965912280, guid: c168aa6ca0713b24ca93d24a49d4a03d,
         type: 3}
@@ -811,12 +811,12 @@ PrefabInstance:
     - target: {fileID: 471612596712503450, guid: e2b1f703a3b66c04db76cfc56bfca227,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 66
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 471612596712503450, guid: e2b1f703a3b66c04db76cfc56bfca227,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 66
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 471612596712503450, guid: e2b1f703a3b66c04db76cfc56bfca227,
         type: 3}
@@ -851,12 +851,12 @@ PrefabInstance:
     - target: {fileID: 471612596712503450, guid: e2b1f703a3b66c04db76cfc56bfca227,
         type: 3}
       propertyPath: m_Pivot.x
-      value: 1
+      value: 0.68
       objectReference: {fileID: 0}
     - target: {fileID: 471612596712503450, guid: e2b1f703a3b66c04db76cfc56bfca227,
         type: 3}
       propertyPath: m_Pivot.y
-      value: 1
+      value: 0.68
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e2b1f703a3b66c04db76cfc56bfca227, type: 3}
@@ -924,6 +924,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: MusicToggleText
+      objectReference: {fileID: 0}
+    - target: {fileID: 2073552231448643665, guid: c168aa6ca0713b24ca93d24a49d4a03d,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.7
       objectReference: {fileID: 0}
     - target: {fileID: 2073552232657264449, guid: c168aa6ca0713b24ca93d24a49d4a03d,
         type: 3}
@@ -1018,7 +1023,7 @@ PrefabInstance:
     - target: {fileID: 8425346432965912280, guid: c168aa6ca0713b24ca93d24a49d4a03d,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 128
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8425346432965912280, guid: c168aa6ca0713b24ca93d24a49d4a03d,
         type: 3}
@@ -1180,12 +1185,12 @@ PrefabInstance:
     - target: {fileID: 5409038390775721978, guid: ea550874155c84f4c8dde0db7cf7c3c0,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -176
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5409038390775721978, guid: ea550874155c84f4c8dde0db7cf7c3c0,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -144
+      value: -270
       objectReference: {fileID: 0}
     - target: {fileID: 5409038390775721978, guid: ea550874155c84f4c8dde0db7cf7c3c0,
         type: 3}

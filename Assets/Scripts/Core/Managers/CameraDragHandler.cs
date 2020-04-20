@@ -10,7 +10,7 @@ namespace Core.Managers
         [SerializeField] private CameraSettings mainCameraOffsets;
 
         private bool _cameraChanged;
-        [SerializeField] private float _zoomPercent;
+        private float _zoomPercent;
         private float _zoomCurrent;
         private float _adjustedPanMultiplier;
         private float _adjustedZoomMultiplier;
@@ -115,6 +115,7 @@ namespace Core.Managers
             _adjustedPanMultiplier = _zoomPercent > 0.0f
                 ? mainCameraOffsets.panMultiplier * (1.0f - _zoomPercent)
                 : mainCameraOffsets.panMultiplier;
+            _adjustedPanMultiplier = Mathf.Clamp(_adjustedPanMultiplier,1.0f, mainCameraOffsets.panMultiplier * (1.0f - _zoomPercent));
 
             _adjustedPanRange = mainCameraOffsets.panRange * _zoomPercent;
 

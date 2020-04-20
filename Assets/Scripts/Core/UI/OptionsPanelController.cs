@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 namespace Core.UI
 {
-    public partial class OptionsPanelController : PanelController
+    public class OptionsPanelController : PanelController
     {
         [SerializeField] private ToggleButton soundsToggleButton;
         [SerializeField] private ToggleButton musicToggleButton;
@@ -20,8 +20,13 @@ namespace Core.UI
             soundsToggle.onClick.AddListener(ToggleSounds);
             musicToggle.onClick.RemoveAllListeners();
             musicToggle.onClick.AddListener(ToggleMusic);
-            inputSettings.onClick.RemoveAllListeners();
-            inputSettings.onClick.AddListener(OpenInputSettings);
+            
+            if (GameManager.debug)
+            {
+                inputSettings.gameObject.SetActive(true);
+                inputSettings.onClick.RemoveAllListeners();
+                inputSettings.onClick.AddListener(OpenInputSettings);
+            }
 
             soundsToggleButton.RefreshToggle(AudioManager.soundsDisabled, true);
             musicToggleButton.RefreshToggle(AudioManager.musicDisabled,true);

@@ -596,13 +596,13 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 107.9
+  m_fontSize: 86
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 18
-  m_fontSizeMax: 144
-  m_fontStyle: 0
+  m_fontSizeMax: 86
+  m_fontStyle: 32
   m_textAlignment: 514
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -1143,6 +1143,7 @@ MonoBehaviour:
   closeButton: {fileID: 1163580588666345925}
   backgroundButton: {fileID: 6730408285604477388}
   textAnimations: []
+  closeButtonPunchSetting: {fileID: 0}
   panelTransform: {fileID: 2274697044446168162}
   payoutMessageText: {fileID: 3421613201100188480}
   payoutAmountText: {fileID: 5443219302182099646}
@@ -1377,13 +1378,13 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 103.95
-  m_fontSizeBase: 36
+  m_fontSize: 86
+  m_fontSizeBase: 86.2
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 18
-  m_fontSizeMax: 144
-  m_fontStyle: 0
+  m_fontSizeMax: 86
+  m_fontStyle: 32
   m_textAlignment: 514
   m_characterSpacing: 0
   m_wordSpacing: 0
