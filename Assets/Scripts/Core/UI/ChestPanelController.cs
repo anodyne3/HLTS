@@ -1,18 +1,41 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.UI;
+using Utils;
 
-public class ChestPanelController : MonoBehaviour
+namespace Core.UI
 {
-    // Start is called before the first frame update
-    void Start()
+    public class ChestPanelController : PanelController
     {
-        
-    }
+        [SerializeField] private Button claimChestButton;
+    
+        public override void Start()
+        {
+            base.Start();
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+            claimChestButton.onClick.RemoveAllListeners();
+            claimChestButton.onClick.AddListener(ClaimChest);
+        }
+
+        public override void OpenPanel()
+        {
+            base.OpenPanel();
+            
+            RefreshPanel();
+        }
+
+        private void RefreshPanel()
+        {
+            claimChestButton.interactable = PlayerData.currentChestRoll >= Constants.LoChestRoll;
+        }
+
+        private static void ClaimChest()
+        {
+            if (PlayerData.currentChestRoll < Constants.HiChestRoll)
+            {
+                PanelManager.OpenSubPanel<ConfirmClaimChestPanelController>();
+            }
+            else
+                FirebaseFunctionality.ClaimChest();
+        }
     }
 }

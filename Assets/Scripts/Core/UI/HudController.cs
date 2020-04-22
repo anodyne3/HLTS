@@ -14,6 +14,7 @@ namespace Core.UI
     {
         [SerializeField] private Button menuButton;
         [SerializeField] private Button shopButton;
+        [SerializeField] private Button chestButton;
         [SerializeField] private TMP_Text coinsAmountText;
         public long CoinsAmount { get; private set; }
 
@@ -26,7 +27,7 @@ namespace Core.UI
         [SerializeField] private DeductCurrencyPrefab deductCurrencyPrefab;
         
         private MyObjectPool<Transform> _tweenCurrencyPool;
-        private Transform _deductTweenPrefab;
+        // private Transform _deductTweenPrefab;
         private RectTransform _currencyRect;
         private long _currencyDifference;
         private bool _addingCurrency;
@@ -41,6 +42,8 @@ namespace Core.UI
             menuButton.onClick.AddListener(OpenMenuPanel);
             shopButton.onClick.RemoveAllListeners();
             shopButton.onClick.AddListener(OpenShopPanel);
+            chestButton.onClick.RemoveAllListeners();
+            chestButton.onClick.AddListener(OpenChestPanel);
 
             CoinsAmount = PlayerData.coinsAmount;
             coinsAmountText.text = CoinsAmount.ToString();
@@ -64,6 +67,11 @@ namespace Core.UI
         private static void OpenShopPanel()
         {
             PanelManager.OpenPanelSolo<ShopPanelController>();
+        }
+        
+        private static void OpenChestPanel()
+        {
+            PanelManager.OpenPanelSolo<ChestPanelController>();
         }
 
         private void RefreshCoins()

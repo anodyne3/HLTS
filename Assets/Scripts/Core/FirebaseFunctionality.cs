@@ -165,7 +165,6 @@ namespace Core
         #endregion
 
         #region slots
-
         private async void RollReels()
         {
             await ReelRoll();
@@ -182,7 +181,9 @@ namespace Core
                 HandleFunctionError(rollReel);
             }
         }
+        #endregion
 
+        #region Ads
         private async void ClaimAdReward()
         {
             await AdRewardClaim();
@@ -199,7 +200,28 @@ namespace Core
                 HandleFunctionError(adRewardClaim);
             }
         }
+        #endregion
+        
+        #region Chests
+        public async void ClaimChest()
+        {
+            await ChestClaim();
+        }
 
+        private async Task ChestClaim()
+        {
+            var chestClaim = _firebaseFunc.GetHttpsCallable(Constants.ChestClaimCloudFunction).CallAsync();
+
+            await chestClaim;
+            if (chestClaim.IsFaulted)
+            {
+                //maybe show message to player regarding some issue
+                HandleFunctionError(chestClaim);
+            }
+        }
+        #endregion
+        
+        #region Common
         private static void HandleFunctionError(Task httpsCallableResult)
         {
             if (httpsCallableResult.Exception == null)

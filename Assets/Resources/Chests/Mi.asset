@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a465b4e4957c4b7cb622717181712eb1, type: 3}
+  m_Name: Mi
+  m_EditorClassIdentifier: 
+  chestType: 1
+  chestColor: {r: 0.543348, g: 0.5514349, b: 0.559, a: 1}
+  chestIcon: {fileID: 3286163911610860551, guid: e523066f2ac54c04eb10979d65068ecd,
+    type: 3}

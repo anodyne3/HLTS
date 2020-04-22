@@ -16,21 +16,29 @@ namespace Utils
         public const string PlayerDataSuffix = "userData";
         public const string ReelRollCloudFunction = "usersReelRollOnCall";
         public const string AdRewardClaimCloudFunction = "usersAdRewardClaimOnCall";
+        public const string ChestClaimCloudFunction = "usersChestClaimOnCall";
         public const string FirebaseDatabaseUrl = "https://he-loves-the-slots.firebaseio.com/";
         public const string PrivacyPolicyUrl = "https://he-loves-the-slots.web.app/PrivacyPolicy.html";
         public const string TermsAndConditionsUrl = "https://he-loves-the-slots.web.app/TermsAndConditions.html";
 
+        //chests
+        public const int LoChestRoll = 10;
+        public const int MiChestRoll = 25;
+        public const int HiChestRoll = 100;
+        public const string ConfirmClaimMessagePrefix = "You are ";
+        public const string ConfirmClaimMessageSuffix = " rolls from a better chest.";
+        
         //ui
         public const float CoinsBackgroundBaseWidth = 300.0f;
         public const float CoinsBackgroundWidthMultiplier = 50.0f;
 
-        //resources
+        //resource paths
         public const string FruitParticleSpritesPath = "FruitSprites";
         public const string SoundEffectPath = "SoundEffects";
         public const string MusicTrackPath = "MusicTracks";
         public const string ShopProductPath = "ShopProducts";
-        
-        
+        public const string ChestsPath = "Chests";
+
         //coin
         public const int CoinTrayMax = 12;
         public const float SpawnRange = 0.8f;
@@ -53,9 +61,9 @@ namespace Utils
         public const string WinLightState = "WinLight";
 
         //reels
-        public const int TotalSpinTime = 330;//174
-        public const int RightReelStopTime = 180;//120
-        public const int MiddleReelStopTime = 120;//60
+        public const int TotalSpinTime = 330;
+        public const int RightReelStopTime = 180;
+        public const int MiddleReelStopTime = 120;
         public const float FastSpinDegrees = 15.0f;
         public const float MediumSpinDegrees = 5.0f;
         public const float SlowSpinDegrees = 1.0f;

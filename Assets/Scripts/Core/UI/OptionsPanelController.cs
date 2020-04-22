@@ -8,18 +8,14 @@ namespace Core.UI
         [SerializeField] private ToggleButton soundsToggleButton;
         [SerializeField] private ToggleButton musicToggleButton;
 
-        [SerializeField] private Button soundsToggle;
-        [SerializeField] private Button musicToggle;
         [SerializeField] private Button inputSettings;
 
         public override void Start()
         {
             base.Start();
 
-            soundsToggle.onClick.RemoveAllListeners();
-            soundsToggle.onClick.AddListener(ToggleSounds);
-            musicToggle.onClick.RemoveAllListeners();
-            musicToggle.onClick.AddListener(ToggleMusic);
+            soundsToggleButton.ClearAndAddListener(ToggleSounds);
+            musicToggleButton.ClearAndAddListener(ToggleMusic);
 
             if (GameManager != null && GameManager.debug)
             {

@@ -9,7 +9,6 @@ namespace Core.UI
         [SerializeField] private ToggleButton ToggleButton;
         
         [SerializeField] private Button Button;
-        [SerializeField] private Button Toggle;
         
         public TMP_Text footer;
 
@@ -21,8 +20,8 @@ namespace Core.UI
 
             Button.onClick.RemoveAllListeners();
             Button.onClick.AddListener(ButtonAction);
-            Toggle.onClick.RemoveAllListeners();
-            Toggle.onClick.AddListener(ToggleAction);
+            
+            ToggleButton.ClearAndAddListener(ToggleAction);
             
             ToggleButton.RefreshToggle(_replaceThisValue, true);
         }

@@ -81,6 +81,7 @@ namespace Core.Managers
             return null;
         }
 
+        #region Sprites
         //return a Sprite from its dictionary according to it's FruitType
         public Sprite GetFruitParticleSprite(FruitType fruitType)
         {
@@ -93,8 +94,10 @@ namespace Core.Managers
                 ? GetResource<Sprite>(FruitType.Bars + "Sprite")
                 : GetResource<Sprite>(FruitType.Bananas + "Sprite");
         }
-
-        //return a random AudioClip from a SoundEffect scriptableObject by its enum 
+        #endregion
+        
+        #region AudioClips
+        //return a random AudioClip from a SoundEffect scriptableObject by its enum
         public AudioClip GetSoundEffect(SoundEffectType soundEffectType)
         {
             if (_soundEffects.Length < 1)
@@ -120,5 +123,6 @@ namespace Core.Managers
         {
             return GetResource<MusicTrack>(musicStyle.ToString()).musicTrack;
         }
+        #endregion
     }
 }

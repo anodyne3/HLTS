@@ -1,19 +1,28 @@
 using System;
+using System.Threading.Tasks;
 using DG.Tweening;
 using MyScriptableObjects;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.UI;
 
 namespace Core.UI
 {
         [Serializable]
-        public struct ToggleButton
+        public class ToggleButton : MonoBehaviour
         {
-            [SerializeField] private Transform transform;
+            public Button toggleButton;
             [SerializeField] private SVGImage image;
             [SerializeField] private TMP_Text text;
             [SerializeField] private TweenPunchSetting punchSetting;
             private Tweener _punchTween;
+
+            public void ClearAndAddListener(UnityAction action)
+            {
+                toggleButton.onClick.RemoveAllListeners();
+                toggleButton.onClick.AddListener(action);
+            }
             
             public void RefreshToggle(bool value, bool start = false)
             {
@@ -22,7 +31,7 @@ namespace Core.UI
                 
                 if (start) return;
 
-                punchSetting.DoPunch(transform, false);
+                punchSetting.DoPunch(toggleButton.transform, false);
             }
     }
 }

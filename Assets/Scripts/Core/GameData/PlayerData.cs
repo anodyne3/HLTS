@@ -11,9 +11,10 @@ namespace Core.GameData
     {
         public static bool ConsentGiven => PlayerPrefs.HasKey(Constants.ConsentKey) && PlayerPrefs.GetInt(Constants.ConsentKey) == 1;
         public FirebaseUser firebaseUser;
-        public long coinsAmount = 10;
-        public int[] lastResult;
-        public int[] nextResult;
+        [HideInInspector] public long coinsAmount = 10;
+        [HideInInspector] public int[] lastResult;
+        [HideInInspector] public int[] nextResult;
+        public int currentChestRoll;
 
         private FirebaseDatabase _database;
 
