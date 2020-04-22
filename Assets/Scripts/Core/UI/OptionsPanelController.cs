@@ -7,7 +7,7 @@ namespace Core.UI
     {
         [SerializeField] private ToggleButton soundsToggleButton;
         [SerializeField] private ToggleButton musicToggleButton;
-        
+
         [SerializeField] private Button soundsToggle;
         [SerializeField] private Button musicToggle;
         [SerializeField] private Button inputSettings;
@@ -15,13 +15,13 @@ namespace Core.UI
         public override void Start()
         {
             base.Start();
-            
+
             soundsToggle.onClick.RemoveAllListeners();
             soundsToggle.onClick.AddListener(ToggleSounds);
             musicToggle.onClick.RemoveAllListeners();
             musicToggle.onClick.AddListener(ToggleMusic);
-            
-            if (GameManager.debug)
+
+            if (GameManager != null && GameManager.debug)
             {
                 inputSettings.gameObject.SetActive(true);
                 inputSettings.onClick.RemoveAllListeners();
@@ -29,21 +29,21 @@ namespace Core.UI
             }
 
             soundsToggleButton.RefreshToggle(AudioManager.soundsDisabled, true);
-            musicToggleButton.RefreshToggle(AudioManager.musicDisabled,true);
+            musicToggleButton.RefreshToggle(AudioManager.musicDisabled, true);
         }
-        
+
         private void ToggleSounds()
         {
             AudioManager.soundsDisabled = !AudioManager.soundsDisabled;
             soundsToggleButton.RefreshToggle(AudioManager.soundsDisabled);
         }
-        
+
         private void ToggleMusic()
         {
             AudioManager.musicDisabled = !AudioManager.musicDisabled;
             musicToggleButton.RefreshToggle(AudioManager.musicDisabled);
         }
-        
+
         private static void OpenInputSettings()
         {
             PanelManager.OpenSubPanel<InputSettingsPanel>();
