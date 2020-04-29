@@ -1,7 +1,12 @@
+using System.Collections.Generic;
+using System.Linq;
+using Core.GameData;
+using Core.UI;
 using DG.Tweening;
 using Enums;
 using MyScriptableObjects;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.UI;
 using Utils;
 
@@ -14,50 +19,38 @@ namespace Core.Managers
         [SerializeField] private Image chestProgressFillImage;
         [SerializeField] private TweenPunchSetting tweenPunchSetting;
 
-        private ChestVariable[] _chestTypes;
+        public ChestVariable[] chestTypes;
 
-        private ChestVariable CurrentChest
+        public ChestVariable CurrentChest
         {
             get
             {
-                var chestTypesLength = _chestTypes.Length;
+                var chestTypesLength = chestTypes.Length;
                 for (var i = 0; i < chestTypesLength; i++)
                 {
-                    if (_chestTypes[i].chestType == CurrentChestType)
-                        return _chestTypes[i];
+                    if (chestTypes[i].chestType == CurrentChestType)
+                        return chestTypes[i];
                 }
 
                 return null;
             }
         }
 
-        public static int RollsToBetterChest
+        public int RollsToBetterChest => CurrentChest.threshold - PlayerData.currentChestRoll;
+
+        private ChestType CurrentChestType
         {
             get
             {
-                if (PlayerData.currentChestRoll < Constants.LoChestRoll)
-                    return Constants.LoChestRoll - PlayerData.currentChestRoll;
-                if (PlayerData.currentChestRoll == Constants.LoChestRoll)
-                    return 0;
-                if (PlayerData.currentChestRoll < Constants.MiChestRoll)
-                    return Constants.MiChestRoll - PlayerData.currentChestRoll;
-                if (PlayerData.currentChestRoll == Constants.MiChestRoll)
-                    return 0;
-                if (PlayerData.currentChestRoll < Constants.HiChestRoll)
-                    return Constants.HiChestRoll - PlayerData.currentChestRoll;
+                var chestTypesLength = chestTypes.Length;
+                for (var i = 0; i < chestTypesLength; i ++)
+                {
+                    if (PlayerData.currentChestRoll > chestTypes[i].threshold) continue;
 
-                return 0;
-            }
-        }
+                    return chestTypes[i].chestType;
+                }
 
-        private static ChestType CurrentChestType
-        {
-            get
-            {
-                if (PlayerData.currentChestRoll < Constants.LoChestRoll)
-                    return ChestType.Lo;
-                
-                return PlayerData.currentChestRoll < Constants.MiChestRoll ? ChestType.Mi : ChestType.Hi;
+                return chestTypes[0].chestType;
             }
         }
 
@@ -72,7 +65,9 @@ namespace Core.Managers
 
         private void LoadChests()
         {
-            _chestTypes = Resources.LoadAll<ChestVariable>(Constants.ChestsPath);
+            var loadedChests = Resources.LoadAll<ChestVariable>(Constants.ChestsPath).ToList();
+            loadedChests.Sort((x, y) => x.rank.CompareTo(y.rank));
+            chestTypes = loadedChests.ToArray();
         }
 
         private void RefreshChest()
@@ -100,7 +95,12 @@ namespace Core.Managers
             tweenPunchSetting.DoPunch(transform);
         }
 
-        private static float GetFillAmount()
+        public void OpenChest(ChestRewardDto chestRewardDto)
+        {
+            PanelManager.OpenSubPanel<OpenChestPanelController>(chestRewardDto);
+        }  
+
+        public float GetFillAmount()
         {
             switch (CurrentChestType)
             {
@@ -111,6 +111,18 @@ namespace Core.Managers
                 case ChestType.Hi:
                     return (Constants.HiChestRoll - (float) RollsToBetterChest) / Constants.HiChestRoll;
             }
+        }
+
+        public Sprite GetChestIcon(ChestType chestType)
+        {
+            var chestTypesLength = chestTypes.Length;
+            for (var i = 0; i < chestTypesLength; i++)
+            {
+                if (chestTypes[i].chestType == chestType)
+                    return chestTypes[i].chestIcon;
+            }
+
+            return null;
         }
     }
 }

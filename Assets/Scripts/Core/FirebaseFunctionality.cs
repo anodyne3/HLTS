@@ -1,7 +1,9 @@
 ﻿using System.Threading.Tasks;
 using Core.GameData;
 using Core.MainSlotMachine;
+using Core.UI;
 using DG.Tweening;
+using Enums;
 using Firebase;
 using Firebase.Auth;
 using Firebase.Functions;
@@ -219,6 +221,24 @@ namespace Core
                 HandleFunctionError(chestClaim);
             }
         }
+        
+        public async void OpenChest(ChestType chestType)
+        {
+            await ChestOpen();
+        }
+
+        private async Task ChestOpen()
+        {
+            var chestClaim = _firebaseFunc.GetHttpsCallable(Constants.ChestClaimCloudFunction).CallAsync();
+
+            await chestClaim;
+            if (chestClaim.IsFaulted)
+            {
+                //maybe show message to player regarding some issue
+                HandleFunctionError(chestClaim);
+            }
+        }
+        
         #endregion
         
         #region Common

@@ -103,7 +103,7 @@ namespace Core
 
             var timeStarted = Time.time;
 
-            while (PlayerData.coinsAmount > 0)
+            while (PlayerData.bcAmount > 0)
             {
                 EventManager.coinInsert.Raise();
 

@@ -41,7 +41,7 @@ namespace Core.UI
             backgroundButton.onClick.AddListener(ClosePanel);
         }
 
-        public virtual void OpenPanel()
+        public virtual void OpenPanel(params object[] args)
         {
             AudioManager.PlayClip(SoundEffectType.OpenPanel);
 

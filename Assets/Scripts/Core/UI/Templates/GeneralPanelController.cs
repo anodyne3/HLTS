@@ -26,7 +26,7 @@ namespace Core.UI
             ToggleButton.RefreshToggle(_replaceThisValue, true);
         }
 
-        public override void OpenPanel()
+        public override void OpenPanel(params object[] args)
         {
             base.OpenPanel();
             

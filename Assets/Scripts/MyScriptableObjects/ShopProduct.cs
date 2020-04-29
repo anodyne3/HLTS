@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Purchasing;
+using Enums;
 
 namespace MyScriptableObjects
 {
@@ -9,5 +10,8 @@ namespace MyScriptableObjects
         public string productName;
         public string productId;
         public ProductType productType;
+        public int productCost;
+        public CurrencyType currencyType;
+        public Sprite productIcon;
     }
 }

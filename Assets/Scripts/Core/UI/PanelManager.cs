@@ -47,11 +47,11 @@ namespace Core.UI
                 currentPopup != null);
         }
 
-        public void OpenSubPanel<T>() where T : PanelController
+        public void OpenSubPanel<T>(params object[] args) where T : PanelController
         {
             var requiredPanel = GetPanel<T>();
             requiredPanel.transform.SetAsLastSibling();
-            requiredPanel.OpenPanel();
+            requiredPanel.OpenPanel(args);
         }
 
         public int OpenPanelCount()

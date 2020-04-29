@@ -14,5 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   chestType: 0
   chestColor: {r: 0.5283019, g: 0.36196154, b: 0.3065148, a: 1}
-  chestIcon: {fileID: 3286163911610860551, guid: d0d6387aac1e72c4b9fe5c555145b420,
+  chestName: Bronze Chest
+  chestIcon: {fileID: 3286163911610860551, guid: f0ea72880f034ef479492d2f9a8196b7,
     type: 3}
+  rank: 0
+  threshold: 10
+  bcMax: 35
+  bpMax: 5
+  sfMax: 1

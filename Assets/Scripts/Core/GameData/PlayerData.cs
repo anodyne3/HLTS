@@ -1,5 +1,7 @@
 using System.Collections;
 using Core.Managers;
+using Core.UI;
+using Enums;
 using Firebase.Auth;
 using Firebase.Database;
 using UnityEngine;
@@ -11,11 +13,15 @@ namespace Core.GameData
     {
         public static bool ConsentGiven => PlayerPrefs.HasKey(Constants.ConsentKey) && PlayerPrefs.GetInt(Constants.ConsentKey) == 1;
         public FirebaseUser firebaseUser;
-        [HideInInspector] public long coinsAmount = 10;
+        [HideInInspector] public long bcAmount = 10;
+        [HideInInspector] public long bpAmount;
+        [HideInInspector] public long sfAmount;
         [HideInInspector] public int[] lastResult;
         [HideInInspector] public int[] nextResult;
+        [HideInInspector] public int[] chestData;
+        
         public int currentChestRoll;
-
+        
         private FirebaseDatabase _database;
 
         private void Start()
@@ -25,7 +31,7 @@ namespace Core.GameData
 
         private void DeductCoin()
         {
-            coinsAmount -= 1;
+            bcAmount -= 1;
             EventManager.refreshUi.Raise();
         }
 
@@ -34,6 +40,8 @@ namespace Core.GameData
             _database = FirebaseDatabase.DefaultInstance;
             _database.GetReference(Constants.PlayerDataPrefix).Child(firebaseUser.UserId)
                 .Child(Constants.PlayerDataSuffix).ValueChanged += OnPlayerDataChanged;
+            _database.GetReference(Constants.PlayerDataPrefix).Child(firebaseUser.UserId)
+                .Child(Constants.ChestDataSuffix).ValueChanged += OnChestDataChanged;
         }
         
         public void StopDatabaseListeners()
@@ -67,10 +75,32 @@ namespace Core.GameData
             }
             
             var snapReturn = args.Snapshot.GetRawJsonValue();
-            var snapReturnDict = new PlayerDataDto(snapReturn);
-            lastResult = snapReturnDict.lastResult.ToArray();
-            nextResult = snapReturnDict.nextResult.ToArray();
-            coinsAmount = snapReturnDict.coinsAmount;
+            var snapReturnDto = new PlayerDataDto(snapReturn);
+            lastResult = snapReturnDto.lastResult.ToArray();
+            nextResult = snapReturnDto.nextResult.ToArray();
+            bcAmount = snapReturnDto.coinsAmount;
+        }
+
+        private void OnChestDataChanged(object sender, ValueChangedEventArgs args)
+        {
+            if (sender != null)
+                Debug.Log(sender.ToString());
+            
+            if (args.DatabaseError != null)
+            {
+                Debug.LogError(args.DatabaseError.Message);
+                return;
+            }
+
+            if (string.IsNullOrEmpty(args.Snapshot.GetRawJsonValue()))
+            {
+                Debug.Log("Empty Snapshot: " + args.Snapshot.Key);
+                return;
+            }
+            
+            var snapReturn = args.Snapshot.GetRawJsonValue();
+            var snapReturnDto = new ChestDto(snapReturn);
+            chestData = snapReturnDto.newChestData;
         }
 
         public IEnumerator OnLogin()
@@ -81,5 +111,17 @@ namespace Core.GameData
             
             GameManager.LoadMain();
         }
+
+        #region ChestData
+
+        public int GetChestCount(ChestType chestType)
+        {
+            if (chestData == null)
+                chestData = new[] {0, 0, 0};
+            
+            return chestData[(int) chestType];
+        }
+
+        #endregion
     }
 }

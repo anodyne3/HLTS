@@ -24,7 +24,7 @@ namespace Core.UI
             doublePayoutForAdButton.onClick.AddListener(ConfirmShowAd);
         }
 
-        public override void OpenPanel()
+        public override void OpenPanel(params object[] args)
         {
             base.OpenPanel();
 
@@ -41,7 +41,7 @@ namespace Core.UI
                 ? Constants.JackpotMessage
                 : Constants.YouWinMessage;
 
-            _payoutAmount = PlayerData.coinsAmount - HudController.CoinsAmount;
+            _payoutAmount = PlayerData.bcAmount - HudController.CoinsAmount;
 
             payoutAmountText.text = _payoutAmount.ToString();
 
@@ -57,7 +57,7 @@ namespace Core.UI
 
         private void ProcessReward()
         {
-            PlayerData.coinsAmount += _payoutAmount;
+            PlayerData.bcAmount += _payoutAmount;
             doublePayoutForAdButton.gameObject.SetActive(false);
             
             RefreshPanel();

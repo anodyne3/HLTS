@@ -28,7 +28,7 @@ namespace Core.UI
             policiesButton.onClick.AddListener(OpenPoliciesPanel);
         }
 
-        public override void OpenPanel()
+        public override void OpenPanel(params object[] args)
         {
             base.OpenPanel();
 

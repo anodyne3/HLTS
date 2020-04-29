@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Core.GameData;
 using Enums;
 using MyScriptableObjects;
 using UnityEngine;
@@ -11,12 +12,13 @@ namespace Core.Managers
 {
     public class ResourceManager : Singleton<ResourceManager>
     {
-        private readonly Dictionary<string, Sprite> fruitParticleSprites = new Dictionary<string, Sprite>();
+        private readonly Dictionary<string, Sprite> _fruitParticleSprites = new Dictionary<string, Sprite>();
         private readonly Dictionary<string, MusicTrack> musicTracks = new Dictionary<string, MusicTrack>();
+        private readonly Dictionary<string, Sprite> _chestRewardSprites = new Dictionary<string, Sprite>();
         // private readonly Dictionary<string, ShopProduct> shopProducts = new Dictionary<string, ShopProduct>();
 
         private SoundEffect[] _soundEffects;
-        private MusicTrack[] _musicTracks;
+        // private MusicTrack[] _musicTracks;
         public ShopProduct[] shopProducts;
 
         private readonly List<IMyDictionaries> _allDictionaries = new List<IMyDictionaries>();
@@ -39,11 +41,12 @@ namespace Core.Managers
 
         private void Awake()
         {
-            PopulateDictionary(fruitParticleSprites, Constants.FruitParticleSpritesPath);
+            PopulateDictionary(_fruitParticleSprites, Constants.FruitParticleSpritesPath);
             PopulateDictionary(musicTracks, Constants.MusicTrackPath);
+            PopulateDictionary(_chestRewardSprites, Constants.ChestRewardsPath);
 
             _soundEffects = Resources.LoadAll<SoundEffect>(Constants.SoundEffectPath);
-            _musicTracks = Resources.LoadAll<MusicTrack>(Constants.MusicTrackPath);
+            // _musicTracks = Resources.LoadAll<MusicTrack>(Constants.MusicTrackPath);
             shopProducts = Resources.LoadAll<ShopProduct>(Constants.ShopProductPath);
         }
 
@@ -93,6 +96,12 @@ namespace Core.Managers
             return randomSprite % 2 == 1
                 ? GetResource<Sprite>(FruitType.Bars + "Sprite")
                 : GetResource<Sprite>(FruitType.Bananas + "Sprite");
+        }
+
+        //return a sprite from its dictionary according to it's 
+        public Sprite GetRewardSprite(ChestRewardType chestRewardType)
+        {
+            return GetResource<Sprite>(chestRewardType.ToString());
         }
         #endregion
         

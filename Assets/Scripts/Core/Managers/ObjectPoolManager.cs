@@ -7,6 +7,13 @@ namespace Core.Managers
     {
         public MyObjectPool<CoinDragHandler> coinPool;
 
+        /// <summary>
+        /// Create an ObjectPool of type T using Prefab on Parent
+        /// </summary>
+        /// <param name="prefab"></param>
+        /// <param name="parent"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
         public static MyObjectPool<T> CreateObjectPool<T>(Object prefab, Transform parent) where T : Object
         {
             var newPool = new MyObjectPool<T>(() => Instantiate((T)prefab, parent));

@@ -14,5 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   chestType: 2
   chestColor: {r: 1, g: 0.7218741, b: 0.34800005, a: 1}
-  chestIcon: {fileID: 3286163911610860551, guid: a73235b18b5d7104a823f0875fa91a42,
+  chestName: Gold Chest
+  chestIcon: {fileID: 3286163911610860551, guid: 08c85f35b89ed3044827e0cdfb0d3a03,
     type: 3}
+  rank: 2
+  threshold: 100
+  bcMax: 500
+  bpMax: 100
+  sfMax: 35

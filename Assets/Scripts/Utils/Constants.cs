@@ -10,10 +10,16 @@ namespace Utils
         public const string ConsentKey = "ConsentKey";
         public const float WorldSpaceTolerance = 0.01f;
         public const float FloatTolerance = 0.001f;
+        
+        //spriteAssets
+        public const string BananaCoinIcon = "<sprite=\"BC\" index=0>";
+        public const string BluePrintIcon = "<sprite=\"BP\" index=0>";
+        public const string StarFruitIcon = "<sprite=\"SF\" index=0>";
 
         //firebase
         public const string PlayerDataPrefix = "users";
         public const string PlayerDataSuffix = "userData";
+        public const string ChestDataSuffix = "userData";
         public const string ReelRollCloudFunction = "usersReelRollOnCall";
         public const string AdRewardClaimCloudFunction = "usersAdRewardClaimOnCall";
         public const string ChestClaimCloudFunction = "usersChestClaimOnCall";
@@ -27,6 +33,7 @@ namespace Utils
         public const int HiChestRoll = 100;
         public const string ConfirmClaimMessagePrefix = "You are ";
         public const string ConfirmClaimMessageSuffix = " rolls from a better chest.";
+        public const string ChestRewardPrefix = " ~";
         
         //ui
         public const float CoinsBackgroundBaseWidth = 300.0f;
@@ -38,6 +45,7 @@ namespace Utils
         public const string MusicTrackPath = "MusicTracks";
         public const string ShopProductPath = "ShopProducts";
         public const string ChestsPath = "Chests";
+        public const string ChestRewardsPath = "ChestRewards";
 
         //coin
         public const int CoinTrayMax = 12;

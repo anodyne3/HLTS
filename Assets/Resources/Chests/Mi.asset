@@ -14,5 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   chestType: 1
   chestColor: {r: 0.543348, g: 0.5514349, b: 0.559, a: 1}
-  chestIcon: {fileID: 3286163911610860551, guid: e523066f2ac54c04eb10979d65068ecd,
+  chestName: Silver Chest
+  chestIcon: {fileID: 3286163911610860551, guid: 6e83c128771a9da4f9fa1ec401a9606f,
     type: 3}
+  rank: 1
+  threshold: 25
+  bcMax: 100
+  bpMax: 25
+  sfMax: 5

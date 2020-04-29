@@ -1,18 +1,19 @@
-﻿using Core.Managers;
-using MyScriptableObjects;
+﻿using MyScriptableObjects;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using Utils;
 
 namespace Core.UI
 {
-    public class ConfirmClaimChestPanelController : PanelController
+    public class ConfirmPurchasePanelController : PanelController
     {
         [SerializeField] private Button confirmButton;
         [SerializeField] private Button cancelButton;
         [SerializeField] private TweenPunchSetting punchSetting;
-        [SerializeField] private TMP_Text messageText;
+        [SerializeField] private SVGImage productIcon;
+        [SerializeField] private TMP_Text currencyCost;
+
+        private ShopProduct _shopProduct;
     
         public override void Start()
         {
@@ -22,22 +23,30 @@ namespace Core.UI
             confirmButton.onClick.AddListener(ConfirmAction);
             cancelButton.onClick.RemoveAllListeners();
             cancelButton.onClick.AddListener(ClosePanel);
+        }
 
+        public override void OpenPanel(params object[] args)
+        {
+            base.OpenPanel();
+
+            _shopProduct = (ShopProduct) args[0];
+            
             RefreshPanel();
         }
 
         private void RefreshPanel()
         {
-            messageText.text = Constants.ConfirmClaimMessagePrefix + ChestManager.RollsToBetterChest +
-                               Constants.ConfirmClaimMessageSuffix;
+            productIcon.sprite = _shopProduct.productIcon;
+            currencyCost.text = _shopProduct.productCost.ToString();
         }
 
         private void ConfirmAction()
         {
             punchSetting.DoPunch(confirmButton.transform, false);
             
-            FirebaseFunctionality.ClaimChest();
-            
+            // confirm action function here
+            //FirebaseFunctionality.shopTransaction(_shopProduct)
+
             base.ClosePanel();
         }
 

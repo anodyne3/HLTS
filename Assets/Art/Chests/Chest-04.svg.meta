@@ -18,8 +18,8 @@ ScriptedImporter:
   viewportOptions: 0
   preserveViewport: 0
   advancedMode: 0
-  predefinedResolutionIndex: 3
-  targetResolution: 480
+  predefinedResolutionIndex: 2
+  targetResolution: 720
   resolutionMultiplier: 1
   stepDistance: 10
   samplingStepDistance: 100
@@ -31,7 +31,7 @@ ScriptedImporter:
   textureSize: 512
   textureWidth: 256
   textureHeight: 256
-  wrapMode: 0
+  wrapMode: 1
   filterMode: 1
   sampleCount: 4
   preserveSVGImageAspect: 0
