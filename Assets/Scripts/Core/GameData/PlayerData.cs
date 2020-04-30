@@ -11,17 +11,26 @@ namespace Core.GameData
 {
     public class PlayerData : Singleton<PlayerData>
     {
-        public static bool ConsentGiven => PlayerPrefs.HasKey(Constants.ConsentKey) && PlayerPrefs.GetInt(Constants.ConsentKey) == 1;
+        public static bool ConsentGiven =>
+            PlayerPrefs.HasKey(Constants.ConsentKey) && PlayerPrefs.GetInt(Constants.ConsentKey) == 1;
+
         public FirebaseUser firebaseUser;
-        [HideInInspector] public long bcAmount = 10;
-        [HideInInspector] public long bpAmount;
-        [HideInInspector] public long sfAmount;
+        private static long _bcAmount = 10;
+        private static long _bpAmount;
+        private static long _sfAmount;
         [HideInInspector] public int[] lastResult;
         [HideInInspector] public int[] nextResult;
         [HideInInspector] public int[] chestData;
-        
+
+        public Currency[] wallet =
+        {
+            new Currency(_bcAmount, CurrencyType.BananaCoins),
+            new Currency(_bpAmount, CurrencyType.BluePrints),
+            new Currency(_sfAmount, CurrencyType.StarFruits)
+        };
+
         public int currentChestRoll;
-        
+
         private FirebaseDatabase _database;
 
         private void Start()
@@ -31,7 +40,7 @@ namespace Core.GameData
 
         private void DeductCoin()
         {
-            bcAmount -= 1;
+            _bcAmount -= 1;
             EventManager.refreshUi.Raise();
         }
 
@@ -43,11 +52,11 @@ namespace Core.GameData
             _database.GetReference(Constants.PlayerDataPrefix).Child(firebaseUser.UserId)
                 .Child(Constants.ChestDataSuffix).ValueChanged += OnChestDataChanged;
         }
-        
+
         public void StopDatabaseListeners()
         {
             if (firebaseUser == null || firebaseUser.UserId == string.Empty) return;
-            
+
             _database.GetReference(Constants.PlayerDataPrefix).Child(firebaseUser.UserId)
                 .Child(Constants.PlayerDataSuffix).ValueChanged -= OnPlayerDataChanged;
         }
@@ -61,7 +70,7 @@ namespace Core.GameData
         {
             if (sender != null)
                 Debug.Log(sender.ToString());
-            
+
             if (args.DatabaseError != null)
             {
                 Debug.LogError(args.DatabaseError.Message);
@@ -73,19 +82,19 @@ namespace Core.GameData
                 Debug.Log("Empty Snapshot: " + args.Snapshot.Key);
                 return;
             }
-            
+
             var snapReturn = args.Snapshot.GetRawJsonValue();
             var snapReturnDto = new PlayerDataDto(snapReturn);
             lastResult = snapReturnDto.lastResult.ToArray();
             nextResult = snapReturnDto.nextResult.ToArray();
-            bcAmount = snapReturnDto.coinsAmount;
+            _bcAmount = snapReturnDto.coinsAmount;
         }
 
         private void OnChestDataChanged(object sender, ValueChangedEventArgs args)
         {
             if (sender != null)
                 Debug.Log(sender.ToString());
-            
+
             if (args.DatabaseError != null)
             {
                 Debug.LogError(args.DatabaseError.Message);
@@ -97,7 +106,7 @@ namespace Core.GameData
                 Debug.Log("Empty Snapshot: " + args.Snapshot.Key);
                 return;
             }
-            
+
             var snapReturn = args.Snapshot.GetRawJsonValue();
             var snapReturnDto = new ChestDto(snapReturn);
             chestData = snapReturnDto.newChestData;
@@ -108,7 +117,7 @@ namespace Core.GameData
             StartDatabaseListeners();
 
             yield return new WaitUntil(() => lastResult != null);
-            
+
             GameManager.LoadMain();
         }
 
@@ -118,8 +127,51 @@ namespace Core.GameData
         {
             if (chestData == null)
                 chestData = new[] {0, 0, 0};
-            
+
             return chestData[(int) chestType];
+        }
+
+        #endregion
+
+        #region Resources
+
+        public long GetResourceAmount(CurrencyType currencyType)
+        {
+            var walletLength = wallet.Length;
+            for (var i = 0; i < walletLength; i++)
+            {
+                var currency = wallet[i];
+                if (currency.currencyType == currencyType)
+                {
+                    return currency.currencyAmount;
+                }
+            }
+
+            return 0;
+        }
+        
+        public void SetResourceAmount(CurrencyType currencyType, long amount)
+        {
+            var walletLength = wallet.Length;
+            for (var i = 0; i < walletLength; i++)
+            {
+                var currency = wallet[i];
+                if (currency.currencyType == currencyType)
+                {
+                    currency.currencyAmount += amount;
+                }
+            }
+        }
+        
+        public void SetResourceAmount(Currency currency)
+        {
+            var walletLength = wallet.Length;
+            for (var i = 0; i < walletLength; i++)
+            {
+                if (wallet[i].currencyType != currency.currencyType) continue;
+                
+                wallet[i].currencyAmount += currency.currencyAmount;
+            }
         }
 
         #endregion

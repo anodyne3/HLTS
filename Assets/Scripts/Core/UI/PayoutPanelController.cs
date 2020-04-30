@@ -41,7 +41,7 @@ namespace Core.UI
                 ? Constants.JackpotMessage
                 : Constants.YouWinMessage;
 
-            _payoutAmount = PlayerData.bcAmount - HudController.CoinsAmount;
+            _payoutAmount = PlayerData.GetResourceAmount(CurrencyType.BananaCoins) - HudController.CoinsAmount;
 
             payoutAmountText.text = _payoutAmount.ToString();
 
@@ -57,7 +57,7 @@ namespace Core.UI
 
         private void ProcessReward()
         {
-            PlayerData.bcAmount += _payoutAmount;
+            PlayerData.SetResourceAmount(CurrencyType.BananaCoins, _payoutAmount);
             doublePayoutForAdButton.gameObject.SetActive(false);
             
             RefreshPanel();

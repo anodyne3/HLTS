@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using Core.UI;
+using Enums;
 using UnityEngine;
 using Utils;
 using Random = UnityEngine.Random;
@@ -25,8 +26,9 @@ namespace Core.MainSlotMachine
         private IEnumerator CreateCoin()
         {
             var waitForSeconds = new WaitForSeconds(0.1f);
-            
-            while (CoinTray.CoinTrayCounter < PlayerData.bcAmount && CoinTray.CoinTrayCounter < Constants.CoinTrayMax)
+
+            while (CoinTray.CoinTrayCounter < PlayerData.GetResourceAmount(CurrencyType.BananaCoins) &&
+                   CoinTray.CoinTrayCounter < Constants.CoinTrayMax)
             {
                 var nextCoin = (CoinDragHandler) ObjectPoolManager.coinPool.Get().GetComponent(typeof(CoinDragHandler));
                 nextCoin.transform.position = GeneratedSpawnPosition();

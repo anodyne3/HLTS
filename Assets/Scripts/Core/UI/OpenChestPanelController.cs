@@ -58,7 +58,7 @@ namespace Core.UI
             var rewardsLength = _chestRewardDto.chestRewards.Length;
             for (var i = 0; i < rewardsLength; i++)
             {
-                if (_chestRewardDto.chestRewards[i].rewardAmount <= 0)
+                if (_chestRewardDto.chestRewards[i].currencyAmount <= 0)
                 {
                     rewardFinishPosition.GetChild(i).gameObject.SetActive(false);
                     continue;
@@ -129,10 +129,10 @@ namespace Core.UI
 
         private void ProcessReward()
         {
-            PlayerData.bcAmount += _chestRewardDto.chestRewards[(int) CurrencyType.BananaCoins].rewardAmount;
-            PlayerData.bpAmount += _chestRewardDto.chestRewards[(int) CurrencyType.BluePrints].rewardAmount;
-            PlayerData.sfAmount += _chestRewardDto.chestRewards[(int) CurrencyType.StarFruits].rewardAmount;
-
+            var chestRewardsLength = _chestRewardDto.chestRewards.Length;
+            for (var i = 0; i < chestRewardsLength; i++)
+                PlayerData.SetResourceAmount(_chestRewardDto.chestRewards[i]);
+            
             RefreshPanel();
 
             AdManager.reward = null;

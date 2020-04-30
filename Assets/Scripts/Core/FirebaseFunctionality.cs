@@ -8,6 +8,7 @@ using Firebase;
 using Firebase.Auth;
 using Firebase.Functions;
 using Firebase.Unity.Editor;
+using MyScriptableObjects;
 using UnityEngine;
 using Utils;
 
@@ -224,10 +225,10 @@ namespace Core
         
         public async void OpenChest(ChestType chestType)
         {
-            await ChestOpen();
+            await ChestOpen(chestType);
         }
 
-        private async Task ChestOpen()
+        private async Task ChestOpen(ChestType chestType)
         {
             var chestClaim = _firebaseFunc.GetHttpsCallable(Constants.ChestClaimCloudFunction).CallAsync();
 
@@ -238,7 +239,25 @@ namespace Core
                 HandleFunctionError(chestClaim);
             }
         }
-        
+        #endregion
+
+        #region UpgradeRepair
+        public async void UpgradeRepair(UpgradeRepairVariable upgradeRepairVariable)
+        {
+            await DoUpgradeRepair(upgradeRepairVariable);
+        }
+
+        private async Task DoUpgradeRepair(UpgradeRepairVariable upgradeRepairVariable)
+        {
+            var doUpgradeRepair = _firebaseFunc.GetHttpsCallable(Constants.DoUpgradeRepair).CallAsync();
+
+            await doUpgradeRepair;
+            if (doUpgradeRepair.IsFaulted)
+            {
+                //maybe show message to player regarding some issue
+                HandleFunctionError(doUpgradeRepair);
+            }
+        }
         #endregion
         
         #region Common

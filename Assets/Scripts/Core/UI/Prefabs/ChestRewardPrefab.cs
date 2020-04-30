@@ -11,11 +11,11 @@ namespace Core.UI.Prefabs
 
         [HideInInspector] public CurrencyType rewardType;
         
-        public void Init(ChestReward chestReward)
+        public void Init(Currency chestReward)
         {
-            rewardType = chestReward.rewardType;
-            rewardAmount.text = chestReward.rewardAmount.ToString();
-            rewardIcon.sprite = ResourceManager.GetCurrencySprite(chestReward.rewardType);
+            rewardType = chestReward.currencyType;
+            rewardAmount.text = chestReward.currencyAmount.ToString();
+            rewardIcon.sprite = ResourceManager.GetCurrencySprite(chestReward.currencyType);
         }
     }
 }

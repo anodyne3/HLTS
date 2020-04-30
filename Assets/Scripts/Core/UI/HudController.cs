@@ -1,6 +1,7 @@
 ﻿using System;
 using Core.Managers;
 using DG.Tweening;
+using Enums;
 using MyScriptableObjects;
 using TMPro;
 using UnityEngine;
@@ -20,15 +21,16 @@ namespace Core.UI
         public long bpAmount { get; private set; }
         public long sfAmount { get; private set; }
 
-        [Header("CurrencyUpdate")]
+        [Header("CurrencyUpdate")] [SerializeField]
+        private Transform currencyPrefab;
 
-        [SerializeField] private Transform currencyPrefab;
         [SerializeField] private Transform currencyIcon;
         [SerializeField] private Transform currencySpawnPosition;
         [SerializeField] private TweenSetting addCurrencyTweenSetting;
         [SerializeField] private DeductCurrencyPrefab deductCurrencyPrefab;
-        
+
         private MyObjectPool<Transform> _tweenCurrencyPool;
+
         // private Transform _deductTweenPrefab;
         private RectTransform _currencyRect;
         private long _currencyDifference;
@@ -37,7 +39,7 @@ namespace Core.UI
         private void Start()
         {
             _tweenCurrencyPool = ObjectPoolManager.CreateObjectPool<Transform>(currencyPrefab, currencySpawnPosition);
-            
+
             _currencyRect = (RectTransform) coinsAmountText.transform.parent.parent.GetComponent(typeof(RectTransform));
 
             menuButton.onClick.RemoveAllListeners();
@@ -47,7 +49,7 @@ namespace Core.UI
             chestButton.onClick.RemoveAllListeners();
             chestButton.onClick.AddListener(OpenChestPanel);
 
-            CoinsAmount = PlayerData.bcAmount;
+            CoinsAmount = PlayerData.GetResourceAmount(CurrencyType.BananaCoins);
             coinsAmountText.text = CoinsAmount.ToString();
             ResizeCurrencySizeDelta();
 
@@ -57,7 +59,7 @@ namespace Core.UI
         private void Update()
         {
             if (!_addingCurrency) return;
-            
+
             coinsAmountText.text = CoinsAmount.ToString();
         }
 
@@ -70,7 +72,7 @@ namespace Core.UI
         {
             PanelManager.OpenPanelSolo<ShopPanelController>();
         }
-        
+
         private static void OpenChestPanel()
         {
             PanelManager.OpenPanelSolo<ChestInventoryPanelController>();
@@ -78,7 +80,7 @@ namespace Core.UI
 
         private void RefreshCoins()
         {
-            _currencyDifference = PlayerData.bcAmount - CoinsAmount;
+            _currencyDifference = PlayerData.GetResourceAmount(CurrencyType.BananaCoins) - CoinsAmount;
 
             if (_currencyDifference == 0) return;
 
@@ -91,7 +93,8 @@ namespace Core.UI
         //resize the width of the coin currency background according to the number of digits 
         public void ResizeCurrencySizeDelta()
         {
-            var newSizeDelta = ResizeCurrencyRectByDigitCount(_currencyRect, PlayerData.bcAmount);
+            var newSizeDelta =
+                ResizeCurrencyRectByDigitCount(_currencyRect, PlayerData.GetResourceAmount(CurrencyType.BananaCoins));
             _currencyRect.DOSizeDelta(newSizeDelta, addCurrencyTweenSetting.sizeDeltaDuration);
         }
 
@@ -109,7 +112,7 @@ namespace Core.UI
             //get a bunch of coins from the pool and move them to the currency target
             var currencyInstanceAmount = TweenSetting.GetSpawnAmount(_currencyDifference);
             ResizeCurrencySizeDelta();
-            
+
             var sequence = DOTween.Sequence();
             for (var i = 0; i < currencyInstanceAmount; i++)
             {
@@ -135,7 +138,8 @@ namespace Core.UI
             //increment the coinsAmountText to the new amount
             var addingCurrencyDuration = sequence.Duration(false) - addCurrencyTweenSetting.moveDuration;
             sequence.Insert(addCurrencyTweenSetting.moveDuration,
-                DOTween.To(() => CoinsAmount, x => CoinsAmount = x, PlayerData.bcAmount,
+                DOTween.To(() => CoinsAmount, x => CoinsAmount = x,
+                    PlayerData.GetResourceAmount(CurrencyType.BananaCoins),
                     addingCurrencyDuration).OnComplete(() =>
                 {
                     _addingCurrency = false;
@@ -144,13 +148,13 @@ namespace Core.UI
 
             _addingCurrency = true;
         }
-        
+
         private void DeductCurrency()
         {
             //instantiate a duplicate of the currency display (amount and icon) and tween it
             deductCurrencyPrefab.Init(_currencyDifference);
             //update the currency display to show the new amount
-            CoinsAmount = PlayerData.bcAmount;
+            CoinsAmount = PlayerData.GetResourceAmount(CurrencyType.BananaCoins);
             coinsAmountText.text = CoinsAmount.ToString();
         }
     }
