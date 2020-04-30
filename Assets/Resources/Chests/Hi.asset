@@ -17,6 +17,8 @@ MonoBehaviour:
   chestName: Gold Chest
   chestIcon: {fileID: 3286163911610860551, guid: 08c85f35b89ed3044827e0cdfb0d3a03,
     type: 3}
+  chestOpenIcon: {fileID: 3286163911610860551, guid: a76c10e461b4738409d2ec37a994d8d5,
+    type: 3}
   rank: 2
   threshold: 100
   bcMax: 500

@@ -14,7 +14,7 @@ namespace Core.Managers
     {
         private readonly Dictionary<string, Sprite> _fruitParticleSprites = new Dictionary<string, Sprite>();
         private readonly Dictionary<string, MusicTrack> musicTracks = new Dictionary<string, MusicTrack>();
-        private readonly Dictionary<string, Sprite> _chestRewardSprites = new Dictionary<string, Sprite>();
+        private readonly Dictionary<string, Sprite> _currencySprites = new Dictionary<string, Sprite>();
         // private readonly Dictionary<string, ShopProduct> shopProducts = new Dictionary<string, ShopProduct>();
 
         private SoundEffect[] _soundEffects;
@@ -43,7 +43,7 @@ namespace Core.Managers
         {
             PopulateDictionary(_fruitParticleSprites, Constants.FruitParticleSpritesPath);
             PopulateDictionary(musicTracks, Constants.MusicTrackPath);
-            PopulateDictionary(_chestRewardSprites, Constants.ChestRewardsPath);
+            PopulateDictionary(_currencySprites, Constants.ChestRewardsPath);
 
             _soundEffects = Resources.LoadAll<SoundEffect>(Constants.SoundEffectPath);
             // _musicTracks = Resources.LoadAll<MusicTrack>(Constants.MusicTrackPath);
@@ -99,9 +99,9 @@ namespace Core.Managers
         }
 
         //return a sprite from its dictionary according to it's 
-        public Sprite GetRewardSprite(ChestRewardType chestRewardType)
+        public Sprite GetCurrencySprite(CurrencyType currencyType)
         {
-            return GetResource<Sprite>(chestRewardType.ToString());
+            return GetResource<Sprite>(currencyType.ToString());
         }
         #endregion
         

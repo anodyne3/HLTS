@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Linq;
 using Core.GameData;
 using Core.UI;
@@ -6,7 +5,6 @@ using DG.Tweening;
 using Enums;
 using MyScriptableObjects;
 using UnityEngine;
-using UnityEngine.Rendering;
 using UnityEngine.UI;
 using Utils;
 
@@ -20,6 +18,8 @@ namespace Core.Managers
         [SerializeField] private TweenPunchSetting tweenPunchSetting;
 
         public ChestVariable[] chestTypes;
+        //kill this
+        [SerializeField] public ChestRewardDto chestReward;
 
         public ChestVariable CurrentChest
         {
@@ -43,7 +43,7 @@ namespace Core.Managers
             get
             {
                 var chestTypesLength = chestTypes.Length;
-                for (var i = 0; i < chestTypesLength; i ++)
+                for (var i = 0; i < chestTypesLength; i++)
                 {
                     if (PlayerData.currentChestRoll > chestTypes[i].threshold) continue;
 
@@ -95,10 +95,17 @@ namespace Core.Managers
             tweenPunchSetting.DoPunch(transform);
         }
 
+        [ContextMenu("OpenChestTest")]
+        public void OpenChestTest()
+        {
+            // chestReward = new ChestRewardDto("[ 10, 20, 0 ]");
+            OpenChest(chestReward);
+        }
+
         public void OpenChest(ChestRewardDto chestRewardDto)
         {
             PanelManager.OpenSubPanel<OpenChestPanelController>(chestRewardDto);
-        }  
+        }
 
         public float GetFillAmount()
         {

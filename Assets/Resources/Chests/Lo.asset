@@ -17,6 +17,8 @@ MonoBehaviour:
   chestName: Bronze Chest
   chestIcon: {fileID: 3286163911610860551, guid: f0ea72880f034ef479492d2f9a8196b7,
     type: 3}
+  chestOpenIcon: {fileID: 3286163911610860551, guid: a76c10e461b4738409d2ec37a994d8d5,
+    type: 3}
   rank: 0
   threshold: 10
   bcMax: 35

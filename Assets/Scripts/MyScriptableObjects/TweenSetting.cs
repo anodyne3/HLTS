@@ -14,7 +14,10 @@ namespace MyScriptableObjects
         public AnimationCurve moveCurve;
         public float spawnZoneRadius;
         public float moveOffset;
-
+        
+        [Header("Rotate")]
+        [SerializeField] private TweenRotateSetting rotateSetting;
+        
         [Header("Punch")]
         [SerializeField] private TweenPunchSetting punchSetting;
 
@@ -32,6 +35,7 @@ namespace MyScriptableObjects
 
         public Ease sequenceEasing;
 
+        private Tweener _rotateTween;
         private Tweener _punchTween;
         private Tweener _fadeTween;
 
@@ -52,6 +56,11 @@ namespace MyScriptableObjects
         public Vector3 RandomSpawnPosition()
         {
             return Random.insideUnitCircle * spawnZoneRadius;
+        }
+        
+        public void DoRotate(Transform rotateTarget, bool pooled = true)
+        {
+            rotateSetting.DoRotate(rotateTarget, pooled);
         }
 
         public void DoPunch(Transform punchTarget, bool pooled = true)

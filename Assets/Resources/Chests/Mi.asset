@@ -17,6 +17,8 @@ MonoBehaviour:
   chestName: Silver Chest
   chestIcon: {fileID: 3286163911610860551, guid: 6e83c128771a9da4f9fa1ec401a9606f,
     type: 3}
+  chestOpenIcon: {fileID: 3286163911610860551, guid: a76c10e461b4738409d2ec37a994d8d5,
+    type: 3}
   rank: 1
   threshold: 25
   bcMax: 100

@@ -1,10 +1,12 @@
+using System;
 using Enums;
 
 namespace Core.UI
 {
+    [Serializable]
     public class ChestReward
     {
-        public ChestRewardType rewardType;
         public int rewardAmount;
+        public CurrencyType rewardType;
     }
 }
