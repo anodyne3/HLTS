@@ -10,6 +10,7 @@ namespace Core
     {
         protected static GameManager GameManager => Foundation.GameManager;
         protected static HudController HudController => Foundation.GetGlobalClass<HudController>();
+        protected static CurrencyController CurrencyController => Foundation.GetGlobalClass<CurrencyController>();
         protected static PanelManager PanelManager => Foundation.GetGlobalClass<PanelManager>();
         protected static CameraManager CameraManager => Foundation.GetGlobalClass<CameraManager>();
         protected static ChestManager ChestManager => Foundation.GetGlobalClass<ChestManager>();

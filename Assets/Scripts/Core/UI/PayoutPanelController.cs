@@ -13,12 +13,12 @@ namespace Core.UI
         [SerializeField] private TMP_Text payoutTypeText;
         public Button doublePayoutForAdButton;
 
-        private long _payoutAmount;
+        private Currency _payoutCurrency = new Currency(0, CurrencyType.BananaCoins);
 
         public override void Start()
         {
             base.Start();
-            
+
             backgroundButton.onClick.RemoveAllListeners();
             doublePayoutForAdButton.onClick.RemoveAllListeners();
             doublePayoutForAdButton.onClick.AddListener(ConfirmShowAd);
@@ -35,15 +35,18 @@ namespace Core.UI
 
         private void RefreshPanel()
         {
-            payoutMessageText.text = SlotMachine.payout == FruitType.Bars || 
+            payoutMessageText.text = SlotMachine.payout == FruitType.Bars ||
                                      SlotMachine.payout == FruitType.Bananas ||
                                      SlotMachine.payout == FruitType.Barnana
                 ? Constants.JackpotMessage
                 : Constants.YouWinMessage;
 
-            _payoutAmount = PlayerData.GetResourceAmount(CurrencyType.BananaCoins) - HudController.CoinsAmount;
 
-            payoutAmountText.text = _payoutAmount.ToString();
+            _payoutCurrency.currencyAmount = PlayerData.GetResourceAmount(_payoutCurrency.currencyType) -
+                                             CurrencyController.GetCurrencyByType(_payoutCurrency.currencyType)
+                                                 .currencyDetails.currencyAmount;
+
+            payoutAmountText.text = _payoutCurrency.currencyAmount.ToString();
 
             payoutTypeText.text = SlotMachine.payout.ToString();
 
@@ -57,9 +60,9 @@ namespace Core.UI
 
         private void ProcessReward()
         {
-            PlayerData.SetResourceAmount(CurrencyType.BananaCoins, _payoutAmount);
+            PlayerData.SetResourceAmount(_payoutCurrency);
             doublePayoutForAdButton.gameObject.SetActive(false);
-            
+
             RefreshPanel();
 
             AdManager.reward = null;
@@ -68,7 +71,7 @@ namespace Core.UI
         private void OnApplicationPause(bool pauseStatus)
         {
             if (pauseStatus || AdManager.reward == null) return;
-            
+
             ProcessReward();
         }
 

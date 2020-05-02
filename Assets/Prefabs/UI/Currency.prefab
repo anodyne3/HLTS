@@ -541,21 +541,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: DeductCurrencyPrefab
       objectReference: {fileID: 0}
-    - target: {fileID: 6235700180329349722, guid: 19cb44b1be0abe2438daab050fe3df3f,
-        type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 19
-      objectReference: {fileID: 0}
-    - target: {fileID: 6235700180329349722, guid: 19cb44b1be0abe2438daab050fe3df3f,
-        type: 3}
-      propertyPath: m_SizeDelta.x
-      value: -134
-      objectReference: {fileID: 0}
-    - target: {fileID: 9203999041801649634, guid: 19cb44b1be0abe2438daab050fe3df3f,
-        type: 3}
-      propertyPath: m_textAlignment
-      value: 516
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 19cb44b1be0abe2438daab050fe3df3f, type: 3}
 --- !u!224 &2922302549731078749 stripped

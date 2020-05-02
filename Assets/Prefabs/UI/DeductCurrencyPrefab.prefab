@@ -206,7 +206,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49bcb2a2e38941d0b0fb88618ce5bd3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canvasGroup: {fileID: 0}
+  canvasGroup: {fileID: 3907571716638605635}
   currencyText: {fileID: 9203999041801649634}
   tweenSettings: {fileID: 11400000, guid: da4a16a2d1cc03c448accfada72f73b5, type: 2}
 --- !u!225 &3907571716638605635

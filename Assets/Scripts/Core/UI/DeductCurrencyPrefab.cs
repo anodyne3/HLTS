@@ -2,7 +2,6 @@ using DG.Tweening;
 using MyScriptableObjects;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Core.UI
 {
@@ -13,9 +12,9 @@ namespace Core.UI
         public TweenSetting tweenSettings;
         private Sequence _deductSequence;
 
-        public void Init(long amount)
+        public void Init(Currency currency)
         {
-            currencyText.text = amount.ToString();
+            currencyText.text = currency.currencyAmount.ToString();
             var doMoveOffset = transform.localPosition;
             doMoveOffset.y -= tweenSettings.moveOffset;
 
@@ -34,7 +33,7 @@ namespace Core.UI
                 .InsertCallback(tweenSettings.fadeStartDelay, () => tweenSettings.DoFade(canvasGroup, false))
                 .AppendCallback(() =>
                 {
-                    HudController.ResizeCurrencySizeDelta();
+                    CurrencyController.ResizeCurrencySizeDelta(currency.currencyType);
                 });
         }
     }
