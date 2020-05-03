@@ -9,7 +9,7 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: UnlitVectorGradientGPUInstancing
   m_Shader: {fileID: 4800000, guid: 8863b1c186011cc4ebe0ba4043066adc, type: 3}
-  m_ShaderKeywords: 
+  m_ShaderKeywords: ETC1_EXTERNAL_ALPHA
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 0
@@ -36,6 +36,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
+    - PixelSnap: 0
     - _ColorMask: 15
     - _EnableExternalAlpha: 0
     - _Stencil: 0

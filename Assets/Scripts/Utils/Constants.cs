@@ -37,7 +37,7 @@ namespace Utils
         public const string ChestRewardPrefix = " ~";
         
         //ui
-        public const float CoinsBackgroundBaseWidth = 300.0f;
+        public const float CoinsBackgroundBaseWidth = 230.0f;
         public const float CoinsBackgroundWidthMultiplier = 50.0f;
 
         //resource paths
@@ -47,6 +47,9 @@ namespace Utils
         public const string ShopProductPath = "ShopProducts";
         public const string ChestsPath = "Chests";
         public const string ChestRewardsPath = "ChestRewards";
+        
+        //tween settings paths
+        public const string CloseButtonPunchSettingPath = "TweenSettings/closeButtonPunchSetting";
 
         //coin
         public const int CoinTrayMax = 12;

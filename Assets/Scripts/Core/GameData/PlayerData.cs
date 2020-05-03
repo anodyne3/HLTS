@@ -15,12 +15,12 @@ namespace Core.GameData
             PlayerPrefs.HasKey(Constants.ConsentKey) && PlayerPrefs.GetInt(Constants.ConsentKey) == 1;
 
         public FirebaseUser firebaseUser;
-        private static long _bcAmount = 10;
-        private static long _bpAmount;
-        private static long _sfAmount;
+        private static long _bcAmount = 100;
+        private static long _bpAmount = 10;
+        private static long _sfAmount = 1;
         [HideInInspector] public int[] lastResult;
         [HideInInspector] public int[] nextResult;
-        [HideInInspector] public int[] chestData;
+        [HideInInspector] public int[] chestData = {1,2,3};
 
         public Currency[] wallet =
         {
@@ -40,7 +40,7 @@ namespace Core.GameData
 
         private void DeductCoin()
         {
-            _bcAmount -= 1;
+            wallet[0].currencyAmount -= 1;
             EventManager.refreshUi.Raise();
         }
 
@@ -125,9 +125,6 @@ namespace Core.GameData
 
         public int GetChestCount(ChestType chestType)
         {
-            if (chestData == null)
-                chestData = new[] {0, 0, 0};
-
             return chestData[(int) chestType];
         }
 

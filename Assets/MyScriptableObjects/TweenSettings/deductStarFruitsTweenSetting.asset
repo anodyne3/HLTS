@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b24095dc18074a278263b9b45befaec4, type: 3}
-  m_Name: deductCurrencyTweenSetting
+  m_Name: deductStarFruitsTweenSetting
   m_EditorClassIdentifier: 
   moveDuration: 1.333
   delayBetweenInstance: 0
@@ -40,6 +40,7 @@ MonoBehaviour:
     m_RotationOrder: 4
   spawnZoneRadius: 0
   moveOffset: 200
+  rotateSetting: {fileID: 0}
   punchSetting: {fileID: 0}
   fadeSetting: {fileID: 11400000, guid: 9a1ef62b9b034774ba8cfaa111ef7456, type: 2}
   fadeStartDelay: 1

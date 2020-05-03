@@ -3,6 +3,7 @@ using Enums;
 using MyScriptableObjects;
 using UnityEngine;
 using UnityEngine.UI;
+using Utils;
 
 namespace Core.UI
 {
@@ -32,7 +33,7 @@ namespace Core.UI
             {
                 closeButton.onClick.RemoveAllListeners();
                 closeButton.onClick.AddListener(ClosePanel);
-                closeButtonPunchSetting = (TweenPunchSetting) Resources.Load("TweenSettings/closeButtonPunchSetting");
+                closeButtonPunchSetting = (TweenPunchSetting) Resources.Load(Constants.CloseButtonPunchSettingPath);
             }
 
             if (backgroundButton == null) return;

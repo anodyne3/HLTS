@@ -39,7 +39,7 @@ namespace MyScriptableObjects
         private Tweener _punchTween;
         private Tweener _fadeTween;
 
-        public static int GetSpawnAmount(long difference)
+        public int GetSpawnAmount(long difference)
         {
             if (difference > 2000)
                 return 25;

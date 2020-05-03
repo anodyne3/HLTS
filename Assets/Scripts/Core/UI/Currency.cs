@@ -1,10 +1,13 @@
+using System;
 using Enums;
+using UnityEngine;
 
 namespace Core.UI
 {
+    [Serializable]
     public class Currency
     {
-        public long currencyAmount;
+        [HideInInspector] public long currencyAmount;
         public CurrencyType currencyType;
 
         public Currency(long amount, CurrencyType type)

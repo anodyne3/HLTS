@@ -641,6 +641,7 @@ MonoBehaviour:
   claimCurrentChestButton: {fileID: 4045130839724309527}
   currentChestIcon: {fileID: 1715393881183362067}
   currentChestProgressSlider: {fileID: 2152353290432737711}
+  currentChestProgressFillImage: {fileID: 3935497919642832240}
   currentChestProgressText: {fileID: 8383852020607469496}
   claimCurrentChestButtonText: {fileID: 6513064858790989886}
   chestInventoryContentHolder: {fileID: 3850033637109785031}
@@ -1241,7 +1242,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
+  m_PixelsPerUnitMultiplier: 3
 --- !u!1 &5700758237009019397
 GameObject:
   m_ObjectHideFlags: 0

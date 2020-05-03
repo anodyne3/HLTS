@@ -9,25 +9,29 @@ namespace Core.UI
 {
     public class ChestInventoryPanelController : PanelController
     {
-        [Header("Current Chest Progress")]
-        [SerializeField] private Button claimCurrentChestButton;
+        [Header("Current Chest Progress")] [SerializeField]
+        private Button claimCurrentChestButton;
+
         [SerializeField] private Image currentChestIcon;
         [SerializeField] private Slider currentChestProgressSlider;
+        [SerializeField] private Image currentChestProgressFillImage;
         [SerializeField] private TMP_Text currentChestProgressText;
         [SerializeField] private TMP_Text claimCurrentChestButtonText;
-        [Header("Chest Inventory")]
-        [SerializeField] private Transform chestInventoryContentHolder;
+
+        [Header("Chest Inventory")] [SerializeField]
+        private Transform chestInventoryContentHolder;
+
         [SerializeField] private ChestInventoryPrefab inventoryChestPrefab;
-        
+
         private readonly List<ChestInventoryPrefab> _chests = new List<ChestInventoryPrefab>();
-    
+
         public override void Start()
         {
             base.Start();
 
             claimCurrentChestButton.onClick.RemoveAllListeners();
             claimCurrentChestButton.onClick.AddListener(ClaimCurrentChest);
-            
+
             var chestTypesLength = ChestManager.chestTypes.Length;
             for (var i = 0; i < chestTypesLength; i++)
             {
@@ -35,14 +39,14 @@ namespace Core.UI
                 chest.Init(ChestManager.chestTypes[i].chestType);
                 _chests.Add(chest);
             }
-            
+
             RefreshChests();
         }
 
         public override void OpenPanel(params object[] args)
         {
             base.OpenPanel();
-            
+
             RefreshPanel();
         }
 
@@ -52,6 +56,7 @@ namespace Core.UI
 
             currentChestIcon.sprite = ChestManager.CurrentChest.chestIcon;
             currentChestProgressSlider.value = ChestManager.GetFillAmount();
+            currentChestProgressFillImage.color = ChestManager.CurrentChest.chestColor;
             currentChestProgressText.text = PlayerData.currentChestRoll + " / " + ChestManager.CurrentChest.threshold;
 
             RefreshChests();

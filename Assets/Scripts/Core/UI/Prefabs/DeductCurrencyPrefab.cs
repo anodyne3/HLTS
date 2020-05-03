@@ -3,7 +3,7 @@ using MyScriptableObjects;
 using TMPro;
 using UnityEngine;
 
-namespace Core.UI
+namespace Core.UI.Prefabs
 {
     public class DeductCurrencyPrefab : GlobalAccess
     {
@@ -12,11 +12,12 @@ namespace Core.UI
         public TweenSetting tweenSettings;
         private Sequence _deductSequence;
 
-        public void Init(Currency currency)
+        public void Init(int currencyDifference)
         {
-            currencyText.text = currency.currencyAmount.ToString();
+            currencyText.text = currencyDifference.ToString();
             var doMoveOffset = transform.localPosition;
-            doMoveOffset.y -= tweenSettings.moveOffset;
+            var rectWidth = CurrencyController.currenciesRect.rect.width + tweenSettings.moveOffset;
+            doMoveOffset.x += rectWidth;
 
             if (_deductSequence != null)
             {
@@ -28,13 +29,11 @@ namespace Core.UI
             _deductSequence
                 .SetAutoKill(false)
                 .SetRecyclable(true)
-                .Insert(0.0f, transform.DOLocalMove(doMoveOffset, tweenSettings.moveDuration).SetEase(tweenSettings.moveCurve))
+                .Insert(0.0f,
+                    transform.DOLocalMove(doMoveOffset, tweenSettings.moveDuration).SetEase(tweenSettings.moveCurve))
                 .InsertCallback(0.0f, () => canvasGroup.alpha = 1.0f)
                 .InsertCallback(tweenSettings.fadeStartDelay, () => tweenSettings.DoFade(canvasGroup, false))
-                .AppendCallback(() =>
-                {
-                    CurrencyController.ResizeCurrencySizeDelta(currency.currencyType);
-                });
+                .AppendCallback(CurrencyController.ResizeCurrencySizeDelta);
         }
     }
 }

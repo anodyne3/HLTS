@@ -1,11 +1,13 @@
 using System;
+using System.Linq;
 using Core.Managers;
+using Core.UI.Prefabs;
 using DG.Tweening;
 using Enums;
 using MyScriptableObjects;
 using TMPro;
-using UnityEditor;
 using UnityEngine;
+using UnityEngine.UI;
 using Utils;
 using Random = UnityEngine.Random;
 
@@ -13,56 +15,46 @@ namespace Core.UI
 {
     public class CurrencyController : GlobalClass
     {
-        public struct CurrencyStruct
+        [Serializable]
+        public class CurrencyClass
         {
-            // public long currencyAmount { get; private set; }
-            public Transform currencyIcon;
+            public Image currencyIcon;
             public TMP_Text currencyAmountText;
-            public RectTransform currencyRect;
+            public TweenPunchSetting addCurrencyPunchTween;
             public Currency currencyDetails;
             public DeductCurrencyPrefab deductCurrencyPrefab;
-            public bool updateCurrency;
+            [HideInInspector] public int currencyDifference;
+            [HideInInspector] public bool updateCurrency;
 
             public void UpdateTextDisplay()
             {
                 currencyAmountText.text = currencyDetails.currencyAmount.ToString();
-                updateCurrency = false;
+            }
+
+            public void DoPunch()
+            {
+                addCurrencyPunchTween.DoPunch(currencyIcon.transform);
             }
         }
 
-        public CurrencyStruct[] currencies;
-        private Transform currencyPrefab;
-        public Transform currencySpawnPosition;
+        public CurrencyClass[] currencies;
+        public RectTransform currenciesRect;
 
-        // [SerializeField] private TMP_Text bananaCoinsAmountText;
-        // [SerializeField] private TMP_Text bluePrintsAmountText;
-        // [SerializeField] private TMP_Text starFruitsAmountText;
-        // public long bcAmount { get; private set; }
-        // public long bpAmount { get; private set; }
-        // public long sfAmount { get; private set; }
+        [Header("CurrencyUpdate")] [SerializeField]
+        private AddCurrencyPrefab addCurrencyPrefab;
 
-        [Header("CurrencyUpdate")]
-        // [SerializeField] private Transform currencyPrefab;
-
-        // [SerializeField] private Transform currencyIcon;
-        // [SerializeField] private Transform currencySpawnPosition;
         [SerializeField] private TweenSetting addCurrencyTweenSetting;
-        private MyObjectPool<Transform> _tweenCurrencyPool;
+        public Transform addCurrencySpawnPosition;
 
-        // private RectTransform _bananaCoinsCurrencyRect;
-        // private RectTransform _bluePrintsCurrencyRect;
-        // private RectTransform _starFruitsCurrencyRect;
-
-        private long _currencyDifference;
-        private bool _updatingCurrencies;
-        private CurrencyType _updatingCurrencyType;
-        public bool withoutTweens;
+        private MyObjectPool<AddCurrencyPrefab> _tweenCurrencyPool;
+        private Vector2 _newSizeDelta = new Vector2();
+        private bool _updateCurrencies;
 
         private void Start()
         {
-            _tweenCurrencyPool = ObjectPoolManager.CreateObjectPool<Transform>(currencyPrefab, currencySpawnPosition);
+            _tweenCurrencyPool =
+                ObjectPoolManager.CreateObjectPool<AddCurrencyPrefab>(addCurrencyPrefab, addCurrencySpawnPosition);
 
-            //create for loop of currencies to init
             SetupCurrencies();
 
             EventManager.NewEventSubscription(gameObject, Constants.GameEvents.refreshUiEvent, RefreshAllCurrencies);
@@ -73,24 +65,30 @@ namespace Core.UI
             var currenciesLength = currencies.Length;
             for (var i = 0; i < currenciesLength; i++)
             {
-                currencies[i].currencyRect = (RectTransform) currencies[i].currencyAmountText.transform.parent.parent
-                    .GetComponent(typeof(RectTransform));
                 currencies[i].currencyDetails.currencyAmount =
                     PlayerData.GetResourceAmount(currencies[i].currencyDetails.currencyType);
-                
-                //add to general refresh
+
                 currencies[i].UpdateTextDisplay();
-                ResizeCurrencySizeDelta(currencies[i].currencyDetails.currencyType);
             }
 
-            withoutTweens = true;
+            ResizeCurrencySizeDelta();
         }
 
         private void Update()
         {
-            if (!_updatingCurrencies) return;
+            if (!_updateCurrencies) return;
 
             UpdateCurrencies();
+
+            _updateCurrencies = false;
+
+            var currenciesLength = currencies.Length;
+            for (var i = 0; i < currenciesLength; i++)
+            {
+                if (!currencies[i].updateCurrency) continue;
+
+                _updateCurrencies = true;
+            }
         }
 
         private void RefreshAllCurrencies()
@@ -100,18 +98,18 @@ namespace Core.UI
             {
                 RefreshCurrency(currencies[i]);
             }
-
-            withoutTweens = false;
         }
 
-        private void RefreshCurrency(CurrencyStruct currency)
+        private void RefreshCurrency(CurrencyClass currency)
         {
-            _currencyDifference = PlayerData.GetResourceAmount(currency.currencyDetails.currencyType) -
-                                  currency.currencyDetails.currencyAmount;
+            var currencyDifference = PlayerData.GetResourceAmount(currency.currencyDetails.currencyType) -
+                                     currency.currencyDetails.currencyAmount;
 
-            if (_currencyDifference == 0) return;
+            if (currencyDifference == 0) return;
 
-            if (_currencyDifference > 0)
+            currency.currencyDifference = (int) currencyDifference;
+
+            if (currencyDifference > 0)
                 AddCurrency(currency);
             else
                 DeductCurrency(currency);
@@ -123,48 +121,37 @@ namespace Core.UI
             for (var i = 0; i < currenciesLength; i++)
             {
                 if (!currencies[i].updateCurrency) continue;
-                
-                GetCurrencyByType(_updatingCurrencyType).UpdateTextDisplay();
+
+                currencies[i].UpdateTextDisplay();
             }
         }
 
-        //resize the width of the coin currency background according to the number of digits 
-        public void ResizeCurrencySizeDelta(CurrencyType currencyType)
+        [ContextMenu("addCurrencyTest")]
+        public void TestAddCurrency()
         {
-            var currency = GetCurrencyByType(currencyType);
-            
-            var newSizeDelta =
-                ResizeCurrencyRectByDigitCount(currency.currencyRect,
-                    PlayerData.GetResourceAmount(CurrencyType.BananaCoins));
-            currency.currencyRect.DOSizeDelta(newSizeDelta, addCurrencyTweenSetting.sizeDeltaDuration);
+            PlayerData.wallet[0].currencyAmount += 20;
+
+            RefreshCurrency(currencies[0]);
         }
 
-        private static Vector2 ResizeCurrencyRectByDigitCount(RectTransform rect, long amount)
-        {
-            var digitCount = Math.Floor(Math.Log10(Mathf.Abs(amount)) + 1);
-            return new Vector2(double.IsInfinity(digitCount)
-                ? Constants.CoinsBackgroundBaseWidth + Constants.CoinsBackgroundWidthMultiplier
-                : (float) digitCount * Constants.CoinsBackgroundWidthMultiplier +
-                  Constants.CoinsBackgroundBaseWidth, rect.sizeDelta.y);
-        }
-
-        private void AddCurrency(CurrencyStruct currency)
+        private void AddCurrency(CurrencyClass currency)
         {
             //get a bunch of coins from the pool and move them to the currency target
-            var currencyInstanceAmount = TweenSetting.GetSpawnAmount(_currencyDifference);
-            ResizeCurrencySizeDelta(currency.currencyDetails.currencyType);
+            var currencyInstanceAmount = addCurrencyTweenSetting.GetSpawnAmount(currency.currencyDifference);
+            ResizeCurrencySizeDelta();
 
             var sequence = DOTween.Sequence();
             for (var i = 0; i < currencyInstanceAmount; i++)
             {
                 var currencyInstance = _tweenCurrencyPool.Get();
+                currencyInstance.Init(currency.currencyIcon.sprite);
                 currencyInstance.gameObject.SetActive(false);
                 currencyInstance.transform.Rotate(Vector3.forward, Random.Range(-150.0f, -10.0f));
                 currencyInstance.transform.localPosition = addCurrencyTweenSetting.RandomSpawnPosition();
                 sequence.InsertCallback(i * addCurrencyTweenSetting.delayBetweenInstance,
                         () => currencyInstance.gameObject.SetActive(true))
                     .Insert(i * addCurrencyTweenSetting.delayBetweenInstance,
-                        currencyInstance.DOMove(currency.currencyIcon.position,
+                        currencyInstance.transform.DOMove(currency.currencyIcon.transform.position,
                                 addCurrencyTweenSetting.moveDuration)
                             .SetEase(addCurrencyTweenSetting.moveCurve)
                             .OnComplete(() =>
@@ -172,42 +159,66 @@ namespace Core.UI
                                 _tweenCurrencyPool.Release(currencyInstance);
                                 currencyInstance.gameObject.SetActive(false);
                                 currencyInstance.transform.localPosition = Vector3.zero;
-                                addCurrencyTweenSetting.DoPunch(currency.currencyIcon.transform);
-                            })).SetRecyclable(true);
+                                currency.DoPunch();
+                            })).SetRecyclable(false);
             }
 
             //increment the coinsAmountText to the new amount
             var addingCurrencyDuration = sequence.Duration(false) - addCurrencyTweenSetting.moveDuration;
+
+            var currencyRef = currency;
+
             sequence.Insert(addCurrencyTweenSetting.moveDuration,
-                DOTween.To(() => currency.currencyDetails.currencyAmount, x => currency.currencyDetails.currencyAmount = x,
-                    PlayerData.GetResourceAmount(CurrencyType.BananaCoins),
-                    addingCurrencyDuration).OnComplete(() =>
+                    DOTween.To(() => currencyRef.currencyDetails.currencyAmount,
+                        x => currencyRef.currencyDetails.currencyAmount = x,
+                        PlayerData.GetResourceAmount(currency.currencyDetails.currencyType), addingCurrencyDuration))
+                .OnComplete(() =>
                 {
-                    _updatingCurrencies = false;
-                    currency.currencyAmountText.text = currency.currencyDetails.currencyAmount.ToString();
-                }));
+                    currencyRef.UpdateTextDisplay();
+                    currencyRef.updateCurrency = false;
+                });
 
             currency.updateCurrency = true;
-            _updatingCurrencies = true;
+            _updateCurrencies = true;
         }
 
-        private void DeductCurrency(CurrencyStruct currency)
+        private static void DeductCurrency(CurrencyClass currency)
         {
             //instantiate a duplicate of the currency display (amount and icon) and tween it
-            currency.deductCurrencyPrefab.Init(currency.currencyDetails);
+            currency.deductCurrencyPrefab.Init(currency.currencyDifference);
             //update the currency display to show the new amount
-            currency.currencyDetails.currencyAmount = PlayerData.GetResourceAmount(currency.currencyDetails.currencyType);
-            currency.currencyAmountText.text = currency.currencyDetails.currencyAmount.ToString();
+            currency.currencyDetails.currencyAmount =
+                PlayerData.GetResourceAmount(currency.currencyDetails.currencyType);
+            currency.UpdateTextDisplay();
         }
 
-        public CurrencyStruct GetCurrencyByType(CurrencyType currencyType)
+        public CurrencyClass GetCurrencyByType(CurrencyType currencyType)
         {
             var currenciesLength = currencies.Length;
             for (var i = 0; i < currenciesLength; i++)
                 if (currencies[i].currencyDetails.currencyType == currencyType)
                     return currencies[i];
 
-            return new CurrencyStruct();
+            return new CurrencyClass();
+        }
+
+        //resize the width of the coin currency background according to the number of digits 
+        public void ResizeCurrencySizeDelta()
+        {
+            long highestAmount = 0;
+
+            var walletLength = PlayerData.wallet.Length;
+            for (var i = 0; i < walletLength; i++)
+                if (PlayerData.wallet[i].currencyAmount > highestAmount)
+                    highestAmount = PlayerData.wallet[i].currencyAmount;
+
+            var digitCount = Math.Floor(Math.Log10(Mathf.Abs(highestAmount)) + 1);
+            _newSizeDelta.Set(double.IsInfinity(digitCount)
+                ? Constants.CoinsBackgroundBaseWidth + Constants.CoinsBackgroundWidthMultiplier
+                : (float) digitCount * Constants.CoinsBackgroundWidthMultiplier +
+                  Constants.CoinsBackgroundBaseWidth, currenciesRect.sizeDelta.y);
+
+            currenciesRect.DOSizeDelta(_newSizeDelta, addCurrencyTweenSetting.sizeDeltaDuration);
         }
     }
 }
