@@ -47,6 +47,7 @@ namespace Utils
         public const string ShopProductPath = "ShopProducts";
         public const string ChestsPath = "Chests";
         public const string ChestRewardsPath = "ChestRewards";
+        public const string UpgradeRepairPath = "UpgradeRepairPath";
         
         //tween settings paths
         public const string CloseButtonPunchSettingPath = "TweenSettings/closeButtonPunchSetting";

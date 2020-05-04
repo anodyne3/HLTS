@@ -13,6 +13,7 @@ namespace Core
         protected static PanelManager PanelManager => Foundation.GetGlobalClass<PanelManager>();
         protected static CameraManager CameraManager => Foundation.GetGlobalClass<CameraManager>();
         protected static ChestManager ChestManager => Foundation.GetGlobalClass<ChestManager>();
+        protected static UpgradeRepairManager UpgradeRepairManager => Foundation.GetGlobalClass<UpgradeRepairManager>();
         protected static InputManager InputManager => GlobalComponents.Instance.AddGlobalComponent<InputManager>() as InputManager;
         protected static AdManager AdManager => GlobalComponents.Instance.AddGlobalComponent<AdManager>() as AdManager;
         protected static AudioManager AudioManager => GlobalComponents.Instance.AddGlobalComponent<AudioManager>() as AudioManager;

@@ -6,7 +6,10 @@ namespace MyScriptableObjects
     [CreateAssetMenu(fileName = "UpgradeRepairVariable", menuName = "UpgradeRepairVariable", order = 70)]
     public class UpgradeRepairVariable : ScriptableObject
     {
-        public bool upgrade;
+        public int id;
+        public int currentLevel;
+        public int maxLevel;
+        public bool IsUpgrade => maxLevel > 1;
         public Sprite icon;
         public string deviceName;
         public string description;

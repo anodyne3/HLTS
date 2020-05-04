@@ -12,13 +12,15 @@ namespace Core
         [HideInInspector] public bool wheelsAreRolling;
         [HideInInspector] public int[] result = new int[3];
         [HideInInspector] public FruitType payout;
+        [HideInInspector] public bool autoMode;
+        [HideInInspector] public int betAmount;
+        [HideInInspector] public int coinSlotMaxBet;
  
         private bool _armIsPulled;
         
         //test variables
-        [HideInInspector] public bool autoMode;
-        private int _testCoinsSpent;
-        private float _timeElapsed;
+        // private int _testCoinsSpent;
+        // private float _timeElapsed;
 
         private void Start()
         {
@@ -90,9 +92,9 @@ namespace Core
 
         private void AutoSlotMode()
         {
-            if (autoMode) return;
-
-            autoMode = true;
+            autoMode = !autoMode;
+            
+            if (!autoMode) return;
             StartCoroutine(nameof(PayoutRateTest));
         }
 
@@ -101,9 +103,9 @@ namespace Core
             var waitUntilWheelsStop = new WaitUntil(() => wheelsAreRolling == false);
             var waitUntilCoinIsLoaded = new WaitUntil(() => coinIsLoaded);
 
-            var timeStarted = Time.time;
+            // var timeStarted = Time.time;
 
-            while (PlayerData.GetResourceAmount(ResourceType.BananaCoins) > 0)
+            while (PlayerData.GetResourceAmount(ResourceType.BananaCoins) > 0 && autoMode)
             {
                 EventManager.coinInsert.Raise();
 
@@ -115,15 +117,16 @@ namespace Core
                 
                 EventManager.armPull.Raise();
 
-                _timeElapsed = Time.time - timeStarted;
-                _testCoinsSpent += 1;
+                // _timeElapsed = Time.time - timeStarted;
+                // _testCoinsSpent += 1;
                 yield return null;
             }
 
             autoMode = false;
             yield return null;
         }
-
+        
+        /*
         private void OnGUI()
         {
             if (!autoMode) return;
@@ -133,5 +136,6 @@ namespace Core
             GUI.Box(new Rect(120, 10, 100, 50), "Test Duration");
             GUI.Box(new Rect(120, 30, 100, 30), _timeElapsed + "s");
         }
+        */
     }
 }

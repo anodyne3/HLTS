@@ -6,13 +6,15 @@ namespace Core.MainSlotMachine
 {
     public class CoinSlot : GlobalAccess
     {
-        private CoinDragHandler _insertedCoin;
-        private bool _loadingCoin;
         [SerializeField] private Transform insertedCoinStartPosition;
         [SerializeField] private Transform insertedCoinFinishPosition;
-
         public AnimationCurve curve = AnimationCurve.Linear(0.0f, 0.0f, 1.0f, 1.0f);
+
+        private CoinDragHandler _insertedCoin;
+        private bool _loadingCoin;
         private float _coinLoadSpeed;
+        
+
         
         //temp for testing
         private void Start()

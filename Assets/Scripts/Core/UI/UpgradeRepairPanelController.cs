@@ -1,4 +1,5 @@
-﻿using MyScriptableObjects;
+﻿using System.Collections.Generic;
+using MyScriptableObjects;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -40,18 +41,18 @@ namespace Core.UI
         {
             RefreshUpgradeRepairButton(ResourceCheck(_upgradeRepairVariable.resourceRequirements));
 
-            upgradeRepairButtonText.text = _upgradeRepairVariable.upgrade ? "Upgrade" : "Repair";
-            headerText.text = _upgradeRepairVariable.upgrade ? "Upgrade" : "Repair";
+            upgradeRepairButtonText.text = _upgradeRepairVariable.IsUpgrade ? "Upgrade" : "Repair";
+            headerText.text = _upgradeRepairVariable.IsUpgrade ? "Upgrade" : "Repair";
             targetIcon.sprite = _upgradeRepairVariable.icon;
             nameText.text = _upgradeRepairVariable.deviceName;
             descriptionText.text = _upgradeRepairVariable.description;
         }
 
-        private bool ResourceCheck(Resource[] requiredResources)
+        private static bool ResourceCheck(IReadOnlyList<Resource> requiredResources)
         {
             var enoughResources = true;
 
-            var requiredResourcesLength = requiredResources.Length;
+            var requiredResourcesLength = requiredResources.Count;
             for (var i = 0; i < requiredResourcesLength; i++)
             {
                 if (PlayerData.GetResourceAmount(requiredResources[i].resourceType) >=

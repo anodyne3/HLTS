@@ -17,6 +17,7 @@ namespace Core.GameData
         [HideInInspector] public int[] lastResult;
         [HideInInspector] public int[] nextResult;
         [HideInInspector] public int[] chestData = {1,2,3};
+        [HideInInspector] public int[] upgradeRepairData = {1,0,0};
 
         public FirebaseUser firebaseUser;
         public Resource[] wallet =

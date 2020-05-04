@@ -26,14 +26,13 @@ namespace Core.Managers
             {
                 var chestTypesLength = chestTypes.Length;
                 for (var i = 0; i < chestTypesLength; i++)
-                {
                     if (chestTypes[i].chestType == CurrentChestType)
                         return chestTypes[i];
-                }
 
                 return null;
             }
         }
+
 
         public int RollsToBetterChest => CurrentChest.threshold - PlayerData.currentChestRoll;
 
@@ -44,9 +43,8 @@ namespace Core.Managers
                 var chestTypesLength = chestTypes.Length;
                 for (var i = 0; i < chestTypesLength; i++)
                 {
-                    if (PlayerData.currentChestRoll >= chestTypes[i].threshold) continue;
-
-                    return chestTypes[i].chestType;
+                    if (PlayerData.currentChestRoll <= chestTypes[i].threshold)
+                        return chestTypes[i].chestType;
                 }
 
                 return chestTypes[0].chestType;
@@ -74,6 +72,7 @@ namespace Core.Managers
             RefreshFill();
 
             EventManager.NewEventSubscription(gameObject, Constants.GameEvents.refreshUiEvent, RefreshFill);
+            //create refreshUpgradesEvent to reload and refresh chests after an upgrade
         }
 
         private void LoadChests()
@@ -96,15 +95,16 @@ namespace Core.Managers
             var tweenPause = DOTween.Sequence();
             tweenPause.InsertCallback(0.5f, () =>
             {
-                if (RollsToBetterChest == 0)
+                if (PlayerData.currentChestRoll == CurrentChest.threshold)
                     UpgradeChest();
             });
         }
 
         private void UpgradeChest()
         {
-            RefreshChest();
-            chestProgressFillImage.fillAmount = 0.0f;
+            chestIcon.sprite = chestTypes[CurrentChest.rank + 1].chestIcon;
+            outlineImage.color = chestTypes[CurrentChest.rank + 1].chestColor;
+            // chestProgressFillImage.fillAmount = 0.0f;
             tweenPunchSetting.DoPunch(transform);
         }
 
@@ -115,7 +115,9 @@ namespace Core.Managers
 
         public float GetFillAmount()
         {
-            switch (CurrentChestType)
+            return (CurrentChest.threshold - (float) RollsToBetterChest) / CurrentChest.threshold;
+            
+            /*switch (CurrentChestType)
             {
                 default:
                     return (Constants.LoChestRoll - (float) RollsToBetterChest) / Constants.LoChestRoll;
@@ -123,7 +125,7 @@ namespace Core.Managers
                     return (Constants.MiChestRoll - (float) RollsToBetterChest) / Constants.MiChestRoll;
                 case ChestType.Hi:
                     return (Constants.HiChestRoll - (float) RollsToBetterChest) / Constants.HiChestRoll;
-            }
+            }*/
         }
 
         public Sprite GetChestIcon(ChestType chestType)
