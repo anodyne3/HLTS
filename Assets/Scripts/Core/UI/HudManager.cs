@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 namespace Core.UI
 {
-    public class HudController : GlobalClass
+    public class HudManager : GlobalClass
     {
         [SerializeField] private Button menuButton;
         [SerializeField] private Button shopButton;

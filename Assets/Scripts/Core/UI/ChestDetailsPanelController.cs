@@ -26,6 +26,8 @@ namespace Core.UI
 
             openChestButton.onClick.RemoveAllListeners();
             openChestButton.onClick.AddListener(ButtonAction);
+
+            EventManager.NewEventSubscription(gameObject, Constants.GameEvents.payoutFinishEvent, RefreshPanel);
         }
 
         public override void OpenPanel(params object[] args)
@@ -42,13 +44,11 @@ namespace Core.UI
                 _chestVariable = ChestManager.chestTypes[i];
             }
             
-            RefreshPanel();
+            InitPanel();
         }
 
-        private void RefreshPanel()
+        private void InitPanel()
         {
-            OpenChestIcon(false);
-            
             if (_chestVariable == null) return;
 
             chestName.text = _chestVariable.chestName;
@@ -57,7 +57,13 @@ namespace Core.UI
             bcMaxText.text = Constants.BananaCoinIcon + Constants.ChestRewardPrefix + _chestVariable.bcMax;
             bpMaxText.text = Constants.BluePrintIcon + Constants.ChestRewardPrefix + _chestVariable.bpMax;
             sfMaxText.text = Constants.StarFruitIcon + Constants.ChestRewardPrefix + _chestVariable.sfMax;
-
+            
+            RefreshPanel();
+        }
+        
+        private void RefreshPanel()
+        {
+            OpenChestIcon(false);
             RefreshOpenButton(PlayerData.GetChestCount(_chestVariable.chestType) > 0);
         }
         

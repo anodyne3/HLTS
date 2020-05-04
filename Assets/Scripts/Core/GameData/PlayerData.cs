@@ -14,24 +14,25 @@ namespace Core.GameData
         public static bool ConsentGiven =>
             PlayerPrefs.HasKey(Constants.ConsentKey) && PlayerPrefs.GetInt(Constants.ConsentKey) == 1;
 
-        public FirebaseUser firebaseUser;
-        private static long _bcAmount = 100;
-        private static long _bpAmount = 10;
-        private static long _sfAmount = 1;
         [HideInInspector] public int[] lastResult;
         [HideInInspector] public int[] nextResult;
         [HideInInspector] public int[] chestData = {1,2,3};
 
-        public Currency[] wallet =
+        public FirebaseUser firebaseUser;
+        public Resource[] wallet =
         {
-            new Currency(_bcAmount, CurrencyType.BananaCoins),
-            new Currency(_bpAmount, CurrencyType.BluePrints),
-            new Currency(_sfAmount, CurrencyType.StarFruits)
+            new Resource(_bcAmount, ResourceType.BananaCoins),
+            new Resource(_bpAmount, ResourceType.BluePrints),
+            new Resource(_sfAmount, ResourceType.StarFruits)
         };
 
         public int currentChestRoll;
 
         private FirebaseDatabase _database;
+        //for testing
+        private static long _bcAmount = 100;
+        private static long _bpAmount = 10;
+        private static long _sfAmount = 1;
 
         private void Start()
         {
@@ -40,7 +41,7 @@ namespace Core.GameData
 
         private void DeductCoin()
         {
-            wallet[0].currencyAmount -= 1;
+            wallet[0].resourceAmount -= 1;
             EventManager.refreshUi.Raise();
         }
 
@@ -87,7 +88,7 @@ namespace Core.GameData
             var snapReturnDto = new PlayerDataDto(snapReturn);
             lastResult = snapReturnDto.lastResult.ToArray();
             nextResult = snapReturnDto.nextResult.ToArray();
-            _bcAmount = snapReturnDto.coinsAmount;
+            wallet[0].resourceAmount = snapReturnDto.coinsAmount;
         }
 
         private void OnChestDataChanged(object sender, ValueChangedEventArgs args)
@@ -132,42 +133,29 @@ namespace Core.GameData
 
         #region Resources
 
-        public long GetResourceAmount(CurrencyType currencyType)
+        public long GetResourceAmount(ResourceType currencyType)
         {
             var walletLength = wallet.Length;
             for (var i = 0; i < walletLength; i++)
             {
                 var currency = wallet[i];
-                if (currency.currencyType == currencyType)
+                if (currency.resourceType == currencyType)
                 {
-                    return currency.currencyAmount;
+                    return currency.resourceAmount;
                 }
             }
 
             return 0;
         }
-        
-        public void SetResourceAmount(CurrencyType currencyType, long amount)
+
+        public void AddResourceAmount(Resource currency)
         {
             var walletLength = wallet.Length;
             for (var i = 0; i < walletLength; i++)
             {
-                var currency = wallet[i];
-                if (currency.currencyType == currencyType)
-                {
-                    currency.currencyAmount += amount;
-                }
-            }
-        }
-        
-        public void SetResourceAmount(Currency currency)
-        {
-            var walletLength = wallet.Length;
-            for (var i = 0; i < walletLength; i++)
-            {
-                if (wallet[i].currencyType != currency.currencyType) continue;
+                if (wallet[i].resourceType != currency.resourceType) continue;
                 
-                wallet[i].currencyAmount += currency.currencyAmount;
+                wallet[i].resourceAmount += currency.resourceAmount;
             }
         }
 

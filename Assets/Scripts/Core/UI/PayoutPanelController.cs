@@ -13,7 +13,7 @@ namespace Core.UI
         [SerializeField] private TMP_Text payoutTypeText;
         public Button doublePayoutForAdButton;
 
-        private Currency _payoutCurrency = new Currency(0, CurrencyType.BananaCoins);
+        private readonly Resource _payoutCurrency = new Resource(0, ResourceType.BananaCoins);
 
         public override void Start()
         {
@@ -42,11 +42,11 @@ namespace Core.UI
                 : Constants.YouWinMessage;
 
 
-            _payoutCurrency.currencyAmount = PlayerData.GetResourceAmount(_payoutCurrency.currencyType) -
-                                             CurrencyController.GetCurrencyByType(_payoutCurrency.currencyType)
-                                                 .currencyDetails.currencyAmount;
+            _payoutCurrency.resourceAmount = PlayerData.GetResourceAmount(_payoutCurrency.resourceType) -
+                                             CurrencyManager.GetCurrencyByType(_payoutCurrency.resourceType)
+                                                 .currencyDetails.resourceAmount;
 
-            payoutAmountText.text = _payoutCurrency.currencyAmount.ToString();
+            payoutAmountText.text = _payoutCurrency.resourceAmount.ToString();
 
             payoutTypeText.text = SlotMachine.payout.ToString();
 
@@ -58,21 +58,21 @@ namespace Core.UI
             PanelManager.OpenSubPanel<ConfirmRewardAdPanelController>();
         }
 
-        private void ProcessReward()
-        {
-            PlayerData.SetResourceAmount(_payoutCurrency);
-            doublePayoutForAdButton.gameObject.SetActive(false);
-
-            RefreshPanel();
-
-            AdManager.reward = null;
-        }
-
         private void OnApplicationPause(bool pauseStatus)
         {
             if (pauseStatus || AdManager.reward == null) return;
 
             ProcessReward();
+        }
+
+        private void ProcessReward()
+        {
+            PlayerData.AddResourceAmount(_payoutCurrency);
+            doublePayoutForAdButton.gameObject.SetActive(false);
+
+            RefreshPanel();
+
+            AdManager.reward = null;
         }
 
         protected override void ClosePanel()

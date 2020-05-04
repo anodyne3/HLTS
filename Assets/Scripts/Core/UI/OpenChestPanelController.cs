@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using Core.GameData;
 using Core.UI.Prefabs;
-using Core.Managers;
 using DG.Tweening;
 using Enums;
 using MyScriptableObjects;
@@ -12,18 +11,19 @@ namespace Core.UI
 {
     public class OpenChestPanelController : PanelController
     {
-        [SerializeField] private Transform rewardStartPosition;
         [SerializeField] private Transform rewardDisplayPosition;
         [SerializeField] private Transform rewardFinishPosition;
-        [SerializeField] private ChestRewardPrefab chestRewardPrefab;
         [SerializeField] private TweenSetting tweenStartSetting;
         [SerializeField] private TweenSetting tweenFinishSetting;
-        [SerializeField] private ContentSizeFitter contentSizeFitter;
-
-        private MyObjectPool<ChestRewardPrefab> _chestRewardPool;
+        
+        public ChestRewardPrefab chestRewardPrefab;
+        public Transform rewardStartPosition;
+        
+        [HideInInspector] public MyObjectPool<ChestRewardPrefab> chestRewardPool;
+        
         private ChestRewardDto _chestRewardDto;
         private Sequence _rewardSequence;
-        private List<ChestRewardPrefab> _activeRewards = new List<ChestRewardPrefab>();
+        private readonly List<ChestRewardPrefab> _activeRewards = new List<ChestRewardPrefab>();
 
         public override void Start()
         {
@@ -36,12 +36,6 @@ namespace Core.UI
         public override void OpenPanel(params object[] args)
         {
             base.OpenPanel();
-
-            if (_chestRewardPool == null)
-            {
-                _chestRewardPool =
-                    ObjectPoolManager.CreateObjectPool<ChestRewardPrefab>(chestRewardPrefab, rewardStartPosition);
-            }
 
             _chestRewardDto = (ChestRewardDto) args[0];
 
@@ -58,13 +52,13 @@ namespace Core.UI
             var rewardsLength = _chestRewardDto.chestRewards.Length;
             for (var i = 0; i < rewardsLength; i++)
             {
-                if (_chestRewardDto.chestRewards[i].currencyAmount <= 0)
+                if (_chestRewardDto.chestRewards[i].resourceAmount <= 0)
                 {
                     rewardFinishPosition.GetChild(i).gameObject.SetActive(false);
                     continue;
                 }
 
-                var chestReward = _chestRewardPool.Get();
+                var chestReward = chestRewardPool.Get();
                 chestReward.Init(_chestRewardDto.chestRewards[i]);
                 var chestRewardTransform = chestReward.transform;
                 chestRewardTransform.position = rewardStartPosition.position;
@@ -120,34 +114,58 @@ namespace Core.UI
 
             foreach (var rewardPrefab in _activeRewards)
             {
-                _chestRewardPool.Release(rewardPrefab);
+                chestRewardPool.Release(rewardPrefab);
                 rewardPrefab.gameObject.SetActive(false);
             }
 
             _activeRewards.Clear();
         }
 
-        private void ProcessReward()
-        {
-            var chestRewardsLength = _chestRewardDto.chestRewards.Length;
-            for (var i = 0; i < chestRewardsLength; i++)
-                PlayerData.SetResourceAmount(_chestRewardDto.chestRewards[i]);
-            
-            RefreshPanel();
-
-            AdManager.reward = null;
-        }
-
         private void OnApplicationPause(bool pauseStatus)
         {
             if (pauseStatus || AdManager.reward == null) return;
 
-            ProcessReward();
+            ProcessAdReward();
         }
+
+        private void ProcessReward()
+        {
+            var chestRewardsLength = _chestRewardDto.chestRewards.Length;
+            for (var i = 0; i < chestRewardsLength; i++)
+                PlayerData.AddResourceAmount(_chestRewardDto.chestRewards[i]);
+        }
+
+        private void ProcessAdReward()
+        {
+            var doubledReward = new Resource(0, ResourceType.StarFruits); 
+            
+            var chestRewardsLength = _chestRewardDto.chestRewards.Length;
+            for (var i = 0; i < chestRewardsLength; i++)
+            {
+                if (_chestRewardDto.chestRewards[i].resourceType != ResourceType.StarFruits) continue;
+                
+                doubledReward = _chestRewardDto.chestRewards[i];
+                PlayerData.AddResourceAmount(_chestRewardDto.chestRewards[i]);
+            }
+
+            doubledReward.resourceAmount += doubledReward.resourceAmount; 
+            
+            var activeRewardsCount = _activeRewards.Count;
+            for (var i = 0; i < activeRewardsCount; i++)
+            {
+                if (_activeRewards[i].rewardType == ResourceType.StarFruits)
+                    _activeRewards[i].rewardAmount.text = doubledReward.resourceAmount.ToString();
+            }
+
+            AdManager.reward = null;
+        }
+        
 
         protected override void ClosePanel()
         {
             base.ClosePanel();
+            
+            ProcessReward();
 
             EventManager.payoutFinish.Raise();
             EventManager.refreshUi.Raise();

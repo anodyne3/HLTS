@@ -221,6 +221,8 @@ namespace Core
                 //maybe show message to player regarding some issue
                 HandleFunctionError(chestClaim);
             }
+            
+            EventManager.chestClaim.Raise();
         }
         
         public async void OpenChest(ChestType chestType)

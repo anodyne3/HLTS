@@ -1,6 +1,7 @@
 using System.Linq;
 using Core.GameData;
 using Core.UI;
+using Core.UI.Prefabs;
 using DG.Tweening;
 using Enums;
 using MyScriptableObjects;
@@ -16,10 +17,8 @@ namespace Core.Managers
         [SerializeField] private Image outlineImage;
         [SerializeField] private Image chestProgressFillImage;
         [SerializeField] private TweenPunchSetting tweenPunchSetting;
-
+        
         public ChestVariable[] chestTypes;
-        //kill this
-        [SerializeField] public ChestRewardDto chestReward;
 
         public ChestVariable CurrentChest
         {
@@ -45,7 +44,7 @@ namespace Core.Managers
                 var chestTypesLength = chestTypes.Length;
                 for (var i = 0; i < chestTypesLength; i++)
                 {
-                    if (PlayerData.currentChestRoll > chestTypes[i].threshold) continue;
+                    if (PlayerData.currentChestRoll >= chestTypes[i].threshold) continue;
 
                     return chestTypes[i].chestType;
                 }
@@ -54,8 +53,22 @@ namespace Core.Managers
             }
         }
 
+        //kill this - will come from firebase
+        [SerializeField] public ChestRewardDto chestReward;
+        [ContextMenu("OpenChestTest")]
+        public void OpenChestTest()
+        {
+            chestReward = new ChestRewardDto("[60,12,3]");
+            OpenChest(chestReward);
+        }
+
         private void Start()
         {
+            var openChestPanel = PanelManager.GetPanel<OpenChestPanelController>();
+            openChestPanel.chestRewardPool =
+                ObjectPoolManager.CreateObjectPool<ChestRewardPrefab>(openChestPanel.chestRewardPrefab,
+                    openChestPanel.rewardStartPosition);
+            
             LoadChests();
             RefreshChest();
             RefreshFill();
@@ -93,13 +106,6 @@ namespace Core.Managers
             RefreshChest();
             chestProgressFillImage.fillAmount = 0.0f;
             tweenPunchSetting.DoPunch(transform);
-        }
-
-        [ContextMenu("OpenChestTest")]
-        public void OpenChestTest()
-        {
-            // chestReward = new ChestRewardDto("[ 10, 20, 0 ]");
-            OpenChest(chestReward);
         }
 
         public void OpenChest(ChestRewardDto chestRewardDto)

@@ -12,11 +12,11 @@ namespace Core.UI.Prefabs
         public TweenSetting tweenSettings;
         private Sequence _deductSequence;
 
-        public void Init(int currencyDifference)
+        public void Init(long currencyDifference)
         {
             currencyText.text = currencyDifference.ToString();
             var doMoveOffset = transform.localPosition;
-            var rectWidth = CurrencyController.currenciesRect.rect.width + tweenSettings.moveOffset;
+            var rectWidth = CurrencyManager.currenciesRect.rect.width + tweenSettings.moveOffset;
             doMoveOffset.x += rectWidth;
 
             if (_deductSequence != null)
@@ -33,7 +33,7 @@ namespace Core.UI.Prefabs
                     transform.DOLocalMove(doMoveOffset, tweenSettings.moveDuration).SetEase(tweenSettings.moveCurve))
                 .InsertCallback(0.0f, () => canvasGroup.alpha = 1.0f)
                 .InsertCallback(tweenSettings.fadeStartDelay, () => tweenSettings.DoFade(canvasGroup, false))
-                .AppendCallback(CurrencyController.ResizeCurrencySizeDelta);
+                .AppendCallback(CurrencyManager.ResizeCurrencyRect);
         }
     }
 }

@@ -6,16 +6,15 @@ namespace Core.UI.Prefabs
 {
     public class ChestRewardPrefab : GlobalAccess
     {
-        [SerializeField] private TMP_Text rewardAmount;
         [SerializeField] private SVGImage rewardIcon;
-
-        [HideInInspector] public CurrencyType rewardType;
+        [HideInInspector] public ResourceType rewardType;
+        public TMP_Text rewardAmount;
         
-        public void Init(Currency chestReward)
+        public void Init(Resource chestReward)
         {
-            rewardType = chestReward.currencyType;
-            rewardAmount.text = chestReward.currencyAmount.ToString();
-            rewardIcon.sprite = ResourceManager.GetCurrencySprite(chestReward.currencyType);
+            rewardType = chestReward.resourceType;
+            rewardAmount.text = chestReward.resourceAmount.ToString();
+            rewardIcon.sprite = ResourceManager.GetCurrencySprite(chestReward.resourceType);
         }
     }
 }

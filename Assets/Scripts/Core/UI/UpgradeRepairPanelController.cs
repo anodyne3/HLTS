@@ -47,15 +47,15 @@ namespace Core.UI
             descriptionText.text = _upgradeRepairVariable.description;
         }
 
-        private bool ResourceCheck(Currency[] requiredResources)
+        private bool ResourceCheck(Resource[] requiredResources)
         {
             var enoughResources = true;
 
             var requiredResourcesLength = requiredResources.Length;
             for (var i = 0; i < requiredResourcesLength; i++)
             {
-                if (PlayerData.GetResourceAmount(requiredResources[i].currencyType) >=
-                    requiredResources[i].currencyAmount)
+                if (PlayerData.GetResourceAmount(requiredResources[i].resourceType) >=
+                    requiredResources[i].resourceAmount)
                     continue;
 
                 enoughResources = false;

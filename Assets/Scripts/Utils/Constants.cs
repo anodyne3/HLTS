@@ -113,6 +113,7 @@ namespace Utils
         public string testEvent = "testEvent";
 
         public string armPullEvent = "armPullEvent";
+        public string chestClaimEvent = "chestClaimEvent";
         public string coinConsumeEvent = "coinConsumeEvent";
         public string coinCreatedEvent = "coinCreatedEvent";
         public string coinDroppedEvent = "coinDroppedEvent";

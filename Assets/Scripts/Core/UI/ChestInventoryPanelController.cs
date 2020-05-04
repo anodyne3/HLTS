@@ -32,6 +32,16 @@ namespace Core.UI
             claimCurrentChestButton.onClick.RemoveAllListeners();
             claimCurrentChestButton.onClick.AddListener(ClaimCurrentChest);
 
+            ChestsInit();
+
+            EventManager.NewEventSubscription(gameObject, Constants.GameEvents.payoutFinishEvent, ChestsRefresh);
+            EventManager.NewEventSubscription(gameObject, Constants.GameEvents.chestClaimEvent, PanelRefresh);
+
+            ChestsRefresh();
+        }
+
+        private void ChestsInit()
+        {
             var chestTypesLength = ChestManager.chestTypes.Length;
             for (var i = 0; i < chestTypesLength; i++)
             {
@@ -39,18 +49,16 @@ namespace Core.UI
                 chest.Init(ChestManager.chestTypes[i].chestType);
                 _chests.Add(chest);
             }
-
-            RefreshChests();
         }
 
         public override void OpenPanel(params object[] args)
         {
             base.OpenPanel();
 
-            RefreshPanel();
+            PanelRefresh();
         }
 
-        private void RefreshPanel()
+        private void PanelRefresh()
         {
             RefreshClaimChestButton(PlayerData.currentChestRoll >= ChestManager.chestTypes[0].threshold);
 
@@ -59,7 +67,16 @@ namespace Core.UI
             currentChestProgressFillImage.color = ChestManager.CurrentChest.chestColor;
             currentChestProgressText.text = PlayerData.currentChestRoll + " / " + ChestManager.CurrentChest.threshold;
 
-            RefreshChests();
+            ChestsRefresh();
+        }
+
+        private void ChestsRefresh()
+        {
+            var chestsCount = _chests.Count;
+            for (var i = 0; i < chestsCount; i++)
+            {
+                _chests[i].Refresh();
+            }
         }
 
         private void RefreshClaimChestButton(bool value)
@@ -67,15 +84,6 @@ namespace Core.UI
             claimCurrentChestButton.interactable = value;
             claimCurrentChestButtonText.color = value ? Color.white : Color.grey;
             currentChestIcon.color = value ? Color.white : Color.grey;
-        }
-
-        private void RefreshChests()
-        {
-            var chestsCount = _chests.Count;
-            for (var i = 0; i < chestsCount; i++)
-            {
-                _chests[i].Refresh();
-            }
         }
 
         private static void ClaimCurrentChest()

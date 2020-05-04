@@ -29,7 +29,7 @@ MonoBehaviour:
   - m_Index: 0
     m_Metrics:
       m_Width: 256
-      m_Height: 215
+      m_Height: 256
       m_HorizontalBearingX: 0
       m_HorizontalBearingY: 172
       m_HorizontalAdvance: 256
@@ -37,7 +37,7 @@ MonoBehaviour:
       m_X: 0
       m_Y: 0
       m_Width: 256
-      m_Height: 215
+      m_Height: 256
     m_Scale: 1
     m_AtlasIndex: 0
     sprite: {fileID: 3286163911610860551, guid: f34bbba08d65d5243b310dfcb3acf7a5,

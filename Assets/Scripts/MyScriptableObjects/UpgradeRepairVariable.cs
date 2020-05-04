@@ -10,6 +10,6 @@ namespace MyScriptableObjects
         public Sprite icon;
         public string deviceName;
         public string description;
-        public Currency[] resourceRequirements;
+        public Resource[] resourceRequirements;
     }
 }

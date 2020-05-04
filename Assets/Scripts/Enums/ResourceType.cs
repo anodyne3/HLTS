@@ -3,7 +3,7 @@ using System;
 namespace Enums
 {
     [Serializable]
-    public enum CurrencyType
+    public enum ResourceType
     {
         BananaCoins = 0,
         BluePrints = 1,

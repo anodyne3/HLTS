@@ -103,7 +103,7 @@ namespace Core
 
             var timeStarted = Time.time;
 
-            while (PlayerData.GetResourceAmount(CurrencyType.BananaCoins) > 0)
+            while (PlayerData.GetResourceAmount(ResourceType.BananaCoins) > 0)
             {
                 EventManager.coinInsert.Raise();
 

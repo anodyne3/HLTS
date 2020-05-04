@@ -99,7 +99,7 @@ namespace Core.Managers
         }
 
         //return a sprite from its dictionary according to it's 
-        public Sprite GetCurrencySprite(CurrencyType currencyType)
+        public Sprite GetCurrencySprite(ResourceType currencyType)
         {
             return GetResource<Sprite>(currencyType.ToString());
         }

@@ -11,7 +11,7 @@ namespace MyScriptableObjects
         public string productId;
         public ProductType productType;
         public int productCost;
-        public CurrencyType currencyType;
+        public ResourceType currencyType;
         public Sprite productIcon;
     }
 }

@@ -1,5 +1,4 @@
-﻿using Core.Managers;
-using MyScriptableObjects;
+﻿using MyScriptableObjects;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -22,7 +21,12 @@ namespace Core.UI
             confirmButton.onClick.AddListener(ConfirmAction);
             cancelButton.onClick.RemoveAllListeners();
             cancelButton.onClick.AddListener(ClosePanel);
+        }
 
+        public override void OpenPanel(params object[] args)
+        {
+            base.OpenPanel(args);
+            
             RefreshPanel();
         }
 
