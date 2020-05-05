@@ -7,13 +7,13 @@ namespace Core.Input
     [Serializable]
     public class WorldSpaceButton : GlobalAccess
     {
-        private Collider2D _buttonCollider2D;
+        public Collider2D buttonCollider2D;  
         public UnityEvent onClick;
-        public bool interactable;
+        public bool isClicked;
 
         private void Start()
         {
-            _buttonCollider2D = (Collider2D) GetComponent(typeof(Collider2D));
+            buttonCollider2D = (Collider2D) GetComponent(typeof(Collider2D));
             
             InputManager.Pressed += OnPressed;
             InputManager.Dragged += OnDragged;
@@ -31,33 +31,44 @@ namespace Core.Input
 
         private void OnPressed(Vector2 pointerPosition)
         {
-            if (_buttonCollider2D != Physics2D.OverlapPoint(pointerPosition)) return;
+            if (buttonCollider2D != Physics2D.OverlapPoint(pointerPosition)) return;
 
-            if (CameraManager.draggingDisabled) return;
+            if (GameManager != null)
+            {
+                if (!GameManager.interactionEnabled) return;
+                
+                GameManager.interactionEnabled = false;
+            }
 
-            InputManager.startPosition = pointerPosition;
+            isClicked = true;
         }
         
-        //to const
-        // private float DragIgnore = 0.1f;
+        //to const and inputSettings
+        public float dragIgnore = 0.1f;
         
         private void OnDragged(Vector2 pointerPosition)
         {
-            if (CameraManager.draggingDisabled) return;
-
-            InputManager.dragDelta = InputManager.startPosition - pointerPosition;
-            InputManager.startPosition = pointerPosition;
+            if(!isClicked) return;
             
-            //dead zone?
-            //if (InputManager.dragDelta.sqrMagnitude > DragIgnore) return;
+            if (GameManager != null && !GameManager.interactionEnabled)
+            {
+                OnReleased();
+                return;
+            }
+
+            /*
+            if (InputManager.dragDelta.sqrMagnitude > dragIgnore)
+            {
+                isClicked = false;
+                OnReleased();
+            }
+            */
         }
         
         private void OnReleased()
         {
             Release();
 
-            CameraManager.draggingDisabled = false;
-            
             if (GameManager == null) return;
 
             GameManager.interactionEnabled = true;
@@ -65,9 +76,12 @@ namespace Core.Input
 
         private void Release()
         {
-            if (onClick.GetPersistentEventCount() == 0 || !interactable) return;
+            // if (onClick.GetPersistentEventCount() == 0) return;
 
-            onClick.Invoke();
+            if (isClicked && buttonCollider2D == Physics2D.OverlapPoint(InputManager.pointerPosition))
+                onClick.Invoke();
+
+            isClicked = false;
         }
     }
 }

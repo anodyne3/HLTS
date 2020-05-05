@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd53c9eab822475492d97d21e6dd74c8, type: 3}
+  m_Name: AutoRollUpgrade
+  m_EditorClassIdentifier: 
+  id: 0
+  currentLevel: 0
+  maxLevel: 3
+  icon: {fileID: 3286163911610860551, guid: 1475fa4dc77c96941af6065c7bb5ba55, type: 3}
+  upgradeName: Auto Roll
+  description: When enabled, the machine will continue to insert Banana Coins and
+    pull the arm until a payout, or you run out of coins.
+  resourceRequirements:
+  - resourceAmount: 300
+    resourceType: 0
+  - resourceAmount: 50
+    resourceType: 1

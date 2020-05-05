@@ -14,8 +14,6 @@ namespace Core.MainSlotMachine
         private bool _loadingCoin;
         private float _coinLoadSpeed;
         
-
-        
         //temp for testing
         private void Start()
         {

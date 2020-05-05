@@ -35,7 +35,7 @@ namespace Core.UI
             foreach (var panel in allPanels)
             {
                 if (panel.TryGetComponent(out T requiredPanel))
-                    requiredPanel.OpenPanel();
+                    requiredPanel.OpenPanel(args);
                 else
                     panel.gameObject.SetActive(false);
             }

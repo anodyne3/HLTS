@@ -243,21 +243,21 @@ namespace Core
         }
         #endregion
 
-        #region UpgradeRepair
-        public async void UpgradeRepair(UpgradeRepairVariable upgradeRepairVariable)
+        #region Upgrades
+        public async void Upgrade(UpgradeVariable upgradeVariable)
         {
-            await DoUpgradeRepair(upgradeRepairVariable);
+            await DoUpgrade(upgradeVariable);
         }
 
-        private async Task DoUpgradeRepair(UpgradeRepairVariable upgradeRepairVariable)
+        private async Task DoUpgrade(UpgradeVariable upgradeVariable)
         {
-            var doUpgradeRepair = _firebaseFunc.GetHttpsCallable(Constants.DoUpgradeRepair).CallAsync();
+            var doUpgrade = _firebaseFunc.GetHttpsCallable(Constants.DoUpgradeRepair).CallAsync();
 
-            await doUpgradeRepair;
-            if (doUpgradeRepair.IsFaulted)
+            await doUpgrade;
+            if (doUpgrade.IsFaulted)
             {
                 //maybe show message to player regarding some issue
-                HandleFunctionError(doUpgradeRepair);
+                HandleFunctionError(doUpgrade);
             }
         }
         #endregion

@@ -8,11 +8,11 @@ namespace Core.Managers
 {
     public class EventManager : GlobalAccess
     {
-        [HideInInspector] public GameEvent autoSlotMode;
         [HideInInspector] public GameEvent coinInsert;
         [HideInInspector] public GameEvent testEvent;
         
         [HideInInspector] public GameEvent armPull;
+        [HideInInspector] public GameEvent autoRoll;
         [HideInInspector] public GameEvent chestClaim;
         [HideInInspector] public GameEvent coinConsume;
         [HideInInspector] public GameEvent coinCreated;
@@ -30,11 +30,11 @@ namespace Core.Managers
         
         private void OnEnable()
         {
-            autoSlotMode = Resources.Load<GameEvent>("Events/" + Constants.GameEvents.autoSlotModeEvent);
             coinInsert = Resources.Load<GameEvent>("Events/" + Constants.GameEvents.coinInsertEvent);
             testEvent = Resources.Load<GameEvent>("Events/" + Constants.GameEvents.testEvent);
             
             armPull = Resources.Load<GameEvent>("Events/" + Constants.GameEvents.armPullEvent);
+            autoRoll = Resources.Load<GameEvent>("Events/" + Constants.GameEvents.autoRollEvent);
             chestClaim = Resources.Load<GameEvent>("Events/" + Constants.GameEvents.chestClaimEvent);
             coinConsume = Resources.Load<GameEvent>("Events/" + Constants.GameEvents.coinConsumeEvent);
             coinCreated = Resources.Load<GameEvent>("Events/" + Constants.GameEvents.coinCreatedEvent);
@@ -49,7 +49,7 @@ namespace Core.Managers
             wheelRoll = Resources.Load<GameEvent>("Events/" + Constants.GameEvents.wheelRollEvent);
         }
         
-        public GameEventListener NewEventSubscription(GameObject parentObject, string gameEventName, UnityAction unityAction)
+        public void NewEventSubscription(GameObject parentObject, string gameEventName, UnityAction unityAction)
         {
             var newGameEvent = Resources.Load<GameEvent>("Events/" + gameEventName);
             var gameEventListener = parentObject.AddComponent<GameEventListener>();
@@ -57,8 +57,8 @@ namespace Core.Managers
             gameEventListener.@event.RegisterListener(gameEventListener);
             gameEventListener.response.AddListener(unityAction);
             gameEventListeners.Add(gameEventListener);
-
-            return gameEventListener;
+            
+            // return gameEventListener;
         }
     }
 }

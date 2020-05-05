@@ -15,11 +15,14 @@ namespace Utils
         public const string BananaCoinIcon = "<sprite=\"BC\" index=0>";
         public const string BluePrintIcon = "<sprite=\"BP\" index=0>";
         public const string StarFruitIcon = "<sprite=\"SF\" index=0>";
+        public const string SufficientCurrencyPrefix = "<color=#FFFFFF>";
+        public const string InsufficientCurrencyPrefix = "<color=#BD2424>";
 
         //firebase
         public const string PlayerDataPrefix = "users";
         public const string PlayerDataSuffix = "userData";
-        public const string ChestDataSuffix = "userData";
+        public const string ChestData = "cd";
+        public const string UpgradeData = "ud";
         public const string ReelRollCloudFunction = "usersReelRollOnCall";
         public const string AdRewardClaimCloudFunction = "usersAdRewardClaimOnCall";
         public const string ChestClaimCloudFunction = "usersChestClaimOnCall";
@@ -47,7 +50,7 @@ namespace Utils
         public const string ShopProductPath = "ShopProducts";
         public const string ChestsPath = "Chests";
         public const string ChestRewardsPath = "ChestRewards";
-        public const string UpgradeRepairPath = "UpgradeRepairPath";
+        public const string UpgradesPath = "Upgrades";
         
         //tween settings paths
         public const string CloseButtonPunchSettingPath = "TweenSettings/closeButtonPunchSetting";
@@ -109,11 +112,11 @@ namespace Utils
     public class GameEvents
     {
         //for debug only
-        public string autoSlotModeEvent = "autoSlotModeEvent";
         public string coinInsertEvent = "coinInsertEvent";
         public string testEvent = "testEvent";
 
         public string armPullEvent = "armPullEvent";
+        public string autoRollEvent = "autoRollEvent";
         public string chestClaimEvent = "chestClaimEvent";
         public string coinConsumeEvent = "coinConsumeEvent";
         public string coinCreatedEvent = "coinCreatedEvent";

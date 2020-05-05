@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using Core.Managers;
 using Core.UI;
@@ -17,7 +18,7 @@ namespace Core.GameData
         [HideInInspector] public int[] lastResult;
         [HideInInspector] public int[] nextResult;
         [HideInInspector] public int[] chestData = {1,2,3};
-        [HideInInspector] public int[] upgradeRepairData = {1,0,0};
+        [HideInInspector] public int[] upgradeData = {1,0};
 
         public FirebaseUser firebaseUser;
         public Resource[] wallet =
@@ -52,7 +53,9 @@ namespace Core.GameData
             _database.GetReference(Constants.PlayerDataPrefix).Child(firebaseUser.UserId)
                 .Child(Constants.PlayerDataSuffix).ValueChanged += OnPlayerDataChanged;
             _database.GetReference(Constants.PlayerDataPrefix).Child(firebaseUser.UserId)
-                .Child(Constants.ChestDataSuffix).ValueChanged += OnChestDataChanged;
+                .Child(Constants.PlayerDataSuffix).Child(Constants.ChestData).ValueChanged += OnChestDataChanged;
+            _database.GetReference(Constants.PlayerDataPrefix).Child(firebaseUser.UserId)
+                .Child(Constants.PlayerDataSuffix).Child(Constants.UpgradeData).ValueChanged += OnUpgradeDataChanged;
         }
 
         public void StopDatabaseListeners()
@@ -70,7 +73,7 @@ namespace Core.GameData
 
         private void OnPlayerDataChanged(object sender, ValueChangedEventArgs args)
         {
-            if (sender != null)
+            /*if (sender != null)
                 Debug.Log(sender.ToString());
 
             if (args.DatabaseError != null)
@@ -85,14 +88,26 @@ namespace Core.GameData
                 return;
             }
 
-            var snapReturn = args.Snapshot.GetRawJsonValue();
-            var snapReturnDto = new PlayerDataDto(snapReturn);
+            var snapReturn = args.Snapshot.GetRawJsonValue();*/
+            var snapReturnDto = new PlayerDataDto(ProcessDataChanges(sender, args));
             lastResult = snapReturnDto.lastResult.ToArray();
             nextResult = snapReturnDto.nextResult.ToArray();
             wallet[0].resourceAmount = snapReturnDto.coinsAmount;
         }
 
         private void OnChestDataChanged(object sender, ValueChangedEventArgs args)
+        {
+            chestData = new GenericArrayDto(ProcessDataChanges(sender, args)).newDataArray;
+            // ProcessGenericArrayDataChanges(sender, args, ref chestData);
+        }
+        
+        private void OnUpgradeDataChanged(object sender, ValueChangedEventArgs args)
+        {
+            // ProcessGenericArrayDataChanges(sender, args, ref upgradeData);
+            upgradeData = new GenericArrayDto(ProcessDataChanges(sender, args)).newDataArray;
+        }
+
+        /*private static void ProcessGenericArrayDataChanges(object sender, ValueChangedEventArgs args, ref int[] dataChanged)
         {
             if (sender != null)
                 Debug.Log(sender.ToString());
@@ -110,8 +125,26 @@ namespace Core.GameData
             }
 
             var snapReturn = args.Snapshot.GetRawJsonValue();
-            var snapReturnDto = new ChestDto(snapReturn);
-            chestData = snapReturnDto.newChestData;
+            var snapReturnDto = new GenericArrayDto(snapReturn);
+            dataChanged = snapReturnDto.newDataArray;
+        }*/
+        
+        private static string ProcessDataChanges(object sender, ValueChangedEventArgs args)
+        {
+            if (sender != null)
+                Debug.Log(sender.ToString());
+
+            if (args.DatabaseError != null)
+            {
+                Debug.LogError(args.DatabaseError.Message);
+                return string.Empty;
+            }
+
+            if (!string.IsNullOrEmpty(args.Snapshot.GetRawJsonValue()))
+                return args.Snapshot.GetRawJsonValue();
+            
+            Debug.Log("Empty Snapshot: " + args.Snapshot.Key);
+            return string.Empty;
         }
 
         public IEnumerator OnLogin()

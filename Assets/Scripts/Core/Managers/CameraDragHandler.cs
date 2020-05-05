@@ -57,18 +57,11 @@ namespace Core.Managers
         private void OnPressed(Vector2 pointerPosition)
         {
             _isPinching = false;
-            
-            if (CameraManager.draggingDisabled) return;
-
-            InputManager.startPosition = pointerPosition;
         }
 
         private void OnDragged(Vector2 pointerPosition)
         {
             if (CameraManager.draggingDisabled) return;
-
-            InputManager.dragDelta = InputManager.startPosition - pointerPosition;
-            InputManager.startPosition = pointerPosition;
 
             CameraPanning(InputManager.dragDelta);
         }

@@ -7,7 +7,7 @@ namespace Core.UI
     [Serializable]
     public class Resource
     {
-        [HideInInspector] public long resourceAmount;
+        public long resourceAmount;
         public ResourceType resourceType;
 
         public Resource(long amount, ResourceType type)

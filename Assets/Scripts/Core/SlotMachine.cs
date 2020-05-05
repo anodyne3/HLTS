@@ -8,15 +8,15 @@ namespace Core
 {
     public class SlotMachine : Singleton<SlotMachine>
     {
-        [HideInInspector] public bool coinIsLoaded;
-        [HideInInspector] public bool wheelsAreRolling;
-        [HideInInspector] public int[] result = new int[3];
-        [HideInInspector] public FruitType payout;
-        [HideInInspector] public bool autoMode;
-        [HideInInspector] public int betAmount;
-        [HideInInspector] public int coinSlotMaxBet;
+        /*[HideInInspector]*/ public bool coinIsLoaded;
+        /*[HideInInspector]*/ public bool wheelsAreRolling;
+        /*[HideInInspector]*/ public int[] result = new int[3];
+        /*[HideInInspector]*/ public FruitType payout;
+        /*[HideInInspector]*/ public bool autoMode;
+        /*[HideInInspector]*/ public int betAmount;
+        /*[HideInInspector]*/ public int coinSlotMaxBet;
  
-        private bool _armIsPulled;
+        [SerializeField] private bool _armIsPulled;
         
         //test variables
         // private int _testCoinsSpent;
@@ -27,7 +27,7 @@ namespace Core
             EventManager.NewEventSubscription(gameObject, Constants.GameEvents.coinLoadEvent, LoadCoin);
             EventManager.NewEventSubscription(gameObject, Constants.GameEvents.armPullEvent, PullArm);
             EventManager.NewEventSubscription(gameObject, Constants.GameEvents.wheelResultEvent, WheelResult);
-            EventManager.NewEventSubscription(gameObject, Constants.GameEvents.autoSlotModeEvent, AutoSlotMode);
+            EventManager.NewEventSubscription(gameObject, Constants.GameEvents.autoRollEvent, AutoSlotToggle);
         }
 
         private void LoadCoin()
@@ -86,16 +86,47 @@ namespace Core
                     payout = FruitType.Barnana;
             }
 
-            if (payout != FruitType.None)
-                EventManager.payoutStart.Raise();
+            if (payout == FruitType.None) return;
+
+            if (autoMode)
+            {
+                autoMode = false;
+                coinIsLoaded = false;
+                StopCoroutine(_autoRoll);
+                EventManager.refreshUi.Raise();
+            }
+
+            EventManager.payoutStart.Raise();
         }
 
-        private void AutoSlotMode()
+        private void AutoSlotToggle()
         {
             autoMode = !autoMode;
             
             if (!autoMode) return;
-            StartCoroutine(nameof(PayoutRateTest));
+            _autoRoll = StartCoroutine(nameof(AutoMode));
+        }
+
+        private Coroutine _autoRoll;
+        
+        private IEnumerator AutoMode()
+        {
+            var waitUntilWheelsStop = new WaitUntil(() => wheelsAreRolling == false);
+
+            coinIsLoaded = true;
+            _armIsPulled = true;
+            
+            while (PlayerData.GetResourceAmount(ResourceType.BananaCoins) > 0 && autoMode)
+            {
+                if (wheelsAreRolling)
+                    yield return waitUntilWheelsStop;
+
+                EventManager.coinConsume.Raise();
+                OnWheelRoll();
+
+                yield return null;
+            }
+            yield return null;
         }
 
         private IEnumerator PayoutRateTest()
@@ -124,6 +155,28 @@ namespace Core
 
             autoMode = false;
             yield return null;
+        }
+
+        public void BetMin()
+        {
+            betAmount = 1;
+        }
+
+        public void BetLess()
+        {
+            
+        }
+
+        public void BetMore()
+        {
+            
+        }
+
+        public void BetMax()
+        {
+            //to Consts
+            
+            betAmount = UpgradeManager.GetUpgradeCurrentLevel(2);
         }
         
         /*

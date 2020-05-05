@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace MyScriptableObjects
 {
-    [CreateAssetMenu(fileName = "Chest", menuName = "MyAssets/Chest", order = 65)]
+    [CreateAssetMenu(fileName = "Chest", menuName = "MyAssets/Variables/Chest", order = 10)]
     public class ChestVariable : ScriptableObject
     {
         public ChestType chestType;

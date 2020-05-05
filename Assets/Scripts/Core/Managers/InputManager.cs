@@ -23,6 +23,7 @@ namespace Core.Managers
         private bool _useTouch = true;
 
         private bool _isDragging;
+        public Vector2 pointerPosition;
         public Vector2 startPosition;
         public Vector2 dragDelta;
 
@@ -59,12 +60,17 @@ namespace Core.Managers
 
             if (drag.contact && !_isDragging)
             {
-                Pressed?.Invoke(CameraManager.MainCamera.ScreenToWorldPoint(drag.position));
                 _isDragging = true;
+                pointerPosition = CameraManager.MainCamera.ScreenToWorldPoint(drag.position);
+                startPosition = pointerPosition;
+                Pressed?.Invoke(pointerPosition);
             }
             else if (drag.contact && _isDragging)
             {
-                Dragged?.Invoke(CameraManager.MainCamera.ScreenToWorldPoint(drag.position));
+                pointerPosition = CameraManager.MainCamera.ScreenToWorldPoint(drag.position);
+                dragDelta = startPosition - pointerPosition;
+                startPosition = pointerPosition;
+                Dragged?.Invoke(pointerPosition);
             }
             else
             {
