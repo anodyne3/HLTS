@@ -14,6 +14,7 @@ namespace Core.Managers
         [HideInInspector] public GameEvent armPull;
         [HideInInspector] public GameEvent autoRoll;
         [HideInInspector] public GameEvent chestClaim;
+        [HideInInspector] public GameEvent chestRefresh;
         [HideInInspector] public GameEvent coinConsume;
         [HideInInspector] public GameEvent coinCreated;
         [HideInInspector] public GameEvent coinDropped;
@@ -36,6 +37,7 @@ namespace Core.Managers
             armPull = Resources.Load<GameEvent>("Events/" + Constants.GameEvents.armPullEvent);
             autoRoll = Resources.Load<GameEvent>("Events/" + Constants.GameEvents.autoRollEvent);
             chestClaim = Resources.Load<GameEvent>("Events/" + Constants.GameEvents.chestClaimEvent);
+            chestRefresh = Resources.Load<GameEvent>("Events/" + Constants.GameEvents.chestRefreshEvent);
             coinConsume = Resources.Load<GameEvent>("Events/" + Constants.GameEvents.coinConsumeEvent);
             coinCreated = Resources.Load<GameEvent>("Events/" + Constants.GameEvents.coinCreatedEvent);
             coinDropped = Resources.Load<GameEvent>("Events/" + Constants.GameEvents.coinDroppedEvent);

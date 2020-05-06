@@ -150,12 +150,13 @@ namespace Core
             });
         }
 
+        //probably unnecessary 
         public void SignOut()
         {
             // PlayerData.StopDatabaseListeners();
             _firebaseAuth.SignOut();
         }
-
+        
         public void LinkAccount()
         {
             //Firebase.Auth.Credential credential = Firebase.Auth.GoogleAuthProvider.GetCredential(googleIdToken, googleAccessToken);

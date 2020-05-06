@@ -24,6 +24,7 @@ namespace Core.Managers
         {
             get
             {
+                if (chestTypes == null) return null;
                 var chestTypesLength = chestTypes.Length;
                 for (var i = 0; i < chestTypesLength; i++)
                     if (chestTypes[i].chestType == CurrentChestType)
@@ -32,7 +33,6 @@ namespace Core.Managers
                 return null;
             }
         }
-
 
         public int RollsToBetterChest => CurrentChest.threshold - PlayerData.currentChestRoll;
 
@@ -104,8 +104,8 @@ namespace Core.Managers
         {
             chestIcon.sprite = chestTypes[CurrentChest.rank + 1].chestIcon;
             outlineImage.color = chestTypes[CurrentChest.rank + 1].chestColor;
-            // chestProgressFillImage.fillAmount = 0.0f;
             tweenPunchSetting.DoPunch(transform);
+            GetFillAmount();
         }
 
         public void OpenChest(ChestRewardDto chestRewardDto)

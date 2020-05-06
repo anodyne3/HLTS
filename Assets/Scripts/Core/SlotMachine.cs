@@ -8,19 +8,21 @@ namespace Core
 {
     public class SlotMachine : Singleton<SlotMachine>
     {
-        /*[HideInInspector]*/ public bool coinIsLoaded;
-        /*[HideInInspector]*/ public bool wheelsAreRolling;
-        /*[HideInInspector]*/ public int[] result = new int[3];
-        /*[HideInInspector]*/ public FruitType payout;
-        /*[HideInInspector]*/ public bool autoMode;
-        /*[HideInInspector]*/ public int betAmount;
-        /*[HideInInspector]*/ public int coinSlotMaxBet;
+        [HideInInspector] public bool coinIsLoaded;
+        [HideInInspector] public bool wheelsAreRolling;
+        [HideInInspector] public int[] result = new int[3];
+        [HideInInspector] public FruitType payout;
+        [HideInInspector] public bool autoMode;
+        [HideInInspector] public int betAmount;
+        [HideInInspector] public int coinSlotMaxBet;
  
-        [SerializeField] private bool _armIsPulled;
+        private bool _armIsPulled;
+        private bool _coinWasLoaded;
+        private Coroutine _autoRoll;
         
         //test variables
-        // private int _testCoinsSpent;
-        // private float _timeElapsed;
+        private int _testCoinsSpent;
+        private float _timeElapsed;
 
         private void Start()
         {
@@ -91,7 +93,7 @@ namespace Core
             if (autoMode)
             {
                 autoMode = false;
-                coinIsLoaded = false;
+                coinIsLoaded = _coinWasLoaded;
                 StopCoroutine(_autoRoll);
                 EventManager.refreshUi.Raise();
             }
@@ -107,12 +109,11 @@ namespace Core
             _autoRoll = StartCoroutine(nameof(AutoMode));
         }
 
-        private Coroutine _autoRoll;
-        
         private IEnumerator AutoMode()
         {
             var waitUntilWheelsStop = new WaitUntil(() => wheelsAreRolling == false);
 
+            _coinWasLoaded = coinIsLoaded;
             coinIsLoaded = true;
             _armIsPulled = true;
             
@@ -134,7 +135,7 @@ namespace Core
             var waitUntilWheelsStop = new WaitUntil(() => wheelsAreRolling == false);
             var waitUntilCoinIsLoaded = new WaitUntil(() => coinIsLoaded);
 
-            // var timeStarted = Time.time;
+            var timeStarted = Time.time;
 
             while (PlayerData.GetResourceAmount(ResourceType.BananaCoins) > 0 && autoMode)
             {
@@ -148,8 +149,8 @@ namespace Core
                 
                 EventManager.armPull.Raise();
 
-                // _timeElapsed = Time.time - timeStarted;
-                // _testCoinsSpent += 1;
+                _timeElapsed = Time.time - timeStarted;
+                _testCoinsSpent += 1;
                 yield return null;
             }
 
@@ -164,18 +165,16 @@ namespace Core
 
         public void BetLess()
         {
-            
+            betAmount--;
         }
 
         public void BetMore()
         {
-            
+            betAmount++;
         }
 
         public void BetMax()
         {
-            //to Consts
-            
             betAmount = UpgradeManager.GetUpgradeCurrentLevel(2);
         }
         

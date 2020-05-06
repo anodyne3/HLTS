@@ -16,11 +16,16 @@ namespace Core.Upgrades
         
         private void Start()
         {
-            autoRollObject.button.onClick.AddListener(ToggleAutoRoll);
-            betMinObject.button.onClick.AddListener(BetMin);
-            betLessObject.button.onClick.AddListener(BetLess);
-            betMoreObject.button.onClick.AddListener(BetMore);
-            betMaxObject.button.onClick.AddListener(BetMax);
+            autoRollObject.button.OnClick.RemoveAllListeners();
+            autoRollObject.button.OnClick.AddListener(ToggleAutoRoll);
+            betMinObject.button.OnClick.RemoveAllListeners();
+            betMinObject.button.OnClick.AddListener(BetMin);
+            betLessObject.button.OnClick.RemoveAllListeners();
+            betLessObject.button.OnClick.AddListener(BetLess);
+            betMoreObject.button.OnClick.RemoveAllListeners();
+            betMoreObject.button.OnClick.AddListener(BetMore);
+            betMaxObject.button.OnClick.RemoveAllListeners();
+            betMaxObject.button.OnClick.AddListener(BetMax);
             
             EventManager.NewEventSubscription(gameObject, Constants.GameEvents.refreshUiEvent, RefreshUi);
             

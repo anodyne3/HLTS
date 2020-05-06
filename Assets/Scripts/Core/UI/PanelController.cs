@@ -56,6 +56,9 @@ namespace Core.UI
                 {
                     if (GameManager != null)
                         GameManager.interactionEnabled = false;
+                    
+                    if (PanelManager != null)
+                        PanelManager.dragPinchDisabled = true;
 
                     gameObject.SetActive(true);
                     Canvas.ForceUpdateCanvases();
@@ -107,6 +110,9 @@ namespace Core.UI
 
                     if (GameManager != null)
                         GameManager.interactionEnabled = true;
+                    
+                    if (PanelManager != null)
+                        PanelManager.dragPinchDisabled = false;
 
                     panelTransform.localScale = PanelManager.openPanelTweenSettings.scaleStartValue;
                 });

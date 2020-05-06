@@ -11,7 +11,7 @@ namespace Core.MainSlotMachine
         [SerializeField] private Transform fruitReelR;
 
         [SerializeField] private int[] newRoll;
-        private WaitForEndOfFrame _waitForEndOfFrame = new WaitForEndOfFrame();
+        private readonly WaitForEndOfFrame _waitForEndOfFrame = new WaitForEndOfFrame();
 
         private void Start()
         {

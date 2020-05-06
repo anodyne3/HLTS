@@ -22,7 +22,12 @@ namespace Utils
         public const string PlayerDataPrefix = "users";
         public const string PlayerDataSuffix = "userData";
         public const string ChestData = "cd";
+        public const string ChestPayout = "cp";
+        public const string CurrentRoll = "cr";
+        public const string LastPayout = "lp";
         public const string UpgradeData = "ud";
+        public const string RollData = "rd";
+        public const string WalletData = "wd";
         public const string ReelRollCloudFunction = "usersReelRollOnCall";
         public const string AdRewardClaimCloudFunction = "usersAdRewardClaimOnCall";
         public const string ChestClaimCloudFunction = "usersChestClaimOnCall";
@@ -118,6 +123,7 @@ namespace Utils
         public string armPullEvent = "armPullEvent";
         public string autoRollEvent = "autoRollEvent";
         public string chestClaimEvent = "chestClaimEvent";
+        public string chestRefreshEvent = "chestRefreshEvent";
         public string coinConsumeEvent = "coinConsumeEvent";
         public string coinCreatedEvent = "coinCreatedEvent";
         public string coinDroppedEvent = "coinDroppedEvent";

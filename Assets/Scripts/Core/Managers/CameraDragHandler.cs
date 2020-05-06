@@ -51,6 +51,8 @@ namespace Core.Managers
 
         private void OnScrolled(float scrollAmount)
         {
+            if (PanelManager.dragPinchDisabled) return;
+            
             CenterAsZoom(scrollAmount);
         }
 
@@ -61,7 +63,7 @@ namespace Core.Managers
 
         private void OnDragged(Vector2 pointerPosition)
         {
-            if (CameraManager.draggingDisabled) return;
+            if (CameraManager.draggingDisabled || PanelManager.dragPinchDisabled) return;
 
             CameraPanning(InputManager.dragDelta);
         }

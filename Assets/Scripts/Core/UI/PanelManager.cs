@@ -14,6 +14,8 @@ namespace Core.UI
         public TweenFadeSetting openPanelFadeSettings;
         public TweenFadeSetting closePanelFadeSettings;
 
+        [HideInInspector] public bool dragPinchDisabled;
+
         public override void Awake()
         {
             base.Awake();

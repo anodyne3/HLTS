@@ -37,6 +37,8 @@ namespace Core.UI
         {
             base.OpenPanel();
 
+            // _chestRewardDto = new ChestRewardDto(JsonUtility.ToJson(PlayerData.chestPayout));
+            
             _chestRewardDto = (ChestRewardDto) args[0];
 
             PanelManager.GetPanel<ChestDetailsPanelController>().OpenChestIcon(true);

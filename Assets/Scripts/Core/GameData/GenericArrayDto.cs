@@ -1,4 +1,4 @@
-using UnityEngine;
+using Newtonsoft.Json;
 
 namespace Core.GameData
 {
@@ -8,8 +8,16 @@ namespace Core.GameData
 
         public GenericArrayDto(string fromJson)
         {
-            var jsonParsed = JsonUtility.FromJson<GenericArrayDto>(fromJson);
-            newDataArray = jsonParsed.newDataArray;
+            // if (isArray)
+            {
+                var jsonParsed = JsonConvert.DeserializeObject<int[]>(fromJson);
+                newDataArray = jsonParsed;
+            }
+            // else
+            {
+                // var jsonParsed = JsonUtility.FromJson<GenericArrayDto>(fromJson);
+                // newDataArray = jsonParsed.newDataArray;
+            }
         }
     }
 }
