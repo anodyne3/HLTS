@@ -223,7 +223,7 @@ namespace Core
                 HandleFunctionError(chestClaim);
             }
             
-            EventManager.chestClaim.Raise();
+            EventManager.chestRefresh.Raise();
         }
         
         public async void OpenChest(ChestType chestType)
@@ -233,7 +233,7 @@ namespace Core
 
         private async Task ChestOpen(ChestType chestType)
         {
-            var chestClaim = _firebaseFunc.GetHttpsCallable(Constants.ChestClaimCloudFunction).CallAsync();
+            var chestClaim = _firebaseFunc.GetHttpsCallable(Constants.ChestOpenCloudFunction).CallAsync();
 
             await chestClaim;
             if (chestClaim.IsFaulted)
@@ -241,6 +241,8 @@ namespace Core
                 //maybe show message to player regarding some issue
                 HandleFunctionError(chestClaim);
             }
+            
+            EventManager.chestOpen.Raise();
         }
         #endregion
 

@@ -31,6 +31,7 @@ namespace Utils
         public const string ReelRollCloudFunction = "usersReelRollOnCall";
         public const string AdRewardClaimCloudFunction = "usersAdRewardClaimOnCall";
         public const string ChestClaimCloudFunction = "usersChestClaimOnCall";
+        public const string ChestOpenCloudFunction = "usersChestOpenOnCall";
         public const string DoUpgradeRepair = "usersDoUpgradeRepairOnCall";
         public const string FirebaseDatabaseUrl = "https://he-loves-the-slots.firebaseio.com/";
         public const string PrivacyPolicyUrl = "https://he-loves-the-slots.web.app/PrivacyPolicy.html";
@@ -122,7 +123,7 @@ namespace Utils
 
         public string armPullEvent = "armPullEvent";
         public string autoRollEvent = "autoRollEvent";
-        public string chestClaimEvent = "chestClaimEvent";
+        public string chestOpenEvent = "chestOpenEvent";
         public string chestRefreshEvent = "chestRefreshEvent";
         public string coinConsumeEvent = "coinConsumeEvent";
         public string coinCreatedEvent = "coinCreatedEvent";

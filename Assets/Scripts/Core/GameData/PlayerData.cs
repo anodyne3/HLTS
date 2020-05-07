@@ -16,7 +16,7 @@ namespace Core.GameData
         [HideInInspector] public int currentChestRoll;
         [HideInInspector] public int[] lastResult;
         [HideInInspector] public int[] nextResult;
-        [HideInInspector] public int[] upgradeData = {1,0};
+        [HideInInspector] public int[] upgradeData;// = {1,0};
 
         public Resource[] wallet =
         {

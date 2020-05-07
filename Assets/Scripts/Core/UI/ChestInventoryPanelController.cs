@@ -30,12 +30,12 @@ namespace Core.UI
             base.Start();
 
             claimCurrentChestButton.onClick.RemoveAllListeners();
-            claimCurrentChestButton.onClick.AddListener(ClaimCurrentChest);
+            claimCurrentChestButton.onClick.AddListener(ClaimChest);
 
             ChestsInit();
 
             EventManager.NewEventSubscription(gameObject, Constants.GameEvents.payoutFinishEvent, ChestsRefresh);
-            EventManager.NewEventSubscription(gameObject, Constants.GameEvents.chestClaimEvent, PanelRefresh);
+            EventManager.NewEventSubscription(gameObject, Constants.GameEvents.chestRefreshEvent, PanelRefresh);
 
             ChestsRefresh();
         }
@@ -86,12 +86,9 @@ namespace Core.UI
             currentChestIcon.color = value ? Color.white : Color.grey;
         }
 
-        private static void ClaimCurrentChest()
+        private static void ClaimChest()
         {
-            if (PlayerData.currentChestRoll < Constants.HiChestRoll)
-                PanelManager.OpenSubPanel<ClaimChestPanelController>();
-            else
-                FirebaseFunctionality.ClaimChest();
+            PanelManager.OpenSubPanel<ClaimChestPanelController>();
         }
     }
 }

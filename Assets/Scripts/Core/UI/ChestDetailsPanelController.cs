@@ -25,9 +25,10 @@ namespace Core.UI
             base.Start();
 
             openChestButton.onClick.RemoveAllListeners();
-            openChestButton.onClick.AddListener(ButtonAction);
+            openChestButton.onClick.AddListener(OpenChest);
 
             EventManager.NewEventSubscription(gameObject, Constants.GameEvents.payoutFinishEvent, RefreshPanel);
+            EventManager.NewEventSubscription(gameObject, Constants.GameEvents.chestOpenEvent, RefreshPanel);
         }
 
         public override void OpenPanel(params object[] args)
@@ -79,7 +80,7 @@ namespace Core.UI
             openChestButtonText.color = value ? Color.white : Color.grey;
         }
 
-        private void ButtonAction()
+        private void OpenChest()
         {
             if (PlayerData.GetChestCount(_chestVariable.chestType) < 1) return;
             
