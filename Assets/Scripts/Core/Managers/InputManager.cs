@@ -81,6 +81,8 @@ namespace Core.Managers
 
         private void OnScroll(InputAction.CallbackContext context)
         {
+            //sanity for development - remove on prod i guess
+            return;
             var control = context.control;
             var device = control.device;
 

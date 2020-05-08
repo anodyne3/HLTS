@@ -9,10 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c42ceaf2b2484ff199ac52c390b60653, type: 3}
-  m_Name: chestOpenFinishRotateSetting
+  m_Script: {fileID: 11500000, guid: cd53c9eab822475492d97d21e6dd74c8, type: 3}
+  m_Name: ChestClaimUpgrade
   m_EditorClassIdentifier: 
-  rotateEndValue: {x: 0, y: 0, z: 360}
-  rotateDuration: 1.333
-  rotateEasing: 10
-  rotateMode: 0
+  id: 0
+  currentLevel: 0
+  maxLevel: 0
+  icon: {fileID: 0}
+  upgradeName: 
+  description: 
+  resourceRequirements: []

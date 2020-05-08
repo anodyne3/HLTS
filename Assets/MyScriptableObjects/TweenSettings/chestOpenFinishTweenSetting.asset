@@ -22,7 +22,7 @@ MonoBehaviour:
     m_RotationOrder: 4
   spawnZoneRadius: 0
   moveOffset: 0
-  rotateSetting: {fileID: 11400000, guid: e2a0f253ecf2d30448723743f8d4323f, type: 2}
+  rotateSetting: {fileID: 11400000, guid: 231ce3de701e5c44ea7238ea1acd1531, type: 2}
   punchSetting: {fileID: 0}
   fadeSetting: {fileID: 0}
   fadeStartDelay: 0

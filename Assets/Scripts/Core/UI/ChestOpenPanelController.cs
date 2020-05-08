@@ -9,7 +9,7 @@ using UnityEngine.UI;
 
 namespace Core.UI
 {
-    public class OpenChestPanelController : PanelController
+    public class ChestOpenPanelController : PanelController
     {
         [SerializeField] private Transform rewardDisplayPosition;
         [SerializeField] private Transform rewardFinishPosition;

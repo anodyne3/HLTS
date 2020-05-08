@@ -12,7 +12,7 @@ namespace Core.GameData
     public class PlayerData : Singleton<PlayerData>
     {
         [HideInInspector] public int[] chestData = {1,2,3};
-        [HideInInspector] public int[] chestPayout = {1,2,3};
+        [HideInInspector] public int[] chestPayout;
         [HideInInspector] public int currentChestRoll;
         [HideInInspector] public int[] lastResult;
         [HideInInspector] public int[] nextResult;
@@ -107,16 +107,16 @@ namespace Core.GameData
         {
             chestPayout = new GenericArrayDto(ProcessDataChanges(sender, args)).newDataArray;
 
-            /*var chestContents = 0;
+            var chestContents = 0;
             
-            var chestDataLength = chestData.Length;
-            for (var i = 0; i < chestDataLength; i++)
+            var chestPayoutLength = chestPayout.Length;
+            for (var i = 0; i < chestPayoutLength; i++)
             {
                 chestContents += chestData[i];
             }
             
-            if (chestContents > 0)
-                ChestManager.OpenChest(new ChestRewardDto(JsonHelper.ToJson(chestData)));*/
+            if (ChestManager != null && chestContents > 0)
+                ChestManager.OpenChest(new ChestRewardDto(chestPayout));
         }
 
         private void OnWalletDataChanged(object sender, ValueChangedEventArgs args)

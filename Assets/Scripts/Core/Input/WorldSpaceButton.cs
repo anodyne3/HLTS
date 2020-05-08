@@ -55,6 +55,9 @@ namespace Core.Input
 
         private void Release()
         {
+            if (GameManager != null && !GameManager.interactionEnabled)
+                isClicked = false;
+            
             if (isClicked && buttonCollider2D == Physics2D.OverlapPoint(InputManager.pointerPosition))
                 onClick.Invoke();
 

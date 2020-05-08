@@ -1,7 +1,7 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Core.GameData;
 using Core.MainSlotMachine;
-using Core.UI;
 using DG.Tweening;
 using Enums;
 using Firebase;
@@ -39,11 +39,12 @@ namespace Core
 
             _firebaseApp.SetEditorDatabaseUrl(Constants.FirebaseDatabaseUrl);
             _firebaseFunc = FirebaseFunctions.DefaultInstance;
-            
+
             _gameEventListeners = new GameObject("FirebaseGameEventListeners");
             _gameEventListeners.transform.SetParent(transform);
             EventManager.NewEventSubscription(_gameEventListeners, Constants.GameEvents.wheelRollEvent, RollReels);
-            EventManager.NewEventSubscription(_gameEventListeners, Constants.GameEvents.userEarnedRewardEvent, ClaimAdReward);
+            EventManager.NewEventSubscription(_gameEventListeners, Constants.GameEvents.userEarnedRewardEvent,
+                ClaimAdReward);
         }
 
         private void OnDestroy()
@@ -66,27 +67,28 @@ namespace Core
                 SignIn();
                 return;
             }
-            
+
             if (_firebaseAuth.CurrentUser == PlayerData.firebaseUser) return;
 
             var signedIn = PlayerData.firebaseUser != _firebaseAuth.CurrentUser &&
                            _firebaseAuth.CurrentUser != null;
-            
+
             if (!signedIn)
             {
                 if (PlayerData.firebaseUser != null)
                 {
                     Debug.Log("Signed out " + PlayerData.firebaseUser.UserId);
                 }
-                
+
                 if (!firebaseReady || !PlayerData.ConsentGiven)
                 {
-                    Debug.Log("Signed out - firebaseReady:" + firebaseReady + "; consentGiven:" + PlayerData.ConsentGiven);
+                    Debug.Log("Signed out - firebaseReady:" + firebaseReady + "; consentGiven:" +
+                              PlayerData.ConsentGiven);
                 }
             }
 
             PlayerData.firebaseUser = _firebaseAuth.CurrentUser;
-            
+
             if (signedIn)
                 StartCoroutine(PlayerData.OnLogin());
         }
@@ -136,12 +138,16 @@ namespace Core
 
         private void DeleteAccount()
         {
-            _firebaseAuth.CurrentUser?.DeleteAsync().ContinueWith(task => {
-                if (task.IsCanceled) {
+            _firebaseAuth.CurrentUser?.DeleteAsync().ContinueWith(task =>
+            {
+                if (task.IsCanceled)
+                {
                     Debug.LogError("DeleteAsync was canceled.");
                     return;
                 }
-                if (task.IsFaulted) {
+
+                if (task.IsFaulted)
+                {
                     Debug.LogError("DeleteAsync encountered an error: " + task.Exception);
                     return;
                 }
@@ -156,7 +162,7 @@ namespace Core
             // PlayerData.StopDatabaseListeners();
             _firebaseAuth.SignOut();
         }
-        
+
         public void LinkAccount()
         {
             //Firebase.Auth.Credential credential = Firebase.Auth.GoogleAuthProvider.GetCredential(googleIdToken, googleAccessToken);
@@ -169,6 +175,7 @@ namespace Core
         #endregion
 
         #region slots
+
         private async void RollReels()
         {
             await ReelRoll();
@@ -185,9 +192,11 @@ namespace Core
                 HandleFunctionError(rollReel);
             }
         }
+
         #endregion
 
         #region Ads
+
         private async void ClaimAdReward()
         {
             await AdRewardClaim();
@@ -204,9 +213,11 @@ namespace Core
                 HandleFunctionError(adRewardClaim);
             }
         }
+
         #endregion
-        
+
         #region Chests
+
         public async void ClaimChest()
         {
             await ChestClaim();
@@ -222,18 +233,21 @@ namespace Core
                 //maybe show message to player regarding some issue
                 HandleFunctionError(chestClaim);
             }
-            
+
             EventManager.chestRefresh.Raise();
         }
-        
+
         public async void OpenChest(ChestType chestType)
         {
-            await ChestOpen(chestType);
+            await ChestOpen(((int) chestType).ToString());
         }
 
-        private async Task ChestOpen(ChestType chestType)
+        private async Task ChestOpen(string chestType)
         {
-            var chestClaim = _firebaseFunc.GetHttpsCallable(Constants.ChestOpenCloudFunction).CallAsync();
+            var data = new Dictionary<string, object> {["text"] = chestType, ["push"] = true};
+
+            var chestClaim = _firebaseFunc.GetHttpsCallable(Constants.ChestOpenCloudFunction)
+                .CallAsync(data);
 
             await chestClaim;
             if (chestClaim.IsFaulted)
@@ -241,12 +255,14 @@ namespace Core
                 //maybe show message to player regarding some issue
                 HandleFunctionError(chestClaim);
             }
-            
+
             EventManager.chestOpen.Raise();
         }
+
         #endregion
 
         #region Upgrades
+
         public async void Upgrade(UpgradeVariable upgradeVariable)
         {
             await DoUpgrade(upgradeVariable);
@@ -263,9 +279,11 @@ namespace Core
                 HandleFunctionError(doUpgrade);
             }
         }
+
         #endregion
-        
+
         #region Common
+
         private static void HandleFunctionError(Task httpsCallableResult)
         {
             if (httpsCallableResult.Exception == null)

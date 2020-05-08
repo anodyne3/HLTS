@@ -9,10 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: c42ceaf2b2484ff199ac52c390b60653, type: 3}
   m_Name: chestOpenStartRotateSetting
-  m_EditorClassIdentifier: Assembly-CSharp:MyScriptableObjects:TweenRotateSetting
+  m_EditorClassIdentifier: 
   rotateEndValue: {x: 0, y: 0, z: -360}
   rotateDuration: 2
   rotateEasing: 10
-  rotateMode: 1
+  rotateMode: 0

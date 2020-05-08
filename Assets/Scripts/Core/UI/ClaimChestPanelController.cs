@@ -18,7 +18,7 @@ namespace Core.UI
             base.Start();
         
             confirmButton.onClick.RemoveAllListeners();
-            confirmButton.onClick.AddListener(ConfirmAction);
+            confirmButton.onClick.AddListener(ClaimChest);
             cancelButton.onClick.RemoveAllListeners();
             cancelButton.onClick.AddListener(ClosePanel);
         }
@@ -36,7 +36,7 @@ namespace Core.UI
                                Constants.ConfirmClaimMessageSuffix;
         }
 
-        private void ConfirmAction()
+        private void ClaimChest()
         {
             punchSetting.DoPunch(confirmButton.transform, false);
             

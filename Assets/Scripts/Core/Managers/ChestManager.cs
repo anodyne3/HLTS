@@ -56,13 +56,13 @@ namespace Core.Managers
         [ContextMenu("OpenChestTest")]
         public void OpenChestTest()
         {
-            chestReward = new ChestRewardDto("[60,12,3]");
-            OpenChest(chestReward);
+            // chestReward = new ChestRewardDto("[60,12,3]");
+            // OpenChest(chestReward);
         }
 
         private void Start()
         {
-            var openChestPanel = PanelManager.GetPanel<OpenChestPanelController>();
+            var openChestPanel = PanelManager.GetPanel<ChestOpenPanelController>();
             openChestPanel.chestRewardPool =
                 ObjectPoolManager.CreateObjectPool<ChestRewardPrefab>(openChestPanel.chestRewardPrefab,
                     openChestPanel.rewardStartPosition);
@@ -71,7 +71,8 @@ namespace Core.Managers
             RefreshChest();
             RefreshFill();
 
-            EventManager.NewEventSubscription(gameObject, Constants.GameEvents.refreshUiEvent, RefreshFill);
+            EventManager.NewEventSubscription(gameObject, Constants.GameEvents.chestRefreshEvent, RefreshFill);
+            EventManager.NewEventSubscription(gameObject, Constants.GameEvents.chestRefreshEvent, RefreshChest);
             //create refreshUpgradesEvent to reload and refresh chests after an upgrade
         }
 
@@ -110,22 +111,13 @@ namespace Core.Managers
 
         public void OpenChest(ChestRewardDto chestRewardDto)
         {
-            PanelManager.OpenSubPanel<OpenChestPanelController>(chestRewardDto);
+            PanelManager.OpenSubPanel<ChestOpenPanelController>(chestRewardDto);
         }
 
         public float GetFillAmount()
         {
-            return (CurrentChest.threshold - (float) RollsToBetterChest) / CurrentChest.threshold;
-            
-            /*switch (CurrentChestType)
-            {
-                default:
-                    return (Constants.LoChestRoll - (float) RollsToBetterChest) / Constants.LoChestRoll;
-                case ChestType.Mi:
-                    return (Constants.MiChestRoll - (float) RollsToBetterChest) / Constants.MiChestRoll;
-                case ChestType.Hi:
-                    return (Constants.HiChestRoll - (float) RollsToBetterChest) / Constants.HiChestRoll;
-            }*/
+            return PlayerData.currentChestRoll / (float) CurrentChest.threshold;
+            // return (CurrentChest.threshold - (float) RollsToBetterChest) / CurrentChest.threshold;
         }
 
         public Sprite GetChestIcon(ChestType chestType)

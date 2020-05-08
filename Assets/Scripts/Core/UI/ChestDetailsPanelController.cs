@@ -28,7 +28,7 @@ namespace Core.UI
             openChestButton.onClick.AddListener(OpenChest);
 
             EventManager.NewEventSubscription(gameObject, Constants.GameEvents.payoutFinishEvent, RefreshPanel);
-            EventManager.NewEventSubscription(gameObject, Constants.GameEvents.chestOpenEvent, RefreshPanel);
+            // EventManager.NewEventSubscription(gameObject, Constants.GameEvents.chestOpenEvent, RefreshPanel);
         }
 
         public override void OpenPanel(params object[] args)
