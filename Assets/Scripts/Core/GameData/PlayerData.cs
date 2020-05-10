@@ -49,7 +49,7 @@ namespace Core.GameData
                 .Child(Constants.PlayerDataSuffix);
             
             _userData.Child(Constants.ChestData).ValueChanged += OnChestDataChanged;
-            _userData.Child(Constants.ChestPayout).ValueChanged += OnChestPayoutChanged;
+            // _userData.Child(Constants.ChestPayout).ValueChanged += OnChestPayoutChanged;
             _userData.Child(Constants.RollData).ValueChanged += OnRollDataChanged;
             _userData.Child(Constants.UpgradeData).ValueChanged += OnUpgradeDataChanged;
             _userData.Child(Constants.WalletData).ValueChanged += OnWalletDataChanged;
@@ -60,7 +60,7 @@ namespace Core.GameData
             if (firebaseUser == null || firebaseUser.UserId == string.Empty || _userData == null) return;
 
             _userData.Child(Constants.ChestData).ValueChanged -= OnChestDataChanged;
-            _userData.Child(Constants.ChestPayout).ValueChanged -= OnChestPayoutChanged;
+            // _userData.Child(Constants.ChestPayout).ValueChanged -= OnChestPayoutChanged;
             _userData.Child(Constants.RollData).ValueChanged -= OnRollDataChanged;
             _userData.Child(Constants.UpgradeData).ValueChanged -= OnUpgradeDataChanged;
             _userData.Child(Constants.WalletData).ValueChanged -= OnWalletDataChanged;
@@ -103,7 +103,7 @@ namespace Core.GameData
             EventManager.chestRefresh.Raise();
         }
 
-        private void OnChestPayoutChanged(object sender, ValueChangedEventArgs args)
+        /*private void OnChestPayoutChanged(object sender, ValueChangedEventArgs args)
         {
             chestPayout = new GenericArrayDto(ProcessDataChanges(sender, args)).newDataArray;
 
@@ -115,9 +115,9 @@ namespace Core.GameData
                 chestContents += chestData[i];
             }
             
-            if (ChestManager != null && chestContents > 0)
-                ChestManager.OpenChest(new ChestRewardDto(chestPayout));
-        }
+            // if (ChestManager != null && chestContents > 0)
+                // ChestManager.OpenChest(new ChestRewardDto(chestPayout));
+        }*/
 
         private void OnWalletDataChanged(object sender, ValueChangedEventArgs args)
         {
@@ -176,7 +176,7 @@ namespace Core.GameData
         private void DeductCoin()
         {
             wallet[0].resourceAmount -= 1;
-            EventManager.refreshUi.Raise();
+            EventManager.refreshCurrency.Raise();
         }
 
         public long GetResourceAmount(ResourceType currencyType)

@@ -1297,6 +1297,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5d9a9f501d0472c8c93cd0313da1ac2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waitingForServerPanel: {fileID: 0}
   openPanelTweenSettings: {fileID: 11400000, guid: 6c19b65bfc8edda4fa476d6d2d490fa4,
     type: 2}
   closePanelTweenSettings: {fileID: 11400000, guid: f8412946b7d289d49bb880d4024147ea,
@@ -1305,6 +1306,7 @@ MonoBehaviour:
     type: 2}
   closePanelFadeSettings: {fileID: 11400000, guid: b6fe3c5f010e76e45ad987622042129a,
     type: 2}
+  dragPinchDisabled: 0
 --- !u!1 &1320899466
 GameObject:
   m_ObjectHideFlags: 0

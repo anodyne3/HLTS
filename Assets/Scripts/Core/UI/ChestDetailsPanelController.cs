@@ -10,6 +10,7 @@ namespace Core.UI
     public class ChestDetailsPanelController : PanelController
     {
         [SerializeField] private TMP_Text chestName;
+        [SerializeField] private TMP_Text chestAmount;
         [SerializeField] private SVGImage chestClosedIcon;
         [SerializeField] private SVGImage chestOpenIcon;
         [SerializeField] private Button openChestButton;
@@ -27,8 +28,8 @@ namespace Core.UI
             openChestButton.onClick.RemoveAllListeners();
             openChestButton.onClick.AddListener(OpenChest);
 
-            EventManager.NewEventSubscription(gameObject, Constants.GameEvents.payoutFinishEvent, RefreshPanel);
-            // EventManager.NewEventSubscription(gameObject, Constants.GameEvents.chestOpenEvent, RefreshPanel);
+            EventManager.NewEventSubscription(gameObject, Constants.GameEvents.refreshUiEvent, RefreshPanel);
+            EventManager.NewEventSubscription(gameObject, Constants.GameEvents.chestOpenEvent, CloseChestIcon);
         }
 
         public override void OpenPanel(params object[] args)
@@ -60,12 +61,19 @@ namespace Core.UI
             sfMaxText.text = Constants.StarFruitIcon + Constants.ChestRewardPrefix + _chestVariable.sfMax;
             
             RefreshPanel();
+            CloseChestIcon();
         }
         
         private void RefreshPanel()
         {
+            var chestCount = PlayerData.GetChestCount(_chestVariable.chestType);
+            RefreshOpenButton(chestCount > 0);
+            chestAmount.text = chestCount.ToString();
+        }
+
+        private void CloseChestIcon()
+        {
             OpenChestIcon(false);
-            RefreshOpenButton(PlayerData.GetChestCount(_chestVariable.chestType) > 0);
         }
         
         public void OpenChestIcon(bool value)

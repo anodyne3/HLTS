@@ -80,7 +80,7 @@ namespace Core.UI
             base.ClosePanel();
 
             EventManager.payoutFinish.Raise();
-            EventManager.refreshUi.Raise();
+            EventManager.refreshCurrency.Raise();
         }
     }
 }

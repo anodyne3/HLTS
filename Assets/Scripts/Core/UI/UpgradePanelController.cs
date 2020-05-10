@@ -60,7 +60,7 @@ namespace Core.UI
         private void RefreshUi()
         {
             RefreshResourceRequirements();
-            RefreshUpgradeButton(ResourceCheck(_upgradeVariable.resourceRequirements));
+            RefreshUpgradeButton(UpgradeManager.HasResourcesForUpgrade(_upgradeVariable.id));
         }
 
         private void RefreshResourceRequirements()

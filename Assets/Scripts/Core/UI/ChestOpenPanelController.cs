@@ -22,6 +22,7 @@ namespace Core.UI
         [HideInInspector] public MyObjectPool<ChestRewardPrefab> chestRewardPool;
         
         private ChestRewardDto _chestRewardDto;
+
         private Sequence _rewardSequence;
         private readonly List<ChestRewardPrefab> _activeRewards = new List<ChestRewardPrefab>();
 
@@ -37,8 +38,6 @@ namespace Core.UI
         {
             base.OpenPanel();
 
-            // _chestRewardDto = new ChestRewardDto(JsonUtility.ToJson(PlayerData.chestPayout));
-            
             _chestRewardDto = (ChestRewardDto) args[0];
 
             PanelManager.GetPanel<ChestDetailsPanelController>().OpenChestIcon(true);
@@ -130,13 +129,6 @@ namespace Core.UI
             ProcessAdReward();
         }
 
-        private void ProcessReward()
-        {
-            var chestRewardsLength = _chestRewardDto.chestRewards.Length;
-            for (var i = 0; i < chestRewardsLength; i++)
-                PlayerData.AddResourceAmount(_chestRewardDto.chestRewards[i]);
-        }
-
         private void ProcessAdReward()
         {
             var doubledReward = new Resource(0, ResourceType.StarFruits); 
@@ -150,7 +142,7 @@ namespace Core.UI
                 PlayerData.AddResourceAmount(_chestRewardDto.chestRewards[i]);
             }
 
-            doubledReward.resourceAmount += doubledReward.resourceAmount; 
+            doubledReward.resourceAmount += doubledReward.resourceAmount;
             
             var activeRewardsCount = _activeRewards.Count;
             for (var i = 0; i < activeRewardsCount; i++)
@@ -161,16 +153,13 @@ namespace Core.UI
 
             AdManager.reward = null;
         }
-        
 
         protected override void ClosePanel()
         {
             base.ClosePanel();
             
-            ProcessReward();
-
-            EventManager.payoutFinish.Raise();
-            EventManager.refreshUi.Raise();
+            EventManager.chestOpen.Raise();
+            EventManager.refreshCurrency.Raise();
         }
     }
 }

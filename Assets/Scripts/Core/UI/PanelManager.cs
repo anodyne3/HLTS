@@ -8,6 +8,8 @@ namespace Core.UI
 {
     public class PanelManager : GlobalClass
     {
+        [SerializeField] private WaitingForServerPanelController waitingForServerPanel;
+        
         public readonly List<PanelController> allPanels = new List<PanelController>();
         public TweenSetting openPanelTweenSettings;
         public TweenSetting closePanelTweenSettings;
@@ -23,8 +25,16 @@ namespace Core.UI
             foreach (Transform panel in transform)
                 if (panel.TryGetComponent(out PanelController panelController))
                     allPanels.Add(panelController);
-            
+
             EventManager.NewEventSubscription(gameObject, Constants.GameEvents.payoutStartEvent, OpenPayoutPanel);
+        }
+        
+        public void WaitingForServerPanel(bool show = true)
+        {
+            if (show)
+                waitingForServerPanel.OpenPanel();
+            else
+                waitingForServerPanel.HidePanel();
         }
 
         private void OpenPayoutPanel()

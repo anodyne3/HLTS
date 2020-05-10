@@ -20,7 +20,7 @@ MonoBehaviour:
   description: When enabled, the machine will continue to insert Banana Coins and
     pull the arm until a payout, or you run out of coins.
   resourceRequirements:
-  - resourceAmount: 300
+  - resourceAmount: 500
     resourceType: 0
-  - resourceAmount: 50
+  - resourceAmount: 25
     resourceType: 1

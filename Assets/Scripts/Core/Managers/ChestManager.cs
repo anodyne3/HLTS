@@ -51,15 +51,6 @@ namespace Core.Managers
             }
         }
 
-        //kill this - will come from firebase
-        [SerializeField] public ChestRewardDto chestReward;
-        [ContextMenu("OpenChestTest")]
-        public void OpenChestTest()
-        {
-            // chestReward = new ChestRewardDto("[60,12,3]");
-            // OpenChest(chestReward);
-        }
-
         private void Start()
         {
             var openChestPanel = PanelManager.GetPanel<ChestOpenPanelController>();
@@ -73,7 +64,6 @@ namespace Core.Managers
 
             EventManager.NewEventSubscription(gameObject, Constants.GameEvents.chestRefreshEvent, RefreshFill);
             EventManager.NewEventSubscription(gameObject, Constants.GameEvents.chestRefreshEvent, RefreshChest);
-            //create refreshUpgradesEvent to reload and refresh chests after an upgrade
         }
 
         private void LoadChests()
@@ -111,6 +101,8 @@ namespace Core.Managers
 
         public void OpenChest(ChestRewardDto chestRewardDto)
         {
+            if (chestRewardDto == null) return;
+            
             PanelManager.OpenSubPanel<ChestOpenPanelController>(chestRewardDto);
         }
 

@@ -20,7 +20,7 @@ MonoBehaviour:
   description: Increase the number of coins which can be inserted, which in turn
     increases the paylines per roll.
   resourceRequirements:
-  - resourceAmount: 500
+  - resourceAmount: 900
     resourceType: 0
-  - resourceAmount: 125
+  - resourceAmount: 100
     resourceType: 0

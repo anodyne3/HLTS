@@ -104,6 +104,7 @@ namespace Core
         private void AutoSlotToggle()
         {
             autoMode = !autoMode;
+            EventManager.refreshUi.Raise();
             
             if (!autoMode) return;
             _autoRoll = StartCoroutine(nameof(AutoMode));

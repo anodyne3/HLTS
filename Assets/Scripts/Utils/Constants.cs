@@ -32,18 +32,20 @@ namespace Utils
         public const string AdRewardClaimCloudFunction = "usersAdRewardClaimOnCall";
         public const string ChestClaimCloudFunction = "usersChestClaimOnCall";
         public const string ChestOpenCloudFunction = "usersChestOpenOnCall";
-        public const string DoUpgradeRepair = "usersDoUpgradeRepairOnCall";
+        public const string DoUpgradeRepair = "usersUpgradeDoOnCall";
         public const string FirebaseDatabaseUrl = "https://he-loves-the-slots.firebaseio.com/";
         public const string PrivacyPolicyUrl = "https://he-loves-the-slots.web.app/PrivacyPolicy.html";
         public const string TermsAndConditionsUrl = "https://he-loves-the-slots.web.app/TermsAndConditions.html";
 
         //chests
-        public const int LoChestRoll = 10;
-        public const int MiChestRoll = 25;
-        public const int HiChestRoll = 100;
         public const string ConfirmClaimMessagePrefix = "You are ";
         public const string ConfirmClaimMessageSuffix = " rolls from a better chest.";
         public const string ChestRewardPrefix = " ~";
+        
+        //upgrades
+        public const int AutoRollUpgradeId = 0;
+        public const int CoinSlotUpgradeId = 1;
+        public const int ChestClaimUpgradeId = 2;
         
         //ui
         public const float CoinsBackgroundBaseWidth = 230.0f;
@@ -132,7 +134,9 @@ namespace Utils
         public string generateCoinEvent = "generateCoinEvent";
         public string payoutFinishEvent = "payoutFinishEvent";
         public string payoutStartEvent = "payoutStartEvent";
+        public string refreshCurrencyEvent = "refreshCurrencyEvent";
         public string refreshUiEvent = "refreshUiEvent";
+        public string upgradeRefreshEvent = "upgradeRefreshEvent";
         public string userEarnedRewardEvent = "userEarnedRewardEvent";
         public string wheelResultEvent = "wheelResultEvent";
         public string wheelRollEvent = "wheelRollEvent";

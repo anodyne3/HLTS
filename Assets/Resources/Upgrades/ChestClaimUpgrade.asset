@@ -12,10 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd53c9eab822475492d97d21e6dd74c8, type: 3}
   m_Name: ChestClaimUpgrade
   m_EditorClassIdentifier: 
-  id: 0
+  id: 2
   currentLevel: 0
-  maxLevel: 0
-  icon: {fileID: 0}
-  upgradeName: 
+  maxLevel: 2
+  icon: {fileID: 3286163911610860551, guid: b73f7e30502e27c47b395e1d7bfd0e67, type: 3}
+  upgradeName: Chest Claim
   description: 
-  resourceRequirements: []
+  resourceRequirements:
+  - resourceAmount: 650
+    resourceType: 0
+  - resourceAmount: 90
+    resourceType: 1

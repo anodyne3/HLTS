@@ -40,7 +40,7 @@ namespace Core.UI
 
             SetupCurrencies();
 
-            EventManager.NewEventSubscription(gameObject, Constants.GameEvents.refreshUiEvent, RefreshAllCurrencies);
+            EventManager.NewEventSubscription(gameObject, Constants.GameEvents.refreshCurrencyEvent, RefreshAllCurrencies);
         }
 
         private void SetupCurrencies()
@@ -79,6 +79,8 @@ namespace Core.UI
             {
                 RefreshCurrency(currencies[i]);
             }
+            
+            EventManager.refreshUi.Raise();
         }
 
         private void RefreshCurrency(Currency currency)

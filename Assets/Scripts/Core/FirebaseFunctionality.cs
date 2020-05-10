@@ -10,6 +10,7 @@ using Firebase.Functions;
 using Firebase.Unity.Editor;
 using MyScriptableObjects;
 using UnityEngine;
+using UnityEngine.UI;
 using Utils;
 
 namespace Core
@@ -199,6 +200,7 @@ namespace Core
 
         private async void ClaimAdReward()
         {
+            PanelManager.WaitingForServerPanel();
             await AdRewardClaim();
         }
 
@@ -212,6 +214,8 @@ namespace Core
                 //maybe show message to player regarding some issue
                 HandleFunctionError(adRewardClaim);
             }
+            
+            PanelManager.WaitingForServerPanel(false);
         }
 
         #endregion
@@ -220,6 +224,7 @@ namespace Core
 
         public async void ClaimChest()
         {
+            PanelManager.WaitingForServerPanel();
             await ChestClaim();
         }
 
@@ -234,11 +239,13 @@ namespace Core
                 HandleFunctionError(chestClaim);
             }
 
+            PanelManager.WaitingForServerPanel(false);
             EventManager.chestRefresh.Raise();
         }
 
         public async void OpenChest(ChestType chestType)
         {
+            PanelManager.WaitingForServerPanel();
             await ChestOpen(((int) chestType).ToString());
         }
 
@@ -249,14 +256,20 @@ namespace Core
             var chestClaim = _firebaseFunc.GetHttpsCallable(Constants.ChestOpenCloudFunction)
                 .CallAsync(data);
 
-            await chestClaim;
+            var response = await chestClaim;
             if (chestClaim.IsFaulted)
             {
                 //maybe show message to player regarding some issue
                 HandleFunctionError(chestClaim);
             }
 
-            EventManager.chestOpen.Raise();
+            if (response.Data == null)
+                //maybe create HandleEmptyResponse - prolly redundant
+                //maybe show message to player regarding some issue
+                return;
+
+            PanelManager.WaitingForServerPanel(false);
+            ChestManager.OpenChest(new ChestRewardDto(response.Data));
         }
 
         #endregion
@@ -265,19 +278,36 @@ namespace Core
 
         public async void Upgrade(UpgradeVariable upgradeVariable)
         {
-            await DoUpgrade(upgradeVariable);
+            PanelManager.WaitingForServerPanel();
+            await DoUpgrade(upgradeVariable.id.ToString());
         }
 
-        private async Task DoUpgrade(UpgradeVariable upgradeVariable)
+        private async Task DoUpgrade(string upgradeId)
         {
-            var doUpgrade = _firebaseFunc.GetHttpsCallable(Constants.DoUpgradeRepair).CallAsync();
+            var data = new Dictionary<string, object> {["text"] = upgradeId, ["push"] = true};
 
-            await doUpgrade;
+            var doUpgrade = _firebaseFunc.GetHttpsCallable(Constants.DoUpgradeRepair).CallAsync(data);
+
+            var response = await doUpgrade;
             if (doUpgrade.IsFaulted)
             {
                 //maybe show message to player regarding some issue
                 HandleFunctionError(doUpgrade);
             }
+
+            if (response.Data == null)
+                //maybe create HandleEmptyResponse - prolly redundant
+                //maybe show message to player regarding some issue
+                return;
+
+            var processedData = (Dictionary<object, object>) response.Data;
+
+            if (!processedData.ContainsKey("id")) return;
+
+            UpgradeManager.upgradeId = (long) processedData["id"];
+
+            PanelManager.WaitingForServerPanel(false);
+            EventManager.upgradeRefresh.Raise();
         }
 
         #endregion

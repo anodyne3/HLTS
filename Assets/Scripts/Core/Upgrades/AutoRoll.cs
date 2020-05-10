@@ -6,8 +6,6 @@ namespace Core.Upgrades
 {
     public class AutoRoll : GlobalAccess
     {
-        [SerializeField] private int autoRollUpgradeId;
-
         [SerializeField] private AutoRollItem betMinObject;
         [SerializeField] private AutoRollItem betLessObject;
         [SerializeField] private AutoRollItem autoRollObject;
@@ -40,72 +38,72 @@ namespace Core.Upgrades
 
         private void ToggleAutoRoll()
         {
-            if (UpgradeManager.GetUpgradeCurrentLevel(autoRollUpgradeId) > 0)
+            if (UpgradeManager.GetUpgradeCurrentLevel(Constants.AutoRollUpgradeId) > 0)
             {
                 EventManager.autoRoll.Raise();
                 autoRollObject.light2d.enabled = SlotMachine.autoMode;
             }
             else
             {
-                PanelManager.OpenPanelSolo<UpgradePanelController>(autoRollUpgradeId);
+                PanelManager.OpenPanelSolo<UpgradePanelController>(Constants.AutoRollUpgradeId);
             }
         }
         
         private void BetMin()
         {
-            if (UpgradeManager.GetUpgradeCurrentLevel(autoRollUpgradeId) > 2)
+            if (UpgradeManager.GetUpgradeCurrentLevel(Constants.AutoRollUpgradeId) > 2)
             {
                 SlotMachine.BetMin();
                 betMinObject.light2d.enabled = SlotMachine.autoMode;
             }
             else
             {
-                PanelManager.OpenPanelSolo<UpgradePanelController>(autoRollUpgradeId);
+                PanelManager.OpenPanelSolo<UpgradePanelController>(Constants.AutoRollUpgradeId);
             }
         }
 
         private void BetLess()
         {
-            if (UpgradeManager.GetUpgradeCurrentLevel(autoRollUpgradeId) > 1)
+            if (UpgradeManager.GetUpgradeCurrentLevel(Constants.AutoRollUpgradeId) > 1)
             {
                 SlotMachine.BetLess();
                 betLessObject.light2d.enabled = SlotMachine.autoMode;
             }
             else
             {
-                PanelManager.OpenPanelSolo<UpgradePanelController>(autoRollUpgradeId);
+                PanelManager.OpenPanelSolo<UpgradePanelController>(Constants.AutoRollUpgradeId);
             }
         }
 
         private void BetMore()
         {
-            if (UpgradeManager.GetUpgradeCurrentLevel(autoRollUpgradeId) > 1)
+            if (UpgradeManager.GetUpgradeCurrentLevel(Constants.AutoRollUpgradeId) > 1)
             {
                 SlotMachine.BetMore();
                 betMoreObject.light2d.enabled = SlotMachine.autoMode;
             }
             else
             {
-                PanelManager.OpenPanelSolo<UpgradePanelController>(autoRollUpgradeId);
+                PanelManager.OpenPanelSolo<UpgradePanelController>(Constants.AutoRollUpgradeId);
             }
         }
 
         private void BetMax()
         {
-            if (UpgradeManager.GetUpgradeCurrentLevel(autoRollUpgradeId) > 2)
+            if (UpgradeManager.GetUpgradeCurrentLevel(Constants.AutoRollUpgradeId) > 2)
             {
                 SlotMachine.BetMax();
                 betMaxObject.light2d.enabled = SlotMachine.autoMode;
             }
             else
             {
-                PanelManager.OpenPanelSolo<UpgradePanelController>(autoRollUpgradeId);
+                PanelManager.OpenPanelSolo<UpgradePanelController>(Constants.AutoRollUpgradeId);
             }
         }
 
         private void RefreshButtonInteraction()
         {
-            var upgradeState = UpgradeManager.GetUpgradeCurrentLevel(autoRollUpgradeId);
+            var upgradeState = UpgradeManager.GetUpgradeCurrentLevel(Constants.AutoRollUpgradeId);
             
             if (upgradeState > 0)
                 autoRollObject.RepairButton();
