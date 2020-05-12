@@ -14,7 +14,7 @@ namespace Core
         [HideInInspector] public FruitType payout;
         [HideInInspector] public bool autoMode;
         [HideInInspector] public int betAmount;
-        [HideInInspector] public int coinSlotMaxBet;
+        public static int CoinSlotMaxBet => UpgradeManager.GetUpgradeCurrentLevel(UpgradeTypes.CoinSlot);
  
         private bool _armIsPulled;
         private bool _coinWasLoaded;
@@ -93,8 +93,8 @@ namespace Core
             if (autoMode)
             {
                 autoMode = false;
-                coinIsLoaded = _coinWasLoaded;
                 StopCoroutine(_autoRoll);
+                coinIsLoaded = _coinWasLoaded;
                 EventManager.refreshUi.Raise();
             }
 
@@ -104,10 +104,16 @@ namespace Core
         private void AutoSlotToggle()
         {
             autoMode = !autoMode;
+
+            if (!autoMode)
+            {
+                StopCoroutine(_autoRoll);
+                coinIsLoaded = _coinWasLoaded;
+            }
+            else
+                _autoRoll = StartCoroutine(nameof(AutoMode));
+                
             EventManager.refreshUi.Raise();
-            
-            if (!autoMode) return;
-            _autoRoll = StartCoroutine(nameof(AutoMode));
         }
 
         private IEnumerator AutoMode()
@@ -176,7 +182,7 @@ namespace Core
 
         public void BetMax()
         {
-            betAmount = UpgradeManager.GetUpgradeCurrentLevel(2);
+            betAmount = UpgradeManager.GetUpgradeCurrentLevel(UpgradeTypes.CoinSlot);
         }
         
         /*

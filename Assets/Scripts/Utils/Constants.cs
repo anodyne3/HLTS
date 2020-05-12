@@ -1,6 +1,7 @@
 using System;
 using Core;
 using Enums;
+using UnityEngine;
 
 namespace Utils
 {
@@ -10,6 +11,10 @@ namespace Utils
         public const string ConsentKey = "ConsentKey";
         public const float WorldSpaceTolerance = 0.01f;
         public const float FloatTolerance = 0.001f;
+        
+        //colours
+        public static Color toggleOn = new Color32(0x39, 0xA8,  0x39, 0xFF);
+        public static Color toggleOff = new Color32(0xAE, 0x17, 0x1B, 0xFF);
         
         //spriteAssets
         public const string BananaCoinIcon = "<sprite=\"BC\" index=0>";
@@ -41,11 +46,6 @@ namespace Utils
         public const string ConfirmClaimMessagePrefix = "You are ";
         public const string ConfirmClaimMessageSuffix = " rolls from a better chest.";
         public const string ChestRewardPrefix = " ~";
-        
-        //upgrades
-        public const int AutoRollUpgradeId = 0;
-        public const int CoinSlotUpgradeId = 1;
-        public const int ChestClaimUpgradeId = 2;
         
         //ui
         public const float CoinsBackgroundBaseWidth = 230.0f;

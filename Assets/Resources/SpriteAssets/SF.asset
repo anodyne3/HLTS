@@ -31,13 +31,13 @@ MonoBehaviour:
       m_Width: 256
       m_Height: 256
       m_HorizontalBearingX: 0
-      m_HorizontalBearingY: 208
+      m_HorizontalBearingY: 204
       m_HorizontalAdvance: 256
     m_GlyphRect:
       m_X: 0
       m_Y: 0
-      m_Width: 256
-      m_Height: 256
+      m_Width: 512
+      m_Height: 512
     m_Scale: 1
     m_AtlasIndex: 0
     sprite: {fileID: 3286163911610860551, guid: 6a0df135ad430634cb0fc784881eefa3,

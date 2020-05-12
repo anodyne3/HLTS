@@ -1,4 +1,5 @@
 using System.Linq;
+using Enums;
 using MyScriptableObjects;
 using UnityEngine;
 using Utils;
@@ -9,7 +10,7 @@ namespace Core.Managers
     {
         private UpgradeVariable[] _upgradeVariables;
 
-        public long upgradeId;
+        [HideInInspector] public long upgradeId;
 
         public override void Awake()
         {
@@ -21,11 +22,11 @@ namespace Core.Managers
         private void LoadUpgrades()
         {
             var loadedList = Resources.LoadAll<UpgradeVariable>(Constants.UpgradesPath).ToList();
-            loadedList.Sort((x, y) => x.id.CompareTo(y.id));
+            loadedList.Sort((x, y) => x.upgradeType.CompareTo(y.upgradeType));
             _upgradeVariables = loadedList.ToArray();
-            RefreshUpgrades();
 
-            EventManager.NewEventSubscription(gameObject, Constants.GameEvents.upgradeRefreshEvent, RefreshUpgrades);
+            EventManager.NewEventSubscription(gameObject, Constants.GameEvents.upgradeRefreshEvent, RefreshUpgrades,
+                true);
         }
 
         private void RefreshUpgrades()
@@ -39,25 +40,25 @@ namespace Core.Managers
             EventManager.refreshUi.Raise();
         }
 
-        public int GetUpgradeCurrentLevel(int id)
+        public int GetUpgradeCurrentLevel(UpgradeTypes id)
         {
-            return _upgradeVariables[id].currentLevel;
+            return _upgradeVariables[(int) id].currentLevel;
         }
 
-        public UpgradeVariable GetUpgradeVariable(int id)
+        public UpgradeVariable GetUpgradeVariable(UpgradeTypes id)
         {
-            return _upgradeVariables[id];
+            return _upgradeVariables[(int) id];
         }
 
-        public bool IsUpgradeMaxed(int id)
+        public bool IsUpgradeMaxed(UpgradeTypes id)
         {
-            return _upgradeVariables[id].currentLevel >= _upgradeVariables[id].maxLevel;
+            return _upgradeVariables[(int) id].currentLevel >= _upgradeVariables[(int) id].maxLevel;
         }
 
-        public bool HasResourcesForUpgrade(int id)
+        public bool HasResourcesForUpgrade(UpgradeTypes id)
         {
-            var requiredResources = _upgradeVariables[id].resourceRequirements; 
-            
+            var requiredResources = _upgradeVariables[(int) id].CurrentResourceRequirements;
+
             var enoughResources = true;
 
             var requiredResourcesLength = requiredResources.Length;

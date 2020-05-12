@@ -11,7 +11,7 @@ ScriptedImporter:
   svgType: 0
   texturedSpriteMeshType: 0
   svgPixelsPerUnit: 100
-  gradientResolution: 64
+  gradientResolution: 2
   alignment: 0
   customPivot: {x: 0, y: 0}
   generatePhysicsShape: 0
@@ -39,17 +39,17 @@ ScriptedImporter:
   spriteData:
     TessellationDetail: 0
     SpriteRect:
-      name: 
+      name: Main_CoinTrayFrontSprite
       originalName: 
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5000778, y: 0.4967347}
       alignment: 0
       border: {x: 0, y: 0, z: 0, w: 0}
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 0
-        height: 0
+        width: 514
+        height: 49
       spriteID: 0473fe5a4d545be4094d212b3978120a
       internalID: 0
     PhysicsOutlines: []

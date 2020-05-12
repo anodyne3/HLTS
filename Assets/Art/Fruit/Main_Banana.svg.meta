@@ -11,7 +11,7 @@ ScriptedImporter:
   svgType: 0
   texturedSpriteMeshType: 0
   svgPixelsPerUnit: 100
-  gradientResolution: 64
+  gradientResolution: 2
   alignment: 0
   customPivot: {x: 0, y: 0}
   generatePhysicsShape: 0
@@ -39,17 +39,17 @@ ScriptedImporter:
   spriteData:
     TessellationDetail: 0
     SpriteRect:
-      name: Main_Banana
+      name: Main_BananaSprite
       originalName: 
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0.50251067, y: 0.5000545}
       alignment: 0
       border: {x: 0, y: 0, z: 0, w: 0}
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 256
-        height: 228
+        width: 94
+        height: 84
       spriteID: 49245199f890ca340aa829a65da9486f
       internalID: 0
     PhysicsOutlines: []

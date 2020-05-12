@@ -12,15 +12,43 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd53c9eab822475492d97d21e6dd74c8, type: 3}
   m_Name: CoinSlotUpgrade
   m_EditorClassIdentifier: 
-  id: 1
+  upgradeType: 1
   currentLevel: 0
   maxLevel: 4
-  icon: {fileID: 3286163911610860551, guid: 51e2e1809e837df4ca7b2928a8a699b7, type: 3}
-  upgradeName: Coin Slot
-  description: Increase the number of coins which can be inserted, which in turn
-    increases the paylines per roll.
-  resourceRequirements:
-  - resourceAmount: 900
-    resourceType: 0
-  - resourceAmount: 100
-    resourceType: 0
+  levelDetails:
+  - icon: {fileID: 3286163911610860551, guid: 33fe1f05ece7eb7468e559516536b7ae, type: 3}
+    upgradeName: 2 Payout Lines
+    description: Increase the number of coins which can be inserted, which in turn
+      increases the paylines per roll.
+    resourceRequirements:
+    - resourceAmount: 900
+      resourceType: 0
+    - resourceAmount: 100
+      resourceType: 1
+  - icon: {fileID: 3286163911610860551, guid: a965311d54d6b3b4384ee3753dc05091, type: 3}
+    upgradeName: 3 Payout Lines
+    description: Increase the number of coins which can be inserted, which in turn
+      increases the paylines per roll.
+    resourceRequirements:
+    - resourceAmount: 1800
+      resourceType: 0
+    - resourceAmount: 300
+      resourceType: 1
+  - icon: {fileID: 3286163911610860551, guid: 64eb71b98a4de9846898f8f150a6b55b, type: 3}
+    upgradeName: 4 Payout Lines
+    description: Increase the number of coins which can be inserted, which in turn
+      increases the paylines per roll.
+    resourceRequirements:
+    - resourceAmount: 2700
+      resourceType: 0
+    - resourceAmount: 900
+      resourceType: 1
+  - icon: {fileID: 3286163911610860551, guid: 3e0bb88b9373eed418473d691c93e747, type: 3}
+    upgradeName: 5 Payout Lines
+    description: Increase the number of coins which can be inserted, which in turn
+      increases the paylines per roll.
+    resourceRequirements:
+    - resourceAmount: 3600
+      resourceType: 0
+    - resourceAmount: 2700
+      resourceType: 1

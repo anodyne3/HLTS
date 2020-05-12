@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Core.UI.Prefabs;
+using Enums;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -10,10 +11,9 @@ namespace Core.UI
 {
     public class ChestInventoryPanelController : PanelController
     {
-        [Header("Current Chest Progress")] [SerializeField]
-        private Button claimCurrentChestButton;
-        [SerializeField]private Button upgradeChestClaimButton;
-        [SerializeField] private TMP_Text upgradeChestClaimButtonText;
+        [Header("Current Chest Progress")] 
+        [SerializeField] private Button claimCurrentChestButton;
+        [SerializeField] private Button upgradeChestClaimButton;
         [SerializeField] private Image currentChestIcon;
         [SerializeField] private Slider currentChestProgressSlider;
         [SerializeField] private Image currentChestProgressFillImage;
@@ -38,8 +38,9 @@ namespace Core.UI
 
             ChestsInit();
 
-            EventManager.NewEventSubscription(gameObject, Constants.GameEvents.chestOpenEvent, PanelRefresh);
+            EventManager.NewEventSubscription(gameObject, Constants.GameEvents.refreshUiEvent, FillRefresh);
             EventManager.NewEventSubscription(gameObject, Constants.GameEvents.chestRefreshEvent, ChestsRefresh);
+            EventManager.NewEventSubscription(gameObject, Constants.GameEvents.chestOpenEvent, PanelRefresh);
 
             ChestsRefresh();
         }
@@ -64,22 +65,25 @@ namespace Core.UI
 
         private void PanelRefresh()
         {
-            RefreshClaimChestButton(PlayerData.currentChestRoll >= ChestManager.chestTypes[0].threshold);
-            if (UpgradeManager.IsUpgradeMaxed(Constants.ChestClaimUpgradeId))
+            if (UpgradeManager.IsUpgradeMaxed(UpgradeTypes.ChestClaim))
                 upgradeChestClaimButton.gameObject.SetActive(false);
-            else
-                RefreshUpgradeChestClaimButton(UpgradeManager.HasResourcesForUpgrade(Constants.ChestClaimUpgradeId));
 
             currentChestIcon.sprite = ChestManager.CurrentChest.chestIcon;
-            currentChestProgressSlider.value = ChestManager.GetFillAmount();
             currentChestProgressFillImage.color = ChestManager.CurrentChest.chestColor;
-            currentChestProgressText.text = PlayerData.currentChestRoll + " / " + ChestManager.CurrentChest.threshold;
 
+            FillRefresh();
             ChestsRefresh();
+        }
+
+        private void FillRefresh()
+        {
+            currentChestProgressText.text = PlayerData.currentChestRoll + " / " + ChestManager.CurrentChest.threshold;
+            currentChestProgressSlider.value = ChestManager.GetFillAmount();
         }
 
         private void ChestsRefresh()
         {
+            RefreshClaimChestButton();
             var chestsCount = _chests.Count;
             for (var i = 0; i < chestsCount; i++)
             {
@@ -87,8 +91,9 @@ namespace Core.UI
             }
         }
 
-        private void RefreshClaimChestButton(bool value)
+        private void RefreshClaimChestButton()
         {
+            var value = PlayerData.currentChestRoll >= ChestManager.chestTypes[0].threshold;
             claimCurrentChestButton.interactable = value;
             claimCurrentChestButtonText.color = value ? Color.white : Color.grey;
             currentChestIcon.color = value ? Color.white : Color.grey;
@@ -98,15 +103,10 @@ namespace Core.UI
         {
             PanelManager.OpenSubPanel<ClaimChestPanelController>();
         }
-        
-        private void RefreshUpgradeChestClaimButton(bool value)
-        {
-            upgradeChestClaimButtonText.color = value ? Color.white : Color.grey;
-        }
-        
+
         private static void UpgradeChestClaim()
         {
-            PanelManager.OpenSubPanel<UpgradePanelController>(Constants.ChestClaimUpgradeId);
+            PanelManager.OpenSubPanel<UpgradePanelController>((int)UpgradeTypes.ChestClaim);
         }
     }
 }

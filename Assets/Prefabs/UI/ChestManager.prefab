@@ -1,5 +1,85 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &6671447346657814499
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7600861224324181347}
+  - component: {fileID: 6878943978223268584}
+  - component: {fileID: 3420700682121800860}
+  - component: {fileID: 1978357961509933041}
+  m_Layer: 5
+  m_Name: UpgradeIndicator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &7600861224324181347
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6671447346657814499}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7798704293247501164}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 1, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 1, y: 1}
+--- !u!222 &6878943978223268584
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6671447346657814499}
+  m_CullTransparentMesh: 0
+--- !u!114 &3420700682121800860
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6671447346657814499}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef8b96895a0ec4ba685178a052544251, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 3286163911610860551, guid: 75f3fa12467bce540a9b241bb6c85e83,
+    type: 3}
+  m_PreserveAspect: 1
+--- !u!114 &1978357961509933041
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6671447346657814499}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0789a0dd871040c697e3bb0ad721e91e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  upgradeType: 2
 --- !u!1 &7798704293103431981
 GameObject:
   m_ObjectHideFlags: 0
@@ -106,6 +186,7 @@ RectTransform:
   - {fileID: 7798704293103431986}
   - {fileID: 7798704293394752126}
   - {fileID: 7798704293317968579}
+  - {fileID: 7600861224324181347}
   m_Father: {fileID: 7798704294060395388}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -399,9 +480,6 @@ MonoBehaviour:
   outlineImage: {fileID: 7798704293247501170}
   chestProgressFillImage: {fileID: 7798704293394752127}
   tweenPunchSetting: {fileID: 11400000, guid: e381d409ad0027643b6336687163c3ef, type: 2}
-  chestRewardPrefab: {fileID: 9139948433816432333, guid: a13618aa66c75d14992f344bd68d8af6,
-    type: 3}
-  rewardStartPosition: {fileID: 8386426672745458312}
   chestTypes: []
 --- !u!222 &1486036065
 CanvasRenderer:

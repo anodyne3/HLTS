@@ -11,7 +11,7 @@ ScriptedImporter:
   svgType: 0
   texturedSpriteMeshType: 0
   svgPixelsPerUnit: 100
-  gradientResolution: 64
+  gradientResolution: 8
   alignment: 0
   customPivot: {x: 0, y: 0}
   generatePhysicsShape: 0
@@ -39,17 +39,17 @@ ScriptedImporter:
   spriteData:
     TessellationDetail: 0
     SpriteRect:
-      name: 
+      name: Lever_LeverShadingSprite
       originalName: 
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.49722636, y: 0.49954423}
       alignment: 0
       border: {x: 0, y: 0, z: 0, w: 0}
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 0
-        height: 0
+        width: 53
+        height: 282
       spriteID: 0407c6c0be315404db9743cddbb185ed
       internalID: 0
     PhysicsOutlines: []

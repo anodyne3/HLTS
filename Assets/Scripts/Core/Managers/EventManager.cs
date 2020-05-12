@@ -10,7 +10,7 @@ namespace Core.Managers
     {
         [HideInInspector] public GameEvent coinInsert;
         [HideInInspector] public GameEvent testEvent;
-        
+
         [HideInInspector] public GameEvent armPull;
         [HideInInspector] public GameEvent autoRoll;
         [HideInInspector] public GameEvent chestOpen;
@@ -30,12 +30,12 @@ namespace Core.Managers
         [HideInInspector] public GameEvent wheelRoll;
 
         [SerializeField] public List<GameEventListener> gameEventListeners = new List<GameEventListener>();
-        
+
         private void OnEnable()
         {
             coinInsert = Resources.Load<GameEvent>("Events/" + Constants.GameEvents.coinInsertEvent);
             testEvent = Resources.Load<GameEvent>("Events/" + Constants.GameEvents.testEvent);
-            
+
             armPull = Resources.Load<GameEvent>("Events/" + Constants.GameEvents.armPullEvent);
             autoRoll = Resources.Load<GameEvent>("Events/" + Constants.GameEvents.autoRollEvent);
             chestOpen = Resources.Load<GameEvent>("Events/" + Constants.GameEvents.chestOpenEvent);
@@ -54,8 +54,9 @@ namespace Core.Managers
             wheelResult = Resources.Load<GameEvent>("Events/" + Constants.GameEvents.wheelResultEvent);
             wheelRoll = Resources.Load<GameEvent>("Events/" + Constants.GameEvents.wheelRollEvent);
         }
-        
-        public void NewEventSubscription(GameObject parentObject, string gameEventName, UnityAction unityAction)
+
+        public void NewEventSubscription(GameObject parentObject, string gameEventName, UnityAction unityAction,
+            bool triggerOnSubscription = false)
         {
             var newGameEvent = Resources.Load<GameEvent>("Events/" + gameEventName);
             var gameEventListener = parentObject.AddComponent<GameEventListener>();
@@ -63,8 +64,9 @@ namespace Core.Managers
             gameEventListener.@event.RegisterListener(gameEventListener);
             gameEventListener.response.AddListener(unityAction);
             gameEventListeners.Add(gameEventListener);
-            
-            // return gameEventListener;
+
+            if (triggerOnSubscription)
+                unityAction.Invoke();
         }
     }
 }

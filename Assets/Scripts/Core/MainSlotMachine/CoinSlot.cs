@@ -1,4 +1,7 @@
 using System.Collections;
+using Core.Input;
+using Core.UI;
+using Enums;
 using UnityEngine;
 using Utils;
 
@@ -6,6 +9,7 @@ namespace Core.MainSlotMachine
 {
     public class CoinSlot : GlobalAccess
     {
+        [SerializeField] private WorldSpaceButton upgradeButton;
         [SerializeField] private Transform insertedCoinStartPosition;
         [SerializeField] private Transform insertedCoinFinishPosition;
         public AnimationCurve curve = AnimationCurve.Linear(0.0f, 0.0f, 1.0f, 1.0f);
@@ -14,12 +18,21 @@ namespace Core.MainSlotMachine
         private bool _loadingCoin;
         private float _coinLoadSpeed;
         
-        //temp for testing
         private void Start()
         {
+            upgradeButton.OnClick.RemoveAllListeners();
+            upgradeButton.OnClick.AddListener(CoinSlotClicked);
+            
             EventManager.NewEventSubscription(gameObject, Constants.GameEvents.coinInsertEvent, LoadCoin);
         }
 
+        private void CoinSlotClicked()
+        {
+            if (UpgradeManager.IsUpgradeMaxed(UpgradeTypes.CoinSlot)) return;
+            
+            PanelManager.OpenPanelSolo<UpgradePanelController>(UpgradeTypes.CoinSlot);
+        }
+        
         private void OnTriggerStay2D(Collider2D other)
         {
             if (_loadingCoin || SlotMachine.coinIsLoaded) return;

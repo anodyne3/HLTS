@@ -62,7 +62,7 @@ namespace Core.Managers
             RefreshChest();
             RefreshFill();
 
-            EventManager.NewEventSubscription(gameObject, Constants.GameEvents.chestRefreshEvent, RefreshFill);
+            EventManager.NewEventSubscription(gameObject, Constants.GameEvents.refreshUiEvent, RefreshFill);
             EventManager.NewEventSubscription(gameObject, Constants.GameEvents.chestRefreshEvent, RefreshChest);
         }
 
@@ -122,6 +122,11 @@ namespace Core.Managers
             }
 
             return null;
+        }
+
+        public void ChestAdded(ChestType id)
+        {
+            
         }
     }
 }

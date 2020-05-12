@@ -232,7 +232,7 @@ namespace Core
         {
             var chestClaim = _firebaseFunc.GetHttpsCallable(Constants.ChestClaimCloudFunction).CallAsync();
 
-            await chestClaim;
+            var response = await chestClaim;
             if (chestClaim.IsFaulted)
             {
                 //maybe show message to player regarding some issue
@@ -240,6 +240,13 @@ namespace Core
             }
 
             PanelManager.WaitingForServerPanel(false);
+            //do i need this? wont it refresh anyway cause of playerData chestData listener?
+            //maybe return the chest id of the claimed chest from function, and then do anim of chest that was claimed
+
+            var chestId = ProcessBasicResponseData(response.Data);
+            
+            ChestManager.ChestAdded((ChestType)chestId);
+            
             EventManager.chestRefresh.Raise();
         }
 
@@ -279,7 +286,7 @@ namespace Core
         public async void Upgrade(UpgradeVariable upgradeVariable)
         {
             PanelManager.WaitingForServerPanel();
-            await DoUpgrade(upgradeVariable.id.ToString());
+            await DoUpgrade(((int) upgradeVariable.upgradeType).ToString());
         }
 
         private async Task DoUpgrade(string upgradeId)
@@ -300,11 +307,11 @@ namespace Core
                 //maybe show message to player regarding some issue
                 return;
 
-            var processedData = (Dictionary<object, object>) response.Data;
+            /*var processedData = (Dictionary<object, object>) response.Data;
 
-            if (!processedData.ContainsKey("id")) return;
+            if (!processedData.ContainsKey("id")) return;*/
 
-            UpgradeManager.upgradeId = (long) processedData["id"];
+            UpgradeManager.upgradeId = ProcessBasicResponseData(response.Data);
 
             PanelManager.WaitingForServerPanel(false);
             EventManager.upgradeRefresh.Raise();
@@ -330,6 +337,15 @@ namespace Core
                 var message = e.Message;
                 Debug.LogError(code + message);
             }
+        }
+
+        private long ProcessBasicResponseData(object data)
+        {
+            var processedData = (Dictionary<object, object>) data;
+
+            if (!processedData.ContainsKey("id")) return -1;
+
+            return (long) processedData["id"];
         }
 
         #endregion

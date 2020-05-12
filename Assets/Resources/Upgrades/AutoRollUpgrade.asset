@@ -12,15 +12,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd53c9eab822475492d97d21e6dd74c8, type: 3}
   m_Name: AutoRollUpgrade
   m_EditorClassIdentifier: 
-  id: 0
-  currentLevel: 0
+  upgradeType: 0
+  currentLevel: 1
   maxLevel: 3
-  icon: {fileID: 3286163911610860551, guid: 1475fa4dc77c96941af6065c7bb5ba55, type: 3}
-  upgradeName: Auto Roll
-  description: When enabled, the machine will continue to insert Banana Coins and
-    pull the arm until a payout, or you run out of coins.
-  resourceRequirements:
-  - resourceAmount: 500
-    resourceType: 0
-  - resourceAmount: 25
-    resourceType: 1
+  levelDetails:
+  - icon: {fileID: 3286163911610860551, guid: bd2ce159bc1015b4193a0e0a2990fb46, type: 3}
+    upgradeName: Auto Roll Button
+    description: When enabled, the machine will continue to consume Banana Coins
+      and roll the wheels until a payout, or you run out of Banana Coins.
+    resourceRequirements:
+    - resourceAmount: 500
+      resourceType: 0
+    - resourceAmount: 25
+      resourceType: 1
+  - icon: {fileID: 3286163911610860551, guid: 4b3bb8b391dfd854abb9c87c0c54ad31, type: 3}
+    upgradeName: Less & More Buttons
+    description: Use these to decrease or increase the bet of every Auto Roll.\n\n(Requires
+      Coin Slot Upgrade)
+    resourceRequirements:
+    - resourceAmount: 800
+      resourceType: 0
+    - resourceAmount: 75
+      resourceType: 1
+  - icon: {fileID: 3286163911610860551, guid: bd28e4fd9a00b1e46bd7b03ab7025617, type: 3}
+    upgradeName: Min & Max Buttons
+    description: Use these to quickly set the bet of every Auto Roll to the Minimum
+      or Maximum. (Requires Coin Slot Upgrade)
+    resourceRequirements:
+    - resourceAmount: 1500
+      resourceType: 0
+    - resourceAmount: 175
+      resourceType: 1

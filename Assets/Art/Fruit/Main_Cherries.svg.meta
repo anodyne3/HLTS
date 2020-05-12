@@ -11,7 +11,7 @@ ScriptedImporter:
   svgType: 0
   texturedSpriteMeshType: 0
   svgPixelsPerUnit: 100
-  gradientResolution: 64
+  gradientResolution: 2
   alignment: 0
   customPivot: {x: 0, y: 0}
   generatePhysicsShape: 0
@@ -39,17 +39,17 @@ ScriptedImporter:
   spriteData:
     TessellationDetail: 0
     SpriteRect:
-      name: 
+      name: Main_CherriesSprite
       originalName: 
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.49946338, y: 0.5010451}
       alignment: 0
       border: {x: 0, y: 0, z: 0, w: 0}
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 0
-        height: 0
+        width: 101
+        height: 82
       spriteID: f8d8dac8eeeb71f4997b8116fb69e8eb
       internalID: 0
     PhysicsOutlines: []

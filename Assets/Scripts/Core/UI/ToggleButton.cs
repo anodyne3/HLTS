@@ -1,11 +1,11 @@
 using System;
-using System.Threading.Tasks;
 using DG.Tweening;
 using MyScriptableObjects;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
+using Utils;
 
 namespace Core.UI
 {
@@ -26,7 +26,7 @@ namespace Core.UI
             
             public void RefreshToggle(bool value, bool start = false)
             {
-                image.color = value ? Color.red : Color.green;
+                image.color = value ? Constants.toggleOff : Constants.toggleOn;
                 text.text = value ? "off" : "on";
                 
                 if (start) return;

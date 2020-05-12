@@ -16,7 +16,7 @@ namespace Core.GameData
         [HideInInspector] public int currentChestRoll;
         [HideInInspector] public int[] lastResult;
         [HideInInspector] public int[] nextResult;
-        [HideInInspector] public int[] upgradeData;// = {1,0};
+        [HideInInspector] public int[] upgradeData;
 
         public Resource[] wallet =
         {
@@ -94,7 +94,7 @@ namespace Core.GameData
             lastResult = snapReturnDto.lr.ToArray();
             nextResult = snapReturnDto.nr.ToArray();
             currentChestRoll = snapReturnDto.cr;
-            EventManager.chestRefresh.Raise();
+            EventManager.refreshUi.Raise();
         }
 
         private void OnChestDataChanged(object sender, ValueChangedEventArgs args)

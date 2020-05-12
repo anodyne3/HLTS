@@ -11,7 +11,7 @@ ScriptedImporter:
   svgType: 0
   texturedSpriteMeshType: 0
   svgPixelsPerUnit: 100
-  gradientResolution: 64
+  gradientResolution: 32
   alignment: 0
   customPivot: {x: 0, y: 0}
   generatePhysicsShape: 0
@@ -39,17 +39,17 @@ ScriptedImporter:
   spriteData:
     TessellationDetail: 0
     SpriteRect:
-      name: 
+      name: Main_ReelFaceSprite
       originalName: 
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5031083, y: 0.5007231}
       alignment: 0
       border: {x: 0, y: 0, z: 0, w: 0}
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 0
-        height: 0
+        width: 60
+        height: 177
       spriteID: 4f45978e77faeff43a59252bd3d733e9
       internalID: 0
     PhysicsOutlines: []

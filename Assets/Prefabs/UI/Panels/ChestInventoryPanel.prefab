@@ -641,7 +641,7 @@ MonoBehaviour:
   panelTransform: {fileID: 715365507786584545}
   claimCurrentChestButton: {fileID: 4045130839724309527}
   upgradeChestClaimButton: {fileID: 2443986025882348742}
-  upgradeChestClaimButtonText: {fileID: 4353511775765795658}
+  upgradeChestClaimButtonText: {fileID: 0}
   currentChestIcon: {fileID: 1715393881183362067}
   currentChestProgressSlider: {fileID: 2152353290432737711}
   currentChestProgressFillImage: {fileID: 3935497919642832240}
@@ -1823,7 +1823,7 @@ PrefabInstance:
     - target: {fileID: 3090026277581636290, guid: 0cce7e47e49ccc040a41abd03b60cd6b,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 16
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 3090026277581636290, guid: 0cce7e47e49ccc040a41abd03b60cd6b,
         type: 3}
@@ -1865,6 +1865,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5490039591513714336, guid: 0cce7e47e49ccc040a41abd03b60cd6b,
+        type: 3}
+      propertyPath: m_Transition
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0cce7e47e49ccc040a41abd03b60cd6b, type: 3}
 --- !u!224 &5132902065187405988 stripped
@@ -1883,17 +1888,5 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &4353511775765795658 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5886352426893381932, guid: 0cce7e47e49ccc040a41abd03b60cd6b,
-    type: 3}
-  m_PrefabInstance: {fileID: 7915711573916451430}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

@@ -564,14 +564,12 @@ MonoBehaviour:
     text: {fileID: 1116707973828072251}
   closeButtonPunchSetting: {fileID: 0}
   panelTransform: {fileID: 1116707974289630451}
-  headerText: {fileID: 1116707973828072251}
   upgradeButton: {fileID: 7445924390647163951}
   upgradeButtonText: {fileID: 7445924389432261436}
   cancelButton: {fileID: 794651592892757737}
   targetIcon: {fileID: 7336373691680047669}
   upgradeNameText: {fileID: 1953642523782813702}
   descriptionText: {fileID: 7766198372848027445}
-  levelText: {fileID: 776020461626557470}
   resourceRequirementPrefab: {fileID: 4455811341067109481, guid: c5c152f49d2799c4ca81e3a52e2352c1,
     type: 3}
   resourceRequirementTransform: {fileID: 520130259848365365}
@@ -1074,7 +1072,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &346656892124737318
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1308,12 +1306,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 2100000, guid: 8d66e65c66e29504199ed664979682cd, type: 2}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.2244, g: 0.66, b: 0.2244, a: 1}
   m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 3286163911610860551, guid: 7e544c2947f290644a1679a2dfec1019,
+  m_Sprite: {fileID: 3286163911610860551, guid: 0df748bddb9529143af56752aecb8fa1,
     type: 3}
   m_PreserveAspect: 1
 --- !u!1 &3069362764591850116
@@ -1955,12 +1953,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 2100000, guid: 8d66e65c66e29504199ed664979682cd, type: 2}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Color: {r: 0.681, g: 0.091934994, b: 0.10703919, a: 1}
   m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 3286163911610860551, guid: 7e544c2947f290644a1679a2dfec1019,
+  m_Sprite: {fileID: 3286163911610860551, guid: 0df748bddb9529143af56752aecb8fa1,
     type: 3}
   m_PreserveAspect: 1
 --- !u!1 &7146438955621846897
@@ -2223,9 +2221,9 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 0, g: 1, b: 0, a: 1}
-    m_HighlightedColor: {r: 0.6039216, g: 0.57254905, b: 0.57254905, a: 1}
-    m_PressedColor: {r: 0.6037736, g: 0.5724457, b: 0.5724457, a: 1}
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 1, g: 1, b: 1, a: 1}
+    m_PressedColor: {r: 1, g: 1, b: 1, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.33, g: 0.33, b: 0.33, a: 1}
     m_ColorMultiplier: 1
