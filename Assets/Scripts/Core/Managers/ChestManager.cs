@@ -17,7 +17,7 @@ namespace Core.Managers
         [SerializeField] private Image outlineImage;
         [SerializeField] private Image chestProgressFillImage;
         [SerializeField] private TweenPunchSetting tweenPunchSetting;
-        
+
         public ChestVariable[] chestTypes;
 
         public ChestVariable CurrentChest
@@ -33,8 +33,16 @@ namespace Core.Managers
                 return null;
             }
         }
-
-        public int RollsToBetterChest => CurrentChest.threshold - PlayerData.currentChestRoll;
+        
+        public int RollsToBetterChest
+        {
+            get {
+                if(PlayerData.currentChestRoll == CurrentChest.threshold)
+                    return GetChestVariable(CurrentChest.rank + 1).threshold - PlayerData.currentChestRoll;
+                
+                return CurrentChest.threshold - PlayerData.currentChestRoll;
+            }
+        }
 
         private ChestType CurrentChestType
         {
@@ -43,8 +51,10 @@ namespace Core.Managers
                 var chestTypesLength = chestTypes.Length;
                 for (var i = 0; i < chestTypesLength; i++)
                 {
-                    if (PlayerData.currentChestRoll <= chestTypes[i].threshold)
-                        return chestTypes[i].chestType;
+                    if (PlayerData.currentChestRoll > chestTypes[i].threshold)
+                        continue;
+
+                    return chestTypes[i].chestType;
                 }
 
                 return chestTypes[0].chestType;
@@ -57,7 +67,7 @@ namespace Core.Managers
             openChestPanel.chestRewardPool =
                 ObjectPoolManager.CreateObjectPool<ChestRewardPrefab>(openChestPanel.chestRewardPrefab,
                     openChestPanel.rewardStartPosition);
-            
+
             LoadChests();
             RefreshChest();
             RefreshFill();
@@ -81,35 +91,43 @@ namespace Core.Managers
 
         private void RefreshFill()
         {
-            chestProgressFillImage.DOFillAmount(GetFillAmount(), tweenPunchSetting.punchDuration);
+            chestProgressFillImage.DOFillAmount(GetFillAmount(CurrentChest.rank), tweenPunchSetting.punchDuration);
 
             var tweenPause = DOTween.Sequence();
+            
+            if (PlayerData.currentChestRoll != CurrentChest.threshold) return;
+                    
             tweenPause.InsertCallback(0.5f, () =>
             {
-                if (PlayerData.currentChestRoll == CurrentChest.threshold)
-                    UpgradeChest();
+                UpgradeChest();
+                chestProgressFillImage.DOFillAmount(GetFillAmount(CurrentChest.rank + 1), tweenPunchSetting.punchDuration);
             });
+        }
+
+        [ContextMenu("UpgradePunchTest")]
+        public void UpgradePunchTest()
+        {
+            tweenPunchSetting.DoPunch(transform);
         }
 
         private void UpgradeChest()
         {
-            chestIcon.sprite = chestTypes[CurrentChest.rank + 1].chestIcon;
-            outlineImage.color = chestTypes[CurrentChest.rank + 1].chestColor;
+            chestIcon.sprite = GetChestVariable(CurrentChest.rank + 1).chestIcon;
+            outlineImage.color = GetChestVariable(CurrentChest.rank + 1).chestColor;
             tweenPunchSetting.DoPunch(transform);
-            GetFillAmount();
+            
         }
 
-        public void OpenChest(ChestRewardDto chestRewardDto)
+        public static void OpenChest(ChestRewardDto chestRewardDto)
         {
             if (chestRewardDto == null) return;
-            
+
             PanelManager.OpenSubPanel<ChestOpenPanelController>(chestRewardDto);
         }
 
-        public float GetFillAmount()
+        public float GetFillAmount(int rank)
         {
-            return PlayerData.currentChestRoll / (float) CurrentChest.threshold;
-            // return (CurrentChest.threshold - (float) RollsToBetterChest) / CurrentChest.threshold;
+            return PlayerData.currentChestRoll / (float) GetChestVariable(rank).threshold;
         }
 
         public Sprite GetChestIcon(ChestType chestType)
@@ -124,9 +142,18 @@ namespace Core.Managers
             return null;
         }
 
+        public ChestVariable GetChestVariable(int rank)
+        {
+            if (rank < 0)
+                return chestTypes[0];
+            
+            return rank < chestTypes.Length ? chestTypes[rank] : CurrentChest;
+        }
+
         public void ChestAdded(ChestType id)
         {
-            
+            //do anim with the icon of type in param
+            EventManager.chestRefresh.Raise();
         }
     }
 }

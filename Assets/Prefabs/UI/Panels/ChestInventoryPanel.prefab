@@ -641,12 +641,12 @@ MonoBehaviour:
   panelTransform: {fileID: 715365507786584545}
   claimCurrentChestButton: {fileID: 4045130839724309527}
   upgradeChestClaimButton: {fileID: 2443986025882348742}
-  upgradeChestClaimButtonText: {fileID: 0}
   currentChestIcon: {fileID: 1715393881183362067}
   currentChestProgressSlider: {fileID: 2152353290432737711}
   currentChestProgressFillImage: {fileID: 3935497919642832240}
   currentChestProgressText: {fileID: 8383852020607469496}
   claimCurrentChestButtonText: {fileID: 6513064858790989886}
+  tweenPunchSetting: {fileID: 11400000, guid: e381d409ad0027643b6336687163c3ef, type: 2}
   chestInventoryContentHolder: {fileID: 3850033637109785031}
   inventoryChestPrefab: {fileID: 1414226349846225592, guid: c1063fdebd8353a4e80227179ea27c77,
     type: 3}

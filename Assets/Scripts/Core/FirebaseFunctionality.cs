@@ -2,6 +2,8 @@
 using System.Threading.Tasks;
 using Core.GameData;
 using Core.MainSlotMachine;
+using Core.Managers;
+using Core.UI;
 using DG.Tweening;
 using Enums;
 using Firebase;
@@ -222,15 +224,17 @@ namespace Core
 
         #region Chests
 
-        public async void ClaimChest()
+        public async void ClaimChest(ChestType claimedChest)
         {
             PanelManager.WaitingForServerPanel();
-            await ChestClaim();
+            await ChestClaim(claimedChest);
         }
 
-        private async Task ChestClaim()
+        private async Task ChestClaim(ChestType claimedChest)
         {
-            var chestClaim = _firebaseFunc.GetHttpsCallable(Constants.ChestClaimCloudFunction).CallAsync();
+            var data = new Dictionary<object, object> {["text"] = claimedChest.ToString(), ["push"] = true};
+
+            var chestClaim = _firebaseFunc.GetHttpsCallable(Constants.ChestClaimCloudFunction).CallAsync(data);
 
             var response = await chestClaim;
             if (chestClaim.IsFaulted)
@@ -240,14 +244,17 @@ namespace Core
             }
 
             PanelManager.WaitingForServerPanel(false);
-            //do i need this? wont it refresh anyway cause of playerData chestData listener?
-            //maybe return the chest id of the claimed chest from function, and then do anim of chest that was claimed
+            
+            //maybe show message to player regarding some issue
+            if (response.Data == null)
+            {
+                Debug.LogError("ChestClaim returned empty data");
+                return;
+            }
 
             var chestId = ProcessBasicResponseData(response.Data);
             
             ChestManager.ChestAdded((ChestType)chestId);
-            
-            EventManager.chestRefresh.Raise();
         }
 
         public async void OpenChest(ChestType chestType)
@@ -270,12 +277,15 @@ namespace Core
                 HandleFunctionError(chestClaim);
             }
 
-            if (response.Data == null)
-                //maybe create HandleEmptyResponse - prolly redundant
-                //maybe show message to player regarding some issue
-                return;
-
             PanelManager.WaitingForServerPanel(false);
+            
+            //maybe show message to player regarding some issue
+            if (response.Data == null)
+            {
+                Debug.LogError("ChestOpen returned empty data");
+                return;
+            }
+
             ChestManager.OpenChest(new ChestRewardDto(response.Data));
         }
 
@@ -302,19 +312,19 @@ namespace Core
                 HandleFunctionError(doUpgrade);
             }
 
+            PanelManager.WaitingForServerPanel(false);
+            
+            //maybe show message to player regarding some issue
             if (response.Data == null)
-                //maybe create HandleEmptyResponse - prolly redundant
-                //maybe show message to player regarding some issue
+            {
+                Debug.LogError("ChestClaim returned empty data");
                 return;
-
-            /*var processedData = (Dictionary<object, object>) response.Data;
-
-            if (!processedData.ContainsKey("id")) return;*/
+            }
 
             UpgradeManager.upgradeId = ProcessBasicResponseData(response.Data);
 
-            PanelManager.WaitingForServerPanel(false);
-            EventManager.upgradeRefresh.Raise();
+            
+            PanelManager.GetPanel<UpgradePanelController>().UpgradeComplete();
         }
 
         #endregion
@@ -339,7 +349,7 @@ namespace Core
             }
         }
 
-        private long ProcessBasicResponseData(object data)
+        private static long ProcessBasicResponseData(object data)
         {
             var processedData = (Dictionary<object, object>) data;
 

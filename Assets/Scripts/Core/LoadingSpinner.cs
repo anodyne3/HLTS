@@ -6,7 +6,7 @@ namespace Core
 {
     public class LoadingSpinner : MonoBehaviour
     {
-        private void Awake()
+        private void OnEnable()
         {
             StartCoroutine(nameof(Spin));
         }

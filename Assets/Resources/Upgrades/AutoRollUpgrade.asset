@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: AutoRollUpgrade
   m_EditorClassIdentifier: 
   upgradeType: 0
-  currentLevel: 1
+  currentLevel: 2
   maxLevel: 3
   levelDetails:
   - icon: {fileID: 3286163911610860551, guid: bd2ce159bc1015b4193a0e0a2990fb46, type: 3}
@@ -27,7 +27,7 @@ MonoBehaviour:
       resourceType: 1
   - icon: {fileID: 3286163911610860551, guid: 4b3bb8b391dfd854abb9c87c0c54ad31, type: 3}
     upgradeName: Less & More Buttons
-    description: Use these to decrease or increase the bet of every Auto Roll.\n\n(Requires
+    description: Use these to decrease or increase the bet of every Auto Roll.<br><br>(Requires
       Coin Slot Upgrade)
     resourceRequirements:
     - resourceAmount: 800
@@ -37,7 +37,7 @@ MonoBehaviour:
   - icon: {fileID: 3286163911610860551, guid: bd28e4fd9a00b1e46bd7b03ab7025617, type: 3}
     upgradeName: Min & Max Buttons
     description: Use these to quickly set the bet of every Auto Roll to the Minimum
-      or Maximum. (Requires Coin Slot Upgrade)
+      or Maximum.<br><br>(Requires Coin Slot Upgrade)
     resourceRequirements:
     - resourceAmount: 1500
       resourceType: 0

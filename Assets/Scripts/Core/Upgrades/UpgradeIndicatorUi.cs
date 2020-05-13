@@ -7,20 +7,23 @@ namespace Core.Upgrades
     public class UpgradeIndicatorUi : GlobalAccess
     {
         [SerializeField] private UpgradeTypes upgradeType;
-        
+
         private SVGImage _indicatorIcon;
-    
+
         private void Start()
         {
             _indicatorIcon = (SVGImage) GetComponent(typeof(SVGImage));
-            
+
             EventManager.NewEventSubscription(gameObject, Constants.GameEvents.refreshUiEvent, RefreshIndicator, true);
         }
 
         private void RefreshIndicator()
         {
-            var upgradeAvailable = UpgradeManager.HasResourcesForUpgrade(upgradeType);
-            
+            if (!isActiveAndEnabled) return;
+
+            var upgradeAvailable = !UpgradeManager.IsUpgradeMaxed(upgradeType) &&
+                                   UpgradeManager.HasResourcesForUpgrade(upgradeType);
+
             DisplayIndicator(upgradeAvailable);
         }
 

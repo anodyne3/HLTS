@@ -1,4 +1,5 @@
-﻿using MyScriptableObjects;
+﻿using Enums;
+using MyScriptableObjects;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,7 +13,9 @@ namespace Core.UI
         [SerializeField] private Button cancelButton;
         [SerializeField] private TweenPunchSetting punchSetting;
         [SerializeField] private TMP_Text messageText;
-    
+
+        private ChestType _claimedChestType;
+        
         public override void Start()
         {
             base.Start();
@@ -26,6 +29,8 @@ namespace Core.UI
         public override void OpenPanel(params object[] args)
         {
             base.OpenPanel(args);
+
+            _claimedChestType = (ChestType) args[0];
             
             RefreshPanel();
         }
@@ -40,7 +45,7 @@ namespace Core.UI
         {
             punchSetting.DoPunch(confirmButton.transform, false);
             
-            FirebaseFunctionality.ClaimChest();
+            FirebaseFunctionality.ClaimChest(_claimedChestType);
             
             base.ClosePanel();
         }

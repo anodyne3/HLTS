@@ -85,5 +85,12 @@ namespace Core.UI
         {
             FirebaseFunctionality.Upgrade(_upgradeVariable);
         }
+
+        public void UpgradeComplete()
+        {
+            base.ClosePanel();
+            
+            EventManager.upgradeRefresh.Raise();
+        }
     }
 }
