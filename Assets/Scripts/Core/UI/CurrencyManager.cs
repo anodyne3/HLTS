@@ -1,10 +1,12 @@
 using System;
 using Core.Managers;
 using Core.UI.Prefabs;
+using Core.Upgrades;
 using DG.Tweening;
 using Enums;
 using MyScriptableObjects;
 using UnityEngine;
+using UnityEngine.UI;
 using Utils;
 using Random = UnityEngine.Random;
 
@@ -12,11 +14,13 @@ namespace Core.UI
 {
     public class CurrencyManager : GlobalClass
     {
-        public Currency[] currencies;
-        public RectTransform currenciesRect;
+        [Header("Shop")] [SerializeField] private Button bcShopButton;
+        [SerializeField] private Button bpShopButton;
+        [SerializeField] private Button sfShopButton;
 
-        [Header("CurrencyUpdate")] [SerializeField]
-        private AddCurrencyPrefab addCurrencyPrefab;
+        [Header("CurrencyUpdate")] public Currency[] currencies;
+        public RectTransform currenciesRect;
+        [SerializeField] private AddCurrencyPrefab addCurrencyPrefab;
 
         [SerializeField] private TweenSetting addCurrencyTweenSetting;
         public Transform addCurrencySpawnPosition;
@@ -25,14 +29,6 @@ namespace Core.UI
         private Vector2 _newSizeDelta = new Vector2();
         private bool _updateCurrencies;
 
-        [ContextMenu("addCurrencyTest")]
-        public void TestAddCurrency()
-        {
-            PlayerData.wallet[0].resourceAmount += 20;
-
-            RefreshCurrency(currencies[0]);
-        }
-
         private void Start()
         {
             _tweenCurrencyPool =
@@ -40,21 +36,17 @@ namespace Core.UI
 
             SetupCurrencies();
 
-            EventManager.NewEventSubscription(gameObject, Constants.GameEvents.refreshCurrencyEvent, RefreshAllCurrencies);
-        }
+            PanelManager.GetPanel<ShopPanelController>().LoadShopProducts();
 
-        private void SetupCurrencies()
-        {
-            var currenciesLength = currencies.Length;
-            for (var i = 0; i < currenciesLength; i++)
-            {
-                currencies[i].currencyDetails.resourceAmount =
-                    PlayerData.GetResourceAmount(currencies[i].currencyDetails.resourceType);
+            bcShopButton.onClick.RemoveAllListeners();
+            bcShopButton.onClick.AddListener(() => { OpenShopPanel(ResourceType.BananaCoins); });
+            bpShopButton.onClick.RemoveAllListeners();
+            bpShopButton.onClick.AddListener(() => { OpenShopPanel(ResourceType.BluePrints); });
+            sfShopButton.onClick.RemoveAllListeners();
+            sfShopButton.onClick.AddListener(() => { OpenShopPanel(ResourceType.StarFruits); });
 
-                currencies[i].UpdateTextDisplay();
-            }
-
-            ResizeCurrencyRect();
+            EventManager.NewEventSubscription(gameObject, Constants.GameEvents.refreshCurrencyEvent,
+                RefreshAllCurrencies);
         }
 
         private void Update()
@@ -72,6 +64,56 @@ namespace Core.UI
             }
         }
 
+        private void UpdateCurrencies()
+        {
+            var currenciesLength = currencies.Length;
+            for (var i = 0; i < currenciesLength; i++)
+            {
+                if (!currencies[i].updateCurrency) continue;
+
+                currencies[i].UpdateTextDisplay();
+            }
+
+            _updateCurrencies = false;
+        }
+
+        private void SetupCurrencies()
+        {
+            var currenciesLength = currencies.Length;
+            for (var i = 0; i < currenciesLength; i++)
+            {
+                currencies[i].currencyDetails.resourceAmount =
+                    PlayerData.GetResourceAmount(currencies[i].currencyDetails.resourceType);
+
+                currencies[i].UpdateTextDisplay();
+            }
+
+            ResizeCurrencyRect();
+        }
+
+        public void ResizeCurrencyRect()
+        {
+            long highestAmount = 0;
+
+            var walletLength = PlayerData.wallet.Length;
+            for (var i = 0; i < walletLength; i++)
+                if (PlayerData.wallet[i].resourceAmount > highestAmount)
+                    highestAmount = PlayerData.wallet[i].resourceAmount;
+
+            var digitCount = Math.Floor(Math.Log10(Mathf.Abs(highestAmount)) + 1);
+            _newSizeDelta.Set(double.IsInfinity(digitCount)
+                ? Constants.CoinsBackgroundBaseWidth + Constants.CoinsBackgroundWidthMultiplier
+                : (float) digitCount * Constants.CoinsBackgroundWidthMultiplier +
+                  Constants.CoinsBackgroundBaseWidth, currenciesRect.sizeDelta.y);
+
+            currenciesRect.DOSizeDelta(_newSizeDelta, addCurrencyTweenSetting.sizeDeltaDuration);
+        }
+
+        private static void OpenShopPanel(ResourceType resourceType)
+        {
+            PanelManager.OpenPanelSolo<ShopPanelController>(resourceType);
+        }
+
         private void RefreshAllCurrencies()
         {
             var currenciesLength = currencies.Length;
@@ -79,7 +121,7 @@ namespace Core.UI
             {
                 RefreshCurrency(currencies[i]);
             }
-            
+
             EventManager.refreshUi.Raise();
         }
 
@@ -96,19 +138,6 @@ namespace Core.UI
                 AddCurrency(currency);
             else
                 DeductCurrency(currency);
-        }
-
-        private void UpdateCurrencies()
-        {
-            var currenciesLength = currencies.Length;
-            for (var i = 0; i < currenciesLength; i++)
-            {
-                if (!currencies[i].updateCurrency) continue;
-
-                currencies[i].UpdateTextDisplay();
-            }
-            
-            _updateCurrencies = false;
         }
 
         private void AddCurrency(Currency currency)
@@ -173,24 +202,6 @@ namespace Core.UI
                     return currencies[i];
 
             return new Currency();
-        }
-
-        public void ResizeCurrencyRect()
-        {
-            long highestAmount = 0;
-
-            var walletLength = PlayerData.wallet.Length;
-            for (var i = 0; i < walletLength; i++)
-                if (PlayerData.wallet[i].resourceAmount > highestAmount)
-                    highestAmount = PlayerData.wallet[i].resourceAmount;
-
-            var digitCount = Math.Floor(Math.Log10(Mathf.Abs(highestAmount)) + 1);
-            _newSizeDelta.Set(double.IsInfinity(digitCount)
-                ? Constants.CoinsBackgroundBaseWidth + Constants.CoinsBackgroundWidthMultiplier
-                : (float) digitCount * Constants.CoinsBackgroundWidthMultiplier +
-                  Constants.CoinsBackgroundBaseWidth, currenciesRect.sizeDelta.y);
-
-            currenciesRect.DOSizeDelta(_newSizeDelta, addCurrencyTweenSetting.sizeDeltaDuration);
         }
     }
 }

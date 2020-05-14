@@ -44,6 +44,8 @@ namespace Core.UI
             EventManager.NewEventSubscription(gameObject, Constants.GameEvents.refreshUiEvent, RefreshFill);
             EventManager.NewEventSubscription(gameObject, Constants.GameEvents.chestRefreshEvent, ChestsRefresh);
             EventManager.NewEventSubscription(gameObject, Constants.GameEvents.chestOpenEvent, RefreshPanel);
+            
+            ChestsRefresh();
         }
 
         private void ChestsInit()

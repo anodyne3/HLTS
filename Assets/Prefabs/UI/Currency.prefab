@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2967262591811720762}
   - component: {fileID: 2967262591811720763}
   m_Layer: 5
-  m_Name: CoinIcon
+  m_Name: BCIcon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -86,7 +86,7 @@ GameObject:
   - component: {fileID: 2967262592068428478}
   - component: {fileID: 2967262592068428479}
   m_Layer: 5
-  m_Name: CoinsAmountText
+  m_Name: BCAmountText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -108,8 +108,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 19, y: 0}
-  m_SizeDelta: {x: -134, y: 0}
+  m_AnchoredPosition: {x: 22, y: 0}
+  m_SizeDelta: {x: -128, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2967262592068428478
 CanvasRenderer:
@@ -165,7 +165,7 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 114.55
+  m_fontSize: 73.45
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -265,8 +265,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 48, y: -16}
-  m_SizeDelta: {x: -96, y: -64}
+  m_AnchoredPosition: {x: 23, y: 8}
+  m_SizeDelta: {x: -146, y: -48}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2967262593148166653
 CanvasRenderer:
@@ -304,7 +304,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
+  m_PixelsPerUnitMultiplier: 1.33
 --- !u!1 &2967262593289803975
 GameObject:
   m_ObjectHideFlags: 0
@@ -343,7 +343,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -730, y: 1459}
-  m_SizeDelta: {x: 650, y: 192}
+  m_SizeDelta: {x: 520, y: 144}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &2967262593289804091
 CanvasRenderer:
@@ -489,22 +489,22 @@ PrefabInstance:
     - target: {fileID: 118165841232091793, guid: 19cb44b1be0abe2438daab050fe3df3f,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 96.00012
+      value: 96
       objectReference: {fileID: 0}
     - target: {fileID: 118165841232091793, guid: 19cb44b1be0abe2438daab050fe3df3f,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -48.000366
+      value: -16
       objectReference: {fileID: 0}
     - target: {fileID: 118165841232091793, guid: 19cb44b1be0abe2438daab050fe3df3f,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: -96
+      value: -146
       objectReference: {fileID: 0}
     - target: {fileID: 118165841232091793, guid: 19cb44b1be0abe2438daab050fe3df3f,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: -64
+      value: -48
       objectReference: {fileID: 0}
     - target: {fileID: 118165841232091793, guid: 19cb44b1be0abe2438daab050fe3df3f,
         type: 3}
@@ -539,27 +539,7 @@ PrefabInstance:
     - target: {fileID: 2933695778107359564, guid: 19cb44b1be0abe2438daab050fe3df3f,
         type: 3}
       propertyPath: m_Name
-      value: DeductCurrencyPrefab
-      objectReference: {fileID: 0}
-    - target: {fileID: 3001669886608947373, guid: 19cb44b1be0abe2438daab050fe3df3f,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3001669886608947373, guid: 19cb44b1be0abe2438daab050fe3df3f,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3001669886608947373, guid: 19cb44b1be0abe2438daab050fe3df3f,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3001669886608947373, guid: 19cb44b1be0abe2438daab050fe3df3f,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 16
+      value: DeductBananaCoinsPrefab
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 19cb44b1be0abe2438daab050fe3df3f, type: 3}

@@ -6,5 +6,6 @@ namespace Enums
         CoinSlot = 1,
         ChestClaim = 2,
         FixSlotLight = 3,
+        ShopUpgrade = 4,
     }
 }

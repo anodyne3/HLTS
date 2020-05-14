@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 256661994548720398}
   - component: {fileID: 9203999041801649634}
   m_Layer: 5
-  m_Name: CoinsAmountText
+  m_Name: BCAmountText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -91,7 +91,7 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 114.55
+  m_fontSize: 73.45
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -172,7 +172,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &118165841232091793
 RectTransform:
   m_ObjectHideFlags: 0
@@ -208,7 +208,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canvasGroup: {fileID: 3907571716638605635}
   currencyText: {fileID: 9203999041801649634}
-  tweenSettings: {fileID: 11400000, guid: da4a16a2d1cc03c448accfada72f73b5, type: 2}
+  tweenSettings: {fileID: 11400000, guid: ac18d63bf143d334cb7902b03b4f3742, type: 2}
 --- !u!225 &3907571716638605635
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -217,7 +217,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2933695778107359564}
   m_Enabled: 1
-  m_Alpha: 1
+  m_Alpha: 0
   m_Interactable: 0
   m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
@@ -233,7 +233,7 @@ GameObject:
   - component: {fileID: 5774151232610222948}
   - component: {fileID: 7118561632877473714}
   m_Layer: 5
-  m_Name: CoinIcon
+  m_Name: BCIcon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -246,16 +246,16 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4843028791300043085}
-  m_LocalRotation: {x: 0, y: 0, z: -0.5, w: 0.8660254}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 118165841232091793}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -60}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 48}
+  m_AnchoredPosition: {x: 0, y: 16}
   m_SizeDelta: {x: 128, y: 128}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5774151232610222948

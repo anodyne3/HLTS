@@ -30,7 +30,7 @@ namespace Core.Managers
 
         private void CreateAndLoadRewardedAd()
         {
-            _rewardedAd = new RewardedAd(TestRewardedAdId);
+            _rewardedAd = new RewardedAd(DoublePayoutAdId);
 
             // Called when an ad request failed to load.
             _rewardedAd.OnAdFailedToLoad += HandleRewardedAdFailedToLoad;

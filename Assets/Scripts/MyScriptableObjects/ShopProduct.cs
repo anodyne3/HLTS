@@ -7,11 +7,12 @@ namespace MyScriptableObjects
     [CreateAssetMenu(fileName = "ShopProduct", menuName = "MyAssets/ShopProduct", order = 70)]
     public class ShopProduct : ScriptableObject
     {
-        public string productName;
-        public string productId;
-        public ProductType productType;
-        public int productCost;
         public ResourceType currencyType;
+        public ShopCategory shopCategory;
+        public ProductType productType;
+        public string productId;
+        public string productName;
         public Sprite productIcon;
+        public int productCost;
     }
 }

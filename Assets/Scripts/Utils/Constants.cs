@@ -23,6 +23,21 @@ namespace Utils
         public const string SufficientCurrencyPrefix = "<color=#FFFFFF>";
         public const string InsufficientCurrencyPrefix = "<color=#BD2424>";
 
+        public static string GetCurrencySpriteAsset(ResourceType currencyType)
+        {
+            switch (currencyType)
+            {
+                case ResourceType.BananaCoins:
+                    return "<sprite=\"BC\" index=0>";
+                case ResourceType.BluePrints:
+                    return "<sprite=\"BP\" index=0>";
+                case ResourceType.StarFruits:
+                    return "<sprite=\"SF\" index=0>";
+                default:
+                    return "\"nonSpriteAssetCurrencyRequested\"";
+            }
+        }
+
         //firebase
         public const string PlayerDataPrefix = "users";
         public const string PlayerDataSuffix = "userData";
@@ -37,7 +52,8 @@ namespace Utils
         public const string AdRewardClaimCloudFunction = "usersAdRewardClaimOnCall";
         public const string ChestClaimCloudFunction = "usersChestClaimOnCall";
         public const string ChestOpenCloudFunction = "usersChestOpenOnCall";
-        public const string DoUpgradeRepair = "usersUpgradeDoOnCall";
+        public const string DoUpgradeRepairFunction = "usersUpgradeDoOnCall";
+        public const string ProductPurchaseFunction = "usersProductPurchaseOnCall";
         public const string FirebaseDatabaseUrl = "https://he-loves-the-slots.firebaseio.com/";
         public const string PrivacyPolicyUrl = "https://he-loves-the-slots.web.app/PrivacyPolicy.html";
         public const string TermsAndConditionsUrl = "https://he-loves-the-slots.web.app/TermsAndConditions.html";
@@ -48,7 +64,7 @@ namespace Utils
         public const string ChestRewardPrefix = " ~";
         
         //ui
-        public const float CoinsBackgroundBaseWidth = 230.0f;
+        public const float CoinsBackgroundBaseWidth = 280.0f;
         public const float CoinsBackgroundWidthMultiplier = 50.0f;
 
         //resource paths
@@ -59,6 +75,7 @@ namespace Utils
         public const string ChestsPath = "Chests";
         public const string ChestRewardsPath = "ChestRewards";
         public const string UpgradesPath = "Upgrades";
+        public const string ShopCategoryPath = "ShopCategories";
         
         //tween settings paths
         public const string CloseButtonPunchSettingPath = "TweenSettings/closeButtonPunchSetting";

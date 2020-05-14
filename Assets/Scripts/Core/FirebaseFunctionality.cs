@@ -4,6 +4,7 @@ using Core.GameData;
 using Core.MainSlotMachine;
 using Core.Managers;
 using Core.UI;
+using Core.UI.Prefabs;
 using DG.Tweening;
 using Enums;
 using Firebase;
@@ -12,7 +13,6 @@ using Firebase.Functions;
 using Firebase.Unity.Editor;
 using MyScriptableObjects;
 using UnityEngine;
-using UnityEngine.UI;
 using Utils;
 
 namespace Core
@@ -202,7 +202,6 @@ namespace Core
 
         private async void ClaimAdReward()
         {
-            PanelManager.WaitingForServerPanel();
             await AdRewardClaim();
         }
 
@@ -216,8 +215,6 @@ namespace Core
                 //maybe show message to player regarding some issue
                 HandleFunctionError(adRewardClaim);
             }
-            
-            PanelManager.WaitingForServerPanel(false);
         }
 
         #endregion
@@ -227,12 +224,12 @@ namespace Core
         public async void ClaimChest(ChestType claimedChest)
         {
             PanelManager.WaitingForServerPanel();
-            await ChestClaim(claimedChest);
+            await ChestClaim(claimedChest.ToString());
         }
 
-        private async Task ChestClaim(ChestType claimedChest)
+        private async Task ChestClaim(string claimedChest)
         {
-            var data = new Dictionary<object, object> {["text"] = claimedChest.ToString(), ["push"] = true};
+            var data = new Dictionary<object, object> {["text"] = claimedChest, ["push"] = true};
 
             var chestClaim = _firebaseFunc.GetHttpsCallable(Constants.ChestClaimCloudFunction).CallAsync(data);
 
@@ -244,7 +241,7 @@ namespace Core
             }
 
             PanelManager.WaitingForServerPanel(false);
-            
+
             //maybe show message to player regarding some issue
             if (response.Data == null)
             {
@@ -253,8 +250,8 @@ namespace Core
             }
 
             var chestId = ProcessBasicResponseData(response.Data);
-            
-            ChestManager.ChestAdded((ChestType)chestId);
+
+            ChestManager.ChestAdded((ChestType) chestId);
         }
 
         public async void OpenChest(ChestType chestType)
@@ -267,18 +264,18 @@ namespace Core
         {
             var data = new Dictionary<string, object> {["text"] = chestType, ["push"] = true};
 
-            var chestClaim = _firebaseFunc.GetHttpsCallable(Constants.ChestOpenCloudFunction)
+            var chestOpen = _firebaseFunc.GetHttpsCallable(Constants.ChestOpenCloudFunction)
                 .CallAsync(data);
 
-            var response = await chestClaim;
-            if (chestClaim.IsFaulted)
+            var response = await chestOpen;
+            if (chestOpen.IsFaulted)
             {
                 //maybe show message to player regarding some issue
-                HandleFunctionError(chestClaim);
+                HandleFunctionError(chestOpen);
             }
 
             PanelManager.WaitingForServerPanel(false);
-            
+
             //maybe show message to player regarding some issue
             if (response.Data == null)
             {
@@ -303,7 +300,7 @@ namespace Core
         {
             var data = new Dictionary<string, object> {["text"] = upgradeId, ["push"] = true};
 
-            var doUpgrade = _firebaseFunc.GetHttpsCallable(Constants.DoUpgradeRepair).CallAsync(data);
+            var doUpgrade = _firebaseFunc.GetHttpsCallable(Constants.DoUpgradeRepairFunction).CallAsync(data);
 
             var response = await doUpgrade;
             if (doUpgrade.IsFaulted)
@@ -313,7 +310,7 @@ namespace Core
             }
 
             PanelManager.WaitingForServerPanel(false);
-            
+
             //maybe show message to player regarding some issue
             if (response.Data == null)
             {
@@ -323,13 +320,47 @@ namespace Core
 
             UpgradeManager.upgradeId = ProcessBasicResponseData(response.Data);
 
-            
+
             PanelManager.GetPanel<UpgradePanelController>().UpgradeComplete();
         }
 
         #endregion
 
+        #region Shop
+
+        public async void PurchaseProduct(string shopProductId)
+        {
+            PanelManager.WaitingForServerPanel();
+            var responseData = await GetHttpsCallable(true, shopProductId, Constants.ProductPurchaseFunction);
+
+            ShopPanelController.CompletePurchase(responseData);
+        }
+
+        #endregion
+
         #region Common
+
+        private async Task<object> GetHttpsCallable(bool hasResponse, string sendData, string callName)
+        {
+            var data = new Dictionary<string, object> {["text"] = sendData, ["push"] = true};
+
+            var task = _firebaseFunc.GetHttpsCallable(callName)
+                .CallAsync(data);
+
+            var response = await task;
+            if (task.IsFaulted)
+            {
+                //maybe show message to player regarding some issue
+                HandleFunctionError(task);
+            }
+
+            PanelManager.WaitingForServerPanel(false);
+            
+            if (response.Data != null) return response.Data;
+            
+            Debug.LogError("GetHttpsCallable returned empty data");
+            return null;
+        }
 
         private static void HandleFunctionError(Task httpsCallableResult)
         {

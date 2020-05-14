@@ -13,13 +13,12 @@ namespace Core.Managers
     public class ResourceManager : Singleton<ResourceManager>
     {
         private readonly Dictionary<string, Sprite> _fruitParticleSprites = new Dictionary<string, Sprite>();
-        private readonly Dictionary<string, MusicTrack> musicTracks = new Dictionary<string, MusicTrack>();
+        private readonly Dictionary<string, MusicTrack> _musicTracks = new Dictionary<string, MusicTrack>();
         private readonly Dictionary<string, Sprite> _currencySprites = new Dictionary<string, Sprite>();
         // private readonly Dictionary<string, ShopProduct> shopProducts = new Dictionary<string, ShopProduct>();
 
         private SoundEffect[] _soundEffects;
         // private MusicTrack[] _musicTracks;
-        public ShopProduct[] shopProducts;
 
         private readonly List<IMyDictionaries> _allDictionaries = new List<IMyDictionaries>();
 
@@ -42,12 +41,11 @@ namespace Core.Managers
         private void Awake()
         {
             PopulateDictionary(_fruitParticleSprites, Constants.FruitParticleSpritesPath);
-            PopulateDictionary(musicTracks, Constants.MusicTrackPath);
+            PopulateDictionary(_musicTracks, Constants.MusicTrackPath);
             PopulateDictionary(_currencySprites, Constants.ChestRewardsPath);
 
             _soundEffects = Resources.LoadAll<SoundEffect>(Constants.SoundEffectPath);
             // _musicTracks = Resources.LoadAll<MusicTrack>(Constants.MusicTrackPath);
-            shopProducts = Resources.LoadAll<ShopProduct>(Constants.ShopProductPath);
         }
 
         //load all resources from a path in the Resources folder, and add them to a dictionary
