@@ -21,9 +21,11 @@ namespace Core.Managers
 
         private void LoadUpgrades()
         {
-            var loadedList = Resources.LoadAll<UpgradeVariable>(Constants.UpgradesPath).ToList();
+            /*var loadedList = Resources.LoadAll<UpgradeVariable>(Constants.UpgradesPath).ToList();
             loadedList.Sort((x, y) => x.upgradeType.CompareTo(y.upgradeType));
-            _upgradeVariables = loadedList.ToArray();
+            _upgradeVariables = loadedList.ToArray();*/
+            _upgradeVariables = GeneralUtils.SortLoadedList<UpgradeVariable>(Constants.UpgradesPath,
+                (x, y) => x.upgradeType.CompareTo(y.upgradeType));
 
             EventManager.NewEventSubscription(gameObject, Constants.GameEvents.upgradeRefreshEvent, RefreshUpgrades,
                 true);

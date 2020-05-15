@@ -1,6 +1,4 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using Core.UI.Prefabs;
 using Enums;
 using MyScriptableObjects;
@@ -15,7 +13,7 @@ namespace Core.UI
         [Header("Prefabs")] [SerializeField] private Transform categoryHolder;
         [SerializeField] private ShopCategoryPrefab categoryPrefab;
         [SerializeField] private ShopProductPrefab productPrefab;
-        
+
         private IStoreController _storeController;
         private IExtensionProvider _extensionProvider;
 
@@ -38,9 +36,8 @@ namespace Core.UI
 
         public void LoadShopProducts()
         {
-            var loadedList = Resources.LoadAll<ShopProduct>(Constants.ShopProductPath).ToList();
-            loadedList.Sort((x, y) => x.productCost.CompareTo(y.productCost));
-            _shopProducts = loadedList.ToArray();
+            _shopProducts = GeneralUtils.SortLoadedList<ShopProduct>(Constants.ShopProductPath,
+                (x, y) => x.productCost.CompareTo(y.productCost));
         }
 
         public override void OpenPanel(params object[] args)
@@ -48,16 +45,14 @@ namespace Core.UI
             base.OpenPanel(args);
 
             if (!isActiveAndEnabled) return;
-            
+
             ClosePanel();
         }
 
         private void InitCategories()
         {
-            var loadedList = Resources.LoadAll<ShopCategory>(Constants.ShopCategoryPath).ToList();
-            loadedList.Sort((x, y) => x.orderInShop.CompareTo(y.orderInShop));
-            _shopCategories = loadedList.ToArray();
-            // _shopCategories = SortLoadedList<ShopCategory>(Constants.ShopCategoryPath, ShopCategory.order);
+            _shopCategories = GeneralUtils.SortLoadedList<ShopCategory>(Constants.ShopCategoryPath,
+                (x, y) => x.orderInShop.CompareTo(y.orderInShop));
 
             var shopCategoriesLength = _shopCategories.Length;
             for (var i = 0; i < shopCategoriesLength; i++)
@@ -66,13 +61,6 @@ namespace Core.UI
                 newCategory.Init(_shopCategories[i].name);
                 newCategory.name = _shopCategories[i].name;
             }
-        }
-
-        private T[] SortLoadedList<T>(string path, int a) where T : ScriptableObject
-        {
-            var loadedList = Resources.LoadAll<T>(path).ToList();
-            loadedList.Sort((x, y) => a.CompareTo(a));
-            return loadedList.ToArray();
         }
 
         private void LoadProductDefinitions()
@@ -97,8 +85,6 @@ namespace Core.UI
                 _hardCurrencyProductDefinitions[i] = new ProductDefinition(_shopProducts[i].productId,
                     _shopProducts[i].productType);
             }
-
-            // Canvas.ForceUpdateCanvases();
         }
 
         private Transform SelectCategoryTransform(int index)
@@ -154,8 +140,8 @@ namespace Core.UI
 
         public void OnInitialized(IStoreController controller, IExtensionProvider extensions)
         {
-            // _storeController = controller;
-            // _extensionProvider = extensions;
+            _storeController = controller;
+            _extensionProvider = extensions;
 
             Debug.Log($"Store Initialised: {controller}; {extensions}");
         }

@@ -78,9 +78,13 @@ namespace Core.Managers
 
         private void LoadChests()
         {
-            var loadedChests = Resources.LoadAll<ChestVariable>(Constants.ChestsPath).ToList();
+            chestTypes =
+                GeneralUtils.SortLoadedList<ChestVariable>(Constants.ChestsPath, 
+                    (x, y) => x.rank.CompareTo(y.rank));
+
+            /*var loadedChests = Resources.LoadAll<ChestVariable>(Constants.ChestsPath).ToList();
             loadedChests.Sort((x, y) => x.rank.CompareTo(y.rank));
-            chestTypes = loadedChests.ToArray();
+            chestTypes = loadedChests.ToArray();*/
         }
 
         private void RefreshChest()
