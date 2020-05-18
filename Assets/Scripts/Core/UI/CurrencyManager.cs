@@ -1,7 +1,6 @@
 using System;
 using Core.Managers;
 using Core.UI.Prefabs;
-using Core.Upgrades;
 using DG.Tweening;
 using Enums;
 using MyScriptableObjects;
@@ -35,8 +34,6 @@ namespace Core.UI
                 ObjectPoolManager.CreateObjectPool<AddCurrencyPrefab>(addCurrencyPrefab, addCurrencySpawnPosition);
 
             SetupCurrencies();
-
-            PanelManager.GetPanel<ShopPanelController>().LoadShopProducts();
 
             bcShopButton.onClick.RemoveAllListeners();
             bcShopButton.onClick.AddListener(() => { OpenShopPanel(ResourceType.BananaCoins); });

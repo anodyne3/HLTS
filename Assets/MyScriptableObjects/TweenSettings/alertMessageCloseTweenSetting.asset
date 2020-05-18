@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b24095dc18074a278263b9b45befaec4, type: 3}
+  m_Name: alertMessageCloseTweenSetting
+  m_EditorClassIdentifier: 
+  moveDuration: 1.333
+  delayBetweenInstance: 0
+  moveCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0.036525976
+      outSlope: 0.036525976
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.93333334
+    - serializedVersion: 3
+      time: 0.5
+      value: 1
+      inSlope: -0.020267054
+      outSlope: -0.020267054
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 1
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spawnZoneRadius: 0
+  moveOffset: -300
+  rotateSetting: {fileID: 11400000, guid: 72646e5e02ce89b43b9b7eb34aec5127, type: 2}
+  punchSetting: {fileID: 0}
+  fadeSetting: {fileID: 11400000, guid: 34fe865d67180bd4f965bf2f6d339223, type: 2}
+  fadeStartDelay: 1.666
+  sizeDeltaDuration: 0
+  scaleStartValue: {x: 1, y: 1, z: 1}
+  scaleEndValue: {x: 1, y: 1, z: 1}
+  scaleDuration: 0.666
+  sequenceEasing: 15

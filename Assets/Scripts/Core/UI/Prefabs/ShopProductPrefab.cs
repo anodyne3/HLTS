@@ -10,9 +10,10 @@ namespace Core.UI.Prefabs
     public class ShopProductPrefab : GlobalAccess
     {
         [SerializeField] private Button purchaseProductButton;
-        [SerializeField] private SVGImage productIcon;
         [SerializeField] private TMP_Text productName;
-        [SerializeField] private TMP_Text productCost;
+        [SerializeField] private TMP_Text productAmount;
+        [SerializeField] private SVGImage productIcon;
+        [SerializeField] private TMP_Text resourceCost;
 
         private ShopProduct _shopProduct;
 
@@ -34,16 +35,35 @@ namespace Core.UI.Prefabs
             productIcon.sprite = _shopProduct.productIcon;
             productName.text = _shopProduct.productName;
 
-            if (_shopProduct.currencyType != ResourceType.HardCurrency)
-                productCost.text = Constants.GetCurrencySpriteAsset(_shopProduct.currencyType);
-
-            productCost.text += " " + _shopProduct.productCost;
+            if (_shopProduct.ResourceType != ResourceType.HardCurrency)
+            {
+                resourceCost.text = Constants.GetCurrencySpriteAsset(_shopProduct.ResourceType);
+                resourceCost.text += _shopProduct.ResourceCost;
+            }
+            else
+            {
+                productAmount.text = _shopProduct.ResourceCost.ToString();
+                var productMetaData = ShopManager.GetLocalizedCurrencyPrice(_shopProduct.productId);
+                resourceCost.text = productMetaData.localizedPriceString;
+            }
         }
 
         private void PurchaseProduct()
         {
-            if (_shopProduct.currencyType != ResourceType.HardCurrency)
-                FirebaseFunctionality.PurchaseProduct(_shopProduct.productId);
+            if (_shopProduct.ResourceType != ResourceType.HardCurrency)
+                if (!HasResourcesForPurchase())
+                    AlertMessage.Init(Constants.LowResourcesPrefix +
+                                      Constants.GetResourceTypeName(_shopProduct.ResourceType));
+                else
+                    PanelManager.OpenSubPanel<ConfirmPurchasePanelController>(_shopProduct);
+
+            else
+                ShopManager.PurchaseProduct(_shopProduct.productId);
+        }
+
+        private bool HasResourcesForPurchase()
+        {
+            return PlayerData.GetResourceAmount(_shopProduct.ResourceType) >= _shopProduct.ResourceCost;
         }
     }
 }

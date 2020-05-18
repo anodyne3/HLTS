@@ -12,11 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16b15cd667114d5aa02bbe346d9775f7, type: 3}
   m_Name: ChestGold
   m_EditorClassIdentifier: 
-  currencyType: 0
   shopCategory: {fileID: 11400000, guid: c09c4646984510e4d9f706dcbf97f41c, type: 2}
   productType: 0
-  productId: com.SethGames.HeLovesTheSlots.goldChest
+  productId: chestL
   productName: Gold Chest
   productIcon: {fileID: 3286163911610860551, guid: 08c85f35b89ed3044827e0cdfb0d3a03,
     type: 3}
-  productCost: 14250
+  requiredResource:
+    resourceAmount: 14250
+    resourceType: 0

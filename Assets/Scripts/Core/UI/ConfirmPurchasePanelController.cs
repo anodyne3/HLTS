@@ -2,6 +2,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Utils;
 
 namespace Core.UI
 {
@@ -10,8 +11,9 @@ namespace Core.UI
         [SerializeField] private Button confirmButton;
         [SerializeField] private Button cancelButton;
         [SerializeField] private TweenPunchSetting punchSetting;
+        [SerializeField] private TMP_Text productName;
         [SerializeField] private SVGImage productIcon;
-        [SerializeField] private TMP_Text currencyCost;
+        [SerializeField] private TMP_Text resourceCost;
 
         private ShopProduct _shopProduct;
     
@@ -36,16 +38,16 @@ namespace Core.UI
 
         private void RefreshPanel()
         {
+            productName.text = _shopProduct.productName;
             productIcon.sprite = _shopProduct.productIcon;
-            currencyCost.text = _shopProduct.productCost.ToString();
+            resourceCost.text = Constants.GetCurrencySpriteAsset(_shopProduct.ResourceType) + _shopProduct.ResourceCost;
         }
 
         private void ConfirmAction()
         {
             punchSetting.DoPunch(confirmButton.transform, false);
             
-            // confirm action function here
-            //FirebaseFunctionality.shopTransaction(_shopProduct)
+            FirebaseFunctionality.PurchaseProduct(_shopProduct.productId);
 
             base.ClosePanel();
         }

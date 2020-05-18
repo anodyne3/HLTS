@@ -1,7 +1,5 @@
-using System.Linq;
 using Enums;
 using MyScriptableObjects;
-using UnityEngine;
 using Utils;
 
 namespace Core.Managers
@@ -9,8 +7,6 @@ namespace Core.Managers
     public class UpgradeManager : GlobalClass
     {
         private UpgradeVariable[] _upgradeVariables;
-
-        [HideInInspector] public long upgradeId;
 
         public override void Awake()
         {
@@ -21,9 +17,6 @@ namespace Core.Managers
 
         private void LoadUpgrades()
         {
-            /*var loadedList = Resources.LoadAll<UpgradeVariable>(Constants.UpgradesPath).ToList();
-            loadedList.Sort((x, y) => x.upgradeType.CompareTo(y.upgradeType));
-            _upgradeVariables = loadedList.ToArray();*/
             _upgradeVariables = GeneralUtils.SortLoadedList<UpgradeVariable>(Constants.UpgradesPath,
                 (x, y) => x.upgradeType.CompareTo(y.upgradeType));
 

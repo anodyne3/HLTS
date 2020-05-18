@@ -11,11 +11,48 @@ namespace Utils
         public const string ConsentKey = "ConsentKey";
         public const float WorldSpaceTolerance = 0.01f;
         public const float FloatTolerance = 0.001f;
-        
+
+        //alertMessages
+        public const string LowResourcesPrefix = "Not enough ";
+        public const string UpgradeCompletedSuffix = " Upgraded";
+        public const string PurchaseMessage = "Purchase Successful";
+        public static string GetResourceTypeName(ResourceType currencyType)
+        {
+            switch (currencyType)
+            {
+                case ResourceType.BananaCoins:
+                    return "Banana Coins";
+                case ResourceType.BluePrints:
+                    return "Blueprints";
+                case ResourceType.StarFruits:
+                    return "Starfruits";
+                default:
+                    return "Resources";
+            }
+        }
+        public static string GetUpgradeTypeName(UpgradeTypes currencyType)
+        {
+            switch (currencyType)
+            {
+                case UpgradeTypes.AutoRoll:
+                    return "Auto Roll ";
+                case UpgradeTypes.CoinSlot:
+                    return "Coin Slot ";
+                case UpgradeTypes.ChestClaim:
+                    return "Auto Chest ";
+                case UpgradeTypes.FixSlotLight:
+                    return "Slot Light ";
+                case UpgradeTypes.ShopUpgrade:
+                    return "Shop ";
+                default:
+                    return "Upgradeable ";
+            }
+        }
+
         //colours
-        public static Color toggleOn = new Color32(0x39, 0xA8,  0x39, 0xFF);
+        public static Color toggleOn = new Color32(0x39, 0xA8, 0x39, 0xFF);
         public static Color toggleOff = new Color32(0xAE, 0x17, 0x1B, 0xFF);
-        
+
         //spriteAssets
         public const string BananaCoinIcon = "<sprite=\"BC\" index=0>";
         public const string BluePrintIcon = "<sprite=\"BP\" index=0>";
@@ -28,11 +65,11 @@ namespace Utils
             switch (currencyType)
             {
                 case ResourceType.BananaCoins:
-                    return "<sprite=\"BC\" index=0>";
+                    return "<sprite=\"BC\" index=0> ";
                 case ResourceType.BluePrints:
-                    return "<sprite=\"BP\" index=0>";
+                    return "<sprite=\"BP\" index=0> ";
                 case ResourceType.StarFruits:
-                    return "<sprite=\"SF\" index=0>";
+                    return "<sprite=\"SF\" index=0> ";
                 default:
                     return "\"nonSpriteAssetCurrencyRequested\"";
             }
@@ -62,7 +99,7 @@ namespace Utils
         public const string ConfirmClaimMessagePrefix = "You are ";
         public const string ConfirmClaimMessageSuffix = " rolls from a better chest.";
         public const string ChestRewardPrefix = " ~";
-        
+
         //ui
         public const float CoinsBackgroundBaseWidth = 280.0f;
         public const float CoinsBackgroundWidthMultiplier = 50.0f;
@@ -76,7 +113,7 @@ namespace Utils
         public const string ChestRewardsPath = "ChestRewards";
         public const string UpgradesPath = "Upgrades";
         public const string ShopCategoryPath = "ShopCategories";
-        
+
         //tween settings paths
         public const string CloseButtonPunchSettingPath = "TweenSettings/closeButtonPunchSetting";
 
@@ -95,7 +132,7 @@ namespace Utils
         public const float ArmPullResetSpeed = 1.667f;
         public const float ArmLockedTriggerAmount = 0.4f;
         public const float ClipTriggerTime = 0.666f;
-        
+
         //animStates
         public const string ArmPullState = "LeverPull";
         public const string LeverBallGlowState = "LeverBallGlow";

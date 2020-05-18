@@ -12,11 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16b15cd667114d5aa02bbe346d9775f7, type: 3}
   m_Name: BananaCoinsLarge
   m_EditorClassIdentifier: 
-  currencyType: 2
   shopCategory: {fileID: 11400000, guid: a24c9dd8f60608b41814b1835f0b8993, type: 2}
   productType: 0
-  productId: 
+  productId: bcL
   productName: 10000
   productIcon: {fileID: 3286163911610860551, guid: 873c719b09cf55946bbb3d002291d08a,
     type: 3}
-  productCost: 600
+  requiredResource:
+    resourceAmount: 600
+    resourceType: 2

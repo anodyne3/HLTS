@@ -12,11 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16b15cd667114d5aa02bbe346d9775f7, type: 3}
   m_Name: StarfruitsHandful
   m_EditorClassIdentifier: 
-  currencyType: 3
   shopCategory: {fileID: 11400000, guid: fa2604f62690d3e439effc536633c392, type: 2}
   productType: 0
-  productId: com.SethGames.HeLovesTheSlots.
+  productId: sfa
   productName: Handful of Starfruits
   productIcon: {fileID: 3286163911610860551, guid: 7c6e08e04747a1d418204722bdbc1720,
     type: 3}
-  productCost: 99
+  requiredResource:
+    resourceAmount: 20
+    resourceType: 3

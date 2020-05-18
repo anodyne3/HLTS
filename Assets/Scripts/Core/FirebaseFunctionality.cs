@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Core.GameData;
 using Core.MainSlotMachine;
 using Core.Managers;
 using Core.UI;
-using Core.UI.Prefabs;
 using DG.Tweening;
 using Enums;
 using Firebase;
@@ -62,7 +62,7 @@ namespace Core
 
         private bool _signingIn;
 
-        private void AuthStateChanged(object sender, System.EventArgs eventArgs)
+        private void AuthStateChanged(object sender, EventArgs eventArgs)
         {
             if (_firebaseAuth.CurrentUser == null && !_signingIn)
             {
@@ -160,11 +160,11 @@ namespace Core
         }
 
         //probably unnecessary 
-        public void SignOut()
+        /*public void SignOut()
         {
             // PlayerData.StopDatabaseListeners();
             _firebaseAuth.SignOut();
-        }
+        }*/
 
         public void LinkAccount()
         {
@@ -249,7 +249,7 @@ namespace Core
                 return;
             }
 
-            var chestId = ProcessBasicResponseData(response.Data);
+            var chestId = ProcessBasicResponseData<long>(response.Data);
 
             ChestManager.ChestAdded((ChestType) chestId);
         }
@@ -318,10 +318,8 @@ namespace Core
                 return;
             }
 
-            UpgradeManager.upgradeId = ProcessBasicResponseData(response.Data);
-
-
-            PanelManager.GetPanel<UpgradePanelController>().UpgradeComplete();
+            PanelManager.GetPanel<UpgradePanelController>()
+                .UpgradeComplete(ProcessBasicResponseData<long>(response.Data));
         }
 
         #endregion
@@ -331,16 +329,18 @@ namespace Core
         public async void PurchaseProduct(string shopProductId)
         {
             PanelManager.WaitingForServerPanel();
-            var responseData = await GetHttpsCallable(true, shopProductId, Constants.ProductPurchaseFunction);
+            var responseData = await GetHttpsCallable(shopProductId, Constants.ProductPurchaseFunction);
 
-            ShopPanelController.CompletePurchase(responseData);
+            var product = ProcessBasicResponseData<string>(responseData);
+
+            ShopManager.CompletePurchase(product);
         }
 
         #endregion
 
         #region Common
 
-        private async Task<object> GetHttpsCallable(bool hasResponse, string sendData, string callName)
+        private async Task<object> GetHttpsCallable(string sendData, string callName)
         {
             var data = new Dictionary<string, object> {["text"] = sendData, ["push"] = true};
 
@@ -355,9 +355,9 @@ namespace Core
             }
 
             PanelManager.WaitingForServerPanel(false);
-            
+
             if (response.Data != null) return response.Data;
-            
+
             Debug.LogError("GetHttpsCallable returned empty data");
             return null;
         }
@@ -380,13 +380,13 @@ namespace Core
             }
         }
 
-        private static long ProcessBasicResponseData(object data)
+        private static T ProcessBasicResponseData<T>(object data)
         {
             var processedData = (Dictionary<object, object>) data;
 
-            if (!processedData.ContainsKey("id")) return -1;
+            if (processedData.ContainsKey("id")) return (T) processedData["id"];
 
-            return (long) processedData["id"];
+            return (T) data;
         }
 
         #endregion

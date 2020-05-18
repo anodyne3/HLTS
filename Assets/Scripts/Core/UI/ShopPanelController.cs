@@ -1,52 +1,39 @@
-using System.Collections.Generic;
 using Core.UI.Prefabs;
 using Enums;
 using MyScriptableObjects;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Purchasing;
 using Utils;
 
 namespace Core.UI
 {
-    public class ShopPanelController : PanelController, IStoreListener
+    public class ShopPanelController : PanelController
     {
         [Header("Prefabs")] [SerializeField] private Transform categoryHolder;
         [SerializeField] private ShopCategoryPrefab categoryPrefab;
-        [SerializeField] private ShopProductPrefab productPrefab;
-
-        private IStoreController _storeController;
-        private IExtensionProvider _extensionProvider;
+        [SerializeField] private ShopProductPrefab hardCurrencyProductPrefab;
+        [SerializeField] private ShopProductPrefab softCurrencyProductPrefab;
 
         private ShopCategory[] _shopCategories;
         private ProductDefinition[] _hardCurrencyProductDefinitions;
-        private ShopProduct[] _shopProducts;
 
         public override void Start()
         {
             base.Start();
 
             InitCategories();
-
-            LoadProductDefinitions();
-
-            if (_storeController != null) return;
-
-            InitialisePurchasing();
-        }
-
-        public void LoadShopProducts()
-        {
-            _shopProducts = GeneralUtils.SortLoadedList<ShopProduct>(Constants.ShopProductPath,
-                (x, y) => x.productCost.CompareTo(y.productCost));
         }
 
         public override void OpenPanel(params object[] args)
         {
+            if (isActiveAndEnabled)
+            {
+                ClosePanel();
+                return;
+            }
+
             base.OpenPanel(args);
-
-            if (!isActiveAndEnabled) return;
-
-            ClosePanel();
         }
 
         private void InitCategories()
@@ -61,20 +48,33 @@ namespace Core.UI
                 newCategory.Init(_shopCategories[i].name);
                 newCategory.name = _shopCategories[i].name;
             }
+
+            InitProducts();
         }
 
-        private void LoadProductDefinitions()
+        private void InitProducts()
+        {
+            var shopProductsLength = ShopManager.shopProducts.Length;
+            for (var i = 0; i < shopProductsLength; i++)
+            {
+                var newShopPanelItem =
+                    Instantiate(
+                        ShopManager.shopProducts[i].ResourceType == ResourceType.HardCurrency
+                            ? hardCurrencyProductPrefab
+                            : softCurrencyProductPrefab, SelectCategoryTransform(i));
+                newShopPanelItem.Init(ShopManager.shopProducts[i]);
+            }
+        }
+
+        public IEnumerable<ProductDefinition> LoadProductDefinitions()
         {
             var hardProductList = new List<ShopProduct>();
 
-            var shopProductsLength = _shopProducts.Length;
+            var shopProductsLength = ShopManager.shopProducts.Length;
             for (var i = 0; i < shopProductsLength; i++)
             {
-                var newShopPanelItem = Instantiate(productPrefab, SelectCategoryTransform(i));
-                newShopPanelItem.Init(_shopProducts[i]);
-
-                if (_shopProducts[i].currencyType == ResourceType.HardCurrency)
-                    hardProductList.Add(_shopProducts[i]);
+                if (ShopManager.shopProducts[i].ResourceType == ResourceType.HardCurrency)
+                    hardProductList.Add(ShopManager.shopProducts[i]);
             }
 
             _hardCurrencyProductDefinitions = new ProductDefinition[hardProductList.Count];
@@ -82,68 +82,19 @@ namespace Core.UI
             var hardProductListCount = hardProductList.Count;
             for (var i = 0; i < hardProductListCount; i++)
             {
-                _hardCurrencyProductDefinitions[i] = new ProductDefinition(_shopProducts[i].productId,
-                    _shopProducts[i].productType);
+                _hardCurrencyProductDefinitions[i] = new ProductDefinition(hardProductList[i].productId,
+                    hardProductList[i].productType);
             }
+
+            return _hardCurrencyProductDefinitions;
         }
 
         private Transform SelectCategoryTransform(int index)
         {
-            var childIndex = _shopProducts[index].shopCategory.orderInShop;
+            var childIndex = ShopManager.shopProducts[index].shopCategory.orderInShop;
             var shopCategoryPrefab = (ShopCategoryPrefab) categoryHolder
                 .GetChild(childIndex).GetComponent(typeof(ShopCategoryPrefab));
             return shopCategoryPrefab.productHolder;
-        }
-
-        private void InitialisePurchasing()
-        {
-            if (IsInitialised()) return;
-
-            var module = StandardPurchasingModule.Instance();
-            var builder = ConfigurationBuilder.Instance(module);
-            builder.AddProducts(_hardCurrencyProductDefinitions);
-            UnityPurchasing.Initialize(this, builder);
-        }
-
-        private bool IsInitialised()
-        {
-            return _storeController != null && _extensionProvider != null;
-        }
-
-        public static void CompletePurchase(object product)
-        {
-            if (product == null) return;
-
-            EventManager.refreshCurrency.Raise();
-        }
-
-        public void OnQueryInventoryFailed(string message)
-        {
-            Debug.Log($"Query Inventory Failed: {message}");
-        }
-
-        public void OnInitializeFailed(InitializationFailureReason error)
-        {
-            Debug.Log($"Initialization Failure Reason: {error}");
-        }
-
-        public PurchaseProcessingResult ProcessPurchase(PurchaseEventArgs e)
-        {
-            Debug.Log($"PurchaseProcessingResult: {e}");
-            throw new System.Exception();
-        }
-
-        public void OnPurchaseFailed(Product i, PurchaseFailureReason p)
-        {
-            Debug.Log($"Purchase of {i} Failed: {p}.");
-        }
-
-        public void OnInitialized(IStoreController controller, IExtensionProvider extensions)
-        {
-            _storeController = controller;
-            _extensionProvider = extensions;
-
-            Debug.Log($"Store Initialised: {controller}; {extensions}");
         }
     }
 }

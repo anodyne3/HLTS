@@ -52,7 +52,7 @@ namespace Core.UI
 
             RefreshUi();
         }
-        
+
         private void RefreshUi()
         {
             RefreshResourceRequirements();
@@ -86,10 +86,17 @@ namespace Core.UI
             FirebaseFunctionality.Upgrade(_upgradeVariable);
         }
 
-        public void UpgradeComplete()
+        public void UpgradeComplete(long productId)
         {
             base.ClosePanel();
-            
+
+            var alertMessage =
+                Constants.GetUpgradeTypeName(UpgradeManager.GetUpgradeVariable((UpgradeTypes) productId).upgradeType) +
+                Constants.UpgradeCompletedSuffix;
+
+            AlertMessage.Init(alertMessage);
+
+            EventManager.refreshCurrency.Raise();
             EventManager.upgradeRefresh.Raise();
         }
     }
