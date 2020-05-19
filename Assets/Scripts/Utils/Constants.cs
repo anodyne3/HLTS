@@ -16,9 +16,10 @@ namespace Utils
         public const string LowResourcesPrefix = "Not enough ";
         public const string UpgradeCompletedSuffix = " Upgraded";
         public const string PurchaseMessage = "Purchase Successful";
-        public static string GetResourceTypeName(ResourceType currencyType)
+        public const string MergeMessage = "Chest Merge Successful";
+        public static string GetResourceTypeName(ResourceType resourceType)
         {
-            switch (currencyType)
+            switch (resourceType)
             {
                 case ResourceType.BananaCoins:
                     return "Banana Coins";
@@ -30,9 +31,9 @@ namespace Utils
                     return "Resources";
             }
         }
-        public static string GetUpgradeTypeName(UpgradeTypes currencyType)
+        public static string GetUpgradeTypeName(UpgradeTypes upgradeTypes)
         {
-            switch (currencyType)
+            switch (upgradeTypes)
             {
                 case UpgradeTypes.AutoRoll:
                     return "Auto Roll ";
@@ -40,8 +41,8 @@ namespace Utils
                     return "Coin Slot ";
                 case UpgradeTypes.ChestClaim:
                     return "Auto Chest ";
-                case UpgradeTypes.FixSlotLight:
-                    return "Slot Light ";
+                case UpgradeTypes.ChestMerge:
+                    return "Chest Merge ";
                 case UpgradeTypes.ShopUpgrade:
                     return "Shop ";
                 default:
@@ -60,9 +61,9 @@ namespace Utils
         public const string SufficientCurrencyPrefix = "<color=#FFFFFF>";
         public const string InsufficientCurrencyPrefix = "<color=#BD2424>";
 
-        public static string GetCurrencySpriteAsset(ResourceType currencyType)
+        public static string GetCurrencySpriteAsset(ResourceType resourceType)
         {
-            switch (currencyType)
+            switch (resourceType)
             {
                 case ResourceType.BananaCoins:
                     return "<sprite=\"BC\" index=0> ";
@@ -88,6 +89,7 @@ namespace Utils
         public const string ReelRollCloudFunction = "usersReelRollOnCall";
         public const string AdRewardClaimCloudFunction = "usersAdRewardClaimOnCall";
         public const string ChestClaimCloudFunction = "usersChestClaimOnCall";
+        public const string ChestMergeCloudFunction = "usersChestMergeOnCall";
         public const string ChestOpenCloudFunction = "usersChestOpenOnCall";
         public const string DoUpgradeRepairFunction = "usersUpgradeDoOnCall";
         public const string ProductPurchaseFunction = "usersProductPurchaseOnCall";
@@ -105,14 +107,15 @@ namespace Utils
         public const float CoinsBackgroundWidthMultiplier = 50.0f;
 
         //resource paths
-        public const string FruitParticleSpritesPath = "FruitSprites";
-        public const string SoundEffectPath = "SoundEffects";
-        public const string MusicTrackPath = "MusicTracks";
-        public const string ShopProductPath = "ShopProducts";
-        public const string ChestsPath = "Chests";
+        public const string ChestMergesPath = "ChestMerges";
         public const string ChestRewardsPath = "ChestRewards";
-        public const string UpgradesPath = "Upgrades";
+        public const string ChestsPath = "Chests";
+        public const string FruitParticleSpritesPath = "FruitSprites";
+        public const string MusicTrackPath = "MusicTracks";
         public const string ShopCategoryPath = "ShopCategories";
+        public const string ShopProductPath = "ShopProducts";
+        public const string SoundEffectPath = "SoundEffects";
+        public const string UpgradesPath = "Upgrades";
 
         //tween settings paths
         public const string CloseButtonPunchSettingPath = "TweenSettings/closeButtonPunchSetting";

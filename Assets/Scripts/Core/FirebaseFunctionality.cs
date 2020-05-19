@@ -286,6 +286,15 @@ namespace Core
             ChestManager.OpenChest(new ChestRewardDto(response.Data));
         }
 
+        public async void ChestMerge(string chestMergeLevel)
+        {
+            // PanelManager.WaitingForServerPanel();
+            var responseData = await GetHttpsCallable(chestMergeLevel, Constants.ChestMergeCloudFunction);
+
+            if (chestMergeLevel == ProcessBasicResponseData<string>(responseData))
+                ChestManager.CompleteMerge();
+        }
+
         #endregion
 
         #region Upgrades

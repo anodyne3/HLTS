@@ -66,11 +66,10 @@ namespace Core.Managers
         //return an object from it's equivalent dictionary
         private T GetResource<T>(string keyString) where T : Object
         {
-            var allDictionariesCount = _allDictionaries.Count;
             var dictionaryReference = new DictionaryReference<T>(null);
-            for (var i = 0; i < allDictionariesCount; i++)
+            foreach (var dictionary in _allDictionaries)
             {
-                dictionaryReference = _allDictionaries[i] as DictionaryReference<T>;
+                dictionaryReference = dictionary as DictionaryReference<T>;
                 if (dictionaryReference == null || dictionaryReference.Type != typeof(T)) continue;
 
                 if (dictionaryReference.reference.TryGetValue(keyString, out var value))

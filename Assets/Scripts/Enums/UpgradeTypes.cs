@@ -5,7 +5,7 @@ namespace Enums
         AutoRoll = 0,
         CoinSlot = 1,
         ChestClaim = 2,
-        FixSlotLight = 3,
+        ChestMerge = 3,
         ShopUpgrade = 4,
     }
 }

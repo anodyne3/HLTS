@@ -14,6 +14,7 @@ namespace Core.UI
         [SerializeField] private SVGImage chestClosedIcon;
         [SerializeField] private SVGImage chestOpenIcon;
         [SerializeField] private Button openChestButton;
+        [SerializeField] private Button chestMergeButton;
         [SerializeField] private TMP_Text openChestButtonText;
         [SerializeField] private TMP_Text bcMaxText;
         [SerializeField] private TMP_Text bpMaxText;
@@ -27,6 +28,8 @@ namespace Core.UI
 
             openChestButton.onClick.RemoveAllListeners();
             openChestButton.onClick.AddListener(OpenChest);
+            chestMergeButton.onClick.RemoveAllListeners();
+            chestMergeButton.onClick.AddListener(OpenMergePanel);
 
             EventManager.NewEventSubscription(gameObject, Constants.GameEvents.refreshUiEvent, RefreshPanel);
             EventManager.NewEventSubscription(gameObject, Constants.GameEvents.chestOpenEvent, CloseChestIcon);
@@ -93,6 +96,11 @@ namespace Core.UI
             if (PlayerData.GetChestCount(_chestVariable.chestType) < 1) return;
             
             FirebaseFunctionality.OpenChest(_chestVariable.chestType);
+        }
+
+        private static void OpenMergePanel()
+        {
+            PanelManager.OpenSubPanel<ChestMergePanelController>();
         }
     }
 }

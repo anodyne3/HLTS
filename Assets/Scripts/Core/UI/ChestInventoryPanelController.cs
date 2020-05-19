@@ -41,11 +41,9 @@ namespace Core.UI
 
             ChestsInit();
 
-            EventManager.NewEventSubscription(gameObject, Constants.GameEvents.refreshUiEvent, RefreshFill);
-            EventManager.NewEventSubscription(gameObject, Constants.GameEvents.chestRefreshEvent, ChestsRefresh);
+            EventManager.NewEventSubscription(gameObject, Constants.GameEvents.refreshUiEvent, RefreshFill, true);
+            EventManager.NewEventSubscription(gameObject, Constants.GameEvents.chestRefreshEvent, ChestsRefresh, true);
             EventManager.NewEventSubscription(gameObject, Constants.GameEvents.chestOpenEvent, RefreshPanel);
-            
-            ChestsRefresh();
         }
 
         private void ChestsInit()
@@ -77,6 +75,8 @@ namespace Core.UI
 
         private void RefreshFill()
         {
+            if (!isActiveAndEnabled) return;
+            
             var currentChestRank = ChestManager.CurrentChest.rank;
             currentChestProgressSlider.DOValue(ChestManager.GetFillAmount(currentChestRank),
                 tweenPunchSetting.punchDuration);
@@ -96,13 +96,13 @@ namespace Core.UI
 
         private void ChestsRefresh()
         {
+            if (!isActiveAndEnabled) return;
+            
             RefreshClaimChestButton();
             currentChestProgressFillImage.color = ChestManager.CurrentChest.chestColor;
-            var chestsCount = _chests.Count;
-            for (var i = 0; i < chestsCount; i++)
-            {
-                _chests[i].Refresh();
-            }
+
+            foreach (var chest in _chests)
+                chest.Refresh();
         }
 
         private void RefreshClaimChestButton()
@@ -118,7 +118,7 @@ namespace Core.UI
 
         private static void ClaimChest()
         {
-            PanelManager.OpenSubPanel<ClaimChestPanelController>(ChestManager
+            PanelManager.OpenSubPanel<ChestClaimPanelController>(ChestManager
                 .GetChestVariable(ChestManager.CurrentChest.rank - 1).chestType);
         }
 

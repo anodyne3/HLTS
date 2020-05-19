@@ -1,4 +1,3 @@
-using System.Linq;
 using Core.GameData;
 using Core.UI;
 using Core.UI.Prefabs;
@@ -19,6 +18,7 @@ namespace Core.Managers
         [SerializeField] private TweenPunchSetting tweenPunchSetting;
 
         public ChestVariable[] chestTypes;
+        public ChestMergeVariable[] chestMergeTypes;
 
         public ChestVariable CurrentChest
         {
@@ -33,13 +33,14 @@ namespace Core.Managers
                 return null;
             }
         }
-        
+
         public int RollsToBetterChest
         {
-            get {
-                if(PlayerData.currentChestRoll == CurrentChest.threshold)
+            get
+            {
+                if (PlayerData.currentChestRoll == CurrentChest.threshold)
                     return GetChestVariable(CurrentChest.rank + 1).threshold - PlayerData.currentChestRoll;
-                
+
                 return CurrentChest.threshold - PlayerData.currentChestRoll;
             }
         }
@@ -71,6 +72,9 @@ namespace Core.Managers
             LoadChests();
             RefreshChest();
             RefreshFill();
+            
+            /*var chestMergePanel = PanelManager.GetPanel<ChestMergePanelController>();
+            chestMergePanel.InitPrefabs();*/
 
             EventManager.NewEventSubscription(gameObject, Constants.GameEvents.refreshUiEvent, RefreshFill);
             EventManager.NewEventSubscription(gameObject, Constants.GameEvents.chestRefreshEvent, RefreshChest);
@@ -79,12 +83,11 @@ namespace Core.Managers
         private void LoadChests()
         {
             chestTypes =
-                GeneralUtils.SortLoadedList<ChestVariable>(Constants.ChestsPath, 
+                GeneralUtils.SortLoadedList<ChestVariable>(Constants.ChestsPath,
                     (x, y) => x.rank.CompareTo(y.rank));
-
-            /*var loadedChests = Resources.LoadAll<ChestVariable>(Constants.ChestsPath).ToList();
-            loadedChests.Sort((x, y) => x.rank.CompareTo(y.rank));
-            chestTypes = loadedChests.ToArray();*/
+            chestMergeTypes =
+                GeneralUtils.SortLoadedList<ChestMergeVariable>(Constants.ChestMergesPath,
+                    (x, y) => x.mergeUpgradeLevel.CompareTo(y.mergeUpgradeLevel));
         }
 
         private void RefreshChest()
@@ -98,20 +101,15 @@ namespace Core.Managers
             chestProgressFillImage.DOFillAmount(GetFillAmount(CurrentChest.rank), tweenPunchSetting.punchDuration);
 
             var tweenPause = DOTween.Sequence();
-            
+
             if (PlayerData.currentChestRoll != CurrentChest.threshold) return;
-                    
+
             tweenPause.InsertCallback(0.5f, () =>
             {
                 UpgradeChest();
-                chestProgressFillImage.DOFillAmount(GetFillAmount(CurrentChest.rank + 1), tweenPunchSetting.punchDuration);
+                chestProgressFillImage.DOFillAmount(GetFillAmount(CurrentChest.rank + 1),
+                    tweenPunchSetting.punchDuration);
             });
-        }
-
-        [ContextMenu("UpgradePunchTest")]
-        public void UpgradePunchTest()
-        {
-            tweenPunchSetting.DoPunch(transform);
         }
 
         private void UpgradeChest()
@@ -119,7 +117,6 @@ namespace Core.Managers
             chestIcon.sprite = GetChestVariable(CurrentChest.rank + 1).chestIcon;
             outlineImage.color = GetChestVariable(CurrentChest.rank + 1).chestColor;
             tweenPunchSetting.DoPunch(transform);
-            
         }
 
         public static void OpenChest(ChestRewardDto chestRewardDto)
@@ -150,7 +147,7 @@ namespace Core.Managers
         {
             if (rank < 0)
                 return chestTypes[0];
-            
+
             return rank < chestTypes.Length ? chestTypes[rank] : CurrentChest;
         }
 
@@ -158,6 +155,11 @@ namespace Core.Managers
         {
             //do anim with the icon of type in param
             EventManager.chestRefresh.Raise();
+        }
+
+        public void CompleteMerge()
+        {
+            AlertMessage.Init(Constants.MergeMessage);
         }
     }
 }
