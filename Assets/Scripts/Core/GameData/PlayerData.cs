@@ -74,17 +74,17 @@ namespace Core.GameData
         private void OnRollDataChanged(object sender, ValueChangedEventArgs args)
         {
             if (sender != null)
-                Debug.Log(sender.ToString());
+                AlertMessage.Init(sender.ToString());
 
             if (args.DatabaseError != null)
             {
-                Debug.LogError(args.DatabaseError.Message);
+                AlertMessage.Init(args.DatabaseError.Message);
                 return;
             }
 
             if (string.IsNullOrEmpty(args.Snapshot.GetRawJsonValue()))
             {
-                Debug.Log("Empty Snapshot: " + args.Snapshot.Key);
+                AlertMessage.Init("Empty Snapshot: " + args.Snapshot.Key);
                 return;
             }
 
@@ -136,11 +136,11 @@ namespace Core.GameData
         private static string ProcessDataChanges(object sender, ValueChangedEventArgs args)
         {
             if (sender != null)
-                Debug.Log(sender.ToString());
+                AlertMessage.Init(sender.ToString());
 
             if (args.DatabaseError != null)
             {
-                Debug.LogError(args.DatabaseError.Message);
+                AlertMessage.Init(args.DatabaseError.Message);
                 return string.Empty;
             }
 
@@ -149,7 +149,7 @@ namespace Core.GameData
                 return args.Snapshot.GetRawJsonValue();
             }
 
-            Debug.Log("Empty Snapshot: " + args.Snapshot.Key);
+            AlertMessage.Init("Empty Snapshot: " + args.Snapshot.Key);
             return string.Empty;
         }
 

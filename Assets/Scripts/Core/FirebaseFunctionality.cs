@@ -38,7 +38,7 @@ namespace Core
                 CheckLogin();
             }
             else
-                Debug.LogError($"Could not resolve all Firebase dependencies: {dependencyStatus.Result}");
+                AlertMessage.Init($"Could not resolve all Firebase dependencies: {dependencyStatus.Result}");
 
             _firebaseApp.SetEditorDatabaseUrl(Constants.FirebaseDatabaseUrl);
             _firebaseFunc = FirebaseFunctions.DefaultInstance;
@@ -66,7 +66,7 @@ namespace Core
         {
             if (_firebaseAuth.CurrentUser == null && !_signingIn)
             {
-                Debug.Log("No user signed in");
+                AlertMessage.Init("No user signed in");
                 SignIn();
                 return;
             }
@@ -80,13 +80,13 @@ namespace Core
             {
                 if (PlayerData.firebaseUser != null)
                 {
-                    Debug.Log("Signed out " + PlayerData.firebaseUser.UserId);
+                    AlertMessage.Init("Signed out " + PlayerData.firebaseUser.UserId);
                 }
 
                 if (!firebaseReady || !PlayerData.ConsentGiven)
                 {
-                    Debug.Log("Signed out - firebaseReady:" + firebaseReady + "; consentGiven:" +
-                              PlayerData.ConsentGiven);
+                    AlertMessage.Init("Signed out - firebaseReady:" + firebaseReady + "; consentGiven:" +
+                                      PlayerData.ConsentGiven);
                 }
             }
 
@@ -110,19 +110,19 @@ namespace Core
             await task;
             if (task.IsCanceled)
             {
-                Debug.LogError("SignInAnonymouslyAsync was cancelled.");
+                AlertMessage.Init("SignInAnonymouslyAsync was cancelled.");
                 return;
             }
 
             if (task.IsFaulted)
             {
-                Debug.LogError("SignInAnonymouslyAsync encountered an error: " + task.Exception);
+                AlertMessage.Init("SignInAnonymouslyAsync encountered an error: " + task.Exception);
                 return;
             }
 
             var newUser = task.Result;
             _signingIn = _firebaseAuth.CurrentUser != null;
-            Debug.LogFormat("User signed in successfully: {0} ({1})", newUser.DisplayName, newUser.UserId);
+            AlertMessage.Init("User signed in successfully: " + newUser.DisplayName + " (" + newUser.UserId + ")");
         }
 
         public void ResetAccount()
@@ -139,32 +139,25 @@ namespace Core
             DOTween.Clear();
         }
 
-        private void DeleteAccount()
+        private static void DeleteAccount()
         {
             _firebaseAuth.CurrentUser?.DeleteAsync().ContinueWith(task =>
             {
                 if (task.IsCanceled)
                 {
-                    Debug.LogError("DeleteAsync was canceled.");
+                    AlertMessage.Init("DeleteAsync was canceled.");
                     return;
                 }
 
                 if (task.IsFaulted)
                 {
-                    Debug.LogError("DeleteAsync encountered an error: " + task.Exception);
+                    AlertMessage.Init("DeleteAsync encountered an error: " + task.Exception);
                     return;
                 }
 
-                Debug.Log("User deleted successfully.");
+                AlertMessage.Init("User deleted successfully.");
             });
         }
-
-        //probably unnecessary 
-        /*public void SignOut()
-        {
-            // PlayerData.StopDatabaseListeners();
-            _firebaseAuth.SignOut();
-        }*/
 
         public void LinkAccount()
         {
@@ -191,7 +184,6 @@ namespace Core
             await rollReel;
             if (rollReel.IsFaulted)
             {
-                //maybe show message to player regarding failed internet
                 HandleFunctionError(rollReel);
             }
         }
@@ -209,12 +201,14 @@ namespace Core
         {
             var adRewardClaim = _firebaseFunc.GetHttpsCallable(Constants.AdRewardClaimCloudFunction).CallAsync();
 
-            await adRewardClaim;
+            var responseData = await adRewardClaim;
             if (adRewardClaim.IsFaulted)
             {
-                //maybe show message to player regarding some issue
                 HandleFunctionError(adRewardClaim);
             }
+
+            var adRewardAmount = ProcessBasicResponseData<long>(responseData);
+            AlertMessage.Init("Extra " + adRewardAmount + " Banana Coins awarded");
         }
 
         #endregion
@@ -224,7 +218,12 @@ namespace Core
         public async void ClaimChest(ChestType claimedChest)
         {
             PanelManager.WaitingForServerPanel();
-            await ChestClaim(claimedChest.ToString());
+            var chestClaimId = claimedChest.ToString();
+            var responseData = await GetHttpsCallable(chestClaimId, Constants.ChestClaimCloudFunction);
+
+            var chestId = ProcessBasicResponseData<long>(responseData);
+            ChestManager.ChestClaimed((ChestType) chestId);
+            // await ChestClaim(claimedChest.ToString());
         }
 
         private async Task ChestClaim(string claimedChest)
@@ -236,16 +235,14 @@ namespace Core
             var response = await chestClaim;
             if (chestClaim.IsFaulted)
             {
-                //maybe show message to player regarding some issue
                 HandleFunctionError(chestClaim);
             }
 
             PanelManager.WaitingForServerPanel(false);
 
-            //maybe show message to player regarding some issue
             if (response.Data == null)
             {
-                Debug.LogError("ChestClaim returned empty data");
+                AlertMessage.Init("ChestClaim returned empty data");
                 return;
             }
 
@@ -257,7 +254,16 @@ namespace Core
         public async void OpenChest(ChestType chestType)
         {
             PanelManager.WaitingForServerPanel();
-            await ChestOpen(((int) chestType).ToString());
+            var chestOpenId = ((int) chestType).ToString();
+            var responseData = await GetHttpsCallable((chestOpenId), Constants.ChestOpenCloudFunction);
+
+            if (responseData == null)
+            {
+                AlertMessage.Init("ChestOpen returned empty data");
+                return;
+            }
+            
+            ChestManager.OpenChest(new ChestRewardDto(responseData));
         }
 
         private async Task ChestOpen(string chestType)
@@ -270,16 +276,14 @@ namespace Core
             var response = await chestOpen;
             if (chestOpen.IsFaulted)
             {
-                //maybe show message to player regarding some issue
                 HandleFunctionError(chestOpen);
             }
 
             PanelManager.WaitingForServerPanel(false);
 
-            //maybe show message to player regarding some issue
             if (response.Data == null)
             {
-                Debug.LogError("ChestOpen returned empty data");
+                AlertMessage.Init("ChestOpen returned empty data");
                 return;
             }
 
@@ -302,14 +306,19 @@ namespace Core
         public async void Upgrade(UpgradeVariable upgradeVariable)
         {
             PanelManager.WaitingForServerPanel();
-            await DoUpgrade(((int) upgradeVariable.upgradeType).ToString());
+            var upgradeId = ((int) upgradeVariable.upgradeType).ToString();
+            var responseData = await GetHttpsCallable(upgradeId, Constants.DoUpgradeCloudFunction);
+
+            PanelManager.GetPanel<UpgradePanelController>()
+                .UpgradeComplete(ProcessBasicResponseData<long>(responseData));
+            // await DoUpgrade(((int) upgradeVariable.upgradeType).ToString());
         }
 
         private async Task DoUpgrade(string upgradeId)
         {
             var data = new Dictionary<string, object> {["text"] = upgradeId, ["push"] = true};
 
-            var doUpgrade = _firebaseFunc.GetHttpsCallable(Constants.DoUpgradeRepairFunction).CallAsync(data);
+            var doUpgrade = _firebaseFunc.GetHttpsCallable(Constants.DoUpgradeCloudFunction).CallAsync(data);
 
             var response = await doUpgrade;
             if (doUpgrade.IsFaulted)
@@ -359,7 +368,6 @@ namespace Core
             var response = await task;
             if (task.IsFaulted)
             {
-                //maybe show message to player regarding some issue
                 HandleFunctionError(task);
             }
 
@@ -367,7 +375,7 @@ namespace Core
 
             if (response.Data != null) return response.Data;
 
-            Debug.LogError("GetHttpsCallable returned empty data");
+            AlertMessage.Init(callName + " returned empty");
             return null;
         }
 
@@ -375,7 +383,7 @@ namespace Core
         {
             if (httpsCallableResult.Exception == null)
             {
-                Debug.LogError("adRewardClaim.Exception is null");
+                AlertMessage.Init("Communication Error - Exception is null");
                 return;
             }
 
@@ -385,7 +393,7 @@ namespace Core
 
                 var code = e.ErrorCode;
                 var message = e.Message;
-                Debug.LogError(code + message);
+                AlertMessage.Init(code + message);
             }
         }
 
@@ -393,7 +401,7 @@ namespace Core
         {
             var processedData = (Dictionary<object, object>) data;
 
-            if (processedData.ContainsKey("id")) return (T) processedData["id"];
+            if (processedData.ContainsKey("text")) return (T) processedData["text"];
 
             return (T) data;
         }

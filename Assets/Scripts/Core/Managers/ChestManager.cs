@@ -156,7 +156,6 @@ namespace Core.Managers
         public void ChestClaimed(ChestType chestType)
         {
             AlertMessage.Init(chestType + Constants.ClaimMessage);
-            ChestAddedAnim(chestType);
             EventManager.chestRefresh.Raise();
         }
 

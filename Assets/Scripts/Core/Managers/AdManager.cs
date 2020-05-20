@@ -54,12 +54,12 @@ namespace Core.Managers
 
         private void HandleRewardedAdFailedToLoad(object sender, AdErrorEventArgs e)
         {
-            Debug.LogError("ad failed to load");
+            AlertMessage.Init("ad failed to load");
         }
 
         private void HandleRewardedAdFailedToShow(object sender, AdErrorEventArgs e)
         {
-            Debug.LogError("ad failed to show");
+            AlertMessage.Init("ad failed to show");
         }
         
         private void HandleUserEarnedReward(object sender, Reward e)

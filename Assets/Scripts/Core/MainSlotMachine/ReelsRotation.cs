@@ -24,7 +24,7 @@ namespace Core.MainSlotMachine
             newRoll = PlayerData.lastResult;
             if (newRoll == null)
             {
-                Debug.Log("lastResult was empty");
+                AlertMessage.Init("lastResult was empty");
                 PlayerData.lastResult = new[] {1, 2, 3};
                 PlayerData.nextResult = new[] {5, 6, 7};
                 return;

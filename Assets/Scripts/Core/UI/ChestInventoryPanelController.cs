@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Core.UI.Prefabs;
+﻿using Core.UI.Prefabs;
 using DG.Tweening;
 using Enums;
 using MyScriptableObjects;

@@ -93,7 +93,7 @@ namespace Utils
         public const string ChestClaimCloudFunction = "usersChestClaimOnCall";
         public const string ChestMergeCloudFunction = "usersChestMergeOnCall";
         public const string ChestOpenCloudFunction = "usersChestOpenOnCall";
-        public const string DoUpgradeRepairFunction = "usersUpgradeDoOnCall";
+        public const string DoUpgradeCloudFunction = "usersUpgradeDoOnCall";
         public const string ProductPurchaseFunction = "usersProductPurchaseOnCall";
         public const string FirebaseDatabaseUrl = "https://he-loves-the-slots.firebaseio.com/";
         public const string PrivacyPolicyUrl = "https://he-loves-the-slots.web.app/PrivacyPolicy.html";
@@ -103,7 +103,7 @@ namespace Utils
         public const string ConfirmClaimMessagePrefix = "You are ";
         public const string ConfirmClaimMessageSuffix = " rolls from a better chest.";
         public const string ChestRewardPrefix = " ~";
-        public const float ChestAddInterval = 0.333f;
+        public const float ChestAddInterval = 0.666f;
 
         //ui
         public const float CoinsBackgroundBaseWidth = 280.0f;
