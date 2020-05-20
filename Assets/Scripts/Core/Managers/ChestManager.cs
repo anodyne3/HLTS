@@ -16,7 +16,10 @@ namespace Core.Managers
         [SerializeField] private Image outlineImage;
         [SerializeField] private Image chestProgressFillImage;
         [SerializeField] private TweenPunchSetting tweenPunchSetting;
+        [SerializeField] private ChestAddedPrefab chestAddedPrefab;
+        [SerializeField] private Transform chestAddedHolder;
 
+        private MyObjectPool<ChestAddedPrefab> _tweenChestAddedPool;
         public ChestVariable[] chestTypes;
         public ChestMergeVariable[] chestMergeTypes;
 
@@ -68,13 +71,12 @@ namespace Core.Managers
             openChestPanel.chestRewardPool =
                 ObjectPoolManager.CreateObjectPool<ChestRewardPrefab>(openChestPanel.chestRewardPrefab,
                     openChestPanel.rewardStartPosition);
+            _tweenChestAddedPool =
+                ObjectPoolManager.CreateObjectPool<ChestAddedPrefab>(chestAddedPrefab, chestAddedHolder);
 
             LoadChests();
             RefreshChest();
             RefreshFill();
-            
-            /*var chestMergePanel = PanelManager.GetPanel<ChestMergePanelController>();
-            chestMergePanel.InitPrefabs();*/
 
             EventManager.NewEventSubscription(gameObject, Constants.GameEvents.refreshUiEvent, RefreshFill);
             EventManager.NewEventSubscription(gameObject, Constants.GameEvents.chestRefreshEvent, RefreshChest);
@@ -151,15 +153,49 @@ namespace Core.Managers
             return rank < chestTypes.Length ? chestTypes[rank] : CurrentChest;
         }
 
-        public void ChestAdded(ChestType id)
+        public void ChestClaimed(ChestType chestType)
         {
-            //do anim with the icon of type in param
+            AlertMessage.Init(chestType + Constants.ClaimMessage);
+            ChestAddedAnim(chestType);
             EventManager.chestRefresh.Raise();
         }
 
-        public void CompleteMerge()
+        public static void CompleteMerge()
         {
             AlertMessage.Init(Constants.MergeMessage);
         }
+
+        #region ChestAddedAnim
+
+        public void AddChestsAnim(ChestType chestType, int amount)
+        {
+            var sequence = DOTween.Sequence();
+            
+            for (var i = 0; i < amount; i++)
+            {
+                sequence.AppendCallback(() =>
+                {
+                    ChestAddedAnim(chestType);
+                })
+                    .AppendInterval(Constants.ChestAddInterval);
+            }
+        }
+
+        private void ChestAddedAnim(ChestType chestType)
+        {
+            var chestAddedInstance = _tweenChestAddedPool.Get();
+            chestAddedInstance.transform.SetAsLastSibling();
+            chestAddedInstance.Init(chestType);
+            chestAddedInstance.gameObject.SetActive(true);
+        }
+
+        public void ChestAddedAnimComplete(ChestAddedPrefab completedPrefab)
+        {
+            _tweenChestAddedPool.Release(completedPrefab);
+            completedPrefab.gameObject.SetActive(false);
+            tweenPunchSetting.DoPunch(outlineImage.transform);
+        }
+        
+        #endregion
     }
 }

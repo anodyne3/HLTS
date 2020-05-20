@@ -2,6 +2,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Utils;
 
 namespace Core.UI.Prefabs
 {
@@ -11,23 +12,37 @@ namespace Core.UI.Prefabs
         [SerializeField] private SVGImage chestIcon;
         [SerializeField] private TMP_Text chestCount;
 
+        private int _oldCount;
         private ChestType _chestType;
 
         private void Start()
         {
             openChestButton.onClick.RemoveAllListeners();
             openChestButton.onClick.AddListener(OpenChestSubPanel);
+            
+            EventManager.NewEventSubscription(gameObject, Constants.GameEvents.chestRefreshEvent, Refresh);
         }
 
         public void Init(ChestType chestType)
         {
             _chestType = chestType;
             chestIcon.sprite = ChestManager.GetChestIcon(_chestType);
+            
+            _oldCount = PlayerData.GetChestCount(_chestType);
+            
+            Refresh();
         }
 
-        public void Refresh()
+        private void Refresh()
         {
-            chestCount.text = PlayerData.GetChestCount(_chestType).ToString();
+            var chestDifference = PlayerData.GetChestCount(_chestType) - _oldCount;
+            
+            _oldCount += chestDifference;
+            chestCount.text = _oldCount.ToString();
+
+            if (chestDifference <= 0) return;
+            
+            ChestManager.AddChestsAnim(_chestType, chestDifference);
         }
 
         private void OpenChestSubPanel()

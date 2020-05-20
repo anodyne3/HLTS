@@ -24,7 +24,14 @@ namespace Core.UI
             
             EventManager.NewEventSubscription(gameObject, Constants.GameEvents.chestRefreshEvent, RefreshButtons);
             EventManager.NewEventSubscription(gameObject, Constants.GameEvents.refreshUiEvent, RefreshText, true);
-            EventManager.NewEventSubscription(gameObject, Constants.GameEvents.upgradeRefreshEvent, RefreshButtons, true);
+            EventManager.NewEventSubscription(gameObject, Constants.GameEvents.upgradeRefreshEvent, RefreshButtons);
+        }
+
+        public override void OpenPanel(params object[] args)
+        {
+            base.OpenPanel(args);
+            
+            RefreshButtons();
         }
 
         private void InitClaimButtons()
@@ -42,6 +49,7 @@ namespace Core.UI
         {
             messageText.text = Constants.ConfirmClaimMessagePrefix + ChestManager.RollsToBetterChest +
                                Constants.ConfirmClaimMessageSuffix;
+            RefreshButtons();
         }
         
         private void RefreshButtons()

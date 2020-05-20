@@ -7,9 +7,9 @@ namespace Core.UI.Prefabs
 {
     public class DeductCurrencyPrefab : GlobalAccess
     {
-        public CanvasGroup canvasGroup;
-        public TMP_Text currencyText;
-        public TweenSetting tweenSettings;
+        [SerializeField] private CanvasGroup canvasGroup;
+        [SerializeField] private TMP_Text currencyText;
+        [SerializeField] private TweenSetting tweenSettings;
         private Sequence _deductSequence;
 
         public void Init(long currencyDifference)

@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b24095dc18074a278263b9b45befaec4, type: 3}
+  m_Name: chestAddedTweenSetting
+  m_EditorClassIdentifier: 
+  moveDuration: 1
+  delayBetweenInstance: 0
+  moveCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 2.3425064
+      outSlope: 2.3425064
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.047666043
+    - serializedVersion: 3
+      time: 0.38088107
+      value: 0.47726318
+      inSlope: -0.06376978
+      outSlope: -0.06376978
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.15721792
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 3.2795136
+      outSlope: 3.2795136
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.04770462
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spawnZoneRadius: 0
+  moveOffset: 500
+  rotateSetting: {fileID: 11400000, guid: 8ab3e8cb4b01c1d4d8735f24d120e76a, type: 2}
+  punchSetting: {fileID: 11400000, guid: 65326eed3ed5e7b42983326de9d4ac18, type: 2}
+  fadeSetting: {fileID: 0}
+  fadeStartDelay: 0
+  sizeDeltaDuration: 0
+  scaleStartValue: {x: 0, y: 0, z: 0}
+  scaleEndValue: {x: 1.333, y: 1.333, z: 1}
+  scaleDuration: 1
+  sequenceEasing: 0

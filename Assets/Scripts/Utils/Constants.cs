@@ -17,6 +17,8 @@ namespace Utils
         public const string UpgradeCompletedSuffix = " Upgraded";
         public const string PurchaseMessage = "Purchase Successful";
         public const string MergeMessage = "Chest Merge Successful";
+        public const string ClaimMessage = " Chest Claimed";
+        
         public static string GetResourceTypeName(ResourceType resourceType)
         {
             switch (resourceType)
@@ -101,6 +103,7 @@ namespace Utils
         public const string ConfirmClaimMessagePrefix = "You are ";
         public const string ConfirmClaimMessageSuffix = " rolls from a better chest.";
         public const string ChestRewardPrefix = " ~";
+        public const float ChestAddInterval = 0.333f;
 
         //ui
         public const float CoinsBackgroundBaseWidth = 280.0f;

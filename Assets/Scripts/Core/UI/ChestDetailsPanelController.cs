@@ -32,6 +32,7 @@ namespace Core.UI
             chestMergeButton.onClick.AddListener(OpenMergePanel);
 
             EventManager.NewEventSubscription(gameObject, Constants.GameEvents.refreshUiEvent, RefreshPanel);
+            EventManager.NewEventSubscription(gameObject, Constants.GameEvents.chestRefreshEvent, RefreshPanel);
             EventManager.NewEventSubscription(gameObject, Constants.GameEvents.chestOpenEvent, CloseChestIcon);
         }
 

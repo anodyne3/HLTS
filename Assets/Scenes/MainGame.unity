@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -2187,24 +2187,47 @@ PrefabInstance:
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 7243324766535440047, guid: 243f378e5bc108943b0a2e8206fee06f,
     type: 3}
+--- !u!1 &785407075
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 785407076}
+  m_Layer: 5
+  m_Name: ChestAddedHolder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &785407076
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 785407075}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1.0004928, y: 1.0004928, z: 1.0004928}
+  m_Children: []
+  m_Father: {fileID: 1018557876}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -521.9315, y: -1251.863}
+  m_SizeDelta: {x: -1107.863, y: -2567.726}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &895154433 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4314787545900673909, guid: a141dace50beb1c4bb4e5cba9a2c8774,
     type: 3}
   m_PrefabInstance: {fileID: 4314787546793677428}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &895154437 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3306717532381968274, guid: a141dace50beb1c4bb4e5cba9a2c8774,
-    type: 3}
-  m_PrefabInstance: {fileID: 4314787546793677428}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f94c4eee644242ac8e1a4c7e4ca62cb4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &898665169
 GameObject:
   m_ObjectHideFlags: 0
@@ -2471,6 +2494,7 @@ RectTransform:
   - {fileID: 1558789447}
   - {fileID: 7066491704856641624}
   - {fileID: 895154433}
+  - {fileID: 785407076}
   m_Father: {fileID: 0}
   m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3789,26 +3813,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 895154437}
+      objectReference: {fileID: 7798704292845295395}
     - target: {fileID: 5885758958848773474, guid: a095c0eaaf065e040a00e3e3c503053a,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: TestAlertMessage
+      value: ChestAnimTest
       objectReference: {fileID: 0}
     - target: {fileID: 6531374473421122884, guid: a095c0eaaf065e040a00e3e3c503053a,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6531374473421122884, guid: a095c0eaaf065e040a00e3e3c503053a,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6531374473421122884, guid: a095c0eaaf065e040a00e3e3c503053a,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 128
       objectReference: {fileID: 0}
     - target: {fileID: 6531374473421122884, guid: a095c0eaaf065e040a00e3e3c503053a,
         type: 3}
@@ -3818,12 +3842,12 @@ PrefabInstance:
     - target: {fileID: 6531374473421122884, guid: a095c0eaaf065e040a00e3e3c503053a,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 246
       objectReference: {fileID: 0}
     - target: {fileID: 6531374473421122884, guid: a095c0eaaf065e040a00e3e3c503053a,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 246
       objectReference: {fileID: 0}
     - target: {fileID: 6593830779331392001, guid: a095c0eaaf065e040a00e3e3c503053a,
         type: 3}
@@ -10117,8 +10141,25 @@ PrefabInstance:
       propertyPath: m_Name
       value: ChestManager
       objectReference: {fileID: 0}
+    - target: {fileID: 8093937056461519895, guid: 33c70850045d45340828e6451526c964,
+        type: 3}
+      propertyPath: chestAddedHolder
+      value: 
+      objectReference: {fileID: 785407076}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 33c70850045d45340828e6451526c964, type: 3}
+--- !u!114 &7798704292845295395 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8093937056461519895, guid: 33c70850045d45340828e6451526c964,
+    type: 3}
+  m_PrefabInstance: {fileID: 7798704292845295394}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68ec01c4393f488fad21c1c4b28f9e7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &7829374493642249447
 PrefabInstance:
   m_ObjectHideFlags: 0

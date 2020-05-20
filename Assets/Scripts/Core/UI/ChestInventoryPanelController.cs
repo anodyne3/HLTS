@@ -28,8 +28,6 @@ namespace Core.UI
 
         [SerializeField] private ChestInventoryPrefab inventoryChestPrefab;
 
-        private readonly List<ChestInventoryPrefab> _chests = new List<ChestInventoryPrefab>();
-
         public override void Start()
         {
             base.Start();
@@ -53,7 +51,6 @@ namespace Core.UI
             {
                 var chest = Instantiate(inventoryChestPrefab, chestInventoryContentHolder);
                 chest.Init(ChestManager.chestTypes[i].chestType);
-                _chests.Add(chest);
             }
         }
 
@@ -75,8 +72,6 @@ namespace Core.UI
 
         private void RefreshFill()
         {
-            if (!isActiveAndEnabled) return;
-            
             var currentChestRank = ChestManager.CurrentChest.rank;
             currentChestProgressSlider.DOValue(ChestManager.GetFillAmount(currentChestRank),
                 tweenPunchSetting.punchDuration);
@@ -100,9 +95,6 @@ namespace Core.UI
             
             RefreshClaimChestButton();
             currentChestProgressFillImage.color = ChestManager.CurrentChest.chestColor;
-
-            foreach (var chest in _chests)
-                chest.Refresh();
         }
 
         private void RefreshClaimChestButton()

@@ -400,7 +400,11 @@ MonoBehaviour:
   outlineImage: {fileID: 7798704293247501170}
   chestProgressFillImage: {fileID: 7798704293394752127}
   tweenPunchSetting: {fileID: 11400000, guid: e381d409ad0027643b6336687163c3ef, type: 2}
+  chestAddedPrefab: {fileID: 5041040817232126956, guid: 150e19b8a7ae84b4aa60651118123a3b,
+    type: 3}
+  chestAddedHolder: {fileID: 0}
   chestTypes: []
+  chestMergeTypes: []
 --- !u!222 &1486036065
 CanvasRenderer:
   m_ObjectHideFlags: 0

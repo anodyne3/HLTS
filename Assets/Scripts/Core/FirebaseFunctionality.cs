@@ -251,7 +251,7 @@ namespace Core
 
             var chestId = ProcessBasicResponseData<long>(response.Data);
 
-            ChestManager.ChestAdded((ChestType) chestId);
+            ChestManager.ChestClaimed((ChestType) chestId);
         }
 
         public async void OpenChest(ChestType chestType)
@@ -288,7 +288,7 @@ namespace Core
 
         public async void ChestMerge(string chestMergeLevel)
         {
-            // PanelManager.WaitingForServerPanel();
+            PanelManager.WaitingForServerPanel();
             var responseData = await GetHttpsCallable(chestMergeLevel, Constants.ChestMergeCloudFunction);
 
             if (chestMergeLevel == ProcessBasicResponseData<string>(responseData))
