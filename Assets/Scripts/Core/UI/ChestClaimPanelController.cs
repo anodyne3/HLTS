@@ -15,23 +15,25 @@ namespace Core.UI
         [SerializeField] private Transform prefabHolder;
 
         private readonly List<ChestClaimPrefab> _claimButtons = new List<ChestClaimPrefab>();
-        
+
         public override void Start()
         {
             base.Start();
-        
+
             InitClaimButtons();
-            
+
             EventManager.NewEventSubscription(gameObject, Constants.GameEvents.chestRefreshEvent, RefreshButtons);
             EventManager.NewEventSubscription(gameObject, Constants.GameEvents.refreshUiEvent, RefreshText, true);
-            EventManager.NewEventSubscription(gameObject, Constants.GameEvents.upgradeRefreshEvent, RefreshButtons);
+            EventManager.NewEventSubscription(gameObject, Constants.GameEvents.upgradeRefreshEvent,
+                RefreshUpgradeIndicators, true);
         }
 
         public override void OpenPanel(params object[] args)
         {
             base.OpenPanel(args);
-            
+
             RefreshButtons();
+            RefreshUpgradeIndicators();
         }
 
         private void InitClaimButtons()
@@ -39,7 +41,7 @@ namespace Core.UI
             var chestTypesLength = ChestManager.chestTypes.Length - 1;
             for (var i = 0; i < chestTypesLength; i++)
             {
-                var chestClaimButton = Instantiate(chestClaimPrefab, prefabHolder);  
+                var chestClaimButton = Instantiate(chestClaimPrefab, prefabHolder);
                 chestClaimButton.Init(ChestManager.chestTypes[i]);
                 _claimButtons.Add(chestClaimButton);
             }
@@ -51,13 +53,17 @@ namespace Core.UI
                                Constants.ConfirmClaimMessageSuffix;
             RefreshButtons();
         }
-        
+
         private void RefreshButtons()
         {
-            if (!isActiveAndEnabled) return;
-            
             foreach (var button in _claimButtons)
                 button.RefreshButton();
+        }
+
+        private void RefreshUpgradeIndicators()
+        {
+            foreach (var button in _claimButtons)
+                button.RefreshUpgradeIndicators();
         }
 
         public void ClosePanelRemote()

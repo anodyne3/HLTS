@@ -16,7 +16,9 @@ namespace MyScriptableObjects
         public string CurrentUpgradeName => levelDetails[currentLevel].upgradeName;
         public string CurrentDescription => levelDetails[currentLevel].description;
         //need to fix this, index out of array
-        public Resource[] CurrentResourceRequirements => levelDetails[currentLevel].resourceRequirements;
+        public Resource[] CurrentResourceRequirements => currentLevel < levelDetails.Length
+            ? levelDetails[currentLevel].resourceRequirements
+            : null;
     }
 }
 

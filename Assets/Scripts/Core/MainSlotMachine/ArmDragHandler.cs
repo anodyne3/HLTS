@@ -37,6 +37,8 @@ namespace Core.MainSlotMachine
 
         private void OnPressed(Vector2 pointerPosition)
         {
+            if (!GameManager.interactionEnabled) return;
+            
             if (_armCollider != Physics2D.OverlapPoint(pointerPosition)) return;
 
             CameraManager.draggingDisabled = true;

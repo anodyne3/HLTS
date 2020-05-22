@@ -20,11 +20,10 @@ namespace Core.Managers
             _upgradeVariables = GeneralUtils.SortLoadedList<UpgradeVariable>(Constants.UpgradesPath,
                 (x, y) => x.upgradeType.CompareTo(y.upgradeType));
 
-            EventManager.NewEventSubscription(gameObject, Constants.GameEvents.upgradeRefreshEvent, RefreshUpgrades,
-                true);
+            RefreshUpgrades();
         }
 
-        private void RefreshUpgrades()
+        public void RefreshUpgrades()
         {
             if (PlayerData.upgradeData == null) return;
 
@@ -32,7 +31,8 @@ namespace Core.Managers
             for (var i = 0; i < upgradeDataLength; i++)
                 _upgradeVariables[i].currentLevel = PlayerData.upgradeData[i];
 
-            EventManager.refreshUi.Raise();
+            EventManager.upgradeRefresh.Raise();
+            EventManager.refreshCurrency.Raise();
         }
 
         public int GetUpgradeCurrentLevel(UpgradeTypes id)

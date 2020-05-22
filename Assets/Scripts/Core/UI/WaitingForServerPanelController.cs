@@ -12,6 +12,12 @@ namespace Core.UI
             backgroundButton.onClick.RemoveAllListeners();
         }
 
+        [ContextMenu("oipanel")]
+        public void OpenPanelTest()
+        {
+            OpenPanel();
+        }
+
         public override void OpenPanel(params object[] args)
         {
             gameObject.SetActive(true);

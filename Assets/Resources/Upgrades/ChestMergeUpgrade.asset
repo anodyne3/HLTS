@@ -32,7 +32,7 @@ MonoBehaviour:
       resourceType: 0
     - resourceAmount: 20
       resourceType: 1
-  - icon: {fileID: 3286163911610860551, guid: 4a9e11a682ad57c48b9397865b26a531, type: 3}
+  - icon: {fileID: 3286163911610860551, guid: 4b3a5bf377ad08941b5cd00441c4955b, type: 3}
     upgradeName: Chest Merge
     description: Merge eight Bronze Chests into a Gold Chest.
     resourceRequirements:

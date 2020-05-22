@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using MyScriptableObjects;
@@ -39,8 +40,16 @@ namespace Core.UI
 
         private void OpenPayoutPanel()
         {
-            OpenPanelSolo<PayoutPanelController>();
+            StartCoroutine(nameof(PayoutOnHold));
         }
+
+        private IEnumerator PayoutOnHold()
+        {
+            if (!GameManager.interactionEnabled)
+                yield return new WaitUntil(() => GameManager.interactionEnabled);
+
+            OpenPanelSolo<PayoutPanelController>();
+        } 
 
         public void OpenPanelSolo<T>(params object[] args) where T : PanelController
         {

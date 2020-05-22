@@ -640,6 +640,7 @@ MonoBehaviour:
   closeButtonPunchSetting: {fileID: 0}
   panelTransform: {fileID: 715365507786584545}
   claimCurrentChestButton: {fileID: 4045130839724309527}
+  claimButtonText: {fileID: 6513064858790989886}
   upgradeChestClaimButton: {fileID: 2443986025882348742}
   currentChestIcon: {fileID: 1715393881183362067}
   currentChestProgressSlider: {fileID: 2152353290432737711}

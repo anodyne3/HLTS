@@ -298,6 +298,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mergeButton: {fileID: 8382769981716142422}
+  mergeText: {fileID: 2745260350343991838}
   givenAmount: {fileID: 7792203577078463440}
   givenIcon: {fileID: 3228644741041325203}
   receivedAmount: {fileID: 28622037401099177}

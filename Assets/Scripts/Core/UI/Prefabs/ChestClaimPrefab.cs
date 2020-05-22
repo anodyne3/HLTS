@@ -3,6 +3,7 @@ using MyScriptableObjects;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Utils;
 
 namespace Core.UI.Prefabs
 {
@@ -14,7 +15,12 @@ namespace Core.UI.Prefabs
         [SerializeField] private Transform upgradeIndicator;
 
         private ChestVariable _chestVariable;
-        private bool _isUpgraded;
+
+        private bool IsUpgraded => _chestVariable.rank < UpgradeManager.GetUpgradeCurrentLevel(UpgradeTypes.ChestClaim);
+
+        private bool IsNextUpgrade =>
+            _chestVariable.rank == UpgradeManager.GetUpgradeCurrentLevel(UpgradeTypes.ChestClaim);
+
         private ChestClaimPanelController _chestClaimPanel;
 
         private void Start()
@@ -35,21 +41,20 @@ namespace Core.UI.Prefabs
         {
             var canClaim = PlayerData.currentChestRoll >= _chestVariable.threshold;
 
-            _isUpgraded = _chestVariable.rank < UpgradeManager.GetUpgradeCurrentLevel(UpgradeTypes.ChestClaim);
+            claimButtonText.text = IsUpgraded ? Constants.ChestButtonClaim : Constants.ChestButtonUpgrade;
+            chestClaimButton.interactable = IsNextUpgrade || IsUpgraded && canClaim;
+            claimButtonText.color = IsUpgraded && canClaim ? Color.white : Color.grey;
+            chestIcon.color = IsUpgraded && canClaim ? Color.white : Color.grey;
+        }
 
-            var isNextUpgrade = _chestVariable.rank ==
-                                UpgradeManager.GetUpgradeCurrentLevel(UpgradeTypes.ChestClaim);
-
-            upgradeIndicator.gameObject.SetActive(isNextUpgrade);
-            
-            chestClaimButton.interactable = isNextUpgrade || _isUpgraded && canClaim;
-            claimButtonText.color = _isUpgraded && canClaim ? Color.white : Color.grey;
-            chestIcon.color = _isUpgraded && canClaim ? Color.white : Color.grey;
+        public void RefreshUpgradeIndicators()
+        {
+            upgradeIndicator.gameObject.SetActive(IsNextUpgrade);
         }
 
         private void ClaimChest()
         {
-            if (_isUpgraded)
+            if (IsUpgraded)
             {
                 FirebaseFunctionality.ClaimChest(_chestVariable.chestType);
                 _chestClaimPanel.punchSetting.DoPunch(chestClaimButton.transform, false);

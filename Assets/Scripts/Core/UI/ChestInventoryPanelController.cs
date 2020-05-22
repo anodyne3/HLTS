@@ -13,7 +13,7 @@ namespace Core.UI
     {
         [Header("Current Chest Progress")] [SerializeField]
         private Button claimCurrentChestButton;
-
+        [SerializeField] private TMP_Text claimButtonText;
         [SerializeField] private Button upgradeChestClaimButton;
         [SerializeField] private Image currentChestIcon;
         [SerializeField] private Slider currentChestProgressSlider;
@@ -26,6 +26,8 @@ namespace Core.UI
         private Transform chestInventoryContentHolder;
 
         [SerializeField] private ChestInventoryPrefab inventoryChestPrefab;
+
+        private bool ClaimIsUpgraded => UpgradeManager.GetUpgradeCurrentLevel(UpgradeTypes.ChestClaim) > 0;
 
         public override void Start()
         {
@@ -41,6 +43,7 @@ namespace Core.UI
             EventManager.NewEventSubscription(gameObject, Constants.GameEvents.refreshUiEvent, RefreshFill, true);
             EventManager.NewEventSubscription(gameObject, Constants.GameEvents.chestRefreshEvent, ChestsRefresh, true);
             EventManager.NewEventSubscription(gameObject, Constants.GameEvents.chestOpenEvent, RefreshPanel);
+            EventManager.NewEventSubscription(gameObject, Constants.GameEvents.upgradeRefreshEvent, RefreshUpgradeButton);
         }
 
         private void ChestsInit()
@@ -62,11 +65,18 @@ namespace Core.UI
 
         private void RefreshPanel()
         {
-            if (UpgradeManager.IsUpgradeMaxed(UpgradeTypes.ChestClaim))
-                upgradeChestClaimButton.gameObject.SetActive(false);
+            RefreshUpgradeButton();
 
             ChestsRefresh();
             RefreshFill();
+        }
+
+        private void RefreshUpgradeButton()
+        {
+            if (!isActiveAndEnabled) return;
+            
+            if (UpgradeManager.IsUpgradeMaxed(UpgradeTypes.ChestClaim))
+                upgradeChestClaimButton.gameObject.SetActive(false);
         }
 
         private void RefreshFill()
@@ -98,19 +108,19 @@ namespace Core.UI
 
         private void RefreshClaimChestButton()
         {
-            var value = PlayerData.currentChestRoll >= ChestManager.chestTypes[0].threshold;
-            claimCurrentChestButton.interactable = value;
-            claimCurrentChestButtonText.color = value ? Color.white : Color.grey;
-            currentChestIcon.color = value ? Color.white : Color.grey;
+            claimButtonText.text = ClaimIsUpgraded ? Constants.ChestButtonUpgrade : Constants.ChestButtonClaim;
+            
             currentChestIcon.sprite = PlayerData.currentChestRoll == ChestManager.CurrentChest.threshold
                 ? ChestManager.GetChestVariable(ChestManager.CurrentChest.rank).chestIcon
                 : ChestManager.GetChestVariable(ChestManager.CurrentChest.rank - 1).chestIcon;
         }
 
-        private static void ClaimChest()
+        private void ClaimChest()
         {
-            PanelManager.OpenSubPanel<ChestClaimPanelController>(ChestManager
-                .GetChestVariable(ChestManager.CurrentChest.rank - 1).chestType);
+            if (ClaimIsUpgraded)
+                PanelManager.OpenSubPanel<ChestClaimPanelController>();
+            else
+                PanelManager.OpenSubPanel<UpgradePanelController>((int) UpgradeTypes.ChestClaim);
         }
 
         private static void UpgradeChestClaim()

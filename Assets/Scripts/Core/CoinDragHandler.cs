@@ -5,7 +5,7 @@ namespace Core
 {
     public class CoinDragHandler : GlobalAccess
     {
-        private float _deltaX, _deltaY, _startingGravity;
+        private float _startingGravity;
         private bool _moveAllowed;
         private SpriteRenderer _spriteRenderer;
 
@@ -38,6 +38,8 @@ namespace Core
 
         private void OnPressed(Vector2 pointerPosition)
         {
+            if (!GameManager.interactionEnabled) return;
+            
             if (_circleTrigger != Physics2D.OverlapPoint(pointerPosition)) return;
 
             CameraManager.draggingDisabled = true;

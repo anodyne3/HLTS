@@ -72,7 +72,7 @@ namespace Core.Managers
         {
             if (GameManager == null) return;
 
-            GameManager.interactionEnabled = true;
+            GameManager.interactionEnabled = PanelManager.OpenPanelCount() == 0;
         }
 
         private void Update()
@@ -116,7 +116,6 @@ namespace Core.Managers
 
             if (zoomData < 0.0f)
             {
-                //Debug.Log("zP < 0"); //ZoomOut
 #if UNITY_EDITOR_WIN
                 _newLocalPosition.x *= _zoomPercent;
                 _newLocalPosition.y *= _zoomPercent;

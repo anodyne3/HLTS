@@ -98,6 +98,7 @@ namespace Core
                 EventManager.refreshUi.Raise();
             }
 
+            CurrencyManager.blockCurrencyRefresh = true;
             EventManager.payoutStart.Raise();
         }
 
@@ -119,6 +120,7 @@ namespace Core
         private IEnumerator AutoMode()
         {
             var waitUntilWheelsStop = new WaitUntil(() => wheelsAreRolling == false);
+            var waitBetweenRolls = new WaitForSeconds(Constants.PauseBetweenRolls);
 
             _coinWasLoaded = coinIsLoaded;
             coinIsLoaded = true;
@@ -127,7 +129,10 @@ namespace Core
             while (PlayerData.GetResourceAmount(ResourceType.BananaCoins) > 0 && autoMode)
             {
                 if (wheelsAreRolling)
+                {
                     yield return waitUntilWheelsStop;
+                    yield return waitBetweenRolls;
+                }
 
                 EventManager.coinConsume.Raise();
                 OnWheelRoll();
@@ -146,7 +151,7 @@ namespace Core
 
             while (PlayerData.GetResourceAmount(ResourceType.BananaCoins) > 0 && autoMode)
             {
-                EventManager.coinInsert.Raise();
+                // EventManager.coinInsert.Raise();
 
                 if (!coinIsLoaded)
                     yield return waitUntilCoinIsLoaded;

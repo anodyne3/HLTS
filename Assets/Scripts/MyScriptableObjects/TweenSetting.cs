@@ -8,36 +8,26 @@ namespace MyScriptableObjects
     [CreateAssetMenu(fileName = "TweenSetting", menuName = "MyAssets/TweenSettings/TweenSetting", order = 55)]
     public class TweenSetting : ScriptableObject
     {
-        [Header("Move")]
-        public float moveDuration;
+        [Header("Move")] public float moveDuration;
         public float delayBetweenInstance;
         public AnimationCurve moveCurve;
         public float spawnZoneRadius;
         public float moveOffset;
-        
-        [Header("Rotate")]
-        [SerializeField] private TweenRotateSetting rotateSetting;
-        
-        [Header("Punch")]
-        [SerializeField] private TweenPunchSetting punchSetting;
 
-        [Header("Fade")]
-        [SerializeField] private TweenFadeSetting fadeSetting;
+        [Header("Rotate")] [SerializeField] private TweenRotateSetting rotateSetting;
+
+        [Header("Punch")] [SerializeField] private TweenPunchSetting punchSetting;
+
+        [Header("Fade")] [SerializeField] private TweenFadeSetting fadeSetting;
         public float fadeStartDelay;
 
-        [Header("SizeDelta")]
-        public float sizeDeltaDuration;
+        [Header("SizeDelta")] public float sizeDeltaDuration;
 
-        [Header("Scale")]
-        public Vector3 scaleStartValue;
+        [Header("Scale")] public Vector3 scaleStartValue;
         public Vector3 scaleEndValue;
         public float scaleDuration;
 
         public Ease sequenceEasing;
-
-        private Tweener _rotateTween;
-        private Tweener _punchTween;
-        private Tweener _fadeTween;
 
         public int GetSpawnAmount(long difference)
         {
@@ -49,7 +39,7 @@ namespace MyScriptableObjects
                 return 15;
             if (difference > 9)
                 return 10;
-            
+
             return (int) difference;
         }
 
@@ -57,7 +47,7 @@ namespace MyScriptableObjects
         {
             return Random.insideUnitCircle * spawnZoneRadius;
         }
-        
+
         public void DoRotate(Transform rotateTarget, bool pooled = true)
         {
             rotateSetting.DoRotate(rotateTarget, pooled);
@@ -72,7 +62,7 @@ namespace MyScriptableObjects
         {
             fadeSetting.DoFade(target, pooled);
         }
-        
+
         public void DoFade(CanvasGroup target, bool pooled = true)
         {
             fadeSetting.DoFade(target, pooled);

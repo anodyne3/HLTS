@@ -26,7 +26,6 @@ namespace Core.UI
 
             if (_sequence != null)
             {
-                // _sequence.Kill(true);
                 _sequence.Restart();
                 return;
             }
@@ -50,7 +49,7 @@ namespace Core.UI
                 .InsertCallback(initTween.fadeStartDelay, () => closeTween.DoRotate(transform))
                 .Insert(initTween.fadeStartDelay,
                     transform.DOScale(closeTween.scaleEndValue, closeTween.scaleDuration).SetEase(closeTween.moveCurve))
-                .InsertCallback(closeTween.fadeStartDelay, () => initTween.DoFade(canvasGroup));
+                .InsertCallback(closeTween.fadeStartDelay, () => initTween.DoFade(canvasGroup, false));
         }
     }
 }

@@ -104,6 +104,9 @@ namespace Utils
         public const string ConfirmClaimMessageSuffix = " rolls from a better chest.";
         public const string ChestRewardPrefix = " ~";
         public const float ChestAddInterval = 0.666f;
+        public const string ChestButtonClaim = "Claim";
+        public const string ChestButtonMerge = "Merge";
+        public const string ChestButtonUpgrade = "Upgrade";
 
         //ui
         public const float CoinsBackgroundBaseWidth = 280.0f;
@@ -151,6 +154,7 @@ namespace Utils
         public const float FastSpinDegrees = 15.0f;
         public const float MediumSpinDegrees = 5.0f;
         public const float SlowSpinDegrees = 1.0f;
+        public const float PauseBetweenRolls = 0.666f;
 
         //fruit
         public static readonly FruitDefinition[] FruitDefinitions =
@@ -180,7 +184,7 @@ namespace Utils
     public class GameEvents
     {
         //for debug only
-        public string coinInsertEvent = "coinInsertEvent";
+        // public string coinInsertEvent = "coinInsertEvent";
         public string testEvent = "testEvent";
 
         public string armPullEvent = "armPullEvent";

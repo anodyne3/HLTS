@@ -1,14 +1,17 @@
 using Enums;
 using MyScriptableObjects;
 using TMPro;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UI;
+using Utils;
 
 namespace Core.UI.Prefabs
 {
     public class ChestMergePrefab : GlobalAccess
     {
         [SerializeField] private Button mergeButton;
+        [SerializeField] private TMP_Text mergeText;
         [SerializeField] private TMP_Text givenAmount;
         [SerializeField] private SVGImage givenIcon;
         [SerializeField] private TMP_Text receivedAmount;
@@ -16,7 +19,11 @@ namespace Core.UI.Prefabs
         [SerializeField] private Transform upgradeIndicator;
 
         private ChestMergeVariable _chestMerge;
-        private bool _isUpgraded;
+
+        private bool IsUpgraded => _chestMerge.mergeUpgradeLevel <
+                                   UpgradeManager.GetUpgradeCurrentLevel(UpgradeTypes.ChestMerge);
+        private bool IsNextUpgrade => _chestMerge.mergeUpgradeLevel ==
+                                      UpgradeManager.GetUpgradeCurrentLevel(UpgradeTypes.ChestMerge);
 
         private void Start()
         {
@@ -35,28 +42,25 @@ namespace Core.UI.Prefabs
             receivedAmount.text = _chestMerge.receivedAmount.ToString();
             receivedAmount.outlineColor = ChestManager.GetChestVariable((int) _chestMerge.receivedType).chestColor;
             receivedIcon.sprite = ChestManager.GetChestIcon(_chestMerge.receivedType);
-
-            RefreshButton();
         }
 
         public void RefreshButton()
         {
-            _isUpgraded = _chestMerge.mergeUpgradeLevel <
-                          UpgradeManager.GetUpgradeCurrentLevel(UpgradeTypes.ChestMerge);
+            mergeText.text = IsUpgraded ? Constants.ChestButtonMerge : Constants.ChestButtonUpgrade;
             
-            var isNextUpgrade = _chestMerge.mergeUpgradeLevel ==
-                               UpgradeManager.GetUpgradeCurrentLevel(UpgradeTypes.ChestMerge);
-            
-            upgradeIndicator.gameObject.SetActive(isNextUpgrade);
-
-            mergeButton.interactable = isNextUpgrade ||
-                                       _isUpgraded && PlayerData.GetChestCount(_chestMerge.requiredType) >=
+            mergeButton.interactable = IsNextUpgrade ||
+                                       IsUpgraded && PlayerData.GetChestCount(_chestMerge.requiredType) >=
                                        _chestMerge.requiredAmount;
+        }
+
+        public void RefreshIndicators()
+        {
+            upgradeIndicator.gameObject.SetActive(IsNextUpgrade);
         }
 
         private void MergeChests()
         {
-            if (_isUpgraded)
+            if (IsUpgraded)
                 FirebaseFunctionality.ChestMerge(_chestMerge.mergeUpgradeLevel.ToString());
             else
                 PanelManager.OpenSubPanel<UpgradePanelController>(UpgradeTypes.ChestMerge);

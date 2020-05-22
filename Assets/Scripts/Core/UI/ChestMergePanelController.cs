@@ -9,18 +9,20 @@ namespace Core.UI
     {
         [SerializeField] private ChestMergePrefab chestMergePrefab;
         [SerializeField] private Transform prefabHolder;
-        
+
         private readonly List<ChestMergePrefab> _mergeButtons = new List<ChestMergePrefab>();
 
         public override void Start()
         {
             base.Start();
-            
+
             InitPrefabs();
-            
-            EventManager.NewEventSubscription(gameObject, Constants.GameEvents.refreshUiEvent, RefreshButtons);
-            EventManager.NewEventSubscription(gameObject, Constants.GameEvents.chestRefreshEvent, RefreshButtons);
-            EventManager.NewEventSubscription(gameObject, Constants.GameEvents.upgradeRefreshEvent, RefreshButtons, true);
+
+            EventManager.NewEventSubscription(gameObject, Constants.GameEvents.upgradeRefreshEvent, RefreshButtons,
+                true);
+            EventManager.NewEventSubscription(gameObject, Constants.GameEvents.chestRefreshEvent, RefreshButtons, true);
+            EventManager.NewEventSubscription(gameObject, Constants.GameEvents.refreshUiEvent, RefreshIndicators,
+                true);
         }
 
         private void InitPrefabs()
@@ -28,7 +30,7 @@ namespace Core.UI
             var chestMergeTypesLength = ChestManager.chestMergeTypes.Length;
             for (var i = 0; i < chestMergeTypesLength; i++)
             {
-                var chestMergeButton = Instantiate(chestMergePrefab, prefabHolder);  
+                var chestMergeButton = Instantiate(chestMergePrefab, prefabHolder);
                 chestMergeButton.Init(ChestManager.chestMergeTypes[i]);
                 _mergeButtons.Add(chestMergeButton);
             }
@@ -36,10 +38,14 @@ namespace Core.UI
 
         private void RefreshButtons()
         {
-            if (!isActiveAndEnabled) return;
-            
             foreach (var button in _mergeButtons)
                 button.RefreshButton();
+        }
+
+        private void RefreshIndicators()
+        {
+            foreach (var button in _mergeButtons)
+                button.RefreshIndicators();
         }
     }
 }

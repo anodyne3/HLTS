@@ -8,7 +8,7 @@ namespace Core.Managers
 {
     public class EventManager : GlobalAccess
     {
-        [HideInInspector] public GameEvent coinInsert;
+        // [HideInInspector] public GameEvent coinInsert;
         [HideInInspector] public GameEvent testEvent;
 
         [HideInInspector] public GameEvent armPull;
@@ -29,11 +29,11 @@ namespace Core.Managers
         [HideInInspector] public GameEvent wheelResult;
         [HideInInspector] public GameEvent wheelRoll;
 
-        [SerializeField] public List<GameEventListener> gameEventListeners = new List<GameEventListener>();
+        // [SerializeField] public List<GameEventListener> gameEventListeners = new List<GameEventListener>();
 
         private void OnEnable()
         {
-            coinInsert = Resources.Load<GameEvent>("Events/" + Constants.GameEvents.coinInsertEvent);
+            // coinInsert = Resources.Load<GameEvent>("Events/" + Constants.GameEvents.coinInsertEvent);
             testEvent = Resources.Load<GameEvent>("Events/" + Constants.GameEvents.testEvent);
 
             armPull = Resources.Load<GameEvent>("Events/" + Constants.GameEvents.armPullEvent);
@@ -63,7 +63,7 @@ namespace Core.Managers
             gameEventListener.@event = newGameEvent;
             gameEventListener.@event.RegisterListener(gameEventListener);
             gameEventListener.response.AddListener(unityAction);
-            gameEventListeners.Add(gameEventListener);
+            // gameEventListeners.Add(gameEventListener);
 
             if (triggerOnSubscription)
                 unityAction.Invoke();

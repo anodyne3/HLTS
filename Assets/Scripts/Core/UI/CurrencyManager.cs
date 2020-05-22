@@ -23,6 +23,7 @@ namespace Core.UI
 
         [SerializeField] private TweenSetting addCurrencyTweenSetting;
         public Transform addCurrencySpawnPosition;
+        public bool blockCurrencyRefresh;
 
         private MyObjectPool<AddCurrencyPrefab> _tweenCurrencyPool;
         private Vector2 _newSizeDelta = new Vector2();
@@ -48,7 +49,7 @@ namespace Core.UI
 
         private void Update()
         {
-            if (!_updateCurrencies) return;
+            if (!_updateCurrencies || blockCurrencyRefresh) return;
 
             UpdateCurrencies();
 
@@ -108,7 +109,10 @@ namespace Core.UI
 
         private static void OpenShopPanel(ResourceType resourceType)
         {
-            PanelManager.OpenPanelSolo<ShopPanelController>(resourceType);
+            if (PanelManager.OpenPanelCount() > 0)
+                PanelManager.OpenSubPanel<ShopPanelController>(resourceType);
+            else
+                PanelManager.OpenPanelSolo<ShopPanelController>(resourceType);
         }
 
         private void RefreshAllCurrencies()

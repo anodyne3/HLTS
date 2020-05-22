@@ -95,9 +95,7 @@ namespace Core.UI
                 Constants.UpgradeCompletedSuffix;
 
             AlertMessage.Init(alertMessage);
-
-            EventManager.refreshCurrency.Raise();
-            EventManager.upgradeRefresh.Raise();
+            UpgradeManager.RefreshUpgrades();
         }
     }
 }

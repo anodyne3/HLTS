@@ -23,7 +23,7 @@ namespace Core.MainSlotMachine
             upgradeButton.OnClick.RemoveAllListeners();
             upgradeButton.OnClick.AddListener(CoinSlotClicked);
             
-            EventManager.NewEventSubscription(gameObject, Constants.GameEvents.coinInsertEvent, LoadCoin);
+            // EventManager.NewEventSubscription(gameObject, Constants.GameEvents.coinInsertEvent, LoadCoin);
         }
 
         private void CoinSlotClicked()
