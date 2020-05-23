@@ -1,3 +1,4 @@
+using DG.Tweening;
 using Enums;
 using MyScriptableObjects;
 using TMPro;
@@ -61,7 +62,10 @@ namespace Core.UI.Prefabs
         private void MergeChests()
         {
             if (IsUpgraded)
+            {
                 FirebaseFunctionality.ChestMerge(_chestMerge.mergeUpgradeLevel.ToString());
+                PanelManager.PunchButton(transform);
+            }
             else
                 PanelManager.OpenSubPanel<UpgradePanelController>(UpgradeTypes.ChestMerge);
         }

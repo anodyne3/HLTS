@@ -43,8 +43,6 @@ namespace Core.UI.Prefabs
 
             claimButtonText.text = IsUpgraded ? Constants.ChestButtonClaim : Constants.ChestButtonUpgrade;
             chestClaimButton.interactable = IsNextUpgrade || IsUpgraded && canClaim;
-            claimButtonText.color = IsUpgraded && canClaim ? Color.white : Color.grey;
-            chestIcon.color = IsUpgraded && canClaim ? Color.white : Color.grey;
         }
 
         public void RefreshUpgradeIndicators()
@@ -57,9 +55,7 @@ namespace Core.UI.Prefabs
             if (IsUpgraded)
             {
                 FirebaseFunctionality.ClaimChest(_chestVariable.chestType);
-                _chestClaimPanel.punchSetting.DoPunch(chestClaimButton.transform, false);
-                if (PlayerData.currentChestRoll >= ChestManager.GetChestVariable(0).threshold)
-                    _chestClaimPanel.ClosePanelRemote();
+                PanelManager.PunchButton(transform);
             }
             else
                 PanelManager.OpenSubPanel<UpgradePanelController>(UpgradeTypes.ChestClaim);

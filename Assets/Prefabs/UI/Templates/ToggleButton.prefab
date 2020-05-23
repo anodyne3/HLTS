@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2073552231448643667}
   - component: {fileID: 2073552231448643666}
   m_Layer: 5
-  m_Name: ToggleText
+  m_Name: SoundsToggleText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -171,7 +171,7 @@ GameObject:
   - component: {fileID: 2073552232657264449}
   - component: {fileID: 1549891046316839095}
   m_Layer: 5
-  m_Name: ToggleButton
+  m_Name: SoundsToggleButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -224,13 +224,13 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 0
+  m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.6039216, g: 0.57254905, b: 0.57254905, a: 1}
+    m_HighlightedColor: {r: 1, g: 1, b: 1, a: 1}
     m_PressedColor: {r: 0.6037736, g: 0.5724457, b: 0.5724457, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.67058825}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -245,7 +245,7 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 1549891046316839095}
+  m_TargetGraphic: {fileID: 6741346746139359473}
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
@@ -289,7 +289,7 @@ GameObject:
   - component: {fileID: 8228352113056777581}
   - component: {fileID: 711331566630217794}
   m_Layer: 5
-  m_Name: ToggleHeader
+  m_Name: SoundsToggleHeader
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -340,7 +340,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: header
+  m_text: sounds
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f503cb6babfbf5e41b0eefe39b790c97, type: 2}
   m_sharedMaterial: {fileID: 5784604520851618637, guid: f503cb6babfbf5e41b0eefe39b790c97,
@@ -369,7 +369,7 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 56.25
+  m_fontSize: 58.6
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -445,7 +445,7 @@ GameObject:
   - component: {fileID: 1406020133957770981}
   - component: {fileID: 6741346746139359473}
   m_Layer: 5
-  m_Name: ToggleIcon
+  m_Name: SoundsToggleIcon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -61,6 +61,8 @@ namespace Core.UI
 
         private void RefreshResourceRequirements()
         {
+            if (UpgradeManager.IsUpgradeMaxed(_upgradeVariable.upgradeType)) return;
+            
             var resourceRequirementsLength = _upgradeVariable.CurrentResourceRequirements.Length;
             var missingPrefabCount = resourceRequirementsLength - _activeRequirements.Count;
 

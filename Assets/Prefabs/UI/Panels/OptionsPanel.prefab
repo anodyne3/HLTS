@@ -677,55 +677,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3615232436260829802}
     m_Modifications:
-    - target: {fileID: 711331566630217794, guid: c168aa6ca0713b24ca93d24a49d4a03d,
-        type: 3}
-      propertyPath: m_text
-      value: sounds
-      objectReference: {fileID: 0}
-    - target: {fileID: 711331566630217794, guid: c168aa6ca0713b24ca93d24a49d4a03d,
-        type: 3}
-      propertyPath: m_fontSize
-      value: 58.6
-      objectReference: {fileID: 0}
-    - target: {fileID: 711331566630217794, guid: c168aa6ca0713b24ca93d24a49d4a03d,
-        type: 3}
-      propertyPath: m_textInfo.characterCount
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 2073552231448643664, guid: c168aa6ca0713b24ca93d24a49d4a03d,
-        type: 3}
-      propertyPath: m_Name
-      value: SoundsToggleText
-      objectReference: {fileID: 0}
-    - target: {fileID: 2073552232657264449, guid: c168aa6ca0713b24ca93d24a49d4a03d,
-        type: 3}
-      propertyPath: m_TargetGraphic
-      value: 
-      objectReference: {fileID: 8582508266605920296}
-    - target: {fileID: 2073552232657264449, guid: c168aa6ca0713b24ca93d24a49d4a03d,
-        type: 3}
-      propertyPath: m_Transition
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 2073552232657264449, guid: c168aa6ca0713b24ca93d24a49d4a03d,
         type: 3}
       propertyPath: m_Interactable
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2073552232657264454, guid: c168aa6ca0713b24ca93d24a49d4a03d,
-        type: 3}
-      propertyPath: m_Name
-      value: SoundsToggleButton
-      objectReference: {fileID: 0}
-    - target: {fileID: 5426650968816306154, guid: c168aa6ca0713b24ca93d24a49d4a03d,
-        type: 3}
-      propertyPath: m_Name
-      value: SoundsToggleHeader
-      objectReference: {fileID: 0}
-    - target: {fileID: 6550359327086202276, guid: c168aa6ca0713b24ca93d24a49d4a03d,
-        type: 3}
-      propertyPath: m_Name
-      value: SoundsToggleIcon
       objectReference: {fileID: 0}
     - target: {fileID: 8425346432965912280, guid: c168aa6ca0713b24ca93d24a49d4a03d,
         type: 3}
@@ -857,18 +812,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae9db863eca14a3b9fb2478c73ec4187, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &8582508266605920296 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6741346746139359473, guid: c168aa6ca0713b24ca93d24a49d4a03d,
-    type: 3}
-  m_PrefabInstance: {fileID: 3068397127252670681}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ef8b96895a0ec4ba685178a052544251, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &3792140386581710206
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -988,6 +931,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e2b1f703a3b66c04db76cfc56bfca227, type: 3}
+--- !u!224 &3615232437912108516 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 471612596712503450, guid: e2b1f703a3b66c04db76cfc56bfca227,
+    type: 3}
+  m_PrefabInstance: {fileID: 3792140386581710206}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &3615232437912108519 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 471612596712503449, guid: e2b1f703a3b66c04db76cfc56bfca227,
@@ -1000,12 +949,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!224 &3615232437912108516 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 471612596712503450, guid: e2b1f703a3b66c04db76cfc56bfca227,
-    type: 3}
-  m_PrefabInstance: {fileID: 3792140386581710206}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5100103719624352287
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1060,33 +1003,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2073552232657264449, guid: c168aa6ca0713b24ca93d24a49d4a03d,
         type: 3}
-      propertyPath: m_TargetGraphic
-      value: 
-      objectReference: {fileID: 1966144950148307694}
-    - target: {fileID: 2073552232657264449, guid: c168aa6ca0713b24ca93d24a49d4a03d,
-        type: 3}
       propertyPath: m_Interactable
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2073552232657264449, guid: c168aa6ca0713b24ca93d24a49d4a03d,
-        type: 3}
-      propertyPath: m_Transition
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2073552232657264449, guid: c168aa6ca0713b24ca93d24a49d4a03d,
-        type: 3}
-      propertyPath: m_Colors.m_HighlightedColor.r
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2073552232657264449, guid: c168aa6ca0713b24ca93d24a49d4a03d,
-        type: 3}
-      propertyPath: m_Colors.m_HighlightedColor.g
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2073552232657264449, guid: c168aa6ca0713b24ca93d24a49d4a03d,
-        type: 3}
-      propertyPath: m_Colors.m_HighlightedColor.b
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2073552232657264454, guid: c168aa6ca0713b24ca93d24a49d4a03d,
         type: 3}
@@ -1231,18 +1149,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ae9db863eca14a3b9fb2478c73ec4187, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1966144950148307694 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6741346746139359473, guid: c168aa6ca0713b24ca93d24a49d4a03d,
-    type: 3}
-  m_PrefabInstance: {fileID: 5100103719624352287}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ef8b96895a0ec4ba685178a052544251, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &6342950538331986988

@@ -223,32 +223,6 @@ namespace Core
 
             var chestId = ProcessBasicResponseData<long>(responseData);
             ChestManager.ChestClaimed((ChestType) chestId);
-            // await ChestClaim(claimedChest.ToString());
-        }
-
-        private async Task ChestClaim(string claimedChest)
-        {
-            var data = new Dictionary<object, object> {["text"] = claimedChest, ["push"] = true};
-
-            var chestClaim = _firebaseFunc.GetHttpsCallable(Constants.ChestClaimCloudFunction).CallAsync(data);
-
-            var response = await chestClaim;
-            if (chestClaim.IsFaulted)
-            {
-                HandleFunctionError(chestClaim);
-            }
-
-            PanelManager.WaitingForServerPanel(false);
-
-            if (response.Data == null)
-            {
-                AlertMessage.Init("ChestClaim returned empty data");
-                return;
-            }
-
-            var chestId = ProcessBasicResponseData<long>(response.Data);
-
-            ChestManager.ChestClaimed((ChestType) chestId);
         }
 
         public async void OpenChest(ChestType chestType)
@@ -264,30 +238,6 @@ namespace Core
             }
             
             ChestManager.OpenChest(new ChestRewardDto(responseData));
-        }
-
-        private async Task ChestOpen(string chestType)
-        {
-            var data = new Dictionary<string, object> {["text"] = chestType, ["push"] = true};
-
-            var chestOpen = _firebaseFunc.GetHttpsCallable(Constants.ChestOpenCloudFunction)
-                .CallAsync(data);
-
-            var response = await chestOpen;
-            if (chestOpen.IsFaulted)
-            {
-                HandleFunctionError(chestOpen);
-            }
-
-            PanelManager.WaitingForServerPanel(false);
-
-            if (response.Data == null)
-            {
-                AlertMessage.Init("ChestOpen returned empty data");
-                return;
-            }
-
-            ChestManager.OpenChest(new ChestRewardDto(response.Data));
         }
 
         public async void ChestMerge(string chestMergeLevel)
@@ -311,33 +261,6 @@ namespace Core
 
             PanelManager.GetPanel<UpgradePanelController>()
                 .UpgradeComplete(ProcessBasicResponseData<long>(responseData));
-            // await DoUpgrade(((int) upgradeVariable.upgradeType).ToString());
-        }
-
-        private async Task DoUpgrade(string upgradeId)
-        {
-            var data = new Dictionary<string, object> {["text"] = upgradeId, ["push"] = true};
-
-            var doUpgrade = _firebaseFunc.GetHttpsCallable(Constants.DoUpgradeCloudFunction).CallAsync(data);
-
-            var response = await doUpgrade;
-            if (doUpgrade.IsFaulted)
-            {
-                //maybe show message to player regarding some issue
-                HandleFunctionError(doUpgrade);
-            }
-
-            PanelManager.WaitingForServerPanel(false);
-
-            //maybe show message to player regarding some issue
-            if (response.Data == null)
-            {
-                Debug.LogError("ChestClaim returned empty data");
-                return;
-            }
-
-            PanelManager.GetPanel<UpgradePanelController>()
-                .UpgradeComplete(ProcessBasicResponseData<long>(response.Data));
         }
 
         #endregion

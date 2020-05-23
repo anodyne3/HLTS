@@ -15,7 +15,6 @@ namespace Core.UI
         [SerializeField] private SVGImage chestOpenIcon;
         [SerializeField] private Button openChestButton;
         [SerializeField] private Button chestMergeButton;
-        [SerializeField] private TMP_Text openChestButtonText;
         [SerializeField] private TMP_Text bcMaxText;
         [SerializeField] private TMP_Text bpMaxText;
         [SerializeField] private TMP_Text sfMaxText;
@@ -71,7 +70,7 @@ namespace Core.UI
         private void RefreshPanel()
         {
             var chestCount = PlayerData.GetChestCount(_chestVariable.chestType);
-            RefreshOpenButton(chestCount > 0);
+            openChestButton.interactable = chestCount > 0;
             chestAmount.text = chestCount.ToString();
         }
 
@@ -84,12 +83,6 @@ namespace Core.UI
         {
             chestOpenIcon.enabled = value;
             chestClosedIcon.enabled = !value;
-        }
-
-        private void RefreshOpenButton(bool value)
-        {
-            openChestButton.interactable = value;
-            openChestButtonText.color = value ? Color.white : Color.grey;
         }
 
         private void OpenChest()

@@ -65,10 +65,5 @@ namespace Core.UI
             foreach (var button in _claimButtons)
                 button.RefreshUpgradeIndicators();
         }
-
-        public void ClosePanelRemote()
-        {
-            ClosePanel();
-        }
     }
 }

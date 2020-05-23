@@ -4,6 +4,7 @@ using Core.UI.Prefabs;
 using DG.Tweening;
 using Enums;
 using MyScriptableObjects;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,7 +16,10 @@ namespace Core.UI
         [SerializeField] private Transform rewardFinishPosition;
         [SerializeField] private TweenSetting tweenStartSetting;
         [SerializeField] private TweenSetting tweenFinishSetting;
-        
+        [SerializeField] private Button doublePayoutForAdButton;
+        [SerializeField] private TMP_Text clickToContinueText;
+        [SerializeField] private Transform continueButtonsHolder;
+
         public ChestRewardPrefab chestRewardPrefab;
         public Transform rewardStartPosition;
         
@@ -32,6 +36,12 @@ namespace Core.UI
 
             backgroundButton.onClick.RemoveAllListeners();
             backgroundButton.onClick.AddListener(RushRewards);
+            doublePayoutForAdButton.onClick.AddListener(ConfirmShowAd);
+        }
+        
+        private static void ConfirmShowAd()
+        {
+            PanelManager.OpenSubPanel<ConfirmRewardAdPanelController>();
         }
 
         public override void OpenPanel(params object[] args)
@@ -41,13 +51,19 @@ namespace Core.UI
             _chestRewardDto = (ChestRewardDto) args[0];
 
             PanelManager.GetPanel<ChestDetailsPanelController>().OpenChestIcon(true);
+            
+            // doublePayoutForAdButton.gameObject.SetActive(AdManager.DoublePayoutAdIsLoaded());
+            CurrencyManager.HideCurrencies(true);
 
             RefreshPanel();
         }
 
         private void RefreshPanel()
         {
-            _rewardSequence = DOTween.Sequence();
+            FlipContinueTextVisibility(true);
+            
+            _rewardSequence = DOTween.Sequence()
+                .OnComplete(() => FlipContinueTextVisibility(false));
             gameObject.SetActive(true);
 
             var rewardsLength = _chestRewardDto.chestRewards.Length;
@@ -110,16 +126,12 @@ namespace Core.UI
         {
             if (!_rewardSequence.IsComplete())
                 _rewardSequence.Complete(true);
+        }
 
-            ClosePanel();
-
-            foreach (var rewardPrefab in _activeRewards)
-            {
-                chestRewardPool.Release(rewardPrefab);
-                rewardPrefab.gameObject.SetActive(false);
-            }
-
-            _activeRewards.Clear();
+        private void FlipContinueTextVisibility(bool value)
+        {
+            clickToContinueText.gameObject.SetActive(value);
+            continueButtonsHolder.gameObject.SetActive(!value);
         }
 
         private void OnApplicationPause(bool pauseStatus)
@@ -158,8 +170,18 @@ namespace Core.UI
         {
             base.ClosePanel();
             
+            CurrencyManager.HideCurrencies(false);
+            
             EventManager.chestOpen.Raise();
             EventManager.refreshCurrency.Raise();
+            
+            foreach (var rewardPrefab in _activeRewards)
+            {
+                chestRewardPool.Release(rewardPrefab);
+                rewardPrefab.gameObject.SetActive(false);
+            }
+            
+            _activeRewards.Clear();
         }
     }
 }

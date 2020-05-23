@@ -14,12 +14,10 @@ namespace Core.UI
         [Header("Current Chest Progress")] [SerializeField]
         private Button claimCurrentChestButton;
         [SerializeField] private TMP_Text claimButtonText;
-        [SerializeField] private Button upgradeChestClaimButton;
         [SerializeField] private Image currentChestIcon;
         [SerializeField] private Slider currentChestProgressSlider;
         [SerializeField] private Image currentChestProgressFillImage;
         [SerializeField] private TMP_Text currentChestProgressText;
-        [SerializeField] private TMP_Text claimCurrentChestButtonText;
         [SerializeField] private TweenPunchSetting tweenPunchSetting;
 
         [Header("Chest Inventory")] [SerializeField]
@@ -27,7 +25,7 @@ namespace Core.UI
 
         [SerializeField] private ChestInventoryPrefab inventoryChestPrefab;
 
-        private bool ClaimIsUpgraded => UpgradeManager.GetUpgradeCurrentLevel(UpgradeTypes.ChestClaim) > 0;
+        private static bool ClaimIsUpgraded => UpgradeManager.GetUpgradeCurrentLevel(UpgradeTypes.ChestClaim) > 0;
 
         public override void Start()
         {
@@ -35,15 +33,13 @@ namespace Core.UI
 
             claimCurrentChestButton.onClick.RemoveAllListeners();
             claimCurrentChestButton.onClick.AddListener(ClaimChest);
-            upgradeChestClaimButton.onClick.RemoveAllListeners();
-            upgradeChestClaimButton.onClick.AddListener(UpgradeChestClaim);
 
             ChestsInit();
 
             EventManager.NewEventSubscription(gameObject, Constants.GameEvents.refreshUiEvent, RefreshFill, true);
             EventManager.NewEventSubscription(gameObject, Constants.GameEvents.chestRefreshEvent, ChestsRefresh, true);
             EventManager.NewEventSubscription(gameObject, Constants.GameEvents.chestOpenEvent, RefreshPanel);
-            EventManager.NewEventSubscription(gameObject, Constants.GameEvents.upgradeRefreshEvent, RefreshUpgradeButton);
+            EventManager.NewEventSubscription(gameObject, Constants.GameEvents.upgradeRefreshEvent, RefreshClaimChestButton);
         }
 
         private void ChestsInit()
@@ -65,18 +61,8 @@ namespace Core.UI
 
         private void RefreshPanel()
         {
-            RefreshUpgradeButton();
-
             ChestsRefresh();
             RefreshFill();
-        }
-
-        private void RefreshUpgradeButton()
-        {
-            if (!isActiveAndEnabled) return;
-            
-            if (UpgradeManager.IsUpgradeMaxed(UpgradeTypes.ChestClaim))
-                upgradeChestClaimButton.gameObject.SetActive(false);
         }
 
         private void RefreshFill()
@@ -108,24 +94,19 @@ namespace Core.UI
 
         private void RefreshClaimChestButton()
         {
-            claimButtonText.text = ClaimIsUpgraded ? Constants.ChestButtonUpgrade : Constants.ChestButtonClaim;
+            claimButtonText.text = ClaimIsUpgraded ? Constants.ChestButtonClaim : Constants.ChestButtonUpgrade;
             
             currentChestIcon.sprite = PlayerData.currentChestRoll == ChestManager.CurrentChest.threshold
                 ? ChestManager.GetChestVariable(ChestManager.CurrentChest.rank).chestIcon
                 : ChestManager.GetChestVariable(ChestManager.CurrentChest.rank - 1).chestIcon;
         }
 
-        private void ClaimChest()
+        private static void ClaimChest()
         {
             if (ClaimIsUpgraded)
                 PanelManager.OpenSubPanel<ChestClaimPanelController>();
             else
                 PanelManager.OpenSubPanel<UpgradePanelController>((int) UpgradeTypes.ChestClaim);
-        }
-
-        private static void UpgradeChestClaim()
-        {
-            PanelManager.OpenSubPanel<UpgradePanelController>((int) UpgradeTypes.ChestClaim);
         }
     }
 }

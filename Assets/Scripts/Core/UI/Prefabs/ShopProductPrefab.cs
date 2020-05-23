@@ -10,6 +10,7 @@ namespace Core.UI.Prefabs
     public class ShopProductPrefab : GlobalAccess
     {
         [SerializeField] private Button purchaseProductButton;
+        [SerializeField] private Transform buttonIcon;
         [SerializeField] private TMP_Text productName;
         [SerializeField] private TMP_Text productAmount;
         [SerializeField] private SVGImage productIcon;
@@ -58,7 +59,10 @@ namespace Core.UI.Prefabs
                     PanelManager.OpenSubPanel<ConfirmPurchasePanelController>(_shopProduct);
 
             else
+            {
                 ShopManager.PurchaseProduct(_shopProduct.productId);
+                PanelManager.PunchButton(buttonIcon);
+            }
         }
 
         private bool HasResourcesForPurchase()

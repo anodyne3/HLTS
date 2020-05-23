@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using Core.Managers;
 using Core.UI.Prefabs;
 using DG.Tweening;
@@ -19,15 +20,18 @@ namespace Core.UI
 
         [Header("CurrencyUpdate")] public Currency[] currencies;
         public RectTransform currenciesRect;
+        [SerializeField] private Transform hideTransform;
         [SerializeField] private AddCurrencyPrefab addCurrencyPrefab;
 
         [SerializeField] private TweenSetting addCurrencyTweenSetting;
+        [SerializeField] private TweenSetting hideCurrencyTweenSetting;
         public Transform addCurrencySpawnPosition;
         public bool blockCurrencyRefresh;
 
         private MyObjectPool<AddCurrencyPrefab> _tweenCurrencyPool;
         private Vector2 _newSizeDelta = new Vector2();
         private bool _updateCurrencies;
+        private bool _currenciesAreMoving;
 
         private void Start()
         {
@@ -117,6 +121,14 @@ namespace Core.UI
 
         private void RefreshAllCurrencies()
         {
+            StartCoroutine(nameof(RefreshAllCurrenciesRoutine));
+        }
+
+        private IEnumerator RefreshAllCurrenciesRoutine()
+        {
+            if (_currenciesAreMoving)
+                yield return new WaitUntil(() => !_currenciesAreMoving);
+
             var currenciesLength = currencies.Length;
             for (var i = 0; i < currenciesLength; i++)
             {
@@ -124,6 +136,8 @@ namespace Core.UI
             }
 
             EventManager.refreshUi.Raise();
+
+            yield return null;
         }
 
         private void RefreshCurrency(Currency currency)
@@ -193,6 +207,36 @@ namespace Core.UI
             currency.currencyDetails.resourceAmount =
                 PlayerData.GetResourceAmount(currency.currencyDetails.resourceType);
             currency.UpdateTextDisplay();
+        }
+
+        public void HideCurrencies(bool value)
+        {
+            _currenciesAreMoving = true;
+
+            var moveOffset = value ? hideCurrencyTweenSetting.moveOffset : -hideCurrencyTweenSetting.moveOffset;
+
+            StartCoroutine(HideCurrenciesRoutine(moveOffset));
+        }
+
+        private IEnumerator HideCurrenciesRoutine(float moveOffset)
+        {
+            var t = 0.0f;
+            var destination = hideTransform.localPosition;
+            destination.y -= moveOffset;
+
+            while (t < hideCurrencyTweenSetting.moveDuration)
+            {
+                hideTransform.localPosition = Vector2.Lerp(hideTransform.localPosition, destination,
+                    t / hideCurrencyTweenSetting.moveDuration);
+                t += Time.deltaTime;
+                yield return null;
+            }
+
+            hideTransform.localPosition = destination;
+
+            _currenciesAreMoving = false;
+
+            yield return null;
         }
 
         public Currency GetCurrencyByType(ResourceType currencyType)

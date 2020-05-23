@@ -10,6 +10,7 @@ namespace Core.UI
     public class PanelManager : GlobalClass
     {
         [SerializeField] private WaitingForServerPanelController waitingForServerPanel;
+        [SerializeField]private TweenPunchSetting generalButtonPunchSetting;
         
         public readonly List<PanelController> allPanels = new List<PanelController>();
         public TweenSetting openPanelTweenSettings;
@@ -88,6 +89,11 @@ namespace Core.UI
             }
 
             return openPanelCount;
-        } 
+        }
+
+        public void PunchButton(Transform target)
+        {
+            generalButtonPunchSetting.DoPunch(target, false);
+        }
     }
 }

@@ -11,7 +11,7 @@ namespace Core.UI
         [SerializeField] private TMP_Text payoutMessageText;
         [SerializeField] private TMP_Text payoutAmountText;
         [SerializeField] private TMP_Text payoutTypeText;
-        public Button doublePayoutForAdButton;
+        [SerializeField] private Button doublePayoutForAdButton;
 
         private readonly Resource _payoutCurrency = new Resource(0, ResourceType.BananaCoins);
 
@@ -24,11 +24,17 @@ namespace Core.UI
             doublePayoutForAdButton.onClick.AddListener(ConfirmShowAd);
         }
 
+        private static void ConfirmShowAd()
+        {
+            PanelManager.OpenSubPanel<ConfirmRewardAdPanelController>();
+        }
+
         public override void OpenPanel(params object[] args)
         {
             base.OpenPanel();
 
-            doublePayoutForAdButton.gameObject.SetActive(AdManager.DoublePayoutAdIsLoaded());
+            // doublePayoutForAdButton.gameObject.SetActive(AdManager.DoublePayoutAdIsLoaded());
+            CurrencyManager.HideCurrencies(true);
 
             RefreshPanel();
         }
@@ -53,11 +59,6 @@ namespace Core.UI
             StartTextAnimations();
         }
 
-        private static void ConfirmShowAd()
-        {
-            PanelManager.OpenSubPanel<ConfirmRewardAdPanelController>();
-        }
-
         private void OnApplicationPause(bool pauseStatus)
         {
             if (pauseStatus || AdManager.reward == null) return;
@@ -78,7 +79,9 @@ namespace Core.UI
         protected override void ClosePanel()
         {
             base.ClosePanel();
-
+            
+            CurrencyManager.HideCurrencies(false);
+            
             EventManager.payoutFinish.Raise();
             EventManager.refreshCurrency.Raise();
         }
