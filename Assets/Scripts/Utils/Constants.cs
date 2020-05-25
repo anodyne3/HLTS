@@ -141,6 +141,11 @@ namespace Utils
         public const float ArmPullResetSpeed = 1.667f;
         public const float ArmLockedTriggerAmount = 0.4f;
         public const float ClipTriggerTime = 0.666f;
+        
+        //bet indicators
+        public const float OffsetAmountLow = -0.6165f;
+        public const float ScaleAmount = 1.215f;
+        public const float RotationAmount = 36f;
 
         //animStates
         public const string ArmPullState = "LeverPull";

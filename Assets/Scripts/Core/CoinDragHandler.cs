@@ -38,7 +38,7 @@ namespace Core
 
         private void OnPressed(Vector2 pointerPosition)
         {
-            if (!GameManager.interactionEnabled) return;
+            if (GameManager != null && !GameManager.interactionEnabled) return;
             
             if (_circleTrigger != Physics2D.OverlapPoint(pointerPosition)) return;
 

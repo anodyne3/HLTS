@@ -153,7 +153,7 @@ namespace Core.Managers
             return rank < chestTypes.Length ? chestTypes[rank] : CurrentChest;
         }
 
-        public void ChestClaimed(ChestType chestType)
+        public static void ChestClaimed(ChestType chestType)
         {
             AlertMessage.Init(chestType + Constants.ClaimMessage);
             EventManager.chestRefresh.Raise();

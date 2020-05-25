@@ -8,21 +8,37 @@ namespace Core
 {
     public class SlotMachine : Singleton<SlotMachine>
     {
-        [HideInInspector] public bool coinIsLoaded;
+        private bool _armIsPulled;
+        private int _coinWasLoaded;
+        private Coroutine _autoRoll;
+
+        private bool CoinIsLoaded => BetAmount > 0;
+        public bool CoinSlotFull => BetAmount >= CoinSlotMaxBet;
+
+        private static int CoinSlotMaxBet => UpgradeManager.GetUpgradeCurrentLevel(UpgradeTypes.CoinSlot) + 1;
+
         [HideInInspector] public bool wheelsAreRolling;
         [HideInInspector] public int[] result = new int[3];
-        [HideInInspector] public FruitType payout;
+        [HideInInspector] public FruitType payoutType;
+        [HideInInspector] public long payoutAmount;
         [HideInInspector] public bool autoMode;
-        [HideInInspector] public int betAmount;
-        public static int CoinSlotMaxBet => UpgradeManager.GetUpgradeCurrentLevel(UpgradeTypes.CoinSlot);
- 
-        private bool _armIsPulled;
-        private bool _coinWasLoaded;
-        private Coroutine _autoRoll;
-        
-        //test variables
+
+        private int _betAmount;
+        public int BetAmount
+        {
+            get => _betAmount;
+            private set
+            {
+                if (value <= CoinSlotMaxBet && value >= 0)
+                    _betAmount = value;
+                
+                BetIndicator.RefreshBetIndicators();
+            }
+        }
+
+        /*//test variables
         private int _testCoinsSpent;
-        private float _timeElapsed;
+        private float _timeElapsed;*/
 
         private void Start()
         {
@@ -34,30 +50,30 @@ namespace Core
 
         private void LoadCoin()
         {
-            if (coinIsLoaded) return;
-
-            coinIsLoaded = true;
+            BetAmount += 1;
         }
 
         private void PullArm()
         {
-            if (_armIsPulled || !coinIsLoaded) return;
+            if (_armIsPulled || !CoinIsLoaded) return;
 
             _armIsPulled = true;
-            ConsumeCoin();
             OnWheelRoll();
+            ConsumeCoins();
         }
 
-        private void ConsumeCoin()
+        private void ConsumeCoins()
         {
-            coinIsLoaded = false;
-            EventManager.coinConsume.Raise();
+            PlayerData.DeductCoin(BetAmount);
+            if (!autoMode)
+                BetAmount = 0;
         }
 
         private void OnWheelRoll()
         {
             wheelsAreRolling = true;
             EventManager.wheelRoll.Raise();
+            FirebaseFunctionality.RollReels(BetAmount);
         }
 
         private void WheelResult()
@@ -70,31 +86,37 @@ namespace Core
 
         private void DeterminePayout()
         {
-            payout = FruitType.None;
-            
+            payoutType = FruitType.None;
+
             var fruitResult = new FruitType[3];
 
             for (var i = 0; i < result.Length; i++)
                 fruitResult[i] = Constants.FruitDefinitions.First(x => x.Id == result[i]).FruitType;
 
             if (fruitResult.Distinct().Count() == 1)
-                payout = fruitResult[0];
+                payoutType = fruitResult[0];
             else
             {
                 var fruitGroup = fruitResult.Aggregate(0,
                     (total, next) => next == FruitType.Bananas || next == FruitType.Bars ? total + 1 : total);
 
                 if (fruitGroup == 3)
-                    payout = FruitType.Barnana;
+                    payoutType = FruitType.Barnana;
             }
 
-            if (payout == FruitType.None) return;
+            if (payoutType == FruitType.None)
+            {
+                /*if (!autoMode)
+                    BetAmount = 0;*/
+                
+                return;
+            }
 
             if (autoMode)
             {
                 autoMode = false;
                 StopCoroutine(_autoRoll);
-                coinIsLoaded = _coinWasLoaded;
+                BetAmount = _coinWasLoaded;
                 EventManager.refreshUi.Raise();
             }
 
@@ -109,11 +131,11 @@ namespace Core
             if (!autoMode)
             {
                 StopCoroutine(_autoRoll);
-                coinIsLoaded = _coinWasLoaded;
+                BetAmount = _coinWasLoaded;
             }
             else
                 _autoRoll = StartCoroutine(nameof(AutoMode));
-                
+
             EventManager.refreshUi.Raise();
         }
 
@@ -122,10 +144,13 @@ namespace Core
             var waitUntilWheelsStop = new WaitUntil(() => wheelsAreRolling == false);
             var waitBetweenRolls = new WaitForSeconds(Constants.PauseBetweenRolls);
 
-            _coinWasLoaded = coinIsLoaded;
-            coinIsLoaded = true;
-            _armIsPulled = true;
+            _coinWasLoaded = BetAmount;
+
+            if (BetAmount == 0)
+                BetAmount = 1;
             
+            _armIsPulled = true;
+
             while (PlayerData.GetResourceAmount(ResourceType.BananaCoins) > 0 && autoMode)
             {
                 if (wheelsAreRolling)
@@ -134,31 +159,30 @@ namespace Core
                     yield return waitBetweenRolls;
                 }
 
-                EventManager.coinConsume.Raise();
+                ConsumeCoins();
                 OnWheelRoll();
 
                 yield return null;
             }
+
             yield return null;
         }
 
-        private IEnumerator PayoutRateTest()
+        /*private IEnumerator PayoutRateTest()
         {
             var waitUntilWheelsStop = new WaitUntil(() => wheelsAreRolling == false);
-            var waitUntilCoinIsLoaded = new WaitUntil(() => coinIsLoaded);
+            var waitUntilCoinIsLoaded = new WaitUntil(() => CoinIsLoaded);
 
             var timeStarted = Time.time;
 
             while (PlayerData.GetResourceAmount(ResourceType.BananaCoins) > 0 && autoMode)
             {
-                // EventManager.coinInsert.Raise();
-
-                if (!coinIsLoaded)
+                if (!CoinIsLoaded)
                     yield return waitUntilCoinIsLoaded;
-                
+
                 if (wheelsAreRolling)
                     yield return waitUntilWheelsStop;
-                
+
                 EventManager.armPull.Raise();
 
                 _timeElapsed = Time.time - timeStarted;
@@ -168,28 +192,28 @@ namespace Core
 
             autoMode = false;
             yield return null;
-        }
+        }*/
 
         public void BetMin()
         {
-            betAmount = 1;
+            BetAmount = 1;
         }
 
         public void BetLess()
         {
-            betAmount--;
+            BetAmount--;
         }
 
         public void BetMore()
         {
-            betAmount++;
+            BetAmount++;
         }
 
         public void BetMax()
         {
-            betAmount = UpgradeManager.GetUpgradeCurrentLevel(UpgradeTypes.CoinSlot);
+            BetAmount = CoinSlotMaxBet;
         }
-        
+
         /*
         private void OnGUI()
         {

@@ -13,9 +13,9 @@ namespace MyScriptableObjects
         public int maxLevel;
         [SerializeField] private UpgradeLevel[] levelDetails;
         public Sprite CurrentIcon => levelDetails[currentLevel].icon;
+        //need to fix this, index out of array
         public string CurrentUpgradeName => levelDetails[currentLevel].upgradeName;
         public string CurrentDescription => levelDetails[currentLevel].description;
-        //need to fix this, index out of array
         public Resource[] CurrentResourceRequirements => currentLevel < levelDetails.Length
             ? levelDetails[currentLevel].resourceRequirements
             : null;

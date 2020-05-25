@@ -12,6 +12,7 @@ namespace Core
         protected static AdManager AdManager => GlobalComponents.Instance.AddGlobalComponent<AdManager>() as AdManager;
         protected static AlertMessage AlertMessage => Foundation.GetGlobalClass<AlertMessage>();
         protected static AudioManager AudioManager => GlobalComponents.Instance.AddGlobalComponent<AudioManager>() as AudioManager;
+        protected static BetIndicator BetIndicator => Foundation.GetGlobalClass<BetIndicator>();
         protected static CameraManager CameraManager => Foundation.GetGlobalClass<CameraManager>();
         protected static ChestManager ChestManager => Foundation.GetGlobalClass<ChestManager>();
         protected static CoinTray CoinTray => GlobalComponents.Instance.AddGlobalComponent<CoinTray>() as CoinTray;

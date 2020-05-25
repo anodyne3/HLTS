@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b24095dc18074a278263b9b45befaec4, type: 3}
-  m_Name: hideCurrenciesTweenSetting
+  m_Name: betIndicatorTweenSetting
   m_EditorClassIdentifier: 
   moveDuration: 0.333
   delayBetweenInstance: 0
@@ -21,7 +21,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   spawnZoneRadius: 0
-  moveOffset: -500
+  moveOffset: 0
   rotateSetting: {fileID: 0}
   punchSetting: {fileID: 0}
   fadeSetting: {fileID: 0}
@@ -30,4 +30,4 @@ MonoBehaviour:
   scaleStartValue: {x: 0, y: 0, z: 0}
   scaleEndValue: {x: 0, y: 0, z: 0}
   scaleDuration: 0
-  sequenceEasing: 0
+  sequenceEasing: 30

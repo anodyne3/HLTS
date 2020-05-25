@@ -33,7 +33,7 @@ namespace Core.UI
         {
             base.OpenPanel();
 
-            // doublePayoutForAdButton.gameObject.SetActive(AdManager.DoublePayoutAdIsLoaded());
+            doublePayoutForAdButton.gameObject.SetActive(AdManager.DoublePayoutAdIsLoaded());
             CurrencyManager.HideCurrencies(true);
 
             RefreshPanel();
@@ -41,20 +41,19 @@ namespace Core.UI
 
         private void RefreshPanel()
         {
-            payoutMessageText.text = SlotMachine.payout == FruitType.Bars ||
-                                     SlotMachine.payout == FruitType.Bananas ||
-                                     SlotMachine.payout == FruitType.Barnana
+            payoutMessageText.text = SlotMachine.payoutType == FruitType.Bars ||
+                                     SlotMachine.payoutType == FruitType.Bananas ||
+                                     SlotMachine.payoutType == FruitType.Barnana
                 ? Constants.JackpotMessage
                 : Constants.YouWinMessage;
 
 
-            _payoutCurrency.resourceAmount = PlayerData.GetResourceAmount(_payoutCurrency.resourceType) -
-                                             CurrencyManager.GetCurrencyByType(_payoutCurrency.resourceType)
-                                                 .currencyDetails.resourceAmount;
+            _payoutCurrency.resourceAmount = SlotMachine.payoutAmount;
+            // _payoutCurrency.resourceAmount = PlayerData.GetResourceAmount(_payoutCurrency.resourceType) - CurrencyManager.GetCurrencyByType(_payoutCurrency.resourceType).currencyDetails.resourceAmount;
 
             payoutAmountText.text = _payoutCurrency.resourceAmount.ToString();
 
-            payoutTypeText.text = SlotMachine.payout.ToString();
+            payoutTypeText.text = SlotMachine.payoutType.ToString();
 
             StartTextAnimations();
         }

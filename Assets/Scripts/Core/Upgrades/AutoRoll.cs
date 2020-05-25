@@ -35,7 +35,7 @@ namespace Core.Upgrades
         {
             _upgradeState = UpgradeManager.GetUpgradeCurrentLevel(UpgradeTypes.AutoRoll);
             RefreshButtons();
-            autoRollObject.ButtonLit(SlotMachine.autoMode);
+            RefreshButtonLights();
         }
 
         private void BetMin()
@@ -43,7 +43,6 @@ namespace Core.Upgrades
             if (_upgradeState > 2)
             {
                 SlotMachine.BetMin();
-                betMinObject.light2d.enabled = SlotMachine.betAmount > 1;
             }
             else
             {
@@ -56,7 +55,6 @@ namespace Core.Upgrades
             if (_upgradeState > 1)
             {
                 SlotMachine.BetLess();
-                betLessObject.light2d.enabled = false;
             }
             else
             {
@@ -69,7 +67,6 @@ namespace Core.Upgrades
             if (_upgradeState > 0)
             {
                 EventManager.autoRoll.Raise();
-                autoRollObject.light2d.enabled = SlotMachine.autoMode;
             }
             else
             {
@@ -82,7 +79,6 @@ namespace Core.Upgrades
             if (_upgradeState > 1)
             {
                 SlotMachine.BetMore();
-                betMoreObject.light2d.enabled = SlotMachine.betAmount < SlotMachine.CoinSlotMaxBet;
             }
             else
             {
@@ -95,7 +91,6 @@ namespace Core.Upgrades
             if (_upgradeState > 2)
             {
                 SlotMachine.BetMax();
-                betMaxObject.light2d.enabled = false;
             }
             else
             {
@@ -125,6 +120,15 @@ namespace Core.Upgrades
             
             betMaxObject.gameObject.SetActive(_upgradeState > 1);
             betMinObject.gameObject.SetActive(_upgradeState > 1);
+        }
+
+        private void RefreshButtonLights()
+        {
+            betMinObject.ButtonLit(SlotMachine.BetAmount > 1);
+            betLessObject.ButtonLit(SlotMachine.BetAmount > 1);
+            autoRollObject.ButtonLit(SlotMachine.autoMode);
+            betMoreObject.ButtonLit(!SlotMachine.CoinSlotFull);
+            betMaxObject.ButtonLit(!SlotMachine.CoinSlotFull);
         }
     }
 }

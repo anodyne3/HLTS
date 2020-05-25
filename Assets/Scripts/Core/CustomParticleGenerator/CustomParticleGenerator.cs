@@ -49,7 +49,7 @@ namespace Core.CustomParticleGenerator
             var randomStartingVelocity = new Vector2(); 
             var currentCycle = 0;
             var startingPosition = transform.position + fruitBurst.startPositionOffset;
-            var payoutSprite = ResourceManager.GetFruitParticleSprite(SlotMachine.payout);
+            var payoutSprite = ResourceManager.GetFruitParticleSprite(SlotMachine.payoutType);
             
             while (fruitBurst.cycles >= currentCycle)
             {

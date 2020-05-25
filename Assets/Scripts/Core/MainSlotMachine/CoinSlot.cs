@@ -22,8 +22,6 @@ namespace Core.MainSlotMachine
         {
             upgradeButton.OnClick.RemoveAllListeners();
             upgradeButton.OnClick.AddListener(CoinSlotClicked);
-            
-            // EventManager.NewEventSubscription(gameObject, Constants.GameEvents.coinInsertEvent, LoadCoin);
         }
 
         private void CoinSlotClicked()
@@ -35,7 +33,7 @@ namespace Core.MainSlotMachine
         
         private void OnTriggerStay2D(Collider2D other)
         {
-            if (_loadingCoin || SlotMachine.coinIsLoaded) return;
+            if (_loadingCoin || SlotMachine.CoinSlotFull) return;
 
             if (!other.TryGetComponent(typeof(CoinDragHandler), out var component)) return;
 

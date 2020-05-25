@@ -25,6 +25,8 @@ namespace Core.Upgrades
 
         public void ButtonLit(bool value)
         {
+            if (brokenSprite.enabled) return;
+            
             buttonSprite.color = value ? Color.white : Color.gray;
             light2d.enabled = value;
         }

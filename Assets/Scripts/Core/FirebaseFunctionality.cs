@@ -45,7 +45,6 @@ namespace Core
 
             _gameEventListeners = new GameObject("FirebaseGameEventListeners");
             _gameEventListeners.transform.SetParent(transform);
-            EventManager.NewEventSubscription(_gameEventListeners, Constants.GameEvents.wheelRollEvent, RollReels);
             EventManager.NewEventSubscription(_gameEventListeners, Constants.GameEvents.userEarnedRewardEvent,
                 ClaimAdReward);
         }
@@ -172,9 +171,12 @@ namespace Core
 
         #region slots
 
-        private async void RollReels()
+        public async void RollReels(int betAmount)
         {
-            await ReelRoll();
+            var responseData = await GetHttpsCallable(betAmount.ToString(), Constants.ReelRollCloudFunction);
+            
+            var payoutAmount = ProcessBasicResponseData<long>(responseData);
+            SlotMachine.payoutAmount = payoutAmount;
         }
 
         private async Task ReelRoll()
@@ -225,7 +227,7 @@ namespace Core
             ChestManager.ChestClaimed((ChestType) chestId);
         }
 
-        public async void OpenChest(ChestType chestType)
+        public async void ChestOpen(ChestType chestType)
         {
             PanelManager.WaitingForServerPanel();
             var chestOpenId = ((int) chestType).ToString();
