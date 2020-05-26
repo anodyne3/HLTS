@@ -19,20 +19,13 @@ namespace Core.CustomParticleGenerator
             _particlePool = ObjectPoolManager.CreateObjectPool<CustomParticle>(fruitPrefab, transform);
         }
 
-        /*
-        private MyObjectPool<T> CreateObjectPool<T>(CustomParticle prefab) where T : CustomParticle
-        {
-            var newPool = new MyObjectPool<T>(() => Instantiate((T)prefab, transform));
-            return newPool;
-        }
-        */
-
         public void StartEmitter()
         {
-            var fruitBurstsLength = fruitBursts.Length;
-            for (var i = 0; i < fruitBurstsLength; i++)
+            var payoutTypeCount = SlotMachine.payoutType.Count;
+            for (var i = 0; i < payoutTypeCount; i++)
             {
-                StartCoroutine(nameof(EmitParticles), fruitBursts[i]);
+                var payoutSprite = ResourceManager.GetFruitParticleSprite(SlotMachine.payoutType[i]);
+                StartCoroutine(EmitParticles(fruitBursts[i], payoutSprite));
             }
         }
 
@@ -41,7 +34,7 @@ namespace Core.CustomParticleGenerator
             StopAllCoroutines();
         }
 
-        private IEnumerator EmitParticles(ParticleBurst fruitBurst)
+        private IEnumerator EmitParticles(ParticleBurst fruitBurst, Sprite payoutSprite)
         {
             //performance enhancing vars
             var initialWait = new WaitForSeconds(fruitBurst.burstTime);
@@ -49,8 +42,7 @@ namespace Core.CustomParticleGenerator
             var randomStartingVelocity = new Vector2(); 
             var currentCycle = 0;
             var startingPosition = transform.position + fruitBurst.startPositionOffset;
-            var payoutSprite = ResourceManager.GetFruitParticleSprite(SlotMachine.payoutType);
-            
+
             while (fruitBurst.cycles >= currentCycle)
             {
                 yield return initialWait;

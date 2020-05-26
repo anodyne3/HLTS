@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: PayoutFruitBurst3
   m_EditorClassIdentifier: 
   burstTime: 1.5
-  burstAmountMin: 7
-  burstAmountMax: 15
+  burstAmountMin: 3
+  burstAmountMax: 9
   cycles: 0
   burstInterval: 2.5
-  startPositionOffset: {x: 0, y: -2, z: 0}
+  startPositionOffset: {x: -0.5, y: -2, z: 0}
   startVelocityMin: {x: -2, y: 5}
   startVelocityMax: {x: 2, y: 0}
   lifeSpan: 3.5

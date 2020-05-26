@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using Enums;
 using UnityEngine;
@@ -19,11 +20,12 @@ namespace Core
 
         [HideInInspector] public bool wheelsAreRolling;
         [HideInInspector] public int[] result = new int[3];
-        [HideInInspector] public FruitType payoutType;
+        [HideInInspector] public List<FruitType> payoutType = new List<FruitType>();
         [HideInInspector] public long payoutAmount;
         [HideInInspector] public bool autoMode;
 
         private int _betAmount;
+
         public int BetAmount
         {
             get => _betAmount;
@@ -31,7 +33,7 @@ namespace Core
             {
                 if (value <= CoinSlotMaxBet && value >= 0)
                     _betAmount = value;
-                
+
                 BetIndicator.RefreshBetIndicators();
             }
         }
@@ -86,31 +88,31 @@ namespace Core
 
         private void DeterminePayout()
         {
-            payoutType = FruitType.None;
+            payoutType.Clear();
 
-            var fruitResult = new FruitType[3];
-
-            for (var i = 0; i < result.Length; i++)
-                fruitResult[i] = Constants.FruitDefinitions.First(x => x.Id == result[i]).FruitType;
-
-            if (fruitResult.Distinct().Count() == 1)
-                payoutType = fruitResult[0];
-            else
+            for (var i = 0; i < BetAmount; i++)
             {
-                var fruitGroup = fruitResult.Aggregate(0,
-                    (total, next) => next == FruitType.Bananas || next == FruitType.Bars ? total + 1 : total);
+                var fruitResult = new FruitType[3];
+                var adjustedResults = AdjustResultsForBet(i);
 
-                if (fruitGroup == 3)
-                    payoutType = FruitType.Barnana;
+                var resultLength = result.Length;
+                for (var j = 0; j < resultLength; j++)
+                    fruitResult[j] = Constants.FruitDefinitions.First(x => x.Id == adjustedResults[j]).FruitType;
+
+                if (fruitResult.Distinct().Count() == 1)
+                    payoutType.Add(fruitResult[0]);
+                else
+                {
+                    var fruitGroup = fruitResult.Aggregate(0,
+                        (total, next) => next == FruitType.Bananas || next == FruitType.Bars ? total + 1 : total);
+
+                    if (fruitGroup == 3)
+                        payoutType.Add(FruitType.Barnana);
+                }
             }
 
-            if (payoutType == FruitType.None)
-            {
-                /*if (!autoMode)
-                    BetAmount = 0;*/
-                
+            if (payoutType.Count == 0)
                 return;
-            }
 
             if (autoMode)
             {
@@ -122,6 +124,66 @@ namespace Core
 
             CurrencyManager.blockCurrencyRefresh = true;
             EventManager.payoutStart.Raise();
+        }
+
+        private int[] AdjustResultsForBet(int betValue)
+        {
+            var fruitArray = new int[3]; 
+            result.CopyTo(fruitArray, 0);
+            var resultLength = result.Length;
+            switch (betValue)
+            {
+                case 1:
+                    for (var i = 0; i < resultLength; i++)
+                        fruitArray[i]++;
+                    break;
+                case 2:
+                    for (var i = 0; i < resultLength; i++)
+                        fruitArray[i]--;
+                    break;
+                case 3:
+                    for (var i = 0; i < resultLength; i++)
+                        switch (i)
+                        {
+                            case 0:
+                                fruitArray[i]--;
+                                break;
+                            case 2:
+                                fruitArray[i]++;
+                                break;
+                        }
+
+                    break;
+                case 4:
+                    for (var i = 0; i < resultLength; i++)
+                        switch (i)
+                        {
+                            case 0:
+                                fruitArray[i]++;
+                                break;
+                            case 2:
+                                fruitArray[i]--;
+                                break;
+                        }
+
+                    break;
+            }
+
+            var fruitArrayLength = fruitArray.Length;
+            for (var i = 0; i < fruitArrayLength; i++)
+            {
+                if (fruitArray[i] > 11)
+                    fruitArray[i] -= 12;
+                else if (fruitArray[i] < 0)
+                    fruitArray[i] += 12;
+
+                if (fruitArray[i] > 11)
+                    fruitArray[i] -= 12;
+                else if (fruitArray[i] < 0)
+                    fruitArray[i] += 12;
+            }
+
+            return fruitArray;
         }
 
         private void AutoSlotToggle()
@@ -148,7 +210,7 @@ namespace Core
 
             if (BetAmount == 0)
                 BetAmount = 1;
-            
+
             _armIsPulled = true;
 
             while (PlayerData.GetResourceAmount(ResourceType.BananaCoins) > 0 && autoMode)
@@ -206,7 +268,10 @@ namespace Core
 
         public void BetMore()
         {
-            BetAmount++;
+            if (BetAmount == 0)
+                BetAmount = 2;
+            else
+                BetAmount++;
         }
 
         public void BetMax()

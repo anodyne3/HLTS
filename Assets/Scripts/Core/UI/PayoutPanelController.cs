@@ -1,3 +1,5 @@
+using System;
+using System.Linq;
 using Enums;
 using TMPro;
 using UnityEngine;
@@ -41,19 +43,25 @@ namespace Core.UI
 
         private void RefreshPanel()
         {
-            payoutMessageText.text = SlotMachine.payoutType == FruitType.Bars ||
-                                     SlotMachine.payoutType == FruitType.Bananas ||
-                                     SlotMachine.payoutType == FruitType.Barnana
+            payoutMessageText.text = SlotMachine.payoutType.Any(x => x == FruitType.Bars) ||
+                                     SlotMachine.payoutType.Any(x => x == FruitType.Bananas) ||
+                                     SlotMachine.payoutType.Any(x => x == FruitType.Barnana)
                 ? Constants.JackpotMessage
                 : Constants.YouWinMessage;
 
+            payoutTypeText.text = string.Empty;
+            var payoutTypeCount = SlotMachine.payoutType.Count;
+            for (var i = 0; i < payoutTypeCount; i++)
+            {
+                payoutTypeText.text += SlotMachine.payoutType[i].ToString();
+
+                if (payoutTypeCount > 1)
+                    payoutTypeText.text += "<br>";
+            }
 
             _payoutCurrency.resourceAmount = SlotMachine.payoutAmount;
-            // _payoutCurrency.resourceAmount = PlayerData.GetResourceAmount(_payoutCurrency.resourceType) - CurrencyManager.GetCurrencyByType(_payoutCurrency.resourceType).currencyDetails.resourceAmount;
 
             payoutAmountText.text = _payoutCurrency.resourceAmount.ToString();
-
-            payoutTypeText.text = SlotMachine.payoutType.ToString();
 
             StartTextAnimations();
         }
@@ -78,9 +86,9 @@ namespace Core.UI
         protected override void ClosePanel()
         {
             base.ClosePanel();
-            
+
             CurrencyManager.HideCurrencies(false);
-            
+
             EventManager.payoutFinish.Raise();
             EventManager.refreshCurrency.Raise();
         }

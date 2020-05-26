@@ -4555,7 +4555,10 @@ MonoBehaviour:
     type: 3}
   fruitBursts:
   - {fileID: 11400000, guid: 8d507c5cd601e9f4a80ce77f92344a9e, type: 2}
-  - {fileID: 11400000, guid: 8d507c5cd601e9f4a80ce77f92344a9e, type: 2}
+  - {fileID: 11400000, guid: 88ba635fd6648a94f99670aad6ec096a, type: 2}
+  - {fileID: 11400000, guid: 99e7ffef5c8e4b243b7173d9f8b1339c, type: 2}
+  - {fileID: 11400000, guid: 3a571d6a2f67edd40929c0a81d39fe28, type: 2}
+  - {fileID: 11400000, guid: df2bdd19425f1b64a86dc61f329bd987, type: 2}
 --- !u!1001 &1400428095
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6082,9 +6085,6 @@ MonoBehaviour:
   - {fileID: 1334632762}
   betIndicatorTweenSettings: {fileID: 11400000, guid: f3a7acd5624432a4991e2c36de17a560,
     type: 2}
-  offsetAmountLow: -0.6165
-  scaleAmount: 1.215
-  rotationAmount: 36
 --- !u!4 &1767537292
 Transform:
   m_ObjectHideFlags: 0

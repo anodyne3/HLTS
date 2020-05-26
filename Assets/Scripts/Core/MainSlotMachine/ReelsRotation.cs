@@ -117,19 +117,6 @@ namespace Core.MainSlotMachine
             SlotMachine.result[0] = newRoll[0];
             SlotMachine.result[1] = newRoll[1];
             SlotMachine.result[2] = newRoll[2];
-            
-            for (var i = 0; i < SlotMachine.result.Length; i++)
-            {
-                if (SlotMachine.result[i] > 11)
-                    SlotMachine.result[i] -= 12;
-                else if (SlotMachine.result[i] < 0)
-                    SlotMachine.result[i] += 12;
-
-                if (SlotMachine.result[i] > 11)
-                    SlotMachine.result[i] -= 12;
-                else if (SlotMachine.result[i] < 0)
-                    SlotMachine.result[i] += 12;
-            }
 
             EventManager.wheelResult.Raise();
         }
