@@ -54,6 +54,9 @@ namespace Core.Managers
         {
             var requiredResources = _upgradeVariables[(int) id].CurrentResourceRequirements;
 
+            if (requiredResources == null)
+                return false;
+            
             var enoughResources = true;
 
             var requiredResourcesLength = requiredResources.Length;

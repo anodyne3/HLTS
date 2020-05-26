@@ -21,34 +21,34 @@ MonoBehaviour:
     description: Increase the number of coins which can be inserted, which in turn
       increases the paylines per roll.
     resourceRequirements:
-    - resourceAmount: 900
+    - resourceAmount: 400
       resourceType: 0
-    - resourceAmount: 100
+    - resourceAmount: 12
       resourceType: 1
   - icon: {fileID: 3286163911610860551, guid: a965311d54d6b3b4384ee3753dc05091, type: 3}
     upgradeName: 3 Payout Lines
     description: Increase the number of coins which can be inserted, which in turn
       increases the paylines per roll.
     resourceRequirements:
-    - resourceAmount: 1800
+    - resourceAmount: 2400
       resourceType: 0
-    - resourceAmount: 300
+    - resourceAmount: 45
       resourceType: 1
   - icon: {fileID: 3286163911610860551, guid: 64eb71b98a4de9846898f8f150a6b55b, type: 3}
     upgradeName: 4 Payout Lines
     description: Increase the number of coins which can be inserted, which in turn
       increases the paylines per roll.
     resourceRequirements:
-    - resourceAmount: 2700
+    - resourceAmount: 4900
       resourceType: 0
-    - resourceAmount: 900
+    - resourceAmount: 122
       resourceType: 1
   - icon: {fileID: 3286163911610860551, guid: 3e0bb88b9373eed418473d691c93e747, type: 3}
     upgradeName: 5 Payout Lines
     description: Increase the number of coins which can be inserted, which in turn
       increases the paylines per roll.
     resourceRequirements:
-    - resourceAmount: 3600
+    - resourceAmount: 7900
       resourceType: 0
-    - resourceAmount: 2700
+    - resourceAmount: 164
       resourceType: 1
