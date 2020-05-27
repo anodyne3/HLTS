@@ -1,4 +1,3 @@
-using System;
 using System.Linq;
 using Enums;
 using TMPro;
@@ -16,6 +15,8 @@ namespace Core.UI
         [SerializeField] private Button doublePayoutForAdButton;
 
         private readonly Resource _payoutCurrency = new Resource(0, ResourceType.BananaCoins);
+        private const AdType ThisAdType = AdType.DoublePayout;
+        public long adRewardAmount;
 
         public override void Start()
         {
@@ -28,14 +29,14 @@ namespace Core.UI
 
         private static void ConfirmShowAd()
         {
-            PanelManager.OpenSubPanel<ConfirmRewardAdPanelController>();
+            PanelManager.OpenSubPanel<ConfirmRewardAdPanelController>(ThisAdType);
         }
 
         public override void OpenPanel(params object[] args)
         {
             base.OpenPanel();
 
-            doublePayoutForAdButton.gameObject.SetActive(AdManager.DoublePayoutAdIsLoaded());
+            doublePayoutForAdButton.gameObject.SetActive(AdManager.AdIsLoaded(ThisAdType));
             CurrencyManager.HideCurrencies(true);
 
             RefreshPanel();
@@ -75,7 +76,10 @@ namespace Core.UI
 
         private void ProcessReward()
         {
+            if (AdManager.shownAd != ThisAdType) return;
+            
             PlayerData.AddResourceAmount(_payoutCurrency);
+            payoutAmountText.text = (_payoutCurrency.resourceAmount + adRewardAmount).ToString();
             doublePayoutForAdButton.gameObject.SetActive(false);
 
             RefreshPanel();

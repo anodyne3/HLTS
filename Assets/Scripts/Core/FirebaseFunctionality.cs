@@ -179,27 +179,33 @@ namespace Core
             SlotMachine.payoutAmount = payoutAmount;
         }
 
-        private async Task ReelRoll()
-        {
-            var rollReel = _firebaseFunc.GetHttpsCallable(Constants.ReelRollCloudFunction).CallAsync();
-
-            await rollReel;
-            if (rollReel.IsFaulted)
-            {
-                HandleFunctionError(rollReel);
-            }
-        }
-
         #endregion
 
         #region Ads
 
         private async void ClaimAdReward()
         {
-            await AdRewardClaim();
+            var shownAdId = ((int) AdManager.shownAd).ToString();
+            var responseData = await GetHttpsCallable(shownAdId, Constants.AdRewardClaimCloudFunction);
+            
+            switch (AdManager.shownAd)
+            {
+                case AdType.DoublePayout:
+                    var adRewardAmount = ProcessBasicResponseData<long>(responseData);
+                    AlertMessage.Init("Extra " + adRewardAmount + " Banana Coins awarded");
+                    PanelManager.GetPanel<PayoutPanelController>().adRewardAmount = adRewardAmount;
+                    break;
+                case AdType.DoubleChest:
+                    PanelManager.GetPanel<ChestOpenPanelController>().adRewards = new ChestRewardDto(responseData);
+                    AlertMessage.Init("Additional Chest contents awarded");
+                    break;
+                default:
+                    AlertMessage.Init("Something went wrong with Ad Reward claim");
+                    break;
+            }
         }
 
-        private async Task AdRewardClaim()
+        /*private async Task AdRewardClaim()
         {
             var adRewardClaim = _firebaseFunc.GetHttpsCallable(Constants.AdRewardClaimCloudFunction).CallAsync();
 
@@ -211,7 +217,7 @@ namespace Core
 
             var adRewardAmount = ProcessBasicResponseData<long>(responseData);
             AlertMessage.Init("Extra " + adRewardAmount + " Banana Coins awarded");
-        }
+        }*/
 
         #endregion
 

@@ -22,13 +22,15 @@ namespace Core.UI
 
         public ChestRewardPrefab chestRewardPrefab;
         public Transform rewardStartPosition;
-        
+        public ChestRewardDto adRewards;
+
         [HideInInspector] public MyObjectPool<ChestRewardPrefab> chestRewardPool;
-        
+
         private ChestRewardDto _chestRewardDto;
 
         private Sequence _rewardSequence;
         private readonly List<ChestRewardPrefab> _activeRewards = new List<ChestRewardPrefab>();
+        private const AdType ThisAdType = AdType.DoubleChest;
 
         public override void Start()
         {
@@ -38,10 +40,10 @@ namespace Core.UI
             backgroundButton.onClick.AddListener(RushRewards);
             doublePayoutForAdButton.onClick.AddListener(ConfirmShowAd);
         }
-        
+
         private static void ConfirmShowAd()
         {
-            PanelManager.OpenSubPanel<ConfirmRewardAdPanelController>();
+            PanelManager.OpenSubPanel<ConfirmRewardAdPanelController>(ThisAdType);
         }
 
         public override void OpenPanel(params object[] args)
@@ -51,8 +53,8 @@ namespace Core.UI
             _chestRewardDto = (ChestRewardDto) args[0];
 
             PanelManager.GetPanel<ChestDetailsPanelController>().OpenChestIcon(true);
-            
-            // doublePayoutForAdButton.gameObject.SetActive(AdManager.DoublePayoutAdIsLoaded());
+
+            doublePayoutForAdButton.gameObject.SetActive(AdManager.AdIsLoaded(ThisAdType));
             CurrencyManager.HideCurrencies(true);
 
             RefreshPanel();
@@ -61,7 +63,7 @@ namespace Core.UI
         private void RefreshPanel()
         {
             FlipContinueTextVisibility(true);
-            
+
             _rewardSequence = DOTween.Sequence()
                 .OnComplete(() => FlipContinueTextVisibility(false));
             gameObject.SetActive(true);
@@ -109,7 +111,8 @@ namespace Core.UI
                         .InsertCallback(startTimePosition,
                             () => tweenStartSetting.DoRotate(_activeRewards[i1].transform.GetChild(0), false))
                         .Insert(finishTimePosition, _activeRewards[i].transform
-                            .DOMove(rewardFinishPosition.GetChild(finishChildId).position, tweenFinishSetting.moveDuration)
+                            .DOMove(rewardFinishPosition.GetChild(finishChildId).position,
+                                tweenFinishSetting.moveDuration)
                             .SetEase(tweenFinishSetting.sequenceEasing))
                         .Insert(finishTimePosition, _activeRewards[i].transform
                             .DOScale(tweenFinishSetting.scaleEndValue, tweenFinishSetting.scaleDuration)
@@ -143,25 +146,36 @@ namespace Core.UI
 
         private void ProcessAdReward()
         {
-            var doubledReward = new Resource(0, ResourceType.StarFruits); 
+            if (AdManager.shownAd != ThisAdType) return;
+
+            var activeRewardsCount = _activeRewards.Count;
+            for (var i = 0; i < activeRewardsCount; i++)
+            {
+                _activeRewards[i].rewardAmount.text =
+                    (adRewards.chestRewards[i].resourceAmount + _chestRewardDto.chestRewards[i].resourceAmount)
+                    .ToString();
+                tweenFinishSetting.DoPunch(_activeRewards[i].rewardAmount.transform);
+            }
+
             
+            /*var doubledReward = new Resource(0, ResourceType.StarFruits);
+
             var chestRewardsLength = _chestRewardDto.chestRewards.Length;
             for (var i = 0; i < chestRewardsLength; i++)
             {
                 if (_chestRewardDto.chestRewards[i].resourceType != ResourceType.StarFruits) continue;
-                
+
                 doubledReward = _chestRewardDto.chestRewards[i];
                 PlayerData.AddResourceAmount(_chestRewardDto.chestRewards[i]);
             }
 
             doubledReward.resourceAmount += doubledReward.resourceAmount;
-            
-            var activeRewardsCount = _activeRewards.Count;
+
             for (var i = 0; i < activeRewardsCount; i++)
             {
                 if (_activeRewards[i].rewardType == ResourceType.StarFruits)
                     _activeRewards[i].rewardAmount.text = doubledReward.resourceAmount.ToString();
-            }
+            }*/
 
             AdManager.reward = null;
         }
@@ -169,18 +183,18 @@ namespace Core.UI
         protected override void ClosePanel()
         {
             base.ClosePanel();
-            
+
             CurrencyManager.HideCurrencies(false);
-            
+
             EventManager.chestOpen.Raise();
             EventManager.refreshCurrency.Raise();
-            
+
             foreach (var rewardPrefab in _activeRewards)
             {
                 chestRewardPool.Release(rewardPrefab);
                 rewardPrefab.gameObject.SetActive(false);
             }
-            
+
             _activeRewards.Clear();
         }
     }

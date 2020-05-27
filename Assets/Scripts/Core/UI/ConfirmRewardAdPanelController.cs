@@ -1,4 +1,5 @@
-﻿using MyScriptableObjects;
+﻿using Enums;
+using MyScriptableObjects;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,6 +10,8 @@ namespace Core.UI
         [SerializeField] private Button confirmButton;
         [SerializeField] private Button cancelButton;
         [SerializeField] private TweenPunchSetting punchSetting;
+
+        private AdType _adType;
     
         public override void Start()
         {
@@ -20,10 +23,17 @@ namespace Core.UI
             cancelButton.onClick.AddListener(ClosePanel);
         }
 
+        public override void OpenPanel(params object[] args)
+        {
+            base.OpenPanel(args);
+
+            _adType = (AdType) args[0];
+        }
+
         private void ConfirmRewardAd()
         {
             punchSetting.DoPunch(confirmButton.transform, false);
-            AdManager.ShowRewardedAd();
+            AdManager.ShowRewardedAd(_adType);
             
             base.ClosePanel();
         }
