@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: e3c2d9948deb63742bd284e99c7367a0
+guid: 5bbec3c8c1f23b1419d14529a4405da5
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -39,7 +39,7 @@ ScriptedImporter:
   spriteData:
     TessellationDetail: 0
     SpriteRect:
-      name: RoundEdge_Radius 50
+      name: UpgradeProgressFill
       originalName: 
       pivot: {x: 0.5, y: 0.5}
       alignment: 0
@@ -50,6 +50,6 @@ ScriptedImporter:
         y: 0
         width: 128
         height: 128
-      spriteID: 59c3e39dbbcfd034c9d18948e7c29929
+      spriteID: 5b2d60ceb86a9e6408bd93ca32a7256c
       internalID: 0
     PhysicsOutlines: []

@@ -1,12 +1,20 @@
+using System.Collections;
+using DG.Tweening;
 using Enums;
 using MyScriptableObjects;
+using UnityEngine;
+using UnityEngine.UI;
 using Utils;
 
 namespace Core.Managers
 {
     public class UpgradeManager : GlobalClass
     {
+        [SerializeField] private Slider progressSlider;
+        [SerializeField] private TweenSetting showSliderTweenSetting;
+
         private UpgradeVariable[] _upgradeVariables;
+        private bool _sliderIsActive;
 
         public override void Awake()
         {
@@ -33,6 +41,7 @@ namespace Core.Managers
 
             EventManager.upgradeRefresh.Raise();
             EventManager.refreshCurrency.Raise();
+            RefreshProgressSlider();
         }
 
         public int GetUpgradeCurrentLevel(UpgradeTypes id)
@@ -56,7 +65,7 @@ namespace Core.Managers
 
             if (requiredResources == null)
                 return false;
-            
+
             var enoughResources = true;
 
             var requiredResourcesLength = requiredResources.Length;
@@ -70,6 +79,58 @@ namespace Core.Managers
             }
 
             return enoughResources;
+        }
+
+        private void RefreshProgressSlider()
+        {
+            ShowProgressSlider();
+
+            progressSlider.DOValue(CurrentUpgradeProgress(), showSliderTweenSetting.scaleDuration)
+                .SetEase(showSliderTweenSetting.sequenceEasing);
+        }
+
+        private float CurrentUpgradeProgress()
+        {
+            int currentLevels = 0, maxCount = 0;
+
+            var upgradeVariablesLength = _upgradeVariables.Length;
+            for (var i = 0; i < upgradeVariablesLength; i++)
+            {
+                currentLevels += _upgradeVariables[i].currentLevel;
+                maxCount += _upgradeVariables[i].maxLevel;
+            }
+
+            return currentLevels / (float) maxCount;
+        }
+
+        private void ShowProgressSlider()
+        {
+            if (CurrentUpgradeProgress() < Constants.FloatTolerance) return;
+
+            if (_sliderIsActive) return;
+
+            StartCoroutine(nameof(HideCurrenciesRoutine));
+        }
+
+        private IEnumerator HideCurrenciesRoutine()
+        {
+            var t = 0.0f;
+            var destination = progressSlider.transform.localPosition;
+            destination.x += showSliderTweenSetting.moveOffset;
+
+            while (t < showSliderTweenSetting.moveDuration)
+            {
+                progressSlider.transform.localPosition = Vector2.Lerp(progressSlider.transform.localPosition,
+                    destination,
+                    t / showSliderTweenSetting.moveDuration);
+                t += Time.deltaTime;
+                yield return null;
+            }
+
+            progressSlider.transform.localPosition = destination;
+            _sliderIsActive = true;
+
+            yield return null;
         }
     }
 }

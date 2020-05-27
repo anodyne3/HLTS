@@ -1364,6 +1364,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waitingForServerPanel: {fileID: 0}
+  generalButtonPunchSetting: {fileID: 0}
   openPanelTweenSettings: {fileID: 11400000, guid: 6c19b65bfc8edda4fa476d6d2d490fa4,
     type: 2}
   closePanelTweenSettings: {fileID: 11400000, guid: f8412946b7d289d49bb880d4024147ea,
