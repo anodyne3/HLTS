@@ -390,6 +390,7 @@ MonoBehaviour:
   - vertexAnimation: {fileID: 11400000, guid: 92d0225d87069a24080bac908a1e42b6, type: 2}
     text: {fileID: 5259340876258349089}
   closeButtonPunchSetting: {fileID: 0}
+  defaultLocalPositionY: 820
   panelTransform: {fileID: 5259340875932985321}
   cameraSettings: {fileID: 11400000, guid: 94aa5d6f192468a49b0a34da17aa354a, type: 2}
   panMultiplier: {fileID: 511329862983201314}

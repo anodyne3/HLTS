@@ -39,7 +39,7 @@ namespace Core.UI
                 waitingForServerPanel.HidePanel();
         }
 
-        private void OpenPayoutPanel()
+        public void OpenPayoutPanel()
         {
             StartCoroutine(nameof(PayoutOnHold));
         }

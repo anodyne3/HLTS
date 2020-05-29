@@ -28,11 +28,16 @@ namespace MyScriptableObjects
             _rotateTween = rotateTarget.DORotate(
                 rotateEndValue,
                 rotateDuration,
-                rotateMode = RotateMode.FastBeyond360)
+                rotateMode)
                 .SetEase(rotateEasing);
 
             if (pooled)
                 _rotateTween.SetAutoKill(false).SetRecyclable(true);
+        }
+
+        public void Kill()
+        {
+            _rotateTween?.Kill(true);
         }
     }
 }

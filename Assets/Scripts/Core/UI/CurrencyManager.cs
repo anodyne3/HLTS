@@ -160,7 +160,7 @@ namespace Core.UI
             var currencyInstanceAmount = addCurrencyTweenSetting.GetSpawnAmount(currency.currencyDifference);
             ResizeCurrencyRect();
 
-            var sequence = DOTween.Sequence();
+            var coinsSequence = DOTween.Sequence();
             for (var i = 0; i < currencyInstanceAmount; i++)
             {
                 var currencyInstance = _tweenCurrencyPool.Get();
@@ -168,7 +168,7 @@ namespace Core.UI
                 currencyInstance.gameObject.SetActive(false);
                 currencyInstance.transform.Rotate(Vector3.forward, Random.Range(-150.0f, -10.0f));
                 currencyInstance.transform.localPosition = addCurrencyTweenSetting.RandomSpawnPosition();
-                sequence.InsertCallback(i * addCurrencyTweenSetting.delayBetweenInstance,
+                coinsSequence.InsertCallback(i * addCurrencyTweenSetting.delayBetweenInstance,
                         () => currencyInstance.gameObject.SetActive(true))
                     .Insert(i * addCurrencyTweenSetting.delayBetweenInstance,
                         currencyInstance.transform.DOMove(currency.currencyIcon.transform.position,
@@ -180,14 +180,15 @@ namespace Core.UI
                                 currencyInstance.gameObject.SetActive(false);
                                 currencyInstance.transform.localPosition = Vector3.zero;
                                 currency.DoPunch();
-                            })).SetRecyclable(false);
+                            }))
+                    .SetRecyclable(false);
             }
 
-            var addingCurrencyDuration = sequence.Duration(false) - addCurrencyTweenSetting.moveDuration;
+            var addingCurrencyDuration = coinsSequence.Duration(false) - addCurrencyTweenSetting.moveDuration;
 
             var currencyRef = currency; //isolation
 
-            sequence.Insert(addCurrencyTweenSetting.moveDuration,
+            coinsSequence.Insert(addCurrencyTweenSetting.moveDuration,
                     DOTween.To(() => currencyRef.currencyDetails.resourceAmount,
                         x => currencyRef.currencyDetails.resourceAmount = x,
                         PlayerData.GetResourceAmount(currency.currencyDetails.resourceType), addingCurrencyDuration))
@@ -209,10 +210,41 @@ namespace Core.UI
             currency.UpdateTextDisplay();
         }
 
+        [ContextMenu("addCoinsTest")]
+        public void AddSomeCoins()
+        {
+            PlayerData.wallet[0].resourceAmount += 1000;
+            RefreshAllCurrencies();
+        }
+        
+        [ContextMenu("addCurrenciesTest")]
+        public void AddSomeCurrencies()
+        {
+            PlayerData.wallet[0].resourceAmount += 1000;
+            PlayerData.wallet[1].resourceAmount += 100;
+            PlayerData.wallet[2].resourceAmount += 10;
+            RefreshAllCurrencies();
+        }
+
+        private bool testBool;
+        
+        [ContextMenu("HideCurrencies")]
+        public void HideCurrenciesTest()
+        {
+            testBool = !testBool;
+            HideCurrencies(testBool);
+        }
+
+        [ContextMenu("openPayoutPanel")]
+        public void OpenPayoutPanelTest()
+        {
+            PanelManager.OpenPayoutPanel();
+        }
+
         public void HideCurrencies(bool value)
         {
             _currenciesAreMoving = true;
-
+            
             var moveOffset = value ? hideCurrencyTweenSetting.moveOffset : -hideCurrencyTweenSetting.moveOffset;
 
             StartCoroutine(HideCurrenciesRoutine(moveOffset));

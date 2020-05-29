@@ -481,6 +481,7 @@ MonoBehaviour:
   - vertexAnimation: {fileID: 11400000, guid: 89a61e14009a0f7499ca9c55553fce97, type: 2}
     text: {fileID: 7033200999915423280}
   closeButtonPunchSetting: {fileID: 0}
+  defaultLocalPositionY: 560
   panelTransform: {fileID: 7033201000913498616}
   textComponent: {fileID: 480106869979192139}
 --- !u!222 &6658986955475506335
@@ -829,9 +830,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 560}
   m_SizeDelta: {x: 800, y: 800}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &7033201000913498566
 CanvasRenderer:
   m_ObjectHideFlags: 0

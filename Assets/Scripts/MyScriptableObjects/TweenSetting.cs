@@ -52,6 +52,11 @@ namespace MyScriptableObjects
         {
             rotateSetting.DoRotate(rotateTarget, pooled);
         }
+        
+        public void KillRotate()
+        {
+            rotateSetting.Kill();
+        }
 
         public void DoPunch(Transform punchTarget, bool pooled = true)
         {

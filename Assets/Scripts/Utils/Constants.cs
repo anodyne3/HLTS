@@ -45,8 +45,8 @@ namespace Utils
                     return "Auto Chest ";
                 case UpgradeTypes.ChestMerge:
                     return "Chest Merge ";
-                case UpgradeTypes.ShopUpgrade:
-                    return "Shop ";
+                case UpgradeTypes.SlotsLight:
+                    return "Slots Light ";
                 default:
                     return "Upgradeable ";
             }
@@ -95,9 +95,14 @@ namespace Utils
         public const string ChestOpenCloudFunction = "usersChestOpenOnCall";
         public const string DoUpgradeCloudFunction = "usersUpgradeDoOnCall";
         public const string ProductPurchaseFunction = "usersProductPurchaseOnCall";
+        
+        //urls
         public const string FirebaseDatabaseUrl = "https://he-loves-the-slots.firebaseio.com/";
         public const string PrivacyPolicyUrl = "https://he-loves-the-slots.web.app/PrivacyPolicy.html";
         public const string TermsAndConditionsUrl = "https://he-loves-the-slots.web.app/TermsAndConditions.html";
+        public const string ShirtBuyUrl = "https://www.spreadshirt.com/user/Original+Star";
+        public const string ShirtClaimUrl = "https://www.spreadshirt.com/";
+        public const string LinkedInUrl = "https://www.linkedin.com/in/seth-games-51386baa/";
 
         //chests
         public const string ConfirmClaimMessagePrefix = "You are ";

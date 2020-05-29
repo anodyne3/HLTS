@@ -1226,6 +1226,7 @@ MonoBehaviour:
   - vertexAnimation: {fileID: 11400000, guid: d21f38c267d647d468b8949202ccc73a, type: 2}
     text: {fileID: 5239614485982534323}
   closeButtonPunchSetting: {fileID: 0}
+  defaultLocalPositionY: 560
   panelTransform: {fileID: 5239614486843075963}
   chestName: {fileID: 5239614485982534323}
   chestAmount: {fileID: 3875042994511148373}

@@ -1,4 +1,5 @@
 using System.Linq;
+using DG.Tweening;
 using Enums;
 using TMPro;
 using UnityEngine;
@@ -16,7 +17,6 @@ namespace Core.UI
 
         private readonly Resource _payoutCurrency = new Resource(0, ResourceType.BananaCoins);
         private const AdType ThisAdType = AdType.DoublePayout;
-        public long adRewardAmount;
 
         public override void Start()
         {
@@ -62,29 +62,18 @@ namespace Core.UI
 
             _payoutCurrency.resourceAmount = SlotMachine.payoutAmount;
 
-            payoutAmountText.text = _payoutCurrency.resourceAmount.ToString();
+            payoutAmountText.text = (_payoutCurrency.resourceAmount).ToString();
+            payoutAmountText.transform.DOPunchScale(new Vector3(1.1f, 1.1f,1.1f), 0.666f);
 
             StartTextAnimations();
         }
 
-        private void OnApplicationPause(bool pauseStatus)
+        public void ProcessAdReward()
         {
-            if (pauseStatus || AdManager.reward == null) return;
-
-            ProcessReward();
-        }
-
-        private void ProcessReward()
-        {
-            if (AdManager.shownAd != ThisAdType) return;
-            
-            PlayerData.AddResourceAmount(_payoutCurrency);
-            payoutAmountText.text = (_payoutCurrency.resourceAmount + adRewardAmount).ToString();
             doublePayoutForAdButton.gameObject.SetActive(false);
-
-            RefreshPanel();
-
-            AdManager.reward = null;
+            
+            payoutAmountText.text = (_payoutCurrency.resourceAmount + _payoutCurrency.resourceAmount).ToString();
+            payoutAmountText.transform.DOPunchScale(new Vector3(1.1f, 1.1f,1.1f), 0.666f);
         }
 
         protected override void ClosePanel()
@@ -92,6 +81,7 @@ namespace Core.UI
             base.ClosePanel();
 
             CurrencyManager.HideCurrencies(false);
+            CurrencyManager.blockCurrencyRefresh = false;
 
             EventManager.payoutFinish.Raise();
             EventManager.refreshCurrency.Raise();

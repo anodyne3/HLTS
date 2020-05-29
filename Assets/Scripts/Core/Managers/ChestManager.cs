@@ -1,3 +1,4 @@
+using System.Collections;
 using Core.GameData;
 using Core.UI;
 using Core.UI.Prefabs;
@@ -19,9 +20,10 @@ namespace Core.Managers
         [SerializeField] private ChestAddedPrefab chestAddedPrefab;
         [SerializeField] private Transform chestAddedHolder;
 
-        private MyObjectPool<ChestAddedPrefab> _tweenChestAddedPool;
         public ChestVariable[] chestTypes;
         public ChestMergeVariable[] chestMergeTypes;
+
+        private MyObjectPool<ChestAddedPrefab> _tweenChestAddedPool;
 
         public ChestVariable CurrentChest
         {
@@ -121,10 +123,11 @@ namespace Core.Managers
             tweenPunchSetting.DoPunch(transform);
         }
 
-        public static void OpenChest(ChestRewardDto chestRewardDto)
+        public static void OpenChestPayoutPanel(ChestRewardDto chestRewardDto)
         {
             if (chestRewardDto == null) return;
 
+            CurrencyManager.blockCurrencyRefresh = true;
             PanelManager.OpenSubPanel<ChestOpenPanelController>(chestRewardDto);
         }
 
@@ -169,13 +172,10 @@ namespace Core.Managers
         public void AddChestsAnim(ChestType chestType, int amount)
         {
             var sequence = DOTween.Sequence();
-            
+
             for (var i = 0; i < amount; i++)
             {
-                sequence.AppendCallback(() =>
-                {
-                    ChestAddedAnim(chestType);
-                })
+                sequence.AppendCallback(() => { ChestAddedAnim(chestType); })
                     .AppendInterval(Constants.ChestAddInterval);
             }
         }
@@ -194,7 +194,7 @@ namespace Core.Managers
             completedPrefab.gameObject.SetActive(false);
             tweenPunchSetting.DoPunch(outlineImage.transform);
         }
-        
+
         #endregion
     }
 }

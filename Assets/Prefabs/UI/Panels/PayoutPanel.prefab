@@ -34,7 +34,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 19.999998}
+  m_AnchoredPosition: {x: 0, y: 20}
   m_SizeDelta: {x: -128, y: -104}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3993201476639629438
@@ -374,9 +374,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -627}
-  m_SizeDelta: {x: 1022, y: 280}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: -487}
+  m_SizeDelta: {x: 1400, y: 800}
+  m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &8142687616478825350
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -432,14 +432,14 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 268.4
+  m_fontSize: 256
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 18
-  m_fontSizeMax: 512
+  m_fontSizeMax: 256
   m_fontStyle: 16
-  m_textAlignment: 514
+  m_textAlignment: 258
   m_characterSpacing: 3.74
   m_wordSpacing: 0
   m_lineSpacing: 0
@@ -1213,11 +1213,13 @@ MonoBehaviour:
   backgroundButton: {fileID: 6730408285604477388}
   textAnimations: []
   closeButtonPunchSetting: {fileID: 0}
+  defaultLocalPositionY: 0
   panelTransform: {fileID: 2274697044446168162}
   payoutMessageText: {fileID: 3421613201100188480}
   payoutAmountText: {fileID: 5443219302182099646}
   payoutTypeText: {fileID: 4377467845544998232}
   doublePayoutForAdButton: {fileID: 318517020505372768}
+  adRewardAmount: 0
 --- !u!1 &7328747613990312413
 GameObject:
   m_ObjectHideFlags: 0

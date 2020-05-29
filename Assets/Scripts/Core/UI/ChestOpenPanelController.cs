@@ -29,6 +29,7 @@ namespace Core.UI
         private ChestRewardDto _chestRewardDto;
 
         private Sequence _rewardSequence;
+        private readonly List<Sequence> _activeRewardsSequences = new List<Sequence>();
         private readonly List<ChestRewardPrefab> _activeRewards = new List<ChestRewardPrefab>();
         private const AdType ThisAdType = AdType.DoubleChest;
 
@@ -38,6 +39,7 @@ namespace Core.UI
 
             backgroundButton.onClick.RemoveAllListeners();
             backgroundButton.onClick.AddListener(RushRewards);
+            doublePayoutForAdButton.onClick.RemoveAllListeners();
             doublePayoutForAdButton.onClick.AddListener(ConfirmShowAd);
         }
 
@@ -54,7 +56,6 @@ namespace Core.UI
 
             PanelManager.GetPanel<ChestDetailsPanelController>().OpenChestIcon(true);
 
-            doublePayoutForAdButton.gameObject.SetActive(AdManager.AdIsLoaded(ThisAdType));
             CurrencyManager.HideCurrencies(true);
 
             RefreshPanel();
@@ -67,6 +68,7 @@ namespace Core.UI
             _rewardSequence = DOTween.Sequence()
                 .OnComplete(() => FlipContinueTextVisibility(false));
             gameObject.SetActive(true);
+            _activeRewardsSequences.Clear();
 
             var rewardsLength = _chestRewardDto.chestRewards.Length;
             for (var i = 0; i < rewardsLength; i++)
@@ -122,6 +124,7 @@ namespace Core.UI
                     ;
 
                 _rewardSequence.Insert(0.0f, rewardStartSequence);
+                _activeRewardsSequences.Add(rewardStartSequence);
             }
         }
 
@@ -129,55 +132,30 @@ namespace Core.UI
         {
             if (!_rewardSequence.IsComplete())
                 _rewardSequence.Complete(true);
+
+            tweenFinishSetting.KillRotate();
         }
 
         private void FlipContinueTextVisibility(bool value)
         {
             clickToContinueText.gameObject.SetActive(value);
+            doublePayoutForAdButton.gameObject.SetActive(AdManager.AdIsLoaded(ThisAdType));
             continueButtonsHolder.gameObject.SetActive(!value);
         }
 
-        private void OnApplicationPause(bool pauseStatus)
+        public void ProcessAdReward()
         {
-            if (pauseStatus || AdManager.reward == null) return;
-
-            ProcessAdReward();
-        }
-
-        private void ProcessAdReward()
-        {
-            if (AdManager.shownAd != ThisAdType) return;
-
+            doublePayoutForAdButton.gameObject.SetActive(false);
+            
             var activeRewardsCount = _activeRewards.Count;
             for (var i = 0; i < activeRewardsCount; i++)
             {
                 _activeRewards[i].rewardAmount.text =
-                    (adRewards.chestRewards[i].resourceAmount + _chestRewardDto.chestRewards[i].resourceAmount)
+                    (_chestRewardDto.chestRewards[i].resourceAmount +
+                     _chestRewardDto.chestRewards[i].resourceAmount)
                     .ToString();
-                tweenFinishSetting.DoPunch(_activeRewards[i].rewardAmount.transform);
+                _activeRewards[i].rewardAmount.transform.DOPunchScale(new Vector3(1.1f, 1.1f, 1.1f), 0.666f);
             }
-
-            
-            /*var doubledReward = new Resource(0, ResourceType.StarFruits);
-
-            var chestRewardsLength = _chestRewardDto.chestRewards.Length;
-            for (var i = 0; i < chestRewardsLength; i++)
-            {
-                if (_chestRewardDto.chestRewards[i].resourceType != ResourceType.StarFruits) continue;
-
-                doubledReward = _chestRewardDto.chestRewards[i];
-                PlayerData.AddResourceAmount(_chestRewardDto.chestRewards[i]);
-            }
-
-            doubledReward.resourceAmount += doubledReward.resourceAmount;
-
-            for (var i = 0; i < activeRewardsCount; i++)
-            {
-                if (_activeRewards[i].rewardType == ResourceType.StarFruits)
-                    _activeRewards[i].rewardAmount.text = doubledReward.resourceAmount.ToString();
-            }*/
-
-            AdManager.reward = null;
         }
 
         protected override void ClosePanel()
@@ -185,6 +163,7 @@ namespace Core.UI
             base.ClosePanel();
 
             CurrencyManager.HideCurrencies(false);
+            CurrencyManager.blockCurrencyRefresh = false;
 
             EventManager.chestOpen.Raise();
             EventManager.refreshCurrency.Raise();

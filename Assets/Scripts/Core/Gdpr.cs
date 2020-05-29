@@ -32,8 +32,10 @@ namespace Core
 
         private void CheckConsent()
         {
-            if (PlayerData.ConsentGiven)
-                ClosePanel();
+            if (!PlayerData.ConsentGiven) return;
+            
+            gameObject.SetActive(false);
+            FirebaseFunctionality.Init();
         }
 
         private void OnPressed(Vector2 pointerPosition)

@@ -340,6 +340,7 @@ MonoBehaviour:
   - vertexAnimation: {fileID: 11400000, guid: 46d548c7ee878e04d9c8c35b89fac259, type: 2}
     text: {fileID: 8535230006884414747}
   closeButtonPunchSetting: {fileID: 0}
+  defaultLocalPositionY: 560
   panelTransform: {fileID: 8535230005870248659}
   chestMergePrefab: {fileID: 5394616816688199901, guid: 183b5da8c70277c47b463403691e0522,
     type: 3}

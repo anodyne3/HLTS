@@ -15,4 +15,4 @@ MonoBehaviour:
   rotateEndValue: {x: 0, y: 0, z: 360}
   rotateDuration: 1.333
   rotateEasing: 10
-  rotateMode: 0
+  rotateMode: 1

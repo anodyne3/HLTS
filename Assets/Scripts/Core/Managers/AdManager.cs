@@ -8,12 +8,11 @@ namespace Core.Managers
     {
         private RewardedAd _doublePayoutAd;
         private RewardedAd _doubleChestAd;
-        public Reward reward;
+        public static Reward reward;
         private EventManager _eventManager;
-        public AdType shownAd;
+        
 
 #if UNITY_ANDROID
-        private const string TestRewardedAdId = "ca-app-pub-3940256099942544/5224354917";
         private const string DoublePayoutAdId = "ca-app-pub-6539801580858512/6919681000";
         private const string DoubleChestAdId = "ca-app-pub-6539801580858512/5059218664";
 
@@ -25,11 +24,18 @@ namespace Core.Managers
 
         private void Start()
         {
-            MobileAds.Initialize(initStatus => { });
+            MobileAds.Initialize(initStatus =>
+            {
+                InitAllAds();
+            });
 
+            _eventManager = EventManager;
+        }
+
+        private void InitAllAds()
+        {
             _doublePayoutAd = CreateAndLoadRewardedAd(AdType.DoublePayout);
             _doubleChestAd = CreateAndLoadRewardedAd(AdType.DoubleChest);
-            _eventManager = EventManager;
         }
 
         public void ShowRewardedAd(AdType adType)
@@ -39,7 +45,7 @@ namespace Core.Managers
             if (rewardedAd == null || !rewardedAd.IsLoaded()) return;
             
             rewardedAd.Show();
-            shownAd = adType;
+            // FirebaseFunctionality.shownAd = adType;
         }
 
         private RewardedAd CreateAndLoadRewardedAd(AdType adType)
@@ -74,7 +80,7 @@ namespace Core.Managers
 
         private void HandleRewardedAdLoaded(object sender, EventArgs args)
         {
-            AlertMessage.Init("HandleRewardedAdLoaded event received" + sender);
+            // AlertMessage.Init("HandleRewardedAdLoaded " + sender);
         }
 
         private void HandleUserEarnedReward(object sender, Reward e)
@@ -95,7 +101,18 @@ namespace Core.Managers
 
         private void HandleRewardedAdClosed(object sender, EventArgs e)
         {
-            sender = CreateAndLoadRewardedAd(shownAd);
+            switch (FirebaseFunctionality.shownAd)
+            {
+                case AdType.DoublePayout:
+                    _doublePayoutAd = CreateAndLoadRewardedAd(FirebaseFunctionality.shownAd);
+                    return;
+                case AdType.DoubleChest:
+                    _doubleChestAd = CreateAndLoadRewardedAd(FirebaseFunctionality.shownAd);
+                    return;
+                default:
+                    AlertMessage.Init(FirebaseFunctionality.shownAd + " ad does not exist");
+                    return;
+            }
         }
 
         public bool AdIsLoaded(AdType adType)

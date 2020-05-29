@@ -637,6 +637,7 @@ MonoBehaviour:
   - vertexAnimation: {fileID: 11400000, guid: dfb140c158f8c6b41816fba18a1e98f5, type: 2}
     text: {fileID: 715365507725837865}
   closeButtonPunchSetting: {fileID: 0}
+  defaultLocalPositionY: 560
   panelTransform: {fileID: 715365507786584545}
   claimCurrentChestButton: {fileID: 4045130839724309527}
   claimButtonText: {fileID: 6513064858790989886}

@@ -561,6 +561,7 @@ MonoBehaviour:
   - vertexAnimation: {fileID: 11400000, guid: 46d548c7ee878e04d9c8c35b89fac259, type: 2}
     text: {fileID: 1116707973828072251}
   closeButtonPunchSetting: {fileID: 0}
+  defaultLocalPositionY: 820
   panelTransform: {fileID: 1116707974289630451}
   confirmButton: {fileID: 7445924390647163951}
   cancelButton: {fileID: 794651592892757737}

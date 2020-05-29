@@ -13,10 +13,10 @@ namespace Core.UI
         [SerializeField] protected Button backgroundButton;
         [SerializeField] private TMP_TextAnimation[] textAnimations;
         [HideInInspector] public TweenPunchSetting closeButtonPunchSetting;
+        [SerializeField] private float defaultLocalPositionY = 560.0f;
 
         public RectTransform panelTransform;
 
-        private float _defaultLocalPositionY;
 
         public virtual void Awake()
         {
@@ -47,9 +47,8 @@ namespace Core.UI
             AudioManager.PlayClip(SoundEffectType.OpenPanel);
 
             panelTransform.localScale = PanelManager.closePanelTweenSettings.scaleStartValue;
-            _defaultLocalPositionY = panelTransform.localPosition.y;
             var panelOffset = PanelManager.OpenPanelCount() * PanelManager.openPanelTweenSettings.moveOffset +
-                              _defaultLocalPositionY;
+                              defaultLocalPositionY;
             var openPanelSequence = DOTween.Sequence();
             openPanelSequence
                 .InsertCallback(0.0f, () =>
@@ -95,7 +94,7 @@ namespace Core.UI
 
             var closePanelSequence = DOTween.Sequence();
             closePanelSequence.Insert(0.0f,
-                    panelTransform.DOLocalMoveY(_defaultLocalPositionY,
+                    panelTransform.DOLocalMoveY(defaultLocalPositionY,
                         PanelManager.closePanelTweenSettings.moveDuration))
                 .Insert(0.0f, panelTransform.DOScale(PanelManager.closePanelTweenSettings.scaleEndValue,
                     PanelManager.closePanelTweenSettings.scaleDuration))

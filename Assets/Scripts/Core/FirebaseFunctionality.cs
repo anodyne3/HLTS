@@ -183,41 +183,53 @@ namespace Core
 
         #region Ads
 
+        public AdType shownAd;
+        
         private async void ClaimAdReward()
         {
-            var shownAdId = ((int) AdManager.shownAd).ToString();
+            shownAd = (AdType) Enum.Parse(typeof(AdType), AdManager.reward.Type);
+            var shownAdId = ((int) shownAd).ToString();
             var responseData = await GetHttpsCallable(shownAdId, Constants.AdRewardClaimCloudFunction);
-            
-            switch (AdManager.shownAd)
+
+            switch (shownAd)
             {
                 case AdType.DoublePayout:
-                    var adRewardAmount = ProcessBasicResponseData<long>(responseData);
-                    AlertMessage.Init("Extra " + adRewardAmount + " Banana Coins awarded");
-                    PanelManager.GetPanel<PayoutPanelController>().adRewardAmount = adRewardAmount;
+                    var payoutAmount = ProcessBasicResponseData<long>(responseData);
+                    AlertMessage.Init("Extra " + payoutAmount + " Banana Coins awarded");
+                    return;
+                case AdType.DoubleChest:
+                    AlertMessage.Init("Additional Chest contents awarded");
+                    return;
+                default:
+                    AlertMessage.Init("Something went wrong with Ad Reward claim");
+                    return;
+            }
+        }
+        
+        private void OnApplicationPause(bool pauseStatus)
+        {
+            if (pauseStatus || AdManager.reward == null) return;
+
+            ProcessReward();
+        }
+
+        private void ProcessReward()
+        {
+            switch (shownAd)
+            {
+                case AdType.DoublePayout:
+                    PanelManager.GetPanel<PayoutPanelController>().ProcessAdReward();
                     break;
                 case AdType.DoubleChest:
-                    PanelManager.GetPanel<ChestOpenPanelController>().adRewards = new ChestRewardDto(responseData);
-                    AlertMessage.Init("Additional Chest contents awarded");
+                    PanelManager.GetPanel<ChestOpenPanelController>().ProcessAdReward();
                     break;
                 default:
                     AlertMessage.Init("Something went wrong with Ad Reward claim");
                     break;
             }
+            
+            AdManager.reward = null;
         }
-
-        /*private async Task AdRewardClaim()
-        {
-            var adRewardClaim = _firebaseFunc.GetHttpsCallable(Constants.AdRewardClaimCloudFunction).CallAsync();
-
-            var responseData = await adRewardClaim;
-            if (adRewardClaim.IsFaulted)
-            {
-                HandleFunctionError(adRewardClaim);
-            }
-
-            var adRewardAmount = ProcessBasicResponseData<long>(responseData);
-            AlertMessage.Init("Extra " + adRewardAmount + " Banana Coins awarded");
-        }*/
 
         #endregion
 
@@ -244,8 +256,8 @@ namespace Core
                 AlertMessage.Init("ChestOpen returned empty data");
                 return;
             }
-            
-            ChestManager.OpenChest(new ChestRewardDto(responseData));
+
+            ChestManager.OpenChestPayoutPanel(new ChestRewardDto(responseData));
         }
 
         public async void ChestMerge(string chestMergeLevel)
