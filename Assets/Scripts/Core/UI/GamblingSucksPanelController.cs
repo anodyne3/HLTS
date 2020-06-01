@@ -1,28 +1,29 @@
 ﻿using Core.GameData;
-using Core.UI;
 using Enums;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Rendering;
+using UnityEngine.UI;
 using Utils;
 
-namespace Core
+namespace Core.UI
 {
-    public class Gdpr : PanelController
+    public class GamblingSucksPanelController : PanelController
     {
+        [SerializeField] private Button readWarningButton;
         [SerializeField] private TMP_Text textComponent;
-
+        
         public override void Start()
         {
             base.Start();
-
+            
             backgroundButton.onClick.RemoveAllListeners();
-
+            
             InputManager.Pressed += OnPressed;
-
-            CheckConsent();
-            // StartTextAnimations();
+            
+            InitPanel();
         }
-
+        
         private void OnDisable()
         {
             if (InputManager == null) return;
@@ -30,12 +31,12 @@ namespace Core
             InputManager.Pressed -= OnPressed;
         }
 
-        private void CheckConsent()
+        private void InitPanel()
         {
-            if (!PlayerData.ConsentGiven) return;
+            if (!PlayerData.WarningRead) return;
             
             gameObject.SetActive(false);
-            FirebaseFunctionality.Init();
+            PanelManager.OpenPanelSolo<Gdpr>();
         }
 
         private void OnPressed(Vector2 pointerPosition)
@@ -51,18 +52,17 @@ namespace Core
 
             var linkInfo = textComponent.textInfo.linkInfo[linkIndex];
 
-            if (linkInfo.GetLinkID() == "TermsOfService") Application.OpenURL(Constants.TermsAndConditionsUrl);
-            else if (linkInfo.GetLinkID() == "PrivacyPolicy") Application.OpenURL(Constants.PrivacyPolicyUrl);
+            if (linkInfo.GetLinkID() == "GamblingSupport") Application.OpenURL(Constants.GamblingSupport);
         }
 
         protected override void ClosePanel()
         {
-            base.ClosePanel();
-
-            PlayerPrefs.SetInt(Constants.ConsentKey, 1);
+            PlayerPrefs.SetInt(Constants.WarningKey, 1);
             PlayerPrefs.Save();
-
-            FirebaseFunctionality.Init();
+            
+            base.ClosePanel();
+            
+            PanelManager.OpenPanelSolo<Gdpr>();
         }
     }
 }

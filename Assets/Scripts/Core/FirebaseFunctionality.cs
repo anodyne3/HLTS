@@ -127,6 +127,7 @@ namespace Core
         public void ResetAccount()
         {
             PlayerPrefs.DeleteKey(Constants.ConsentKey);
+            PlayerPrefs.DeleteKey(Constants.WarningKey);
             PlayerData.StopDatabaseListeners();
             GlobalComponents.Instance.RemoveGlobalComponent<PlayerData>();
             DeleteAccount();

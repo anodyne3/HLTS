@@ -31,6 +31,8 @@ namespace Core.GameData
         public FirebaseUser firebaseUser;
         public static bool ConsentGiven =>
             PlayerPrefs.HasKey(Constants.ConsentKey) && PlayerPrefs.GetInt(Constants.ConsentKey) == 1;
+        public static bool WarningRead =>
+            PlayerPrefs.HasKey(Constants.WarningKey) && PlayerPrefs.GetInt(Constants.WarningKey) == 1;
         
         //for testing
         private static long _bcAmount = 100;

@@ -9,6 +9,7 @@ namespace Utils
     {
         public const float LoadingSpinnerDegrees = 2.33f;
         public const string ConsentKey = "ConsentKey";
+        public const string WarningKey = "WarningKey";
         public const float WorldSpaceTolerance = 0.01f;
         public const float FloatTolerance = 0.001f;
 
@@ -100,9 +101,10 @@ namespace Utils
         public const string FirebaseDatabaseUrl = "https://he-loves-the-slots.firebaseio.com/";
         public const string PrivacyPolicyUrl = "https://he-loves-the-slots.web.app/PrivacyPolicy.html";
         public const string TermsAndConditionsUrl = "https://he-loves-the-slots.web.app/TermsAndConditions.html";
-        public const string ShirtBuyUrl = "https://www.spreadshirt.com/user/Original+Star";
+        public const string ShirtBuyUrl = "https://shop.spreadshirt.com/dem-slots-yo/";
         public const string ShirtClaimUrl = "https://www.spreadshirt.com/";
         public const string LinkedInUrl = "https://www.linkedin.com/in/seth-games-51386baa/";
+        public const string GamblingSupport = "https://www.gamblingtherapy.org/en";
 
         //chests
         public const string ConfirmClaimMessagePrefix = "You are ";
