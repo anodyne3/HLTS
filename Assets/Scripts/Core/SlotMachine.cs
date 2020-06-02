@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Core.MainSlotMachine;
 using Enums;
 using UnityEngine;
 using Utils;
@@ -10,8 +11,8 @@ namespace Core
     public class SlotMachine : Singleton<SlotMachine>
     {
         private bool _armIsPulled;
-        private int _coinWasLoaded;
         private Coroutine _autoRoll;
+        [HideInInspector] public int lastBetAmount;
 
         private bool CoinIsLoaded => BetAmount > 0;
         public bool CoinSlotFull => BetAmount >= CoinSlotMaxBet;
@@ -38,10 +39,6 @@ namespace Core
             }
         }
 
-        /*//test variables
-        private int _testCoinsSpent;
-        private float _timeElapsed;*/
-
         private void Start()
         {
             EventManager.NewEventSubscription(gameObject, Constants.GameEvents.coinLoadEvent, LoadCoin);
@@ -53,6 +50,7 @@ namespace Core
         private void LoadCoin()
         {
             BetAmount += 1;
+            BetIndicator.RefreshLastBetIndicators();
         }
 
         private void PullArm()
@@ -60,13 +58,16 @@ namespace Core
             if (_armIsPulled || !CoinIsLoaded) return;
 
             _armIsPulled = true;
-            OnWheelRoll();
             ConsumeCoins();
+            OnWheelRoll();
         }
 
         private void ConsumeCoins()
         {
             PlayerData.DeductCoin(BetAmount);
+            lastBetAmount = BetAmount;
+            BetIndicator.RefreshLastBetIndicators();
+            
             if (!autoMode)
                 BetAmount = 0;
         }
@@ -75,7 +76,7 @@ namespace Core
         {
             wheelsAreRolling = true;
             EventManager.wheelRoll.Raise();
-            FirebaseFunctionality.RollReels(BetAmount);
+            FirebaseFunctionality.RollReels(lastBetAmount);
         }
 
         private void WheelResult()
@@ -90,7 +91,7 @@ namespace Core
         {
             payoutType.Clear();
 
-            for (var i = 0; i < BetAmount; i++)
+            for (var i = 0; i < lastBetAmount; i++)
             {
                 var fruitResult = new FruitType[3];
                 var adjustedResults = AdjustResultsForBet(i);
@@ -100,16 +101,23 @@ namespace Core
                     fruitResult[j] = Constants.FruitDefinitions.First(x => x.Id == adjustedResults[j]).FruitType;
 
                 if (fruitResult.Distinct().Count() == 1)
+                {
                     payoutType.Add(fruitResult[0]);
+                    BetIndicator.FlashLastBetIndicators(i);
+                }
                 else
                 {
                     var fruitGroup = fruitResult.Aggregate(0,
                         (total, next) => next == FruitType.Bananas || next == FruitType.Bars ? total + 1 : total);
 
-                    if (fruitGroup == 3)
-                        payoutType.Add(FruitType.Barnana);
+                    if (fruitGroup != 3) continue;
+                    
+                    payoutType.Add(FruitType.Barnana);
+                    BetIndicator.FlashLastBetIndicators(i);
                 }
             }
+            
+            BetIndicator.RefreshLastBetIndicators();
 
             if (payoutType.Count == 0)
                 return;
@@ -118,7 +126,6 @@ namespace Core
             {
                 autoMode = false;
                 StopCoroutine(_autoRoll);
-                BetAmount = _coinWasLoaded;
                 EventManager.refreshUi.Raise();
             }
 
@@ -193,7 +200,8 @@ namespace Core
             if (!autoMode)
             {
                 StopCoroutine(_autoRoll);
-                BetAmount = _coinWasLoaded;
+                if (UpgradeManager.GetUpgradeCurrentLevel(UpgradeTypes.AutoRoll) < 2)
+                    BetAmount = 1;
             }
             else
                 _autoRoll = StartCoroutine(nameof(AutoMode));
@@ -205,8 +213,6 @@ namespace Core
         {
             var waitUntilWheelsStop = new WaitUntil(() => wheelsAreRolling == false);
             var waitBetweenRolls = new WaitForSeconds(Constants.PauseBetweenRolls);
-
-            _coinWasLoaded = BetAmount;
 
             if (BetAmount == 0)
                 BetAmount = 1;
@@ -230,7 +236,35 @@ namespace Core
             yield return null;
         }
 
-        /*private IEnumerator PayoutRateTest()
+        public void BetMin()
+        {
+            BetAmount = 1;
+        }
+
+        public void BetLess()
+        {
+            BetAmount--;
+        }
+
+        public void BetMore()
+        {
+            if (BetAmount == 0)
+                BetAmount = 2;
+            else
+                BetAmount++;
+        }
+
+        public void BetMax()
+        {
+            BetAmount = CoinSlotMaxBet;
+        }
+        
+        /*
+        //test variables
+        private int _testCoinsSpent;
+        private float _timeElapsed;
+        
+        private IEnumerator PayoutRateTest()
         {
             var waitUntilWheelsStop = new WaitUntil(() => wheelsAreRolling == false);
             var waitUntilCoinIsLoaded = new WaitUntil(() => CoinIsLoaded);
@@ -254,32 +288,8 @@ namespace Core
 
             autoMode = false;
             yield return null;
-        }*/
-
-        public void BetMin()
-        {
-            BetAmount = 1;
         }
 
-        public void BetLess()
-        {
-            BetAmount--;
-        }
-
-        public void BetMore()
-        {
-            if (BetAmount == 0)
-                BetAmount = 2;
-            else
-                BetAmount++;
-        }
-
-        public void BetMax()
-        {
-            BetAmount = CoinSlotMaxBet;
-        }
-
-        /*
         private void OnGUI()
         {
             if (!autoMode) return;

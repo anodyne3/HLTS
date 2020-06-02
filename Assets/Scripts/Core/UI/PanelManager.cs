@@ -46,7 +46,7 @@ namespace Core.UI
 
         private IEnumerator PayoutOnHold()
         {
-            if (!GameManager.interactionEnabled)
+            if (GameManager != null && !GameManager.interactionEnabled)
                 yield return new WaitUntil(() => GameManager.interactionEnabled);
 
             OpenPanelSolo<PayoutPanelController>();

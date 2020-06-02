@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: CoinSlotUpgrade
   m_EditorClassIdentifier: 
   upgradeType: 1
-  currentLevel: 0
+  currentLevel: 4
   maxLevel: 4
   levelDetails:
   - icon: {fileID: 3286163911610860551, guid: 33fe1f05ece7eb7468e559516536b7ae, type: 3}

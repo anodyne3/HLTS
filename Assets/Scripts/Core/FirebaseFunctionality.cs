@@ -175,6 +175,8 @@ namespace Core
         public async void RollReels(int betAmount)
         {
             var responseData = await GetHttpsCallable(betAmount.ToString(), Constants.ReelRollCloudFunction);
+
+            if (responseData == null) return;
             
             var payoutAmount = ProcessBasicResponseData<long>(responseData);
             SlotMachine.payoutAmount = payoutAmount;
@@ -306,18 +308,19 @@ namespace Core
         {
             var data = new Dictionary<string, object> {["text"] = sendData, ["push"] = true};
 
-            var task = _firebaseFunc.GetHttpsCallable(callName)
-                .CallAsync(data);
+            if (_firebaseFunc == null) 
+                return null;
+            
+            var task = _firebaseFunc.GetHttpsCallable(callName).CallAsync(data);
 
             var response = await task;
             if (task.IsFaulted)
-            {
                 HandleFunctionError(task);
-            }
 
             PanelManager.WaitingForServerPanel(false);
 
-            if (response.Data != null) return response.Data;
+            if (response.Data != null)
+                return response.Data;
 
             AlertMessage.Init(callName + " returned empty");
             return null;
