@@ -126,7 +126,7 @@ namespace Core.Upgrades
         {
             betMinObject.ButtonLit(SlotMachine.BetAmount > 1);
             betLessObject.ButtonLit(SlotMachine.BetAmount > 1);
-            autoRollObject.ButtonLit(SlotMachine.autoMode);
+            autoRollObject.ButtonLit(!SlotMachine.autoMode);
             betMoreObject.ButtonLit(!SlotMachine.CoinSlotFull);
             betMaxObject.ButtonLit(!SlotMachine.CoinSlotFull);
         }
