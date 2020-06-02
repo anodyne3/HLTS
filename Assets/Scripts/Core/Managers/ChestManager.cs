@@ -1,4 +1,3 @@
-using System.Collections;
 using Core.GameData;
 using Core.UI;
 using Core.UI.Prefabs;
@@ -23,15 +22,18 @@ namespace Core.Managers
         public ChestVariable[] chestTypes;
         public ChestMergeVariable[] chestMergeTypes;
 
+        private int _chestTypesLength;
+        private bool _chestAtThreshold;
+        private bool _chestUpgraded;
         private MyObjectPool<ChestAddedPrefab> _tweenChestAddedPool;
 
         public ChestVariable CurrentChest
         {
             get
             {
-                if (chestTypes == null) return null;
-                var chestTypesLength = chestTypes.Length;
-                for (var i = 0; i < chestTypesLength; i++)
+                if (chestTypes == null)
+                    return null;
+                for (var i = 0; i < _chestTypesLength; i++)
                     if (chestTypes[i].chestType == CurrentChestType)
                         return chestTypes[i];
 
@@ -54,13 +56,20 @@ namespace Core.Managers
         {
             get
             {
-                var chestTypesLength = chestTypes.Length;
-                for (var i = 0; i < chestTypesLength; i++)
+                _chestUpgraded = false;
+                
+                for (var i = 0; i < _chestTypesLength; i++)
                 {
-                    if (PlayerData.currentChestRoll > chestTypes[i].threshold)
-                        continue;
 
-                    return chestTypes[i].chestType;
+                    if (PlayerData.currentChestRoll > chestTypes[i].threshold)
+                    {
+                        _chestUpgraded = true;
+                        continue;
+                    }
+
+                    _chestAtThreshold = PlayerData.currentChestRoll == chestTypes[i].threshold;
+                    
+                    return !_chestAtThreshold ? chestTypes[i].chestType : chestTypes[i + 1].chestType;
                 }
 
                 return chestTypes[0].chestType;
@@ -89,6 +98,9 @@ namespace Core.Managers
             chestTypes =
                 GeneralUtils.SortLoadedList<ChestVariable>(Constants.ChestsPath,
                     (x, y) => x.rank.CompareTo(y.rank));
+            
+            _chestTypesLength = chestTypes.Length;
+            
             chestMergeTypes =
                 GeneralUtils.SortLoadedList<ChestMergeVariable>(Constants.ChestMergesPath,
                     (x, y) => x.mergeUpgradeLevel.CompareTo(y.mergeUpgradeLevel));
@@ -96,31 +108,26 @@ namespace Core.Managers
 
         private void RefreshChest()
         {
+            if (outlineImage.color == CurrentChest.chestColor)
+                return;
+            
             chestIcon.sprite = CurrentChest.chestIcon;
             outlineImage.color = CurrentChest.chestColor;
+            tweenPunchSetting.DoPunch(transform);
         }
 
         private void RefreshFill()
         {
             chestProgressFillImage.DOFillAmount(GetFillAmount(CurrentChest.rank), tweenPunchSetting.punchDuration);
 
-            var tweenPause = DOTween.Sequence();
+            if (!_chestUpgraded && !_chestAtThreshold) return;
 
-            if (PlayerData.currentChestRoll != CurrentChest.threshold) return;
+            var tweenPause = DOTween.Sequence();
 
             tweenPause.InsertCallback(0.5f, () =>
             {
-                UpgradeChest();
-                chestProgressFillImage.DOFillAmount(GetFillAmount(CurrentChest.rank + 1),
-                    tweenPunchSetting.punchDuration);
+                EventManager.chestRefresh.Raise();
             });
-        }
-
-        private void UpgradeChest()
-        {
-            chestIcon.sprite = GetChestVariable(CurrentChest.rank + 1).chestIcon;
-            outlineImage.color = GetChestVariable(CurrentChest.rank + 1).chestColor;
-            tweenPunchSetting.DoPunch(transform);
         }
 
         public static void OpenChestPayoutPanel(ChestRewardDto chestRewardDto)
@@ -138,12 +145,9 @@ namespace Core.Managers
 
         public Sprite GetChestIcon(ChestType chestType)
         {
-            var chestTypesLength = chestTypes.Length;
-            for (var i = 0; i < chestTypesLength; i++)
-            {
+            for (var i = 0; i < _chestTypesLength; i++)
                 if (chestTypes[i].chestType == chestType)
                     return chestTypes[i].chestIcon;
-            }
 
             return null;
         }

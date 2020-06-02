@@ -375,7 +375,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -487}
-  m_SizeDelta: {x: 1400, y: 800}
+  m_SizeDelta: {x: 1300, y: 800}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &8142687616478825350
 CanvasRenderer:
@@ -403,7 +403,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: plums
+  m_text: 'diamantes
+
+'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f503cb6babfbf5e41b0eefe39b790c97, type: 2}
   m_sharedMaterial: {fileID: 5784604520851618637, guid: f503cb6babfbf5e41b0eefe39b790c97,
@@ -432,7 +434,7 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 256
+  m_fontSize: 191.15
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -473,9 +475,9 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 4377467845544998232}
-    characterCount: 5
+    characterCount: 10
     spriteCount: 0
-    spaceCount: 0
+    spaceCount: 1
     wordCount: 1
     linkCount: 0
     lineCount: 1
@@ -1219,7 +1221,6 @@ MonoBehaviour:
   payoutAmountText: {fileID: 5443219302182099646}
   payoutTypeText: {fileID: 4377467845544998232}
   doublePayoutForAdButton: {fileID: 318517020505372768}
-  adRewardAmount: 0
 --- !u!1 &7328747613990312413
 GameObject:
   m_ObjectHideFlags: 0

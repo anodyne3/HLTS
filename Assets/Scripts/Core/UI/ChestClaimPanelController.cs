@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Core.UI.Prefabs;
+using Enums;
 using MyScriptableObjects;
 using TMPro;
 using UnityEngine;
@@ -9,8 +10,8 @@ namespace Core.UI
 {
     public class ChestClaimPanelController : PanelController
     {
-        public TweenPunchSetting punchSetting;
         [SerializeField] private TMP_Text messageText;
+        [SerializeField] private TMP_Text areYouSureText;
         [SerializeField] private ChestClaimPrefab chestClaimPrefab;
         [SerializeField] private Transform prefabHolder;
 
@@ -49,6 +50,8 @@ namespace Core.UI
 
         private void RefreshText()
         {
+            areYouSureText.gameObject.SetActive(ChestManager.CurrentChest.chestType != ChestType.Bronze);
+            
             messageText.text = Constants.ConfirmClaimMessagePrefix + ChestManager.RollsToBetterChest +
                                Constants.ConfirmClaimMessageSuffix;
             RefreshButtons();

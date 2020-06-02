@@ -72,16 +72,6 @@ namespace Core.UI
                 tweenPunchSetting.punchDuration);
             currentChestProgressText.text =
                 PlayerData.currentChestRoll + " / " + ChestManager.CurrentChest.threshold;
-
-            if (PlayerData.currentChestRoll != ChestManager.CurrentChest.threshold) return;
-
-            var nextChestVariable = ChestManager.GetChestVariable(currentChestRank + 1);
-
-            currentChestProgressFillImage.color = nextChestVariable.chestColor;
-            currentChestProgressText.text = PlayerData.currentChestRoll + " / " + nextChestVariable.threshold;
-            currentChestProgressSlider.DOValue(ChestManager.GetFillAmount(currentChestRank + 1),
-                tweenPunchSetting.punchDuration);
-            RefreshClaimChestButton();
         }
 
         private void ChestsRefresh()

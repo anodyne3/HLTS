@@ -12,7 +12,6 @@ namespace Core.GameData
     public class PlayerData : Singleton<PlayerData>
     {
         [HideInInspector] public int[] chestData = {1,2,3};
-        [HideInInspector] public int[] chestPayout;
         [HideInInspector] public int currentChestRoll;
         [HideInInspector] public int[] lastResult;
         [HideInInspector] public int[] nextResult;
@@ -90,6 +89,8 @@ namespace Core.GameData
             nextResult = snapReturnDto.nr.ToArray();
             currentChestRoll = snapReturnDto.cr;
             EventManager.refreshUi.Raise();
+            if (currentChestRoll == 0)
+                EventManager.chestRefresh.Raise();
         }
 
         private void OnChestDataChanged(object sender, ValueChangedEventArgs args)
@@ -171,17 +172,6 @@ namespace Core.GameData
             }
 
             return 0;
-        }
-
-        public void AddResourceAmount(Resource currency)
-        {
-            var walletLength = wallet.Length;
-            for (var i = 0; i < walletLength; i++)
-            {
-                if (wallet[i].resourceType != currency.resourceType) continue;
-                
-                wallet[i].resourceAmount += currency.resourceAmount;
-            }
         }
 
         #endregion
