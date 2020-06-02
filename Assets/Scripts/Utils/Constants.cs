@@ -150,12 +150,9 @@ namespace Utils
         public const float ClipTriggerTime = 0.666f;
         
         //bet indicators
-        public const float OffsetAmountLow = -0.5865f;
+        public const float OffsetAmountLow = -0.6115f;
         public const float ScaleAmount = 1.215f;
-        public const float RotationAmount = 35f;
-        public const float LastOffsetAmountLow = -0.6365f;
-        public const float LastScaleAmount = 1.215f;
-        public const float LastRotationAmount = 37f;
+        public const float RotationAmount = 36f;
 
         //animStates
         public const string ArmPullState = "LeverPull";

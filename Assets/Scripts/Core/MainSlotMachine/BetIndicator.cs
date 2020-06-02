@@ -37,21 +37,21 @@ namespace Core.MainSlotMachine
                 switch (i)
                 {
                     case 0:
-                        newIndicatorPositions[i].Set(-0.03f, 1.0f, 0.0f);
+                        newIndicatorPositions[i].Set(0.0f, 1.0f, 0.0f);
                         break;
                     case 1:
-                        newIndicatorPositions[i].Set(isActive ? Constants.LastOffsetAmountLow : -0.03f, 1.0f, 0.0f);
+                        newIndicatorPositions[i].Set(isActive ? Constants.OffsetAmountLow : 0.0f, 1.0f, 0.0f);
                         break;
                     case 2:
-                        newIndicatorPositions[i].Set(isActive ? -Constants.OffsetAmountLow : -0.03f, 1.0f, 0.0f);
+                        newIndicatorPositions[i].Set(isActive ? -Constants.OffsetAmountLow : 0.0f, 1.0f, 0.0f);
                         break;
                     case 3:
-                        newIndicatorPositions[i].Set(isActive ? 0.0f : -0.03f, isActive ? Constants.ScaleAmount : 1.0f,
+                        newIndicatorPositions[i].Set(0.0f, isActive ? Constants.ScaleAmount : 1.0f,
                             isActive ? -Constants.RotationAmount : 0.0f);
                         break;
                     case 4:
-                        newIndicatorPositions[i].Set(isActive ? 0.0f : -0.03f, isActive ? Constants.ScaleAmount : 1.0f,
-                            isActive ? Constants.LastRotationAmount : 0.0f);
+                        newIndicatorPositions[i].Set(0.0f, isActive ? Constants.ScaleAmount : 1.0f,
+                            isActive ? Constants.RotationAmount : 0.0f);
                         break;
                 }
             }
@@ -88,20 +88,20 @@ namespace Core.MainSlotMachine
                 switch (i)
                 {
                     case 0:
-                        newIndicatorPositions[i].Set(0.03f, 1.0f, 0.0f);
+                        newIndicatorPositions[i].Set(0.0f, 1.0f, 0.0f);
                         break;
                     case 1:
-                        newIndicatorPositions[i].Set(isActive ? Constants.OffsetAmountLow : 0.03f, 1.0f, 0.0f);
+                        newIndicatorPositions[i].Set(isActive ? Constants.OffsetAmountLow : 0.0f, 1.0f, 0.0f);
                         break;
                     case 2:
-                        newIndicatorPositions[i].Set(isActive ? -Constants.LastOffsetAmountLow : 0.03f, 1.0f, 0.0f);
+                        newIndicatorPositions[i].Set(isActive ? -Constants.OffsetAmountLow : 0.0f, 1.0f, 0.0f);
                         break;
                     case 3:
-                        newIndicatorPositions[i].Set(isActive ? 0.0f : 0.03f, isActive ? Constants.LastScaleAmount : 1.0f,
-                            isActive ? -Constants.LastRotationAmount : 0.0f);
+                        newIndicatorPositions[i].Set(0.0f, isActive ? Constants.ScaleAmount : 1.0f,
+                            isActive ? -Constants.RotationAmount : 0.0f);
                         break;
                     case 4:
-                        newIndicatorPositions[i].Set(isActive ? 0.0f : 0.03f, isActive ? Constants.LastScaleAmount : 1.0f,
+                        newIndicatorPositions[i].Set(0.0f, isActive ? Constants.ScaleAmount : 1.0f,
                             isActive ? Constants.RotationAmount : 0.0f);
                         break;
                 }
