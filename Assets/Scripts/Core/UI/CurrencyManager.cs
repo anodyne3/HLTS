@@ -135,8 +135,6 @@ namespace Core.UI
                 RefreshCurrency(currencies[i]);
             }
 
-            EventManager.refreshUi.Raise();
-
             yield return null;
         }
 
@@ -157,7 +155,7 @@ namespace Core.UI
 
         private void AddCurrency(Currency currency)
         {
-            var currencyInstanceAmount = addCurrencyTweenSetting.GetSpawnAmount(currency.currencyDifference);
+            var currencyInstanceAmount = GetSpawnAmount(currency.currencyDifference);
             ResizeCurrencyRect();
 
             var coinsSequence = DOTween.Sequence();
@@ -196,6 +194,7 @@ namespace Core.UI
                 {
                     currencyRef.UpdateTextDisplay();
                     currencyRef.updateCurrency = false;
+                    EventManager.refreshUi.Raise();
                 });
 
             currency.updateCurrency = true;
@@ -208,46 +207,7 @@ namespace Core.UI
             currency.currencyDetails.resourceAmount =
                 PlayerData.GetResourceAmount(currency.currencyDetails.resourceType);
             currency.UpdateTextDisplay();
-        }
-
-        [ContextMenu("addCoinsTest")]
-        public void AddSomeCoins()
-        {
-            PlayerData.wallet[0].resourceAmount += 1000;
-            RefreshAllCurrencies();
-        }
-        
-        [ContextMenu("addCurrenciesTest")]
-        public void AddSomeCurrencies()
-        {
-            PlayerData.wallet[0].resourceAmount += 1000;
-            PlayerData.wallet[1].resourceAmount += 100;
-            PlayerData.wallet[2].resourceAmount += 10;
-            RefreshAllCurrencies();
-        }
-
-        private bool testBool;
-        
-        [ContextMenu("HideCurrencies")]
-        public void HideCurrenciesTest()
-        {
-            testBool = !testBool;
-            HideCurrencies(testBool);
-        }
-
-        [ContextMenu("openPayoutPanel")]
-        public void OpenPayoutPanelTest()
-        {
-            PanelManager.OpenPayoutPanel();
-        }
-
-        public void HideCurrencies(bool value)
-        {
-            _currenciesAreMoving = true;
-            
-            var moveOffset = value ? hideCurrencyTweenSetting.moveOffset : -hideCurrencyTweenSetting.moveOffset;
-
-            StartCoroutine(HideCurrenciesRoutine(moveOffset));
+            EventManager.refreshUi.Raise();
         }
 
         private IEnumerator HideCurrenciesRoutine(float moveOffset)
@@ -270,15 +230,38 @@ namespace Core.UI
 
             yield return null;
         }
+        
+        private static int GetSpawnAmount(long difference)
+        {
+            if (difference > 2000)
+                return 25;
+            if (difference > 1000)
+                return 20;
+            if (difference > 200)
+                return 15;
+            if (difference > 9)
+                return 10;
 
-        public Currency GetCurrencyByType(ResourceType currencyType)
+            return (int) difference;
+        }
+
+        public void HideCurrencies(bool value)
+        {
+            _currenciesAreMoving = true;
+            
+            var moveOffset = value ? hideCurrencyTweenSetting.moveOffset : -hideCurrencyTweenSetting.moveOffset;
+
+            StartCoroutine(HideCurrenciesRoutine(moveOffset));
+        }
+
+        public long GetCurrencyAmount(ResourceType currencyType)
         {
             var currenciesLength = currencies.Length;
             for (var i = 0; i < currenciesLength; i++)
                 if (currencies[i].currencyDetails.resourceType == currencyType)
-                    return currencies[i];
+                    return currencies[i].currencyDetails.resourceAmount;
 
-            return new Currency();
+            return 0;
         }
     }
 }

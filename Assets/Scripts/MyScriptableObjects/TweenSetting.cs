@@ -29,20 +29,6 @@ namespace MyScriptableObjects
 
         public Ease sequenceEasing;
 
-        public int GetSpawnAmount(long difference)
-        {
-            if (difference > 2000)
-                return 25;
-            if (difference > 1000)
-                return 20;
-            if (difference > 200)
-                return 15;
-            if (difference > 9)
-                return 10;
-
-            return (int) difference;
-        }
-
         public Vector3 RandomSpawnPosition()
         {
             return Random.insideUnitCircle * spawnZoneRadius;

@@ -41,61 +41,41 @@ namespace Core.Upgrades
         private void BetMin()
         {
             if (_upgradeState > 2)
-            {
                 SlotMachine.BetMin();
-            }
             else
-            {
                 PanelManager.OpenPanelSolo<UpgradePanelController>(UpgradeTypes.AutoRoll);
-            }
         }
 
         private void BetLess()
         {
             if (_upgradeState > 1)
-            {
                 SlotMachine.BetLess();
-            }
             else
-            {
                 PanelManager.OpenPanelSolo<UpgradePanelController>(UpgradeTypes.AutoRoll);
-            }
         }
 
         private void ToggleAutoRoll()
         {
             if (_upgradeState > 0)
-            {
                 EventManager.autoRoll.Raise();
-            }
             else
-            {
                 PanelManager.OpenPanelSolo<UpgradePanelController>(UpgradeTypes.AutoRoll);
-            }
         }
 
         private void BetMore()
         {
             if (_upgradeState > 1)
-            {
                 SlotMachine.BetMore();
-            }
             else
-            {
                 PanelManager.OpenPanelSolo<UpgradePanelController>(UpgradeTypes.AutoRoll);
-            }
         }
 
         private void BetMax()
         {
             if (_upgradeState > 2)
-            {
                 SlotMachine.BetMax();
-            }
             else
-            {
                 PanelManager.OpenPanelSolo<UpgradePanelController>(UpgradeTypes.AutoRoll);
-            }
         }
 
         private void RefreshButtons()

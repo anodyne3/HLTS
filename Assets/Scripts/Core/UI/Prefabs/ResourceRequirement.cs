@@ -14,7 +14,7 @@ namespace Core.UI.Prefabs
         {
             _required = resource;
             icon.sprite = ResourceManager.GetCurrencySprite(resource.resourceType);
-            var currentResourceAmount = PlayerData.GetResourceAmount(_required.resourceType); 
+            var currentResourceAmount = CurrencyManager.GetCurrencyAmount(_required.resourceType); 
             amountText.text = currentResourceAmount >= _required.resourceAmount
                 ? Constants.SufficientCurrencyPrefix
                 : Constants.InsufficientCurrencyPrefix;

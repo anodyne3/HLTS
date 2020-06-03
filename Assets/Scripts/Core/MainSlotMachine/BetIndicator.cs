@@ -11,7 +11,6 @@ namespace Core.MainSlotMachine
         [SerializeField] private TweenSetting betIndicatorTweenSettings;
         [SerializeField] private Transform[] lastBetIndicators;
         [SerializeField] private TweenSetting lastBetIndicatorTweenSettings;
-        
 
         private void Start()
         {
@@ -33,7 +32,8 @@ namespace Core.MainSlotMachine
             for (var i = 0; i < betIndicatorsLength; i++)
             {
                 var isActive = SlotMachine.BetAmount > i;
-
+                betIndicators[i].gameObject.SetActive(isActive);
+                
                 switch (i)
                 {
                     case 0:

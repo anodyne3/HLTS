@@ -19,8 +19,6 @@ namespace Core.Upgrades
 
         private void RefreshIndicator()
         {
-            if (!isActiveAndEnabled) return;
-
             var upgradeAvailable = !UpgradeManager.IsUpgradeMaxed(upgradeType) &&
                                    UpgradeManager.HasResourcesForUpgrade(upgradeType);
 

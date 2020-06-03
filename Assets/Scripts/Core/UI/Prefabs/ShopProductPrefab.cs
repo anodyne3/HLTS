@@ -67,7 +67,7 @@ namespace Core.UI.Prefabs
 
         private bool HasResourcesForPurchase()
         {
-            return PlayerData.GetResourceAmount(_shopProduct.ResourceType) >= _shopProduct.ResourceCost;
+            return CurrencyManager.GetCurrencyAmount(_shopProduct.ResourceType) >= _shopProduct.ResourceCost;
         }
     }
 }

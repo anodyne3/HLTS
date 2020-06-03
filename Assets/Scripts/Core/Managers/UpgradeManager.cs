@@ -71,7 +71,7 @@ namespace Core.Managers
             var requiredResourcesLength = requiredResources.Length;
             for (var i = 0; i < requiredResourcesLength; i++)
             {
-                if (PlayerData.GetResourceAmount(requiredResources[i].resourceType) >=
+                if (CurrencyManager.GetCurrencyAmount(requiredResources[i].resourceType) >=
                     requiredResources[i].resourceAmount)
                     continue;
 

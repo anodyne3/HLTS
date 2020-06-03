@@ -1,4 +1,6 @@
-﻿using Enums;
+﻿using System;
+using Core.Upgrades;
+using Enums;
 using MyScriptableObjects;
 using TMPro;
 using UnityEngine;
@@ -18,9 +20,10 @@ namespace Core.UI
         [SerializeField] private TMP_Text bcMaxText;
         [SerializeField] private TMP_Text bpMaxText;
         [SerializeField] private TMP_Text sfMaxText;
+        [SerializeField] private UpgradeIndicatorUi upgradeIndicator;
 
         private ChestVariable _chestVariable;
-        
+
         public override void Start()
         {
             base.Start();
@@ -40,15 +43,16 @@ namespace Core.UI
             base.OpenPanel();
 
             var chestType = (ChestType) args[0];
-            
-            var chestTypesLength = ChestManager.chestTypes.Length;
+
+            /*var chestTypesLength = ChestManager.chestTypes.Length;
             for (var i = 0; i < chestTypesLength; i++)
             {
                 if (ChestManager.chestTypes[i].chestType != chestType) continue;
 
                 _chestVariable = ChestManager.chestTypes[i];
-            }
-            
+            }*/
+            _chestVariable = ChestManager.chestTypes[(int) chestType];
+
             InitPanel();
         }
 
@@ -62,23 +66,42 @@ namespace Core.UI
             bcMaxText.text = Constants.BananaCoinIcon + Constants.ChestRewardPrefix + _chestVariable.bcMax;
             bpMaxText.text = Constants.BluePrintIcon + Constants.ChestRewardPrefix + _chestVariable.bpMax;
             sfMaxText.text = Constants.StarFruitIcon + Constants.ChestRewardPrefix + _chestVariable.sfMax;
-            
+
             RefreshPanel();
             CloseChestIcon();
         }
-        
+
         private void RefreshPanel()
         {
             var chestCount = PlayerData.GetChestCount(_chestVariable.chestType);
             openChestButton.interactable = chestCount > 0;
             chestAmount.text = chestCount.ToString();
+            HideUpgradeIndicator();
+        }
+
+        private void HideUpgradeIndicator()
+        {
+            switch (_chestVariable.chestType)
+            {
+                case ChestType.Bronze:
+                    upgradeIndicator.gameObject.SetActive(
+                        UpgradeManager.GetUpgradeCurrentLevel(UpgradeTypes.ChestMerge) < 3);
+                    break;
+                case ChestType.Silver:
+                    upgradeIndicator.gameObject.SetActive(
+                        UpgradeManager.GetUpgradeCurrentLevel(UpgradeTypes.ChestMerge) > 2);
+                    break;
+                case ChestType.Gold:
+                    upgradeIndicator.gameObject.SetActive(false);
+                    break;
+            }
         }
 
         private void CloseChestIcon()
         {
             OpenChestIcon(false);
         }
-        
+
         public void OpenChestIcon(bool value)
         {
             chestOpenIcon.enabled = value;
@@ -88,7 +111,7 @@ namespace Core.UI
         private void OpenChest()
         {
             if (PlayerData.GetChestCount(_chestVariable.chestType) < 1) return;
-            
+
             FirebaseFunctionality.ChestOpen(_chestVariable.chestType);
         }
 

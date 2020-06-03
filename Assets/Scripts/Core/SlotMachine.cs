@@ -129,6 +129,7 @@ namespace Core
                 EventManager.refreshUi.Raise();
             }
 
+            BetAmount = 0;
             CurrencyManager.blockCurrencyRefresh = true;
             EventManager.payoutStart.Raise();
         }
@@ -200,8 +201,7 @@ namespace Core
             if (!autoMode)
             {
                 StopCoroutine(_autoRoll);
-                if (UpgradeManager.GetUpgradeCurrentLevel(UpgradeTypes.AutoRoll) < 2)
-                    BetAmount = 1;
+                BetAmount = 0;
             }
             else
                 _autoRoll = StartCoroutine(nameof(AutoMode));
@@ -219,7 +219,7 @@ namespace Core
 
             _armIsPulled = true;
 
-            while (PlayerData.GetResourceAmount(ResourceType.BananaCoins) > 0 && autoMode)
+            while (CurrencyManager.GetCurrencyAmount(ResourceType.BananaCoins) > 0 && autoMode)
             {
                 if (wheelsAreRolling)
                 {
@@ -243,7 +243,8 @@ namespace Core
 
         public void BetLess()
         {
-            BetAmount--;
+            if (BetAmount > 1)
+                BetAmount--;
         }
 
         public void BetMore()
@@ -271,7 +272,7 @@ namespace Core
 
             var timeStarted = Time.time;
 
-            while (PlayerData.GetResourceAmount(ResourceType.BananaCoins) > 0 && autoMode)
+            while (CurrencyManager.GetCurrencyAmount(ResourceType.BananaCoins) > 0 && autoMode)
             {
                 if (!CoinIsLoaded)
                     yield return waitUntilCoinIsLoaded;
