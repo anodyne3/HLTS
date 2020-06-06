@@ -19,7 +19,9 @@ namespace Core
         protected static CurrencyManager CurrencyManager => Foundation.GetGlobalClass<CurrencyManager>();
         protected static EventManager EventManager => GlobalComponents.Instance.AddGlobalComponent<EventManager>() as EventManager;
         protected static FirebaseFunctionality FirebaseFunctionality => GlobalComponents.Instance.AddGlobalComponent<FirebaseFunctionality>() as FirebaseFunctionality;
+        protected static HudManager HudManager => Foundation.GetGlobalClass<HudManager>();
         protected static InputManager InputManager => GlobalComponents.Instance.AddGlobalComponent<InputManager>() as InputManager;
+        protected static NarrativeManager NarrativeManager => GlobalComponents.Instance.AddGlobalComponent<NarrativeManager>() as NarrativeManager;
         protected static ObjectPoolManager ObjectPoolManager => GlobalComponents.Instance.AddGlobalComponent<ObjectPoolManager>() as ObjectPoolManager;
         protected static PanelManager PanelManager => Foundation.GetGlobalClass<PanelManager>();
         protected static PlayerData PlayerData => GlobalComponents.Instance.AddGlobalComponent<PlayerData>() as PlayerData;

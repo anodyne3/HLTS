@@ -288,6 +288,19 @@ namespace Core
 
         #endregion
 
+        #region Narrative
+
+        public async void ProgressNarrativePoint()
+        {
+            await GetHttpsCallable(Constants.ProgressNarrativeFunction);
+            
+            //kill this once tested
+            AlertMessage.Init("Narrative Progressed");
+            // EventManager.narrativeRefresh.Raise();
+        }
+
+        #endregion
+
         #region Shop
 
         public async void PurchaseProduct(string shopProductId)
@@ -323,6 +336,23 @@ namespace Core
                 return response.Data;
 
             AlertMessage.Init(callName + " returned empty");
+            return null;
+        }
+        
+        private async Task<object> GetHttpsCallable(string callName)
+        {
+            if (_firebaseFunc == null) 
+                return null;
+            
+            var task = _firebaseFunc.GetHttpsCallable(callName).CallAsync();
+
+            await task;
+            
+            if (task.IsFaulted)
+                HandleFunctionError(task);
+
+            PanelManager.WaitingForServerPanel(false);
+
             return null;
         }
 

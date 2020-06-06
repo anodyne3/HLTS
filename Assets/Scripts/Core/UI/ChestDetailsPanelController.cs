@@ -1,5 +1,4 @@
-﻿using System;
-using Core.Upgrades;
+﻿using Core.Upgrades;
 using Enums;
 using MyScriptableObjects;
 using TMPro;
@@ -44,13 +43,6 @@ namespace Core.UI
 
             var chestType = (ChestType) args[0];
 
-            /*var chestTypesLength = ChestManager.chestTypes.Length;
-            for (var i = 0; i < chestTypesLength; i++)
-            {
-                if (ChestManager.chestTypes[i].chestType != chestType) continue;
-
-                _chestVariable = ChestManager.chestTypes[i];
-            }*/
             _chestVariable = ChestManager.chestTypes[(int) chestType];
 
             InitPanel();

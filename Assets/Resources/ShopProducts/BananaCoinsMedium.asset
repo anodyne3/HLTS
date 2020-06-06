@@ -15,7 +15,7 @@ MonoBehaviour:
   shopCategory: {fileID: 11400000, guid: a24c9dd8f60608b41814b1835f0b8993, type: 2}
   productType: 0
   productId: bcM
-  productName: 1000
+  productName: 3750
   productIcon: {fileID: 3286163911610860551, guid: 4224e8aa0e375774b94641b33be5b798,
     type: 3}
   requiredResource:

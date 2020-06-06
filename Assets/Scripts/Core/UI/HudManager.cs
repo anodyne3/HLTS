@@ -5,12 +5,15 @@ namespace Core.UI
 {
     public class HudManager : GlobalClass
     {
+        public Button helpButton;
         [SerializeField] private Button menuButton;
-        
         [SerializeField] private Button chestButton;
         
         private void Start()
         {
+            helpButton.onClick.RemoveAllListeners();
+            helpButton.onClick.AddListener(OpenNarrativePanel);
+            
             menuButton.onClick.RemoveAllListeners();
             menuButton.onClick.AddListener(OpenMenuPanel);
            
@@ -27,5 +30,10 @@ namespace Core.UI
         {
             PanelManager.OpenPanelSolo<ChestInventoryPanelController>();
         }
+
+        private static void OpenNarrativePanel()
+        {
+            PanelManager.OpenPanelSolo<NarrativePanelController>();
+        } 
     }
 }

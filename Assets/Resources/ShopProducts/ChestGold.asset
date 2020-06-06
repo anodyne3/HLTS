@@ -19,5 +19,5 @@ MonoBehaviour:
   productIcon: {fileID: 3286163911610860551, guid: 08c85f35b89ed3044827e0cdfb0d3a03,
     type: 3}
   requiredResource:
-    resourceAmount: 14250
+    resourceAmount: 2600
     resourceType: 0

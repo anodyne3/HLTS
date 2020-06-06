@@ -8,6 +8,7 @@ namespace Core.GameData
         public int cr;
         public List<int> lr;
         public List<int> nr;
+        public int np;
 
         public RollDataDto(string fromJson)
         {
@@ -15,6 +16,7 @@ namespace Core.GameData
             cr = jsonParsed.cr;
             lr = jsonParsed.lr;
             nr = jsonParsed.nr;
+            np = jsonParsed.np;
         }
     }
 }

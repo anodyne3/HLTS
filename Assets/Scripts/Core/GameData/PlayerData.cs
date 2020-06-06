@@ -16,6 +16,7 @@ namespace Core.GameData
         [HideInInspector] public int[] lastResult;
         [HideInInspector] public int[] nextResult;
         [HideInInspector] public int[] upgradeData;
+        /*[HideInInspector]*/ public long narrativeProgress;
 
         public Resource[] wallet =
         {
@@ -44,20 +45,22 @@ namespace Core.GameData
             _userData = _database.GetReference(Constants.PlayerDataPrefix).Child(firebaseUser.UserId)
                 .Child(Constants.PlayerDataSuffix);
             
-            _userData.Child(Constants.ChestData).ValueChanged += OnChestDataChanged;
             _userData.Child(Constants.RollData).ValueChanged += OnRollDataChanged;
-            _userData.Child(Constants.UpgradeData).ValueChanged += OnUpgradeDataChanged;
             _userData.Child(Constants.WalletData).ValueChanged += OnWalletDataChanged;
+            _userData.Child(Constants.ChestData).ValueChanged += OnChestDataChanged;
+            _userData.Child(Constants.UpgradeData).ValueChanged += OnUpgradeDataChanged;
+            _userData.Child(Constants.NarrativeData).ValueChanged += OnNarrativeDataChanged;
         }
 
         public void StopDatabaseListeners()
         {
             if (firebaseUser == null || firebaseUser.UserId == string.Empty || _userData == null) return;
 
-            _userData.Child(Constants.ChestData).ValueChanged -= OnChestDataChanged;
             _userData.Child(Constants.RollData).ValueChanged -= OnRollDataChanged;
-            _userData.Child(Constants.UpgradeData).ValueChanged -= OnUpgradeDataChanged;
             _userData.Child(Constants.WalletData).ValueChanged -= OnWalletDataChanged;
+            _userData.Child(Constants.ChestData).ValueChanged -= OnChestDataChanged;
+            _userData.Child(Constants.UpgradeData).ValueChanged -= OnUpgradeDataChanged;
+            _userData.Child(Constants.NarrativeData).ValueChanged -= OnNarrativeDataChanged;
         }
 
         private void OnDisable()
@@ -93,12 +96,6 @@ namespace Core.GameData
                 EventManager.chestRefresh.Raise();
         }
 
-        private void OnChestDataChanged(object sender, ValueChangedEventArgs args)
-        {
-            chestData = new GenericArrayDto(ProcessDataChanges(sender, args)).newDataArray;
-            EventManager.chestRefresh.Raise();
-        }
-
         private void OnWalletDataChanged(object sender, ValueChangedEventArgs args)
         {
             var walletData = new GenericArrayDto(ProcessDataChanges(sender, args)).newDataArray;
@@ -108,9 +105,29 @@ namespace Core.GameData
             }
         }
 
+        private void OnChestDataChanged(object sender, ValueChangedEventArgs args)
+        {
+            chestData = new GenericArrayDto(ProcessDataChanges(sender, args)).newDataArray;
+            EventManager.chestRefresh.Raise();
+        }
+
         private void OnUpgradeDataChanged(object sender, ValueChangedEventArgs args)
         {
             upgradeData = new GenericArrayDto(ProcessDataChanges(sender, args)).newDataArray;
+        }
+
+        private void OnNarrativeDataChanged(object sender, ValueChangedEventArgs args)
+        {
+            if (narrativeProgress >= Constants.NarrativeMax)
+            {
+                _userData.Child(Constants.NarrativeData).ValueChanged -= OnNarrativeDataChanged;
+                return;
+            }
+
+            narrativeProgress = (long)args.Snapshot.Value;
+            
+            NarrativeManager.RefreshCurrentNarrativePoint();
+            EventManager.narrativeRefresh.Raise();
         }
 
         private static string ProcessDataChanges(object sender, ValueChangedEventArgs args)

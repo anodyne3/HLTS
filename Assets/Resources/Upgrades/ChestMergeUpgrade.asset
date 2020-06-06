@@ -20,15 +20,15 @@ MonoBehaviour:
     upgradeName: Chest Merge
     description: Merge three Bronze Chests into a Silver Chest.
     resourceRequirements:
-    - resourceAmount: 900
+    - resourceAmount: 1000
       resourceType: 0
-    - resourceAmount: 40
+    - resourceAmount: 39
       resourceType: 1
   - icon: {fileID: 3286163911610860551, guid: 4b3a5bf377ad08941b5cd00441c4955b, type: 3}
     upgradeName: Chest Merge
     description: Merge five Bronze Chests into two Silver Chests.
     resourceRequirements:
-    - resourceAmount: 1900
+    - resourceAmount: 2000
       resourceType: 0
     - resourceAmount: 65
       resourceType: 1
@@ -36,31 +36,31 @@ MonoBehaviour:
     upgradeName: Chest Merge
     description: Merge eight Bronze Chests into a Gold Chest.
     resourceRequirements:
-    - resourceAmount: 2800
+    - resourceAmount: 3000
       resourceType: 0
-    - resourceAmount: 90
+    - resourceAmount: 76
       resourceType: 1
   - icon: {fileID: 3286163911610860551, guid: 4b3a5bf377ad08941b5cd00441c4955b, type: 3}
     upgradeName: Chest Merge
     description: Merge three Silver Chests into a Gold Chest.
     resourceRequirements:
-    - resourceAmount: 4900
+    - resourceAmount: 5000
       resourceType: 0
-    - resourceAmount: 90
+    - resourceAmount: 89
       resourceType: 1
   - icon: {fileID: 3286163911610860551, guid: 4b3a5bf377ad08941b5cd00441c4955b, type: 3}
     upgradeName: Chest Merge
     description: Merge five Silver Chests into two Gold Chests.
     resourceRequirements:
-    - resourceAmount: 6700
+    - resourceAmount: 7000
       resourceType: 0
-    - resourceAmount: 125
+    - resourceAmount: 132
       resourceType: 1
   - icon: {fileID: 3286163911610860551, guid: 4b3a5bf377ad08941b5cd00441c4955b, type: 3}
     upgradeName: Chest Merge
     description: Merge eight Silver Chests into three Gold Chests.
     resourceRequirements:
-    - resourceAmount: 7600
+    - resourceAmount: 7000
       resourceType: 0
-    - resourceAmount: 150
+    - resourceAmount: 154
       resourceType: 1

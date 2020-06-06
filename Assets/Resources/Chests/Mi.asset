@@ -21,6 +21,6 @@ MonoBehaviour:
     type: 3}
   rank: 1
   threshold: 25
-  bcMax: 100
-  bpMax: 25
-  sfMax: 5
+  bcMax: 130
+  bpMax: 16
+  sfMax: 6

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using MyScriptableObjects;
 using UnityEngine;
+using UnityEngine.Rendering;
 using Utils;
 
 namespace Core.UI
@@ -39,17 +40,22 @@ namespace Core.UI
                 waitingForServerPanel.HidePanel();
         }
 
-        public void OpenPayoutPanel()
+        private void OpenPayoutPanel()
         {
-            StartCoroutine(nameof(PayoutOnHold));
+            OpenPanelOnHold<PayoutPanelController>();
         }
 
-        private IEnumerator PayoutOnHold()
+        public void OpenPanelOnHold<T>(params object[] args) where T : PanelController
+        {
+            StartCoroutine(PayoutOnHold<T>(args));
+        }
+
+        private IEnumerator PayoutOnHold<T>(params object[] args) where T : PanelController
         {
             if (GameManager != null && !GameManager.interactionEnabled)
                 yield return new WaitUntil(() => GameManager.interactionEnabled);
 
-            OpenPanelSolo<PayoutPanelController>();
+            OpenPanelSolo<T>(args);
         } 
 
         public void OpenPanelSolo<T>(params object[] args) where T : PanelController

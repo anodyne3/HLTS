@@ -132,5 +132,10 @@ namespace Core.Managers
 
             yield return null;
         }
+
+        public bool IsSliderActive()
+        {
+            return _sliderIsActive;
+        }
     }
 }

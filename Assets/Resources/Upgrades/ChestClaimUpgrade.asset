@@ -21,16 +21,16 @@ MonoBehaviour:
     description: Every 25 rolls you will receive a Silver Chest.<br><br>You can still
       claim a Bronze Chest after 10 rolls, but it's one or the other, not both!
     resourceRequirements:
-    - resourceAmount: 888
+    - resourceAmount: 3000
       resourceType: 0
-    - resourceAmount: 88
+    - resourceAmount: 200
       resourceType: 1
   - icon: {fileID: 3286163911610860551, guid: 08c85f35b89ed3044827e0cdfb0d3a03, type: 3}
     upgradeName: Gold Chest
     description: Every 100 rolls you will receive a Gold Chest.<br><br>You can still
       claim Silver and Bronze Chests.
     resourceRequirements:
-    - resourceAmount: 2222
+    - resourceAmount: 10000
       resourceType: 0
-    - resourceAmount: 222
+    - resourceAmount: 400
       resourceType: 1

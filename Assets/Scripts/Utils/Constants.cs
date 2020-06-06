@@ -83,12 +83,10 @@ namespace Utils
         public const string PlayerDataPrefix = "users";
         public const string PlayerDataSuffix = "userData";
         public const string ChestData = "cd";
-        public const string ChestPayout = "cp";
-        public const string CurrentRoll = "cr";
-        public const string LastPayout = "lp";
         public const string UpgradeData = "ud";
         public const string RollData = "rd";
         public const string WalletData = "wd";
+        public const string NarrativeData = "np";
         public const string ReelRollCloudFunction = "usersReelRollOnCall";
         public const string AdRewardClaimCloudFunction = "usersAdRewardClaimOnCall";
         public const string ChestClaimCloudFunction = "usersChestClaimOnCall";
@@ -96,6 +94,7 @@ namespace Utils
         public const string ChestOpenCloudFunction = "usersChestOpenOnCall";
         public const string DoUpgradeCloudFunction = "usersUpgradeDoOnCall";
         public const string ProductPurchaseFunction = "usersProductPurchaseOnCall";
+        public const string ProgressNarrativeFunction = "usersNarrativeProgressOnCall";
         
         //urls
         public const string FirebaseDatabaseUrl = "https://he-loves-the-slots.firebaseio.com/";
@@ -125,6 +124,7 @@ namespace Utils
         public const string ChestsPath = "Chests";
         public const string FruitParticleSpritesPath = "FruitSprites";
         public const string MusicTrackPath = "MusicTracks";
+        public const string NarrativePointsPath = "NarrativePoints/";
         public const string ShopCategoryPath = "ShopCategories";
         public const string ShopProductPath = "ShopProducts";
         public const string SoundEffectPath = "SoundEffects";
@@ -188,6 +188,11 @@ namespace Utils
         //payoutWords
         public const string JackpotMessage = "Jackpot!";
         public const string YouWinMessage = "You Win!";
+        
+        //narrative
+        public const int NarrativeMax = 10;
+        public const string NarrativeClose = "Tap to Close"; 
+        public const string NarrativeContinue = "Tap to Continue";
 
         public static readonly GameEvents GameEvents = new GameEvents();
     }
@@ -209,6 +214,7 @@ namespace Utils
         public string coinLoadEvent = "coinLoadEvent";
         public string generateCoinEvent = "generateCoinEvent";
         public string payoutFinishEvent = "payoutFinishEvent";
+        public string narrativeRefreshEvent = "narrativeRefreshEvent";
         public string payoutStartEvent = "payoutStartEvent";
         public string refreshCurrencyEvent = "refreshCurrencyEvent";
         public string refreshUiEvent = "refreshUiEvent";

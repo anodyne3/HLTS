@@ -1,0 +1,44 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea557d80bff54952aa6cd9f043ee12e0, type: 3}
+  m_Name: Intro
+  m_EditorClassIdentifier: 
+  id: 0
+  narrativeShard:
+  - textChunks:
+    - "\\'Oh! Hello, Friend, who I have not seen in \u2026 some \u2026 long \u2026
+      space .. of time.\\\u2019"
+    storyImage: {fileID: 3286163911610860551, guid: 20c25517a14ee114383193dc9bc37bfa,
+      type: 3}
+  - textChunks:
+    - Just act natural. Try not to blow our cover.
+    storyImage: {fileID: 3286163911610860551, guid: 42ffb413be9217948b49cd60cff95b4c,
+      type: 3}
+  - textChunks:
+    - "<b>\\'Shall We Imbibe Some Tasty Beverage, And \u2026 Eat A \u2026 Peanut
+      \u2026 Bowl \u2026 Thereof, With Our ... Chit-Chat?\\\u2019"
+    storyImage: {fileID: 3286163911610860551, guid: 20c25517a14ee114383193dc9bc37bfa,
+      type: 3}
+  - textChunks:
+    - "Find a table near the back wall and I\u2019ll meet you there in a moment."
+    storyImage: {fileID: 3286163911610860551, guid: e8875ff64978ad74b8cc594067d2bae1,
+      type: 3}
+  - textChunks:
+    - "This is a routine operation. We\u2019re here to investigate a new \u201CTrade
+      Stimulator\u201D."
+    storyImage: {fileID: 3286163911610860551, guid: 42ffb413be9217948b49cd60cff95b4c,
+      type: 3}
+  - textChunks:
+    - "As soon as we find out if they\u2019re violating any laws, we can wrap up
+      and get out of here."
+    storyImage: {fileID: 3286163911610860551, guid: a4bfbc6fb495db84fa7f3ad128f87f30,
+      type: 3}
