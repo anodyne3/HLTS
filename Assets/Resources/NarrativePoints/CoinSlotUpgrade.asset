@@ -23,6 +23,6 @@ MonoBehaviour:
     storyImage: {fileID: 3286163911610860551, guid: 53984d58efa89194c835bea6dd92a100,
       type: 3}
   - textChunks:
-    - And we will get those "Chests" quicker!!
+    - And we'll get those "Chests" quicker!!
     storyImage: {fileID: 3286163911610860551, guid: e28fa3e96ab4d9e4d85f08c2a2125b53,
       type: 3}

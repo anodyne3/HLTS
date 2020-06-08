@@ -1,8 +1,6 @@
 using System;
 using Enums;
 using UnityEngine;
-using UnityEngine.Timeline;
-using UnityEngine.UI;
 
 namespace MyScriptableObjects
 {
@@ -11,7 +9,7 @@ namespace MyScriptableObjects
     {
         public NarrativeTypes id;
         public NarrativeShard[] narrativeShard;
-        public TimelinePlayable timelinePlayable;
+        public bool fireAndForget;
 
         private void OnEnable()
         {

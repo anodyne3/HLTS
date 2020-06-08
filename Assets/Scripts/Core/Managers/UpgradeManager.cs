@@ -105,14 +105,14 @@ namespace Core.Managers
 
         private void ShowProgressSlider()
         {
+            if (_sliderIsActive) return;
+            
             if (CurrentUpgradeProgress() < Constants.FloatTolerance) return;
 
-            if (_sliderIsActive) return;
-
-            StartCoroutine(nameof(HideCurrenciesRoutine));
+            StartCoroutine(nameof(ShowProgressSliderRoutine));
         }
 
-        private IEnumerator HideCurrenciesRoutine()
+        private IEnumerator ShowProgressSliderRoutine()
         {
             var t = 0.0f;
             var destination = progressSlider.transform.localPosition;

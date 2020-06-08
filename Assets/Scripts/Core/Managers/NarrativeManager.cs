@@ -1,27 +1,28 @@
 ﻿using System;
 using System.Collections;
-using Core.MainSlotMachine;
+using System.Collections.Generic;
 using Core.UI;
-using DG.Tweening;
 using Enums;
 using Utils;
 using MyScriptableObjects;
 using UnityEngine;
-using UnityEngine.Rendering;
-using UnityEngine.UI;
 
 namespace Core.Managers
 {
     public class NarrativeManager : Singleton<NarrativeManager>
     {
         public NarrativePoint currentNarrativePoint;
-        
+
         private readonly WaitUntil _gameManagerInteractionWait = new WaitUntil(() => GameManager.interactionEnabled);
         private readonly WaitUntil _payoutEventWait = new WaitUntil(() => !SlotMachine.wheelsAreRolling);
         private NarrativePanelController _narrativePanel;
+        
+        private Queue<NarrativePoint> _narrativeFireAndForget = new Queue<NarrativePoint>();
 
         private void Start()
         {
+            LoadNarrativeQueue();
+            
             EventManager.NewEventSubscription(gameObject, Constants.GameEvents.coinCreatedEvent,
                 OpenIntroPanel);
             EventManager.NewEventSubscription(gameObject, Constants.GameEvents.armPullEvent, ArmPullTests);
@@ -32,10 +33,24 @@ namespace Core.Managers
                 OpenNarrativePanel);
         }
 
+        private void LoadNarrativeQueue()
+        {
+            var narrativePoints =
+                GeneralUtils.SortLoadedList<NarrativePoint>(Constants.NarrativeData,
+                    (x, y) => x.id.CompareTo(y.id));
+
+            var narrativePointsLength = narrativePoints.Length;
+            for (var i = 0; i < narrativePointsLength; i++)
+            {
+                if (narrativePoints[i].fireAndForget)
+                    _narrativeFireAndForget.Enqueue(narrativePoints[i]);
+            }
+        }
+
         private void OpenIntroPanel()
         {
             RefreshHelpButton();
-            
+
             if (_narrativePanel != null && _narrativePanel.gameObject.activeInHierarchy) return;
 
             if ((NarrativeTypes) PlayerData.narrativeProgress != NarrativeTypes.Intro) return;
@@ -59,7 +74,8 @@ namespace Core.Managers
                 case NarrativeTypes.ChestRoll:
                     if (PlayerData.GetChestCount(ChestType.Bronze) > 0)
                         FirebaseFunctionality.ProgressNarrativePoint();
-                    else if (ChestManager.GetFillAmount(ChestManager.CurrentChest.rank) < 0.11f)
+                    else if (ChestManager.CurrentChest != null &&
+                             ChestManager.GetFillAmount(ChestManager.CurrentChest.rank) < 0.11f)
                         StartCoroutine(DelayedOpen(7.0f,
                             () => PanelManager.OpenPanelOnHold<NarrativePanelController>(_payoutEventWait)));
                     break;
@@ -72,6 +88,16 @@ namespace Core.Managers
                             .GetUpgradeVariable(UpgradeTypes.CoinSlot).CurrentResourceRequirements[1].resourceAmount)
                         FirebaseFunctionality.ProgressNarrativePoint();
                     break;
+                case NarrativeTypes.UpgradeMerge:
+                    if (CurrencyManager.GetCurrencyAmount(ResourceType.BluePrints) >= Constants.ChestMergeTrigger)
+                        PanelManager.OpenPanelOnHold<NarrativePanelController>(_gameManagerInteractionWait);
+                    break;
+                case NarrativeTypes.UpgradeClaim:
+                    if (CurrencyManager.GetCurrencyAmount(ResourceType.BluePrints) >= Constants.ChestClaimTrigger)
+                        PanelManager.OpenPanelOnHold<NarrativePanelController>(_gameManagerInteractionWait);
+                    break;
+                default:
+                    return;
             }
         }
 
@@ -112,16 +138,8 @@ namespace Core.Managers
                     PanelManager.OpenPanelOnHold<NarrativePanelController>(_gameManagerInteractionWait);
                     break;
                 case NarrativeTypes.UpgradeSlider:
-                    if (UpgradeManager.IsSliderActive())
-                        PanelManager.OpenPanelOnHold<NarrativePanelController>(_gameManagerInteractionWait);
-                    break;
-                case NarrativeTypes.UpgradeMerge:
-                    if (PlayerData.chestData[0] >= Constants.ChestMergeTrigger)
-                        PanelManager.OpenPanelOnHold<NarrativePanelController>(_gameManagerInteractionWait);
-                    break;
-                case NarrativeTypes.UpgradeClaim:
-                    if (CurrencyManager.GetCurrencyAmount(ResourceType.BananaCoins) >= Constants.ChestClaimTrigger)
-                        PanelManager.OpenPanelOnHold<NarrativePanelController>(_gameManagerInteractionWait);
+                    StartCoroutine(DelayedOpen(2.0f,
+                        () => PanelManager.OpenPanelOnHold<NarrativePanelController>(_gameManagerInteractionWait)));
                     break;
             }
         }
@@ -129,7 +147,7 @@ namespace Core.Managers
         public void RefreshHelpButton()
         {
             if (HudManager == null) return;
-            
+
             switch (currentNarrativePoint.id)
             {
                 case NarrativeTypes.PullLever:

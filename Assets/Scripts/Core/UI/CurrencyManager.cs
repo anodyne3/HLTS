@@ -91,6 +91,8 @@ namespace Core.UI
             }
 
             ResizeCurrencyRect();
+            
+            EventManager.refreshUi.Raise();
         }
 
         public void ResizeCurrencyRect()

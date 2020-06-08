@@ -193,7 +193,6 @@ namespace Utils
         public const int NarrativeMax = 8;
         public const string NarrativeClose = "Tap to Close"; 
         public const string NarrativeContinue = "Tap to Continue";
-        public const int CoinSlotUpgradeTrigger = 50;
         public const int ChestMergeTrigger = 20;
         public const int ChestClaimTrigger = 120;
 
