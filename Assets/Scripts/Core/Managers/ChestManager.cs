@@ -26,6 +26,7 @@ namespace Core.Managers
         private bool _chestAtThreshold;
         private bool _chestUpgraded;
         private MyObjectPool<ChestAddedPrefab> _tweenChestAddedPool;
+        private ChestInventoryPanelController _chestInventoryPanel;
 
         public ChestVariable CurrentChest
         {
@@ -90,7 +91,6 @@ namespace Core.Managers
             RefreshFill();
 
             EventManager.NewEventSubscription(gameObject, Constants.GameEvents.refreshUiEvent, RefreshFill);
-            EventManager.NewEventSubscription(gameObject, Constants.GameEvents.chestRefreshEvent, RefreshChest);
         }
 
         private void LoadChests()
@@ -104,6 +104,9 @@ namespace Core.Managers
             chestMergeTypes =
                 GeneralUtils.SortLoadedList<ChestMergeVariable>(Constants.ChestMergesPath,
                     (x, y) => x.mergeUpgradeLevel.CompareTo(y.mergeUpgradeLevel));
+            
+            _chestInventoryPanel = PanelManager.GetPanel<ChestInventoryPanelController>();
+            _chestInventoryPanel.ChestsInit();
         }
 
         private void RefreshChest()

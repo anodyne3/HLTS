@@ -34,15 +34,13 @@ namespace Core.UI
             claimCurrentChestButton.onClick.RemoveAllListeners();
             claimCurrentChestButton.onClick.AddListener(ClaimChest);
 
-            ChestsInit();
-
             EventManager.NewEventSubscription(gameObject, Constants.GameEvents.refreshUiEvent, RefreshFill, true);
             EventManager.NewEventSubscription(gameObject, Constants.GameEvents.chestRefreshEvent, ChestsRefresh, true);
             EventManager.NewEventSubscription(gameObject, Constants.GameEvents.chestOpenEvent, RefreshPanel);
             EventManager.NewEventSubscription(gameObject, Constants.GameEvents.upgradeRefreshEvent, RefreshClaimChestButton);
         }
 
-        private void ChestsInit()
+        public void ChestsInit()
         {
             var chestTypesLength = ChestManager.chestTypes.Length;
             for (var i = 0; i < chestTypesLength; i++)

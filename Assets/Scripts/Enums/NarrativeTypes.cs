@@ -9,6 +9,7 @@ namespace Enums
         Blueprints,
         CoinSlotUpgrade,
         UpgradeSlider,
+        Starfruits,
         UpgradeMerge,
         UpgradeClaim,
     }

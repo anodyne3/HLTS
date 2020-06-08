@@ -1,5 +1,4 @@
-﻿using Core.Managers;
-using Enums;
+﻿using Enums;
 using MyScriptableObjects;
 using TMPro;
 using UnityEngine;
@@ -38,7 +37,7 @@ namespace Core.UI
         {
             base.OpenPanel();
             
-            backgroundBlackoutImage.gameObject.SetActive(args.Length > 0);
+            backgroundBlackoutImage.gameObject.SetActive(args.Length > 1);
 
             SetupNarrativeStage();
             ResetCounters();
@@ -48,9 +47,8 @@ namespace Core.UI
         private void SetupNarrativeStage()
         {
             var stageCount = 0;
-            
             _narrativePoint = NarrativeManager.currentNarrativePoint;
-
+            
             var narrativeShardLength = _narrativePoint.narrativeShard.Length;
             for (var i = 0; i < narrativeShardLength; i++)
                 stageCount += _narrativePoint.narrativeShard[i].textChunks.Length;
@@ -124,19 +122,20 @@ namespace Core.UI
         protected override void ClosePanel()
         {
             base.ClosePanel();
-
-            switch (_narrativePoint.id)
-            {
-                case NarrativeTypes.Intro:
-                    FirebaseFunctionality.ProgressNarrativePoint();
-                    CurrencyManager.HideCurrencies(false);
-                    break;
-                case NarrativeTypes.UpgradeSlider:
-                case NarrativeTypes.UpgradeMerge:
-                case NarrativeTypes.UpgradeClaim:
-                    FirebaseFunctionality.ProgressNarrativePoint();
-                    break;
-            }
+            
+                switch (_narrativePoint.id)
+                {
+                    case NarrativeTypes.Intro:
+                        FirebaseFunctionality.ProgressNarrativePoint();
+                        CurrencyManager.HideCurrencies(false);
+                        break;
+                    case NarrativeTypes.UpgradeSlider:
+                    case NarrativeTypes.Starfruits:
+                    case NarrativeTypes.UpgradeMerge:
+                    case NarrativeTypes.UpgradeClaim:
+                        FirebaseFunctionality.ProgressNarrativePoint();
+                        break;
+                }
             
             NarrativeManager.RefreshHelpButton();
         }

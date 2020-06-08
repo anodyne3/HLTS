@@ -9,7 +9,6 @@ namespace MyScriptableObjects
     {
         public NarrativeTypes id;
         public NarrativeShard[] narrativeShard;
-        public bool fireAndForget;
 
         private void OnEnable()
         {

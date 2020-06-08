@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using Core.UI;
 using Enums;
 using Utils;
@@ -16,35 +15,21 @@ namespace Core.Managers
         private readonly WaitUntil _gameManagerInteractionWait = new WaitUntil(() => GameManager.interactionEnabled);
         private readonly WaitUntil _payoutEventWait = new WaitUntil(() => !SlotMachine.wheelsAreRolling);
         private NarrativePanelController _narrativePanel;
-        
-        private Queue<NarrativePoint> _narrativeFireAndForget = new Queue<NarrativePoint>();
+        private bool _openPanelBlock;
+
 
         private void Start()
         {
-            LoadNarrativeQueue();
-            
             EventManager.NewEventSubscription(gameObject, Constants.GameEvents.coinCreatedEvent,
                 OpenIntroPanel);
             EventManager.NewEventSubscription(gameObject, Constants.GameEvents.armPullEvent, ArmPullTests);
             EventManager.NewEventSubscription(gameObject, Constants.GameEvents.refreshUiEvent, RefreshUiTests);
             EventManager.NewEventSubscription(gameObject, Constants.GameEvents.upgradeRefreshEvent,
                 UpgradeRefreshTests);
+            EventManager.NewEventSubscription(gameObject, Constants.GameEvents.chestOpenEvent,
+                ChestOpenRefreshTests);
             EventManager.NewEventSubscription(gameObject, Constants.GameEvents.narrativeRefreshEvent,
                 OpenNarrativePanel);
-        }
-
-        private void LoadNarrativeQueue()
-        {
-            var narrativePoints =
-                GeneralUtils.SortLoadedList<NarrativePoint>(Constants.NarrativeData,
-                    (x, y) => x.id.CompareTo(y.id));
-
-            var narrativePointsLength = narrativePoints.Length;
-            for (var i = 0; i < narrativePointsLength; i++)
-            {
-                if (narrativePoints[i].fireAndForget)
-                    _narrativeFireAndForget.Enqueue(narrativePoints[i]);
-            }
         }
 
         private void OpenIntroPanel()
@@ -74,10 +59,6 @@ namespace Core.Managers
                 case NarrativeTypes.ChestRoll:
                     if (PlayerData.GetChestCount(ChestType.Bronze) > 0)
                         FirebaseFunctionality.ProgressNarrativePoint();
-                    else if (ChestManager.CurrentChest != null &&
-                             ChestManager.GetFillAmount(ChestManager.CurrentChest.rank) < 0.11f)
-                        StartCoroutine(DelayedOpen(7.0f,
-                            () => PanelManager.OpenPanelOnHold<NarrativePanelController>(_payoutEventWait)));
                     break;
                 case NarrativeTypes.ChestGained:
                     if (CurrencyManager.GetCurrencyAmount(ResourceType.BluePrints) > 0)
@@ -101,11 +82,17 @@ namespace Core.Managers
             }
         }
 
-        private static IEnumerator DelayedOpen(float waitTime, Action callback)
+        private IEnumerator DelayedOpen(float waitTime, Action callback)
         {
+            if (_openPanelBlock) yield break;
+
+            _openPanelBlock = true;
+
             yield return new WaitForSeconds(waitTime);
 
             callback.Invoke();
+
+            _openPanelBlock = false;
         }
 
         private static void UpgradeRefreshTests()
@@ -114,6 +101,27 @@ namespace Core.Managers
 
             if (UpgradeManager.GetUpgradeCurrentLevel(UpgradeTypes.CoinSlot) > 0)
                 FirebaseFunctionality.ProgressNarrativePoint();
+        }
+
+        private void ChestOpenRefreshTests()
+        {
+            if ((NarrativeTypes) PlayerData.narrativeProgress != NarrativeTypes.Starfruits) return;
+
+            var cheapestCoins = 0;
+
+            var shopProductsLength = ShopManager.shopProducts.Length;
+            for (var i = 0; i < shopProductsLength; i++)
+            {
+                var x = ShopManager.shopProducts[i];
+                if (x.ResourceType != ResourceType.StarFruits) continue;
+
+                cheapestCoins = x.ResourceCost;
+                break;
+            }
+
+            if (CurrencyManager.GetCurrencyAmount(ResourceType.StarFruits) >= cheapestCoins)
+                StartCoroutine(DelayedOpen(6.0f,
+                    () => PanelManager.OpenPanelOnHold<NarrativePanelController>(_gameManagerInteractionWait)));
         }
 
         private void OpenNarrativePanel()
@@ -125,6 +133,12 @@ namespace Core.Managers
                 case NarrativeTypes.PullLever:
                     StartCoroutine(DelayedOpen(2.0f,
                         () => PanelManager.OpenPanelOnHold<NarrativePanelController>(_gameManagerInteractionWait)));
+                    break;
+                case NarrativeTypes.ChestRoll:
+                    if (ChestManager.CurrentChest != null &&
+                        ChestManager.GetFillAmount(ChestManager.CurrentChest.rank) < 0.1f)
+                        StartCoroutine(DelayedOpen(6.0f,
+                            () => PanelManager.OpenPanelOnHold<NarrativePanelController>(_payoutEventWait)));
                     break;
                 case NarrativeTypes.ChestGained:
                     if (PlayerData.GetChestCount(ChestType.Bronze) > 0)

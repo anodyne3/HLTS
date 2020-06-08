@@ -21,8 +21,7 @@ namespace Core.UI.Prefabs
         {
             openChestButton.onClick.RemoveAllListeners();
             openChestButton.onClick.AddListener(OpenChestSubPanel);
-
-            EventManager.NewEventSubscription(gameObject, Constants.GameEvents.chestRefreshEvent, Refresh);
+            
             EventManager.NewEventSubscription(gameObject, Constants.GameEvents.refreshUiEvent, HideUpgradeIndicator,
                 true);
         }
@@ -34,11 +33,11 @@ namespace Core.UI.Prefabs
 
             _oldCount = PlayerData.GetChestCount(_chestType);
             _upgradeIndicatorUi = (UpgradeIndicatorUi) GetComponentInChildren(typeof(UpgradeIndicatorUi));
-
-            Refresh();
+            
+            EventManager.NewEventSubscription(gameObject, Constants.GameEvents.chestRefreshEvent, Refresh);
         }
 
-        private void Refresh()
+        public void Refresh()
         {
             var chestDifference = PlayerData.GetChestCount(_chestType) - _oldCount;
 
@@ -48,8 +47,6 @@ namespace Core.UI.Prefabs
             if (chestDifference <= 0) return;
 
             ChestManager.AddChestsAnim(_chestType, chestDifference);
-
-            // HideUpgradeIndicator();
         }
 
         private void HideUpgradeIndicator()
