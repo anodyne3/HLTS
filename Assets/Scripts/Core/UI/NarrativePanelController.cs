@@ -1,5 +1,4 @@
-﻿using System;
-using Core.Managers;
+﻿using Core.Managers;
 using Enums;
 using MyScriptableObjects;
 using TMPro;
@@ -11,6 +10,7 @@ namespace Core.UI
 {
     public class NarrativePanelController : PanelController
     {
+        [SerializeField] private Image backgroundBlackoutImage;
         [SerializeField] private Button consumeNarrativeButton;
         [SerializeField] private SVGImage narrativeImage;
         [SerializeField] private TMP_Text narrativeText;
@@ -37,27 +37,25 @@ namespace Core.UI
         public override void OpenPanel(params object[] args)
         {
             base.OpenPanel();
+            
+            backgroundBlackoutImage.gameObject.SetActive(args.Length > 0);
 
-            _narrativePoint = NarrativeManager.currentNarrativePoint;
-
-            _narrativeStages = CalculateNarrativeStageCount();
-
+            SetupNarrativeStage();
             ResetCounters();
-
             RefreshPanel();
         }
 
-        private int CalculateNarrativeStageCount()
+        private void SetupNarrativeStage()
         {
             var stageCount = 0;
+            
+            _narrativePoint = NarrativeManager.currentNarrativePoint;
 
             var narrativeShardLength = _narrativePoint.narrativeShard.Length;
             for (var i = 0; i < narrativeShardLength; i++)
-            {
                 stageCount += _narrativePoint.narrativeShard[i].textChunks.Length;
-            }
 
-            return stageCount;
+            _narrativeStages = stageCount;
         }
 
         private void ResetCounters()
@@ -130,25 +128,17 @@ namespace Core.UI
             switch (_narrativePoint.id)
             {
                 case NarrativeTypes.Intro:
-                case NarrativeTypes.SlotMachine:
-                case NarrativeTypes.UpgradeSlider:
-                case NarrativeTypes.Blueprints:
-                case NarrativeTypes.ChestMerge:
-                case NarrativeTypes.ChestClaim:
                     FirebaseFunctionality.ProgressNarrativePoint();
-                    NarrativeManager.ShowHelpButton(false);
+                    CurrencyManager.HideCurrencies(false);
                     break;
-                // case NarrativeTypes.LoadCoin:
-                case NarrativeTypes.PullLever:
-                case NarrativeTypes.ChestRoll:
-                case NarrativeTypes.ChestOpen:
-                case NarrativeTypes.CoinSlotUpgrade:
-                    NarrativeManager.ShowHelpButton();
-                    break;
-                default:
-                    NarrativeManager.ShowHelpButton(false);
+                case NarrativeTypes.UpgradeSlider:
+                case NarrativeTypes.UpgradeMerge:
+                case NarrativeTypes.UpgradeClaim:
+                    FirebaseFunctionality.ProgressNarrativePoint();
                     break;
             }
+            
+            NarrativeManager.RefreshHelpButton();
         }
     }
 }

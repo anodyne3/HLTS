@@ -3,15 +3,13 @@ namespace Enums
     public enum NarrativeTypes
     {
         Intro,
-        SlotMachine,
-        // LoadCoin,
         PullLever,
         ChestRoll,
-        ChestOpen,
+        ChestGained,
         Blueprints,
         CoinSlotUpgrade,
         UpgradeSlider,
-        ChestMerge,
-        ChestClaim,
+        UpgradeMerge,
+        UpgradeClaim,
     }
 }

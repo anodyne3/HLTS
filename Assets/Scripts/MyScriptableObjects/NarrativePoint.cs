@@ -12,6 +12,11 @@ namespace MyScriptableObjects
         public NarrativeTypes id;
         public NarrativeShard[] narrativeShard;
         public TimelinePlayable timelinePlayable;
+
+        private void OnEnable()
+        {
+            id = (NarrativeTypes) Enum.Parse(typeof(NarrativeTypes), name);
+        }
     }
 
     [Serializable]

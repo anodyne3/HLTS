@@ -12,10 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea557d80bff54952aa6cd9f043ee12e0, type: 3}
   m_Name: PullLever
   m_EditorClassIdentifier: 
-  id: 2
+  id: 1
   narrativeShard:
   - textChunks:
     - You gotta Drag a Coin into that Slot...
-    - then you gotta drag that ... lever .. arm ... thing.
-    storyImage: {fileID: 3286163911610860551, guid: 42ffb413be9217948b49cd60cff95b4c,
+    storyImage: {fileID: 3286163911610860551, guid: 53984d58efa89194c835bea6dd92a100,
+      type: 3}
+  - textChunks:
+    - then you drag that ... lever .. arm ... thing down.
+    storyImage: {fileID: 3286163911610860551, guid: 2dc9ba796756ce241af8ef4a7c6a9bf5,
+      type: 3}
+  - textChunks:
+    - If you match three, you win!
+    storyImage: {fileID: 3286163911610860551, guid: 4b6ce5799fcf3904ba3363cb9fd85242,
       type: 3}

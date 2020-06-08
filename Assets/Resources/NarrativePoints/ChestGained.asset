@@ -10,10 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ea557d80bff54952aa6cd9f043ee12e0, type: 3}
-  m_Name: ChestMerge
+  m_Name: ChestGained
   m_EditorClassIdentifier: 
   id: 4
   narrativeShard:
   - textChunks:
-    - 
-    storyImage: {fileID: 0}
+    - Hey!! We got a Chest!<br><br>I wonder what's inside.
+    storyImage: {fileID: 3286163911610860551, guid: e28fa3e96ab4d9e4d85f08c2a2125b53,
+      type: 3}

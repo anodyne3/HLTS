@@ -10,15 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ea557d80bff54952aa6cd9f043ee12e0, type: 3}
-  m_Name: UpgradeSlider
+  m_Name: UpgradeClaim
   m_EditorClassIdentifier: 
-  id: 7
+  id: 9
   narrativeShard:
   - textChunks:
-    - Now we're getting somewhere.<br><br>This meter counts our upgrades.
-    storyImage: {fileID: 3286163911610860551, guid: 5bbec3c8c1f23b1419d14529a4405da5,
+    - "This Upgrade will give a Silver Chest every 25 rolls.<br><br>That\u2019s quicker
+      than all that Merging."
+    storyImage: {fileID: 3286163911610860551, guid: 96c94bf5ea6e36e4c8645198204d9fd0,
       type: 3}
   - textChunks:
-    - "Once it\u2019s full enough, we can make our assessment and blow this joint!"
-    storyImage: {fileID: 3286163911610860551, guid: 42ffb413be9217948b49cd60cff95b4c,
+    - "I don\u2019t like to call the shots<br><br> \u2026 <br><br>but you should
+      do that."
+    storyImage: {fileID: 3286163911610860551, guid: e28fa3e96ab4d9e4d85f08c2a2125b53,
       type: 3}

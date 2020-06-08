@@ -118,13 +118,13 @@ namespace Core.GameData
 
         private void OnNarrativeDataChanged(object sender, ValueChangedEventArgs args)
         {
+            narrativeProgress = (long)args.Snapshot.Value;
+            
             if (narrativeProgress >= Constants.NarrativeMax)
             {
                 _userData.Child(Constants.NarrativeData).ValueChanged -= OnNarrativeDataChanged;
                 return;
             }
-
-            narrativeProgress = (long)args.Snapshot.Value;
             
             NarrativeManager.RefreshCurrentNarrativePoint();
             EventManager.narrativeRefresh.Raise();

@@ -15,5 +15,7 @@ MonoBehaviour:
   id: 3
   narrativeShard:
   - textChunks:
-    - 
-    storyImage: {fileID: 0}
+    - Hmm?!? Looks like there's some kind of  'Box' on it's way.<br><br>Keep rolling
+      and we'll see what it is.
+    storyImage: {fileID: 3286163911610860551, guid: 42ffb413be9217948b49cd60cff95b4c,
+      type: 3}

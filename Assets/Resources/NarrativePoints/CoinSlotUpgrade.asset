@@ -12,8 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea557d80bff54952aa6cd9f043ee12e0, type: 3}
   m_Name: CoinSlotUpgrade
   m_EditorClassIdentifier: 
-  id: 4
+  id: 5
   narrativeShard:
   - textChunks:
-    - 
-    storyImage: {fileID: 0}
+    - It seems like we could Upgrade the Coin Slot.
+    storyImage: {fileID: 3286163911610860551, guid: 4c5dbbaab2757b04c918de53888ad143,
+      type: 3}
+  - textChunks:
+    - That would double our chances of winning ...
+    storyImage: {fileID: 3286163911610860551, guid: 53984d58efa89194c835bea6dd92a100,
+      type: 3}
+  - textChunks:
+    - And we will get those "Chests" quicker!!
+    storyImage: {fileID: 3286163911610860551, guid: e28fa3e96ab4d9e4d85f08c2a2125b53,
+      type: 3}

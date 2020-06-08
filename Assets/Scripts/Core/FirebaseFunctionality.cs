@@ -290,13 +290,18 @@ namespace Core
 
         #region Narrative
 
+        private bool _narrativeCallBlock;
+        
         public async void ProgressNarrativePoint()
         {
+            if (_narrativeCallBlock) return;
+
+            _narrativeCallBlock = true;
             await GetHttpsCallable(Constants.ProgressNarrativeFunction);
-            
+
+            _narrativeCallBlock = false;
             //kill this once tested
             AlertMessage.Init("Narrative Progressed");
-            // EventManager.narrativeRefresh.Raise();
         }
 
         #endregion

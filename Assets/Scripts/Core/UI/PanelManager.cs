@@ -40,20 +40,22 @@ namespace Core.UI
                 waitingForServerPanel.HidePanel();
         }
 
+        private readonly WaitUntil _gameManagerInteractionWait = new WaitUntil(() => GameManager.interactionEnabled);
         private void OpenPayoutPanel()
         {
-            OpenPanelOnHold<PayoutPanelController>();
+            OpenPanelOnHold<PayoutPanelController>(_gameManagerInteractionWait);
         }
 
-        public void OpenPanelOnHold<T>(params object[] args) where T : PanelController
+        public void OpenPanelOnHold<T>(WaitUntil waitUntil, params object[] args) where T : PanelController
         {
-            StartCoroutine(PayoutOnHold<T>(args));
+            StartCoroutine(OpenOnHold<T>(waitUntil, args));
         }
 
-        private IEnumerator PayoutOnHold<T>(params object[] args) where T : PanelController
+        private IEnumerator OpenOnHold<T>(CustomYieldInstruction waitUntil, params object[] args) where T : PanelController
         {
-            if (GameManager != null && !GameManager.interactionEnabled)
-                yield return new WaitUntil(() => GameManager.interactionEnabled);
+            var keepWaiting = waitUntil.keepWaiting;
+            if (GameManager != null && keepWaiting)
+                yield return waitUntil;
 
             OpenPanelSolo<T>(args);
         } 

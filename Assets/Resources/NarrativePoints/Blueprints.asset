@@ -15,5 +15,14 @@ MonoBehaviour:
   id: 4
   narrativeShard:
   - textChunks:
-    - 
-    storyImage: {fileID: 0}
+    - Okay! The Chests contain Blueprints, which are used for upgrading the machine.
+    storyImage: {fileID: 3286163911610860551, guid: f34bbba08d65d5243b310dfcb3acf7a5,
+      type: 3}
+  - textChunks:
+    - "These \"Upgrades\u201D <i>should</i>  make winning easier."
+    storyImage: {fileID: 3286163911610860551, guid: 75f3fa12467bce540a9b241bb6c85e83,
+      type: 3}
+  - textChunks:
+    - We should explore that, but we'll need more  Blueprints.
+    storyImage: {fileID: 3286163911610860551, guid: 4c5dbbaab2757b04c918de53888ad143,
+      type: 3}
