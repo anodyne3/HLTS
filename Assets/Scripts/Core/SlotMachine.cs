@@ -24,6 +24,7 @@ namespace Core
         [HideInInspector] public List<FruitType> payoutType = new List<FruitType>();
         [HideInInspector] public long payoutAmount;
         [HideInInspector] public bool autoMode;
+        [HideInInspector] public int coinsWereLoaded;
 
         private int _betAmount;
 
@@ -58,6 +59,7 @@ namespace Core
             if (_armIsPulled || !CoinIsLoaded) return;
 
             _armIsPulled = true;
+            coinsWereLoaded = 0;
             ConsumeCoins();
             OnWheelRoll();
         }
@@ -129,7 +131,7 @@ namespace Core
                 EventManager.refreshUi.Raise();
             }
 
-            BetAmount = 0;
+            BetAmount = coinsWereLoaded;
             CurrencyManager.blockCurrencyRefresh = true;
             EventManager.payoutStart.Raise();
         }

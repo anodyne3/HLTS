@@ -14,9 +14,12 @@ namespace Core.Managers
 
         private readonly WaitUntil _gameManagerInteractionWait = new WaitUntil(() => GameManager.interactionEnabled);
         private readonly WaitUntil _payoutEventWait = new WaitUntil(() => !SlotMachine.wheelsAreRolling);
+
+        private readonly WaitUntil _narrativeCallBlockWait =
+            new WaitUntil(() => !FirebaseFunctionality.narrativeCallBlock);
+
         private NarrativePanelController _narrativePanel;
         private bool _openPanelBlock;
-
 
         private void Start()
         {
@@ -26,8 +29,7 @@ namespace Core.Managers
             EventManager.NewEventSubscription(gameObject, Constants.GameEvents.refreshUiEvent, RefreshUiTests);
             EventManager.NewEventSubscription(gameObject, Constants.GameEvents.upgradeRefreshEvent,
                 UpgradeRefreshTests);
-            EventManager.NewEventSubscription(gameObject, Constants.GameEvents.chestOpenEvent,
-                ChestOpenRefreshTests);
+            // EventManager.NewEventSubscription(gameObject, Constants.GameEvents.chestOpenEvent, ChestOpenRefreshTests);
             EventManager.NewEventSubscription(gameObject, Constants.GameEvents.narrativeRefreshEvent,
                 OpenNarrativePanel);
         }
@@ -69,6 +71,23 @@ namespace Core.Managers
                             .GetUpgradeVariable(UpgradeTypes.CoinSlot).CurrentResourceRequirements[1].resourceAmount)
                         FirebaseFunctionality.ProgressNarrativePoint();
                     break;
+                case NarrativeTypes.Starfruits:
+                    var cheapestCoins = 0;
+
+                    var shopProductsLength = ShopManager.shopProducts.Length;
+                    for (var i = 0; i < shopProductsLength; i++)
+                    {
+                        var x = ShopManager.shopProducts[i];
+                        if (x.ResourceType != ResourceType.StarFruits) continue;
+
+                        cheapestCoins = x.ResourceCost;
+                        break;
+                    }
+
+                    if (CurrencyManager.GetCurrencyAmount(ResourceType.StarFruits) >= cheapestCoins)
+                        StartCoroutine(DelayedOpen(2.0f,
+                            () => PanelManager.OpenPanelOnHold<NarrativePanelController>(_gameManagerInteractionWait)));
+                    break;
                 case NarrativeTypes.UpgradeMerge:
                     if (CurrencyManager.GetCurrencyAmount(ResourceType.BluePrints) >= Constants.ChestMergeTrigger)
                         StartCoroutine(DelayedOpen(2.0f, () =>
@@ -94,6 +113,9 @@ namespace Core.Managers
 
             callback.Invoke();
 
+            if (FirebaseFunctionality.narrativeCallBlock)
+                yield return _narrativeCallBlockWait;
+            
             _openPanelBlock = false;
         }
 
@@ -145,7 +167,7 @@ namespace Core.Managers
                 case NarrativeTypes.ChestGained:
                     if (PlayerData.GetChestCount(ChestType.Bronze) > 0)
                         StartCoroutine(DelayedOpen(2.0f, () =>
-                        PanelManager.OpenPanelOnHold<NarrativePanelController>(_gameManagerInteractionWait)));
+                            PanelManager.OpenPanelOnHold<NarrativePanelController>(_gameManagerInteractionWait)));
                     break;
                 case NarrativeTypes.Blueprints:
                     if (CurrencyManager.GetCurrencyAmount(ResourceType.BluePrints) > 0)

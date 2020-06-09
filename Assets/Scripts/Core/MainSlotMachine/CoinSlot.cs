@@ -33,7 +33,7 @@ namespace Core.MainSlotMachine
         
         private void OnTriggerStay2D(Collider2D other)
         {
-            if (_loadingCoin || SlotMachine.CoinSlotFull) return;
+            if (_loadingCoin || SlotMachine.CoinSlotFull || SlotMachine.autoMode) return;
 
             if (!other.TryGetComponent(typeof(CoinDragHandler), out var component)) return;
 
@@ -87,6 +87,7 @@ namespace Core.MainSlotMachine
             _insertedCoin.gameObject.SetActive(false);
             ObjectPoolManager.coinPool.Release(_insertedCoin);
             EventManager.coinLoad.Raise();
+            SlotMachine.coinsWereLoaded++;
             _loadingCoin = false;
         }
     }

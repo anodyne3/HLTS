@@ -34,10 +34,10 @@ namespace Core.UI.Prefabs
             _oldCount = PlayerData.GetChestCount(_chestType);
             _upgradeIndicatorUi = (UpgradeIndicatorUi) GetComponentInChildren(typeof(UpgradeIndicatorUi));
             
-            EventManager.NewEventSubscription(gameObject, Constants.GameEvents.chestRefreshEvent, Refresh);
+            EventManager.NewEventSubscription(gameObject, Constants.GameEvents.chestRefreshEvent, Refresh, true);
         }
 
-        public void Refresh()
+        private void Refresh()
         {
             var chestDifference = PlayerData.GetChestCount(_chestType) - _oldCount;
 

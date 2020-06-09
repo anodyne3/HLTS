@@ -7,9 +7,9 @@ namespace Enums
         ChestRoll,
         ChestGained,
         Blueprints,
+        Starfruits,
         CoinSlotUpgrade,
         UpgradeSlider,
-        Starfruits,
         UpgradeMerge,
         UpgradeClaim,
     }
