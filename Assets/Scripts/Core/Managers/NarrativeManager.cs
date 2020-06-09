@@ -71,11 +71,13 @@ namespace Core.Managers
                     break;
                 case NarrativeTypes.UpgradeMerge:
                     if (CurrencyManager.GetCurrencyAmount(ResourceType.BluePrints) >= Constants.ChestMergeTrigger)
-                        PanelManager.OpenPanelOnHold<NarrativePanelController>(_gameManagerInteractionWait);
+                        StartCoroutine(DelayedOpen(2.0f, () =>
+                            PanelManager.OpenPanelOnHold<NarrativePanelController>(_payoutEventWait)));
                     break;
                 case NarrativeTypes.UpgradeClaim:
                     if (CurrencyManager.GetCurrencyAmount(ResourceType.BluePrints) >= Constants.ChestClaimTrigger)
-                        PanelManager.OpenPanelOnHold<NarrativePanelController>(_gameManagerInteractionWait);
+                        StartCoroutine(DelayedOpen(2.0f, () =>
+                            PanelManager.OpenPanelOnHold<NarrativePanelController>(_payoutEventWait)));
                     break;
                 default:
                     return;
@@ -120,7 +122,7 @@ namespace Core.Managers
             }
 
             if (CurrencyManager.GetCurrencyAmount(ResourceType.StarFruits) >= cheapestCoins)
-                StartCoroutine(DelayedOpen(6.0f,
+                StartCoroutine(DelayedOpen(2.0f,
                     () => PanelManager.OpenPanelOnHold<NarrativePanelController>(_gameManagerInteractionWait)));
         }
 
@@ -142,7 +144,8 @@ namespace Core.Managers
                     break;
                 case NarrativeTypes.ChestGained:
                     if (PlayerData.GetChestCount(ChestType.Bronze) > 0)
-                        PanelManager.OpenPanelOnHold<NarrativePanelController>(_gameManagerInteractionWait);
+                        StartCoroutine(DelayedOpen(2.0f, () =>
+                        PanelManager.OpenPanelOnHold<NarrativePanelController>(_gameManagerInteractionWait)));
                     break;
                 case NarrativeTypes.Blueprints:
                     if (CurrencyManager.GetCurrencyAmount(ResourceType.BluePrints) > 0)

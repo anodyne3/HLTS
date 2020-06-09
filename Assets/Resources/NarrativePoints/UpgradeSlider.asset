@@ -12,10 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea557d80bff54952aa6cd9f043ee12e0, type: 3}
   m_Name: UpgradeSlider
   m_EditorClassIdentifier: 
-  id: 7
+  id: 6
   narrativeShard:
   - textChunks:
-    - Now we're getting somewhere.<br><br>This meter counts our upgrades.
+    - Now we're getting somewhere.<br><br>Try loading 2 coins into the Coin Slot.
+    storyImage: {fileID: 3286163911610860551, guid: 53984d58efa89194c835bea6dd92a100,
+      type: 3}
+  - textChunks:
+    - Also, upgrading revealed something else.<br><br>This "meter" counts our upgrades.
     storyImage: {fileID: 3286163911610860551, guid: 5bbec3c8c1f23b1419d14529a4405da5,
       type: 3}
   - textChunks:

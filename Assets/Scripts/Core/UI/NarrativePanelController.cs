@@ -18,10 +18,10 @@ namespace Core.UI
         private NarrativePoint _narrativePoint;
         private NarrativeShard _activeShard;
 
-        [SerializeField] private int _currentChunk;
-        [SerializeField] private int _currentShard;
-        [SerializeField] private int _currentStage;
-        [SerializeField] private int _narrativeStages;
+        private int _currentChunk;
+        private int _currentShard;
+        private int _currentStage;
+        private int _narrativeStages;
 
         public override void Start()
         {
@@ -37,7 +37,7 @@ namespace Core.UI
         {
             base.OpenPanel();
             
-            backgroundBlackoutImage.gameObject.SetActive(args.Length > 1);
+            backgroundBlackoutImage.gameObject.SetActive(args.Length > 0);
 
             SetupNarrativeStage();
             ResetCounters();

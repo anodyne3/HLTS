@@ -16,7 +16,7 @@ namespace Core.GameData
         [HideInInspector] public int[] lastResult;
         [HideInInspector] public int[] nextResult;
         [HideInInspector] public int[] upgradeData;
-        /*[HideInInspector]*/ public long narrativeProgress;
+        [HideInInspector] public long narrativeProgress;
 
         public Resource[] wallet =
         {
