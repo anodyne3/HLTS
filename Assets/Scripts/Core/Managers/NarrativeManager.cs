@@ -89,12 +89,12 @@ namespace Core.Managers
                             () => PanelManager.OpenPanelOnHold<NarrativePanelController>(_gameManagerInteractionWait)));
                     break;
                 case NarrativeTypes.UpgradeMerge:
-                    if (CurrencyManager.GetCurrencyAmount(ResourceType.BluePrints) >= Constants.ChestMergeTrigger)
+                    // if (CurrencyManager.GetCurrencyAmount(ResourceType.BluePrints) >= Constants.ChestMergeTrigger)
                         StartCoroutine(DelayedOpen(2.0f, () =>
                             PanelManager.OpenPanelOnHold<NarrativePanelController>(_payoutEventWait)));
                     break;
                 case NarrativeTypes.UpgradeClaim:
-                    if (CurrencyManager.GetCurrencyAmount(ResourceType.BluePrints) >= Constants.ChestClaimTrigger)
+                    // if (CurrencyManager.GetCurrencyAmount(ResourceType.BluePrints) >= Constants.ChestClaimTrigger)
                         StartCoroutine(DelayedOpen(2.0f, () =>
                             PanelManager.OpenPanelOnHold<NarrativePanelController>(_payoutEventWait)));
                     break;
@@ -194,6 +194,8 @@ namespace Core.Managers
                 case NarrativeTypes.ChestGained:
                 case NarrativeTypes.Blueprints:
                 case NarrativeTypes.CoinSlotUpgrade:
+                case NarrativeTypes.UpgradeMerge:
+                case NarrativeTypes.UpgradeClaim:
                     HudManager.helpButton.gameObject.SetActive(true);
                     break;
                 default:

@@ -131,8 +131,6 @@ namespace Core.UI
                         break;
                     case NarrativeTypes.UpgradeSlider:
                     case NarrativeTypes.Starfruits:
-                    case NarrativeTypes.UpgradeMerge:
-                    case NarrativeTypes.UpgradeClaim:
                         FirebaseFunctionality.ProgressNarrativePoint();
                         break;
                 }
