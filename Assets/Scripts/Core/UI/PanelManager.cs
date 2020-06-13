@@ -30,6 +30,14 @@ namespace Core.UI
                     allPanels.Add(panelController);
 
             EventManager.NewEventSubscription(gameObject, Constants.GameEvents.payoutStartEvent, OpenPayoutPanel);
+
+            if (!PlayerData.NarrativeIsComplete()) return;
+            
+            var narrativePanel = GetPanel<NarrativePanelController>();
+
+            if (narrativePanel == null) return;
+            allPanels.Remove(narrativePanel);
+            Destroy(narrativePanel.gameObject);
         }
         
         public void WaitingForServerPanel(bool show = true)

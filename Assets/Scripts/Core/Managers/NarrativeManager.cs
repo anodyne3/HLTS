@@ -21,6 +21,8 @@ namespace Core.Managers
         private NarrativePanelController _narrativePanel;
         private bool _openPanelBlock;
 
+        [HideInInspector] public bool currentNarrativeSeen;
+
         private void Start()
         {
             EventManager.NewEventSubscription(gameObject, Constants.GameEvents.coinCreatedEvent,
@@ -56,6 +58,8 @@ namespace Core.Managers
 
         private void RefreshUiTests()
         {
+            if (currentNarrativeSeen) return;
+
             switch ((NarrativeTypes) PlayerData.narrativeProgress)
             {
                 case NarrativeTypes.ChestRoll:
@@ -90,13 +94,13 @@ namespace Core.Managers
                     break;
                 case NarrativeTypes.UpgradeMerge:
                     // if (CurrencyManager.GetCurrencyAmount(ResourceType.BluePrints) >= Constants.ChestMergeTrigger)
-                        StartCoroutine(DelayedOpen(2.0f, () =>
-                            PanelManager.OpenPanelOnHold<NarrativePanelController>(_payoutEventWait)));
+                    StartCoroutine(DelayedOpen(2.0f, () =>
+                        PanelManager.OpenPanelOnHold<NarrativePanelController>(_payoutEventWait)));
                     break;
                 case NarrativeTypes.UpgradeClaim:
                     // if (CurrencyManager.GetCurrencyAmount(ResourceType.BluePrints) >= Constants.ChestClaimTrigger)
-                        StartCoroutine(DelayedOpen(2.0f, () =>
-                            PanelManager.OpenPanelOnHold<NarrativePanelController>(_payoutEventWait)));
+                    StartCoroutine(DelayedOpen(2.0f, () =>
+                        PanelManager.OpenPanelOnHold<NarrativePanelController>(_payoutEventWait)));
                     break;
                 default:
                     return;
@@ -115,16 +119,27 @@ namespace Core.Managers
 
             if (FirebaseFunctionality.narrativeCallBlock)
                 yield return _narrativeCallBlockWait;
-            
+
             _openPanelBlock = false;
         }
 
         private static void UpgradeRefreshTests()
         {
-            if ((NarrativeTypes) PlayerData.narrativeProgress != NarrativeTypes.CoinSlotUpgrade) return;
-
-            if (UpgradeManager.GetUpgradeCurrentLevel(UpgradeTypes.CoinSlot) > 0)
-                FirebaseFunctionality.ProgressNarrativePoint();
+            switch ((NarrativeTypes) PlayerData.narrativeProgress)
+            {
+                case NarrativeTypes.CoinSlotUpgrade:
+                    if (UpgradeManager.GetUpgradeCurrentLevel(UpgradeTypes.CoinSlot) > 0)
+                        FirebaseFunctionality.ProgressNarrativePoint();
+                    break;
+                case NarrativeTypes.UpgradeMerge:
+                    if (UpgradeManager.GetUpgradeCurrentLevel(UpgradeTypes.ChestMerge) > 0)
+                        FirebaseFunctionality.ProgressNarrativePoint();
+                    break;
+                case NarrativeTypes.UpgradeClaim:
+                    if (UpgradeManager.GetUpgradeCurrentLevel(UpgradeTypes.ChestClaim) > 0)
+                        FirebaseFunctionality.ProgressNarrativePoint();
+                    break;
+            }
         }
 
         private void ChestOpenRefreshTests()

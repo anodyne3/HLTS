@@ -11,8 +11,13 @@ namespace Core.UI
         
         private void Start()
         {
-            helpButton.onClick.RemoveAllListeners();
-            helpButton.onClick.AddListener(OpenNarrativePanel);
+            if (PlayerData.NarrativeIsComplete())
+                Destroy(helpButton.gameObject);
+            else
+            {
+                helpButton.onClick.RemoveAllListeners();
+                helpButton.onClick.AddListener(OpenNarrativePanel);
+            }
             
             menuButton.onClick.RemoveAllListeners();
             menuButton.onClick.AddListener(OpenMenuPanel);

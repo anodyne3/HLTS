@@ -36,7 +36,7 @@ namespace Core.UI
         public override void OpenPanel(params object[] args)
         {
             base.OpenPanel();
-            
+
             backgroundBlackoutImage.gameObject.SetActive(args.Length > 0);
 
             SetupNarrativeStage();
@@ -48,7 +48,7 @@ namespace Core.UI
         {
             var stageCount = 0;
             _narrativePoint = NarrativeManager.currentNarrativePoint;
-            
+
             var narrativeShardLength = _narrativePoint.narrativeShard.Length;
             for (var i = 0; i < narrativeShardLength; i++)
                 stageCount += _narrativePoint.narrativeShard[i].textChunks.Length;
@@ -122,19 +122,21 @@ namespace Core.UI
         protected override void ClosePanel()
         {
             base.ClosePanel();
-            
-                switch (_narrativePoint.id)
-                {
-                    case NarrativeTypes.Intro:
-                        FirebaseFunctionality.ProgressNarrativePoint();
-                        CurrencyManager.HideCurrencies(false);
-                        break;
-                    case NarrativeTypes.UpgradeSlider:
-                    case NarrativeTypes.Starfruits:
-                        FirebaseFunctionality.ProgressNarrativePoint();
-                        break;
-                }
-            
+
+            NarrativeManager.currentNarrativeSeen = true;
+
+            switch (_narrativePoint.id)
+            {
+                case NarrativeTypes.Intro:
+                    FirebaseFunctionality.ProgressNarrativePoint();
+                    CurrencyManager.HideCurrencies(false);
+                    break;
+                case NarrativeTypes.UpgradeSlider:
+                case NarrativeTypes.Starfruits:
+                    FirebaseFunctionality.ProgressNarrativePoint();
+                    break;
+            }
+
             NarrativeManager.RefreshHelpButton();
         }
     }

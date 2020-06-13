@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using Core.Managers;
 using Core.UI;
@@ -119,8 +120,8 @@ namespace Core.GameData
         private void OnNarrativeDataChanged(object sender, ValueChangedEventArgs args)
         {
             narrativeProgress = (long)args.Snapshot.Value;
-            
-            if (narrativeProgress >= Constants.NarrativeMax)
+
+            if (NarrativeIsComplete())
             {
                 _userData.Child(Constants.NarrativeData).ValueChanged -= OnNarrativeDataChanged;
                 return;
@@ -129,6 +130,12 @@ namespace Core.GameData
             NarrativeManager.RefreshCurrentNarrativePoint();
             EventManager.narrativeRefresh.Raise();
         }
+
+        public bool NarrativeIsComplete()
+        {
+            return PlayerData.narrativeProgress >= Enum.GetNames(typeof(NarrativeTypes)).Length;
+        }
+        
 
         private static string ProcessDataChanges(object sender, ValueChangedEventArgs args)
         {

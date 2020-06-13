@@ -300,8 +300,17 @@ namespace Core
             await GetHttpsCallable(Constants.ProgressNarrativeFunction);
 
             narrativeCallBlock = false;
-            //kill this once tested
-            AlertMessage.Init("Narrative Progressed");
+            NarrativeManager.currentNarrativeSeen = false;
+            
+            if (PlayerData.NarrativeIsComplete())
+                RemoveExistingNarrativeObjects();
+        }
+        
+        private static void RemoveExistingNarrativeObjects()
+        {
+            Destroy(HudManager.helpButton.gameObject);
+            Destroy(PanelManager.GetPanel<NarrativePanelController>().gameObject);
+            GlobalComponents.Instance.RemoveGlobalComponent<NarrativeManager>();
         }
 
         #endregion

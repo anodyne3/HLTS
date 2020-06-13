@@ -190,11 +190,8 @@ namespace Utils
         public const string YouWinMessage = "You Win!";
         
         //narrative
-        public const int NarrativeMax = 10;
         public const string NarrativeClose = "Tap to Close"; 
         public const string NarrativeContinue = "Tap to Continue";
-        public const int ChestMergeTrigger = 20;
-        public const int ChestClaimTrigger = 120;
 
         public static readonly GameEvents GameEvents = new GameEvents();
     }
