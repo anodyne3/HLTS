@@ -12,11 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea557d80bff54952aa6cd9f043ee12e0, type: 3}
   m_Name: Starfruits
   m_EditorClassIdentifier: 
-  id: 0
+  id: 5
   narrativeShard:
   - textChunks:
     - We've got enough "Starfruits" to buy some "Banana Coins"<br><br> ... unless
       you were saving them for some special occassion...
-    storyImage: {fileID: 3286163911610860551, guid: 7c6e08e04747a1d418204722bdbc1720,
+    storyImage: {fileID: 3286163911610860551, guid: d824e6205bfd54048a540bf98727dc79,
       type: 3}
-  fireAndForget: 1

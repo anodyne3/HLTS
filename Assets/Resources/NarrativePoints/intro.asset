@@ -43,7 +43,7 @@ MonoBehaviour:
     storyImage: {fileID: 3286163911610860551, guid: 42ffb413be9217948b49cd60cff95b4c,
       type: 3}
   - textChunks:
-    - "As soon as we find out if they\u2019re violating any laws, we can wrap up
-      and get out of here."
+    - As soon as we find out if it breaks any laws, we can wrap up and get out of
+      here.
     storyImage: {fileID: 3286163911610860551, guid: a4bfbc6fb495db84fa7f3ad128f87f30,
       type: 3}

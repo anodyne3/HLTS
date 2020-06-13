@@ -17,7 +17,7 @@ MonoBehaviour:
   - textChunks:
     - "This Upgrade will give a Silver Chest every 25 rolls.<br><br>That\u2019s quicker
       than all that Merging."
-    storyImage: {fileID: 3286163911610860551, guid: 96c94bf5ea6e36e4c8645198204d9fd0,
+    storyImage: {fileID: 3286163911610860551, guid: 40f6ad9c860853c4fa588095950909d4,
       type: 3}
   - textChunks:
     - "I don\u2019t like to call the shots<br><br> \u2026 <br><br>but you should

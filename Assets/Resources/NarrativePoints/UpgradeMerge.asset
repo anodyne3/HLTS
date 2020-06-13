@@ -16,7 +16,7 @@ MonoBehaviour:
   narrativeShard:
   - textChunks:
     - This Upgrade allows us to merge our Bronze Chests for a Silver one.
-    storyImage: {fileID: 3286163911610860551, guid: 96c94bf5ea6e36e4c8645198204d9fd0,
+    storyImage: {fileID: 3286163911610860551, guid: 012299d954ffc624eb101cef3db248eb,
       type: 3}
   - textChunks:
     - That's very generous<br><br> ...  <br><br>What's the catch ?!?

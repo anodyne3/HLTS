@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea557d80bff54952aa6cd9f043ee12e0, type: 3}
   m_Name: ChestRoll
   m_EditorClassIdentifier: 
-  id: 3
+  id: 2
   narrativeShard:
   - textChunks:
     - Hmm?!? Looks like there's some kind of  'Box' on it's way.<br><br>Keep rolling
       and we'll see what it is.
-    storyImage: {fileID: 3286163911610860551, guid: 42ffb413be9217948b49cd60cff95b4c,
+    storyImage: {fileID: 3286163911610860551, guid: 87dccf4d4c7bcfd4185a2d8afb8c35c4,
       type: 3}

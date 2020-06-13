@@ -16,13 +16,13 @@ MonoBehaviour:
   narrativeShard:
   - textChunks:
     - You gotta Drag a Coin into that Slot...
-    storyImage: {fileID: 3286163911610860551, guid: 53984d58efa89194c835bea6dd92a100,
+    storyImage: {fileID: 3286163911610860551, guid: 6d9b0f78cc7e6844e9bad97e6510f21d,
       type: 3}
   - textChunks:
     - then you drag that ... lever .. arm ... thing down.
-    storyImage: {fileID: 3286163911610860551, guid: 2dc9ba796756ce241af8ef4a7c6a9bf5,
+    storyImage: {fileID: 3286163911610860551, guid: 70b162f0e95281d4cbaddec58215fcf7,
       type: 3}
   - textChunks:
     - If you match three, you win!
-    storyImage: {fileID: 3286163911610860551, guid: 4b6ce5799fcf3904ba3363cb9fd85242,
+    storyImage: {fileID: 3286163911610860551, guid: c351c82d08fbd2e47af117528b043866,
       type: 3}
