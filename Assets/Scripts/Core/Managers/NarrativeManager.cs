@@ -38,12 +38,12 @@ namespace Core.Managers
 
         private void OpenIntroPanel()
         {
-            RefreshHelpButton();
-
+            if ((NarrativeTypes) PlayerData.narrativeProgress != NarrativeTypes.Intro) return;
+            
             if (_narrativePanel != null && _narrativePanel.gameObject.activeInHierarchy) return;
 
-            if ((NarrativeTypes) PlayerData.narrativeProgress != NarrativeTypes.Intro) return;
-
+            RefreshHelpButton();
+            
             _narrativePanel = PanelManager.GetPanel<NarrativePanelController>();
             _narrativePanel.OpenPanel("blackoutBackground");
             CurrencyManager.HideCurrencies(true);
@@ -58,8 +58,6 @@ namespace Core.Managers
 
         private void RefreshUiTests()
         {
-            if (currentNarrativeSeen) return;
-
             switch ((NarrativeTypes) PlayerData.narrativeProgress)
             {
                 case NarrativeTypes.ChestRoll:
@@ -76,6 +74,7 @@ namespace Core.Managers
                         FirebaseFunctionality.ProgressNarrativePoint();
                     break;
                 case NarrativeTypes.Starfruits:
+                    if (currentNarrativeSeen) return;
                     var cheapestCoins = 0;
 
                     var shopProductsLength = ShopManager.shopProducts.Length;
@@ -93,14 +92,16 @@ namespace Core.Managers
                             () => PanelManager.OpenPanelOnHold<NarrativePanelController>(_gameManagerInteractionWait)));
                     break;
                 case NarrativeTypes.UpgradeMerge:
-                    // if (CurrencyManager.GetCurrencyAmount(ResourceType.BluePrints) >= Constants.ChestMergeTrigger)
-                    StartCoroutine(DelayedOpen(2.0f, () =>
-                        PanelManager.OpenPanelOnHold<NarrativePanelController>(_payoutEventWait)));
+                    if (currentNarrativeSeen) return;
+                    if (CurrencyManager.GetCurrencyAmount(ResourceType.BluePrints) >= Constants.ChestMergeTrigger)
+                        StartCoroutine(DelayedOpen(2.0f, () =>
+                            PanelManager.OpenPanelOnHold<NarrativePanelController>(_payoutEventWait)));
                     break;
                 case NarrativeTypes.UpgradeClaim:
-                    // if (CurrencyManager.GetCurrencyAmount(ResourceType.BluePrints) >= Constants.ChestClaimTrigger)
-                    StartCoroutine(DelayedOpen(2.0f, () =>
-                        PanelManager.OpenPanelOnHold<NarrativePanelController>(_payoutEventWait)));
+                    if (currentNarrativeSeen) return;
+                    if (CurrencyManager.GetCurrencyAmount(ResourceType.BluePrints) >= Constants.ChestClaimTrigger)
+                        StartCoroutine(DelayedOpen(2.0f, () =>
+                            PanelManager.OpenPanelOnHold<NarrativePanelController>(_payoutEventWait)));
                     break;
                 default:
                     return;
@@ -209,9 +210,12 @@ namespace Core.Managers
                 case NarrativeTypes.ChestGained:
                 case NarrativeTypes.Blueprints:
                 case NarrativeTypes.CoinSlotUpgrade:
+                    HudManager.helpButton.gameObject.SetActive(true);
+                    break;
                 case NarrativeTypes.UpgradeMerge:
                 case NarrativeTypes.UpgradeClaim:
-                    HudManager.helpButton.gameObject.SetActive(true);
+                    if (currentNarrativeSeen)
+                        HudManager.helpButton.gameObject.SetActive(true);
                     break;
                 default:
                     HudManager.helpButton.gameObject.SetActive(false);

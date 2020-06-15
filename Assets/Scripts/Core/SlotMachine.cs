@@ -216,7 +216,7 @@ namespace Core
             var waitUntilWheelsStop = new WaitUntil(() => wheelsAreRolling == false);
             var waitBetweenRolls = new WaitForSeconds(Constants.PauseBetweenRolls);
 
-            if (BetAmount == 0)
+            if (BetAmount == 0 || UpgradeManager.GetUpgradeCurrentLevel(UpgradeTypes.AutoRoll) < 2)
                 BetAmount = 1;
 
             _armIsPulled = true;

@@ -109,7 +109,10 @@ namespace Core.UI
 
         private static void OpenMergePanel()
         {
-            PanelManager.OpenSubPanel<ChestMergePanelController>();
+            if (UpgradeManager.GetUpgradeCurrentLevel(UpgradeTypes.ChestMerge) > 0)
+                PanelManager.OpenSubPanel<ChestMergePanelController>();
+            else
+                PanelManager.OpenSubPanel<UpgradePanelController>(UpgradeTypes.ChestMerge);
         }
     }
 }

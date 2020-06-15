@@ -192,6 +192,8 @@ namespace Utils
         //narrative
         public const string NarrativeClose = "Tap to Close"; 
         public const string NarrativeContinue = "Tap to Continue";
+        public const int ChestMergeTrigger = 20;
+        public const int ChestClaimTrigger = 120;
 
         public static readonly GameEvents GameEvents = new GameEvents();
     }
