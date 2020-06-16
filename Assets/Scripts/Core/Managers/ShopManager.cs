@@ -9,6 +9,7 @@ namespace Core.Managers
 {
     public class ShopManager : GlobalClass, IStoreListener
     {
+        [HideInInspector] public bool canValidateReceipt = true;    // true for prod
         private IStoreController _storeController;
         private IExtensionProvider _extensionProvider;
         [HideInInspector] public ShopPanelController shopPanel;
@@ -75,8 +76,6 @@ namespace Core.Managers
 
             EventManager.refreshCurrency.Raise();
         }
-
-        public bool canValidateReceipt = true;    // true for prod
 
         public PurchaseProcessingResult ProcessPurchase(PurchaseEventArgs e)
         {

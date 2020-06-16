@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 873c719b09cf55946bbb3d002291d08a
+guid: 08c977c61fdb19f45b1f71824ee6d670
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -8,14 +8,14 @@ ScriptedImporter:
   assetBundleName: 
   assetBundleVariant: 
   script: {fileID: 11500000, guid: a57477913897c46af95d590f580878bd, type: 3}
-  svgType: 4
+  svgType: 1
   texturedSpriteMeshType: 0
   svgPixelsPerUnit: 100
   gradientResolution: 8
   alignment: 0
   customPivot: {x: 0, y: 0}
   generatePhysicsShape: 0
-  viewportOptions: 0
+  viewportOptions: 1
   preserveViewport: 0
   advancedMode: 0
   predefinedResolutionIndex: 3
@@ -31,15 +31,15 @@ ScriptedImporter:
   textureSize: 512
   textureWidth: 256
   textureHeight: 256
-  wrapMode: 0
+  wrapMode: 1
   filterMode: 1
-  sampleCount: 4
+  sampleCount: 8
   preserveSVGImageAspect: 1
   useSVGPixelsPerUnit: 0
   spriteData:
     TessellationDetail: 0
     SpriteRect:
-      name: CoinStackMax
+      name: BP
       originalName: 
       pivot: {x: 0.5, y: 0.5}
       alignment: 0
@@ -48,8 +48,8 @@ ScriptedImporter:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 512
-        height: 507
-      spriteID: 70a7fe60a8635bb40ae97338a6584410
+        width: 256
+        height: 256
+      spriteID: 9550310744fe7924e8421509ca517a0c
       internalID: 0
     PhysicsOutlines: []

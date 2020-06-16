@@ -10,7 +10,7 @@ namespace Core.UI
     [Serializable]
     public class Currency
     {
-        public Image currencyIcon;
+        public SVGImage currencyIcon;
         public TMP_Text currencyAmountText;
         public TweenPunchSetting addCurrencyPunchTween;
         public Resource currencyDetails;

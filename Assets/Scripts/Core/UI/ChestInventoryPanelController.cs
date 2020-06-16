@@ -14,7 +14,7 @@ namespace Core.UI
         [Header("Current Chest Progress")] [SerializeField]
         private Button claimCurrentChestButton;
         [SerializeField] private TMP_Text claimButtonText;
-        [SerializeField] private Image currentChestIcon;
+        [SerializeField] private SVGImage currentChestIcon;
         [SerializeField] private Slider currentChestProgressSlider;
         [SerializeField] private Image currentChestProgressFillImage;
         [SerializeField] private TMP_Text currentChestProgressText;

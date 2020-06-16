@@ -12,8 +12,8 @@ namespace Core.Managers
 {
     public class ChestManager : GlobalClass
     {
-        [SerializeField] private Image chestIcon;
-        [SerializeField] private Image outlineImage;
+        [SerializeField] private SVGImage chestIcon;
+        [SerializeField] private SVGImage outlineImage;
         [SerializeField] private Image chestProgressFillImage;
         [SerializeField] private TweenPunchSetting tweenPunchSetting;
         [SerializeField] private ChestAddedPrefab chestAddedPrefab;
@@ -58,10 +58,9 @@ namespace Core.Managers
             get
             {
                 _chestUpgraded = false;
-                
+
                 for (var i = 0; i < _chestTypesLength; i++)
                 {
-
                     if (PlayerData.currentChestRoll > chestTypes[i].threshold)
                     {
                         _chestUpgraded = true;
@@ -69,7 +68,7 @@ namespace Core.Managers
                     }
 
                     _chestAtThreshold = PlayerData.currentChestRoll == chestTypes[i].threshold;
-                    
+
                     return !_chestAtThreshold ? chestTypes[i].chestType : chestTypes[i + 1].chestType;
                 }
 
@@ -98,13 +97,13 @@ namespace Core.Managers
             chestTypes =
                 GeneralUtils.SortLoadedList<ChestVariable>(Constants.ChestsPath,
                     (x, y) => x.rank.CompareTo(y.rank));
-            
+
             _chestTypesLength = chestTypes.Length;
-            
+
             chestMergeTypes =
                 GeneralUtils.SortLoadedList<ChestMergeVariable>(Constants.ChestMergesPath,
                     (x, y) => x.mergeUpgradeLevel.CompareTo(y.mergeUpgradeLevel));
-            
+
             _chestInventoryPanel = PanelManager.GetPanel<ChestInventoryPanelController>();
             _chestInventoryPanel.ChestsInit();
         }
@@ -113,7 +112,7 @@ namespace Core.Managers
         {
             if (outlineImage.color == CurrentChest.chestColor)
                 return;
-            
+
             chestIcon.sprite = CurrentChest.chestIcon;
             outlineImage.color = CurrentChest.chestColor;
             tweenPunchSetting.DoPunch(transform);
@@ -127,10 +126,7 @@ namespace Core.Managers
 
             var tweenPause = DOTween.Sequence();
 
-            tweenPause.InsertCallback(0.5f, () =>
-            {
-                EventManager.chestRefresh.Raise();
-            });
+            tweenPause.InsertCallback(0.5f, () => { EventManager.chestRefresh.Raise(); });
         }
 
         public static void OpenChestPayoutPanel(ChestRewardDto chestRewardDto)

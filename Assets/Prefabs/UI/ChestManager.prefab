@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7798704293103431986}
   - component: {fileID: 7798704293103431984}
-  - component: {fileID: 7798704293103431987}
+  - component: {fileID: 7278607694862480093}
   m_Layer: 5
   m_Name: BackgroundImage
   m_TagString: Untagged
@@ -45,7 +45,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7798704293103431981}
   m_CullTransparentMesh: 0
---- !u!114 &7798704293103431987
+--- !u!114 &7278607694862480093
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -54,26 +54,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 7798704293103431981}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Script: {fileID: 11500000, guid: ef8b96895a0ec4ba685178a052544251, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 0.972549, b: 0.7882353, a: 1}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
   m_Sprite: {fileID: 3286163911610860551, guid: f9900161df93fe342bbf988b7cf2d7e4,
     type: 3}
-  m_Type: 0
   m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &7798704293247501167
 GameObject:
   m_ObjectHideFlags: 0
@@ -84,7 +77,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7798704293247501164}
   - component: {fileID: 7798704293247501171}
-  - component: {fileID: 7798704293247501170}
+  - component: {fileID: 8094597066051312730}
   m_Layer: 5
   m_Name: OutlineImage
   m_TagString: Untagged
@@ -124,7 +117,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7798704293247501167}
   m_CullTransparentMesh: 0
---- !u!114 &7798704293247501170
+--- !u!114 &8094597066051312730
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -133,26 +126,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 7798704293247501167}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Script: {fileID: 11500000, guid: ef8b96895a0ec4ba685178a052544251, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 0.7218741, b: 0.34800005, a: 1}
   m_RaycastTarget: 0
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
   m_Sprite: {fileID: 3286163911610860551, guid: f9900161df93fe342bbf988b7cf2d7e4,
     type: 3}
-  m_Type: 0
   m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 2
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &7798704293317968578
 GameObject:
   m_ObjectHideFlags: 0
@@ -163,7 +149,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7798704293317968579}
   - component: {fileID: 7798704293317968576}
-  - component: {fileID: 7798704293317968577}
+  - component: {fileID: 4892036549558440460}
   m_Layer: 5
   m_Name: ChestIcon
   m_TagString: Untagged
@@ -198,7 +184,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7798704293317968578}
   m_CullTransparentMesh: 0
---- !u!114 &7798704293317968577
+--- !u!114 &4892036549558440460
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -207,26 +193,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 7798704293317968578}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Script: {fileID: 11500000, guid: ef8b96895a0ec4ba685178a052544251, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: 0b012844cadfbe541b20626331cf90a2, type: 2}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 3286163911610860551, guid: 08c85f35b89ed3044827e0cdfb0d3a03,
+  m_Sprite: {fileID: 3286163911610860551, guid: b73f7e30502e27c47b395e1d7bfd0e67,
     type: 3}
-  m_Type: 0
   m_PreserveAspect: 1
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &7798704293394752121
 GameObject:
   m_ObjectHideFlags: 0
@@ -287,10 +266,11 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 0.25490198, g: 0.5921569, b: 0.5294118, a: 1}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 3286163911610860551, guid: f9900161df93fe342bbf988b7cf2d7e4,
+  m_Sprite: {fileID: 3286163911610860551, guid: 611bcbc47e5497a4daec47614ec61799,
     type: 3}
   m_Type: 3
   m_PreserveAspect: 0
@@ -397,8 +377,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68ec01c4393f488fad21c1c4b28f9e7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chestIcon: {fileID: 7798704293317968577}
-  outlineImage: {fileID: 7798704293247501170}
+  chestIcon: {fileID: 4892036549558440460}
+  outlineImage: {fileID: 8094597066051312730}
   chestProgressFillImage: {fileID: 7798704293394752127}
   tweenPunchSetting: {fileID: 11400000, guid: e381d409ad0027643b6336687163c3ef, type: 2}
   chestAddedPrefab: {fileID: 5041040817232126956, guid: 150e19b8a7ae84b4aa60651118123a3b,
@@ -406,6 +386,7 @@ MonoBehaviour:
   chestAddedHolder: {fileID: 0}
   chestTypes: []
   chestMergeTypes: []
+  fillMaker: {fileID: 0}
 --- !u!222 &1486036065
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -429,6 +410,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []

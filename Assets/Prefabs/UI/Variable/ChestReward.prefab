@@ -50,8 +50,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35450a4ddfe04e25bd7bdad47e2d7b85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rewardAmount: {fileID: 1920797815551018791}
   rewardIcon: {fileID: 5001390203470470145}
+  rewardType: 0
+  rewardAmount: {fileID: 1920797815551018791}
 --- !u!1 &2118363398743181305
 GameObject:
   m_ObjectHideFlags: 0
@@ -109,9 +110,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef8b96895a0ec4ba685178a052544251, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: 0b012844cadfbe541b20626331cf90a2, type: 2}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 0
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -178,6 +180,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 0
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []

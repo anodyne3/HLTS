@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: e2253c3ccc3ef3e4a8fd624aabab752f
+guid: 49a4b60ed5419744da92e46de0f6a225
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -11,15 +11,15 @@ ScriptedImporter:
   svgType: 1
   texturedSpriteMeshType: 0
   svgPixelsPerUnit: 100
-  gradientResolution: 64
+  gradientResolution: 8
   alignment: 0
   customPivot: {x: 0, y: 0}
   generatePhysicsShape: 0
-  viewportOptions: 0
+  viewportOptions: 1
   preserveViewport: 0
   advancedMode: 0
-  predefinedResolutionIndex: 0
-  targetResolution: 2160
+  predefinedResolutionIndex: 3
+  targetResolution: 480
   resolutionMultiplier: 1
   stepDistance: 10
   samplingStepDistance: 100
@@ -28,12 +28,12 @@ ScriptedImporter:
   maxTangentAngleEnabled: 0
   maxTangentAngle: 5
   keepTextureAspectRatio: 1
-  textureSize: 1024
+  textureSize: 512
   textureWidth: 256
   textureHeight: 256
-  wrapMode: 0
+  wrapMode: 1
   filterMode: 1
-  sampleCount: 4
+  sampleCount: 8
   preserveSVGImageAspect: 1
   useSVGPixelsPerUnit: 0
   spriteData:
@@ -50,6 +50,6 @@ ScriptedImporter:
         y: 0
         width: 0
         height: 0
-      spriteID: b96370b9f7d9cb5459457369c8cb92bc
+      spriteID: 936efa1ed66c2fa4b93584ddfe4152ad
       internalID: 0
     PhysicsOutlines: []

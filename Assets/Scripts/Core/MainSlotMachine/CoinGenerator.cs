@@ -27,7 +27,7 @@ namespace Core.MainSlotMachine
         {
             var waitForSeconds = new WaitForSeconds(0.1f);
 
-            while (CoinTray.CoinTrayCounter < PlayerData.GetResourceAmount(ResourceType.BananaCoins) &&
+            while (/*CoinTray.CoinTrayCounter < PlayerData.GetResourceAmount(ResourceType.BananaCoins) &&*/
                    CoinTray.CoinTrayCounter < Constants.CoinTrayMax)
             {
                 var nextCoin = (CoinDragHandler) ObjectPoolManager.coinPool.Get().GetComponent(typeof(CoinDragHandler));

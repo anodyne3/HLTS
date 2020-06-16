@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2967262591811720760}
   - component: {fileID: 2967262591811720762}
-  - component: {fileID: 2967262591811720763}
+  - component: {fileID: 6227417176025627588}
   m_Layer: 5
   m_Name: BCIcon
   m_TagString: Untagged
@@ -45,7 +45,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2967262591811720761}
   m_CullTransparentMesh: 0
---- !u!114 &2967262591811720763
+--- !u!114 &6227417176025627588
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -54,26 +54,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 2967262591811720761}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Script: {fileID: 11500000, guid: ef8b96895a0ec4ba685178a052544251, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: 0b012844cadfbe541b20626331cf90a2, type: 2}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 3286163911610860551, guid: c073d8c8a45404642bc1e63fc978b130,
-    type: 3}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
+  m_Sprite: {fileID: 0}
+  m_PreserveAspect: 1
 --- !u!1 &2967262592068428477
 GameObject:
   m_ObjectHideFlags: 0
@@ -134,6 +126,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 0
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -291,6 +284,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -411,6 +405,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -540,6 +535,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: DeductBananaCoinsPrefab
+      objectReference: {fileID: 0}
+    - target: {fileID: 9203999041801649634, guid: 19cb44b1be0abe2438daab050fe3df3f,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 73.45
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 19cb44b1be0abe2438daab050fe3df3f, type: 3}

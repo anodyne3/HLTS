@@ -20,7 +20,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _MainTex:
-        m_Texture: {fileID: 6192944022281365145, guid: c073d8c8a45404642bc1e63fc978b130,
+        m_Texture: {fileID: 6192944022281365145, guid: 49a4b60ed5419744da92e46de0f6a225,
           type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -51,7 +51,7 @@ MonoBehaviour:
   material: {fileID: -3844471468085585924}
   materialHashCode: 0
   m_Version: 1.1.0
-  spriteSheet: {fileID: 6192944022281365145, guid: c073d8c8a45404642bc1e63fc978b130,
+  spriteSheet: {fileID: 6192944022281365145, guid: 49a4b60ed5419744da92e46de0f6a225,
     type: 3}
   m_SpriteCharacterTable:
   - m_ElementType: 2
