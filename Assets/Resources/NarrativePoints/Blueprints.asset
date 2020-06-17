@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Blueprints
   m_EditorClassIdentifier: 
   id: 4
+  title: planning ahead
   narrativeShard:
   - textChunks:
     - Okay! The Chests contain Blueprints.<br><br>These are used for upgrading the

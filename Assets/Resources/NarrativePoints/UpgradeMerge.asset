@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: UpgradeMerge
   m_EditorClassIdentifier: 
   id: 8
+  title: fair trade?
   narrativeShard:
   - textChunks:
     - This Upgrade allows us to merge our Bronze Chests for a Silver one.

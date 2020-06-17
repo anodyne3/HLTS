@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿using DG.Tweening;
 using UnityEngine;
 using Utils;
 
@@ -9,9 +9,12 @@ namespace Core.MainSlotMachine
         [SerializeField] private Transform fruitReelL;
         [SerializeField] private Transform fruitReelM;
         [SerializeField] private Transform fruitReelR;
-
-        [SerializeField] private int[] newRoll;
-        private readonly WaitForEndOfFrame _waitForEndOfFrame = new WaitForEndOfFrame();
+        [SerializeField] private AnimationCurve curve = AnimationCurve.Linear(0.0f, 0.0f, 1.0f, 1.0f);
+        private int[] _newRoll;
+        
+        private const float ReelSpinTimeL = 5.666f;
+        private const float ReelSpinTimeM = 3.666f;
+        private const float ReelSpinTimeR = 2.666f;
 
         private void Start()
         {
@@ -21,92 +24,62 @@ namespace Core.MainSlotMachine
 
         private void SetReelStartingPosition()
         {
-            newRoll = PlayerData.lastResult;
-            if (newRoll == null)
+            _newRoll = PlayerData.lastResult;
+            if (_newRoll == null)
             {
                 AlertMessage.Init("lastResult was empty");
                 PlayerData.lastResult = new[] {1, 2, 3};
-                PlayerData.nextResult = new[] {5, 6, 7};
-                return;
+                _newRoll = PlayerData.lastResult;
+                PlayerData.nextResult = new[] {1, 2, 3};
             }
+
+            fruitReelL.Rotate(_newRoll[0] * 30, 0.0f, 0.0f);
+            fruitReelM.Rotate(_newRoll[1] * 30, 0.0f, 0.0f);
+            fruitReelR.Rotate(_newRoll[2] * 30, 0.0f, 0.0f);
             
-            fruitReelL.Rotate(newRoll[0] * 30, 0.0f, 0.0f);
-            fruitReelM.Rotate(newRoll[1] * 30, 0.0f, 0.0f);
-            fruitReelR.Rotate(newRoll[2] * 30, 0.0f, 0.0f);
+            EventManager.testEvent.Raise();
         }
 
         private void WheelRoll()
         {
-            newRoll = PlayerData.nextResult;
+            _newRoll = PlayerData.nextResult;
+
+            SpinReels(_newRoll, PlayerData.lastResult);
+        }
+
+        
+        private void SpinReels(int[] nextRoll, int[] lastResult)
+        {
+            var spinSequence = DOTween.Sequence();
             
-            StartCoroutine(SpinLeftReel(newRoll[0], PlayerData.lastResult[0]));
-            StartCoroutine(SpinMiddleReel(newRoll[1], PlayerData.lastResult[1]));
-            StartCoroutine(SpinRightReel(newRoll[2], PlayerData.lastResult[2]));
-        }
-
-        private IEnumerator SpinLeftReel(int nextRoll, int lastResult)
-        {
-            var spinDegrees = Constants.TotalSpinTime - 10 - (nextRoll - lastResult) * 2;
-
-            while (spinDegrees > Constants.RightReelStopTime)
-            {
-                spinDegrees -= 1;
-                fruitReelL.Rotate(-Constants.FastSpinDegrees, 0.0f, 0.0f);
-                yield return _waitForEndOfFrame;
-            }
-
-            while (spinDegrees > Constants.MiddleReelStopTime)
-            {
-                spinDegrees -= 1;
-                fruitReelL.Rotate(-Constants.MediumSpinDegrees, 0.0f, 0.0f);
-                yield return _waitForEndOfFrame;
-            }
-
-            while (spinDegrees > 0)
-            {
-                spinDegrees -= 1;
-                fruitReelL.Rotate(-Constants.SlowSpinDegrees, 0.0f, 0.0f);
-                yield return _waitForEndOfFrame;
-            }
+            var spinDegreesL =
+                (Constants.TotalSpinTime - 10 - (nextRoll[0] - lastResult[0]) * 2 - Constants.RightReelStopTime) *
+                -Constants.FastSpinDegrees
+                + (Constants.RightReelStopTime - Constants.MiddleReelStopTime) * -Constants.MediumSpinDegrees
+                + Constants.MiddleReelStopTime * -Constants.SlowSpinDegrees;
+            var reelFinishRotationL = new Vector3(spinDegreesL, 0.0f, 0.0f);
             
-            GenerateResult();
-        }
+            var spinDegreesM =
+                (Constants.TotalSpinTime - 2 + (nextRoll[1] - lastResult[1]) * 2 - Constants.RightReelStopTime) *
+                Constants.FastSpinDegrees
+                + (Constants.RightReelStopTime - Constants.MiddleReelStopTime) * Constants.MediumSpinDegrees;
+            var reelFinishRotationM = new Vector3(spinDegreesM, 0.0f, 0.0f);
+            
+            var spinDegreesR =
+                (Constants.TotalSpinTime - 6 - (nextRoll[2] - lastResult[2]) * 2 - Constants.RightReelStopTime) *
+                -Constants.FastSpinDegrees;
+            var reelFinishRotationR = new Vector3(spinDegreesR, 0.0f, 0.0f);
 
-        private IEnumerator SpinMiddleReel(int nextRoll, int lastResult)
-        {
-            var spinDegrees = Constants.TotalSpinTime + 4 + (nextRoll - lastResult) * 2;
-
-            while (spinDegrees > Constants.RightReelStopTime)
-            {
-                spinDegrees -= 1;
-                fruitReelM.Rotate(Constants.FastSpinDegrees, 0.0f, 0.0f);
-                yield return _waitForEndOfFrame;
-            }
-
-            while (spinDegrees > Constants.MiddleReelStopTime)
-            {
-                spinDegrees -= 1;
-                fruitReelM.Rotate(
-                    spinDegrees - 23 <= Constants.MiddleReelStopTime
-                        ? Constants.MediumSpinDegrees * 0.25f
-                        : Constants.MediumSpinDegrees, 0.0f, 0.0f);
-                yield return _waitForEndOfFrame;
-            }
-        }
-
-        private IEnumerator SpinRightReel(int nextRoll, int lastResult)
-        {
-            var spinDegrees = Constants.TotalSpinTime - (nextRoll - lastResult) * 2;
-
-            while (spinDegrees > Constants.RightReelStopTime)
-            {
-                spinDegrees -= 1;
-                fruitReelR.Rotate(
-                    spinDegrees - 7 <= Constants.RightReelStopTime
-                        ? -Constants.FastSpinDegrees * 0.25f
-                        : -Constants.FastSpinDegrees, 0.0f, 0.0f);
-                yield return _waitForEndOfFrame;
-            }
+            spinSequence.Insert(0.0f,
+                    fruitReelL.transform.DOLocalRotate(reelFinishRotationL, ReelSpinTimeL, RotateMode.LocalAxisAdd)
+                        .SetEase(curve))
+                .Insert(0.0f,
+                    fruitReelM.transform.DOLocalRotate(reelFinishRotationM, ReelSpinTimeM, RotateMode.LocalAxisAdd)
+                        .SetEase(curve))
+                .Insert(0.0f,
+                    fruitReelR.transform.DOLocalRotate(reelFinishRotationR, ReelSpinTimeR, RotateMode.LocalAxisAdd)
+                        .SetEase(curve))
+                .OnComplete(GenerateResult);
         }
 
         private void GenerateResult()
@@ -114,9 +87,9 @@ namespace Core.MainSlotMachine
             if (SlotMachine.result == null)
                 SlotMachine.result = new int[3];
 
-            SlotMachine.result[0] = newRoll[0];
-            SlotMachine.result[1] = newRoll[1];
-            SlotMachine.result[2] = newRoll[2];
+            SlotMachine.result[0] = _newRoll[0];
+            SlotMachine.result[1] = _newRoll[1];
+            SlotMachine.result[2] = _newRoll[2];
 
             EventManager.wheelResult.Raise();
         }

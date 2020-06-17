@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using Core.GameData;
 using Enums;
 using MyScriptableObjects;
 using UnityEngine;
@@ -15,10 +14,8 @@ namespace Core.Managers
         private readonly Dictionary<string, Sprite> _fruitParticleSprites = new Dictionary<string, Sprite>();
         private readonly Dictionary<string, MusicTrack> _musicTracks = new Dictionary<string, MusicTrack>();
         private readonly Dictionary<string, Sprite> _currencySprites = new Dictionary<string, Sprite>();
-        // private readonly Dictionary<string, ShopProduct> shopProducts = new Dictionary<string, ShopProduct>();
 
         private SoundEffect[] _soundEffects;
-        // private MusicTrack[] _musicTracks;
 
         private readonly List<IMyDictionaries> _allDictionaries = new List<IMyDictionaries>();
 
@@ -30,7 +27,7 @@ namespace Core.Managers
         {
             public readonly IDictionary<string, T> reference;
             public Type Type => typeof(T);
-            private T Value;
+            // private T Value;
 
             public DictionaryReference(IDictionary<string, T> dictionary)
             {
@@ -45,10 +42,8 @@ namespace Core.Managers
             PopulateDictionary(_currencySprites, Constants.ChestRewardsPath);
 
             _soundEffects = Resources.LoadAll<SoundEffect>(Constants.SoundEffectPath);
-            // _musicTracks = Resources.LoadAll<MusicTrack>(Constants.MusicTrackPath);
         }
 
-        //load all resources from a path in the Resources folder, and add them to a dictionary
         private void PopulateDictionary<T>(IDictionary<string, T> resourceDictionary, string path) where T : Object
         {
             var resources = Resources.LoadAll<T>(path);
@@ -63,7 +58,6 @@ namespace Core.Managers
             _allDictionaries.Add(newDictionaryReference);
         }
 
-        //return an object from it's equivalent dictionary
         private T GetResource<T>(string keyString) where T : Object
         {
             var dictionaryReference = new DictionaryReference<T>(null);
@@ -82,7 +76,6 @@ namespace Core.Managers
         }
 
         #region Sprites
-        //return a Sprite from its dictionary according to it's FruitType
         public Sprite GetFruitParticleSprite(FruitType fruitType)
         {
             if (fruitType != FruitType.Barnana)
@@ -95,7 +88,6 @@ namespace Core.Managers
                 : GetResource<Sprite>(FruitType.Bananas + "Sprite");
         }
 
-        //return a sprite from its dictionary according to it's 
         public Sprite GetCurrencySprite(ResourceType currencyType)
         {
             return GetResource<Sprite>(currencyType + "Sprite");
@@ -103,12 +95,10 @@ namespace Core.Managers
         #endregion
         
         #region AudioClips
-        //return a random AudioClip from a SoundEffect scriptableObject by its enum
         public AudioClip GetSoundEffect(SoundEffectType soundEffectType)
         {
             if (_soundEffects.Length < 1)
             {
-                // Debug.LogError("empty soundEffect");
                 return null;
             }
 
@@ -120,11 +110,9 @@ namespace Core.Managers
                     return soundClip.soundEffectArray[Random.Range(0, soundClip.soundEffectArray.Length)];
             }
 
-            // Debug.LogError("empty soundEffectArray");
             return null;
         }
 
-        //return an audioClip from a MusicTrack scriptableObject by its enum
         public AudioClip GetMusicTrack(MusicStyle musicStyle)
         {
             return GetResource<MusicTrack>(musicStyle.ToString()).musicTrack;

@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: UpgradeSlider
   m_EditorClassIdentifier: 
   id: 7
+  title: exit strategy
   narrativeShard:
   - textChunks:
     - Now we're getting somewhere.<br><br>Try loading 2 coins into the Coin Slot.

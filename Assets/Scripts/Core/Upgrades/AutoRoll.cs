@@ -104,11 +104,12 @@ namespace Core.Upgrades
 
         private void RefreshButtonLights()
         {
-            betMinObject.ButtonLit(SlotMachine.BetAmount > 1);
-            betLessObject.ButtonLit(SlotMachine.BetAmount > 1);
-            autoRollObject.ButtonLit(!SlotMachine.autoMode);
-            betMoreObject.ButtonLit(!SlotMachine.CoinSlotFull);
-            betMaxObject.ButtonLit(!SlotMachine.CoinSlotFull);
+            betMinObject.SpriteLit(SlotMachine.BetAmount > 1);
+            betLessObject.SpriteLit(SlotMachine.BetAmount > 1);
+            autoRollObject.LightLit(SlotMachine.autoMode);
+            autoRollObject.SpriteLit(true);
+            betMoreObject.SpriteLit(!SlotMachine.CoinSlotFull);
+            betMaxObject.SpriteLit(!SlotMachine.CoinSlotFull);
         }
     }
 }

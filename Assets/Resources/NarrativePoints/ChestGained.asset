@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: ChestGained
   m_EditorClassIdentifier: 
   id: 3
+  title: trunk in love
   narrativeShard:
   - textChunks:
     - Hey!! We got a Chest!<br><br>I wonder what's inside.

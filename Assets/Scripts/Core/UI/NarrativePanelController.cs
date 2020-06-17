@@ -12,6 +12,7 @@ namespace Core.UI
         [SerializeField] private Image backgroundBlackoutImage;
         [SerializeField] private Button consumeNarrativeButton;
         [SerializeField] private SVGImage narrativeImage;
+        [SerializeField] private TMP_Text headerText;
         [SerializeField] private TMP_Text narrativeText;
         [SerializeField] private TMP_Text footer;
 
@@ -66,6 +67,7 @@ namespace Core.UI
 
         private void RefreshPanel()
         {
+            headerText.text = _narrativePoint.title;
             narrativeImage.sprite = _activeShard.storyImage;
             narrativeText.text = _activeShard.textChunks[0];
 

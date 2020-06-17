@@ -33,7 +33,10 @@ namespace Core.Managers
             get
             {
                 if (chestTypes == null)
+                {
+                    AlertMessage.Init("ChestManager error - CurrentChest");
                     return null;
+                }
                 for (var i = 0; i < _chestTypesLength; i++)
                     if (chestTypes[i].chestType == CurrentChestType)
                         return chestTypes[i];
@@ -47,7 +50,10 @@ namespace Core.Managers
             get
             {
                 if (PlayerData.currentChestRoll == CurrentChest.threshold)
+                {
+                    AlertMessage.Init("ChestManager error - rollsToBetter");
                     return GetChestVariable(CurrentChest.rank + 1).threshold - PlayerData.currentChestRoll;
+                }
 
                 return CurrentChest.threshold - PlayerData.currentChestRoll;
             }
@@ -122,8 +128,8 @@ namespace Core.Managers
         {
             chestProgressFillImage.DOFillAmount(GetFillAmount(CurrentChest.rank), tweenPunchSetting.punchDuration);
 
-            if (!_chestUpgraded && !_chestAtThreshold) return;
-
+            if (!_chestUpgraded || _chestAtThreshold) return;
+            
             var tweenPause = DOTween.Sequence();
 
             tweenPause.InsertCallback(0.5f, () => { EventManager.chestRefresh.Raise(); });

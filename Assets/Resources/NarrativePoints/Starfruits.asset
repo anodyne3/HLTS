@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Starfruits
   m_EditorClassIdentifier: 
   id: 5
+  title: mmm! tasty!!
   narrativeShard:
   - textChunks:
     - We've got enough "Starfruits" to buy some "Banana Coins"<br><br> ... unless

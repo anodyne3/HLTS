@@ -1,4 +1,5 @@
 ﻿using System;
+using MyScriptableObjects;
 using UnityEngine;
 using Utils;
 
@@ -7,15 +8,31 @@ namespace Core.MainSlotMachine
     public class ReelFruitRotation : GlobalAccess
     {
         private SpriteRenderer _spriteRenderer;
-        private const float SortingOrderThreshold = 50.0f;
+        private const float SortingOrderThreshold = 54.0f;
         private Vector3 _eulerAngles;
 
         private void Start()
         {
             _spriteRenderer = (SpriteRenderer) GetComponent(typeof(SpriteRenderer));
+            
+            EventManager.NewEventSubscription(gameObject, Constants.GameEvents.testEvent, InitialAdjustSortingLayer);
         }
 
-        private void Update()
+        private void InitialAdjustSortingLayer()
+        {
+            AdjustSortingLayer();
+            var eventListener = GetComponent(typeof(GameEventListener));
+            Destroy(eventListener);
+        }
+
+        private void LateUpdate()
+        {
+            if (!SlotMachine.wheelsAreRolling) return;
+
+            AdjustSortingLayer();
+        }
+
+        private void AdjustSortingLayer()
         {
             _eulerAngles = transform.rotation.eulerAngles;
 

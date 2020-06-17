@@ -139,7 +139,7 @@ namespace Utils
         public const float SpawnHeight = -2.0f;
         public const float CoinLoadSpeed = 0.67f;
         public const int CoinStartingSortingOrder = 1;
-        public const int CoinInsertedSortingOrder = 11;
+        public const int CoinInsertedSortingOrder = 10;
         public const int CoinPressedSortingOrder = 14;
 
         //arm

@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Intro
   m_EditorClassIdentifier: 
   id: 0
+  title: hey! Rookie
   narrativeShard:
   - textChunks:
     - "'Oh! Hello, Friend, who I have not seen in \u2026 some \u2026 long \u2026

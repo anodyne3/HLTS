@@ -13,10 +13,11 @@ MonoBehaviour:
   m_Name: CoinSlotUpgrade
   m_EditorClassIdentifier: 
   id: 6
+  title: double vision
   narrativeShard:
   - textChunks:
     - It seems like we could Upgrade the Coin Slot.
-    storyImage: {fileID: 3286163911610860551, guid: 6d9b0f78cc7e6844e9bad97e6510f21d,
+    storyImage: {fileID: 3286163911610860551, guid: 973b0d91280f3ee45b73abc67d9b5208,
       type: 3}
   - textChunks:
     - That would double our chances of winning ...

@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: UpgradeClaim
   m_EditorClassIdentifier: 
   id: 9
+  title: do it!
   narrativeShard:
   - textChunks:
     - "This Upgrade will give a Silver Chest every 25 rolls.<br><br>That\u2019s quicker

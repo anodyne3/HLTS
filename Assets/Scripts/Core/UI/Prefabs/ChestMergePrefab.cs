@@ -46,10 +46,8 @@ namespace Core.UI.Prefabs
         public void RefreshButton()
         {
             mergeText.text = IsUpgraded ? Constants.ChestButtonMerge : Constants.ChestButtonUpgrade;
-            
-            mergeButton.interactable = IsNextUpgrade ||
-                                       IsUpgraded && PlayerData.GetChestCount(_chestMerge.requiredType) >=
-                                       _chestMerge.requiredAmount;
+
+            mergeButton.interactable = IsNextUpgrade || IsUpgraded;
         }
 
         public void RefreshIndicators()
@@ -61,7 +59,11 @@ namespace Core.UI.Prefabs
         {
             if (IsUpgraded)
             {
-                FirebaseFunctionality.ChestMerge(_chestMerge.mergeUpgradeLevel.ToString());
+                if (PlayerData.GetChestCount(_chestMerge.requiredType) >= _chestMerge.requiredAmount)
+                    FirebaseFunctionality.ChestMerge(_chestMerge.mergeUpgradeLevel.ToString());
+                else
+                    AlertMessage.Init("Not Enough Chests");
+                
                 PanelManager.PunchButton(transform);
             }
             else

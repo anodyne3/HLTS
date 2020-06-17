@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: PullLever
   m_EditorClassIdentifier: 
   id: 1
+  title: match 3?
   narrativeShard:
   - textChunks:
     - You gotta Drag a Coin into that Slot...

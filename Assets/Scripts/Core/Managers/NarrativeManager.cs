@@ -91,6 +91,10 @@ namespace Core.Managers
                         StartCoroutine(DelayedOpen(2.0f,
                             () => PanelManager.OpenPanelOnHold<NarrativePanelController>(_gameManagerInteractionWait)));
                     break;
+                case NarrativeTypes.CoinSlotUpgrade:
+                    if (currentNarrativeSeen) return;
+                    PanelManager.OpenPanelOnHold<NarrativePanelController>(_payoutEventWait);
+                    break;
                 case NarrativeTypes.UpgradeMerge:
                     if (currentNarrativeSeen) return;
                     if (CurrencyManager.GetCurrencyAmount(ResourceType.BluePrints) >= Constants.ChestMergeTrigger)
@@ -143,27 +147,6 @@ namespace Core.Managers
             }
         }
 
-        private void ChestOpenRefreshTests()
-        {
-            if ((NarrativeTypes) PlayerData.narrativeProgress != NarrativeTypes.Starfruits) return;
-
-            var cheapestCoins = 0;
-
-            var shopProductsLength = ShopManager.shopProducts.Length;
-            for (var i = 0; i < shopProductsLength; i++)
-            {
-                var x = ShopManager.shopProducts[i];
-                if (x.ResourceType != ResourceType.StarFruits) continue;
-
-                cheapestCoins = x.ResourceCost;
-                break;
-            }
-
-            if (CurrencyManager.GetCurrencyAmount(ResourceType.StarFruits) >= cheapestCoins)
-                StartCoroutine(DelayedOpen(2.0f,
-                    () => PanelManager.OpenPanelOnHold<NarrativePanelController>(_gameManagerInteractionWait)));
-        }
-
         private void OpenNarrativePanel()
         {
             if (PanelManager == null) return;
@@ -186,10 +169,6 @@ namespace Core.Managers
                             PanelManager.OpenPanelOnHold<NarrativePanelController>(_gameManagerInteractionWait)));
                     break;
                 case NarrativeTypes.Blueprints:
-                    if (CurrencyManager.GetCurrencyAmount(ResourceType.BluePrints) > 0)
-                        PanelManager.OpenPanelOnHold<NarrativePanelController>(_gameManagerInteractionWait);
-                    break;
-                case NarrativeTypes.CoinSlotUpgrade:
                     PanelManager.OpenPanelOnHold<NarrativePanelController>(_gameManagerInteractionWait);
                     break;
                 case NarrativeTypes.UpgradeSlider:

@@ -108,7 +108,7 @@ namespace Core.UI
                     gameObject.SetActive(false);
 
                     if (GameManager != null)
-                        GameManager.interactionEnabled = true;
+                        GameManager.interactionEnabled = PanelManager.OpenPanelCount() == 0;
                     
                     if (PanelManager != null)
                         PanelManager.dragPinchDisabled = false;
