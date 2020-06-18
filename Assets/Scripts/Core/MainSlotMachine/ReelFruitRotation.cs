@@ -15,7 +15,7 @@ namespace Core.MainSlotMachine
         {
             _spriteRenderer = (SpriteRenderer) GetComponent(typeof(SpriteRenderer));
             
-            EventManager.NewEventSubscription(gameObject, Constants.GameEvents.testEvent, InitialAdjustSortingLayer);
+            EventManager.NewEventSubscription(gameObject, Constants.GameEvents.coinCreatedEvent, InitialAdjustSortingLayer);
         }
 
         private void InitialAdjustSortingLayer()

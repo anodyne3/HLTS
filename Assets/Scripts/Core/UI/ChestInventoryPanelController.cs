@@ -74,8 +74,6 @@ namespace Core.UI
 
         private void ChestsRefresh()
         {
-            if (!isActiveAndEnabled) return;
-            
             RefreshClaimChestButton();
             currentChestProgressFillImage.color = ChestManager.CurrentChest.chestColor;
         }

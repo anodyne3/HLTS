@@ -92,10 +92,11 @@ namespace Core.Managers
                 ObjectPoolManager.CreateObjectPool<ChestAddedPrefab>(chestAddedPrefab, chestAddedHolder);
 
             LoadChests();
-            RefreshChest();
-            RefreshFill();
+            // RefreshChest();
+            // RefreshFill();
 
-            EventManager.NewEventSubscription(gameObject, Constants.GameEvents.refreshUiEvent, RefreshFill);
+            EventManager.NewEventSubscription(gameObject, Constants.GameEvents.chestRefreshEvent, RefreshChest, true);
+            EventManager.NewEventSubscription(gameObject, Constants.GameEvents.refreshUiEvent, RefreshFill, true);
         }
 
         private void LoadChests()
@@ -128,7 +129,7 @@ namespace Core.Managers
         {
             chestProgressFillImage.DOFillAmount(GetFillAmount(CurrentChest.rank), tweenPunchSetting.punchDuration);
 
-            if (!_chestUpgraded || _chestAtThreshold) return;
+            if (!_chestUpgraded && !_chestAtThreshold) return;
             
             var tweenPause = DOTween.Sequence();
 
