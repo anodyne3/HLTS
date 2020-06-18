@@ -37,7 +37,8 @@ MonoBehaviour:
       type: 3}
   - textChunks:
     - "They call it a \u201CSlot Machine,\u201D short for \"nickel-in-the-slot machine.\""
-    storyImage: {fileID: 21300000, guid: 3c96eb4d055da7b4f9f60c19c9f3fd81, type: 3}
+    storyImage: {fileID: 3286163911610860551, guid: 5d5962f17364aed4f8c921cb9ff1fbe4,
+      type: 3}
   - textChunks:
     - The British call it a "Fruit Machine," but it don't look all that healthy to
       me.

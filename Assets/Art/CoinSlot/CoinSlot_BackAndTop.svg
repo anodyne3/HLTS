@@ -2,13 +2,13 @@
 <!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 width="61.816px" height="49.374px" viewBox="400.054 0 61.816 49.374" enable-background="new 400.054 0 61.816 49.374"
-	 xml:space="preserve">
+	 width="61.816px" height="49.375px" viewBox="0 0 61.816 49.375" enable-background="new 0 0 61.816 49.375" xml:space="preserve">
 <g id="Coin_Slot">
 	
 		<path fill="#AFAFAD" stroke="#000000" stroke-width="0.4455" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="
-		M430.948,0c-17.063,0-26.752,8.019-30.894,16.038h0.011h61.801C457.724,8.018,448.033,0,430.948,0z"/>
-	<linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="430.9651" y1="16.1384" x2="430.9651" y2="50.2637">
+		M30.894,0C13.831,0,4.142,8.019,0,16.038h0.011h61.801C57.67,8.018,47.978,0,30.894,0z"/>
+	
+		<linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="-183.4885" y1="125.3354" x2="-183.4885" y2="91.2092" gradientTransform="matrix(1 0 0 -1 214.3999 141.4736)">
 		<stop  offset="0" style="stop-color:#AFAFAD"/>
 		<stop  offset="0.2169" style="stop-color:#ACACAA"/>
 		<stop  offset="0.3942" style="stop-color:#A2A2A0"/>
@@ -19,6 +19,7 @@
 	</linearGradient>
 	
 		<polygon fill="url(#SVGID_1_)" stroke="#000000" stroke-width="0.4455" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="
-		461.87,16.033 447,27.643 447,43.023 431.85,49.374 416.731,43.263 416.731,31.493 415.71,29.333 414.92,27.643 400.06,16.033 	"/>
+		61.816,16.033 46.947,27.643 46.947,43.023 31.797,49.375 16.677,43.263 16.677,31.494 15.656,29.333 14.866,27.643 0.006,16.033 	
+		"/>
 </g>
 </svg>
