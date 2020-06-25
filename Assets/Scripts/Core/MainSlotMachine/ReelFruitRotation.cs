@@ -23,6 +23,7 @@ namespace Core.MainSlotMachine
             AdjustSortingLayer();
             var eventListener = GetComponent(typeof(GameEventListener));
             Destroy(eventListener);
+            EventManager.refreshUi.Raise();
         }
 
         private void LateUpdate()

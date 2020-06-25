@@ -15,6 +15,7 @@ namespace Core.Managers
 
         private UpgradeVariable[] _upgradeVariables;
         private bool _sliderIsActive;
+        private int _upgradeMaxCount;
 
         public override void Awake()
         {
@@ -28,6 +29,7 @@ namespace Core.Managers
             _upgradeVariables = GeneralUtils.SortLoadedList<UpgradeVariable>(Constants.UpgradesPath,
                 (x, y) => x.upgradeType.CompareTo(y.upgradeType));
 
+            SetUpgradeMaxCount();
             RefreshUpgrades();
         }
 
@@ -42,6 +44,15 @@ namespace Core.Managers
             EventManager.upgradeRefresh.Raise();
             EventManager.refreshCurrency.Raise();
             RefreshProgressSlider();
+        }
+
+        private void SetUpgradeMaxCount()
+        {
+            var upgradeVariablesLength = _upgradeVariables.Length;
+            for (var i = 0; i < upgradeVariablesLength; i++)
+            {
+                _upgradeMaxCount += _upgradeVariables[i].maxLevel;
+            }
         }
 
         public int GetUpgradeCurrentLevel(UpgradeTypes id)
@@ -91,16 +102,15 @@ namespace Core.Managers
 
         private float CurrentUpgradeProgress()
         {
-            int currentLevels = 0, maxCount = 0;
+            var currentLevels = 0;
 
             var upgradeVariablesLength = _upgradeVariables.Length;
             for (var i = 0; i < upgradeVariablesLength; i++)
             {
                 currentLevels += _upgradeVariables[i].currentLevel;
-                maxCount += _upgradeVariables[i].maxLevel;
             }
 
-            return currentLevels / (float) maxCount;
+            return currentLevels / (float) _upgradeMaxCount;
         }
 
         private void ShowProgressSlider()
@@ -133,9 +143,9 @@ namespace Core.Managers
             yield return null;
         }
 
-        public bool IsSliderActive()
+        public bool SufficientProgress()
         {
-            return _sliderIsActive;
+            return progressSlider.value > (_upgradeMaxCount - 1) / (float)_upgradeMaxCount;
         }
     }
 }

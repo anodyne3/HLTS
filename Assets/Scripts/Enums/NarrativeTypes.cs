@@ -12,5 +12,6 @@ namespace Enums
         UpgradeSlider,
         UpgradeMerge,
         UpgradeClaim,
+        Finale
     }
 }

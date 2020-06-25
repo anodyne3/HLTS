@@ -101,7 +101,7 @@ namespace Utils
         public const string PrivacyPolicyUrl = "https://he-loves-the-slots.web.app/PrivacyPolicy.html";
         public const string TermsAndConditionsUrl = "https://he-loves-the-slots.web.app/TermsAndConditions.html";
         public const string ShirtBuyUrl = "https://shop.spreadshirt.com/dem-slots-yo/";
-        public const string ShirtClaimUrl = "https://www.spreadshirt.com/";
+        public const string ShirtClaimUrl = "https://www.spreadshirt.com/dem-slots-yobonus/";
         public const string LinkedInUrl = "https://www.linkedin.com/in/seth-games-51386baa/";
         public const string GamblingSupport = "https://www.gamblingtherapy.org/en";
 

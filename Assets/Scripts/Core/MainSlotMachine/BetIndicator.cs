@@ -71,7 +71,7 @@ namespace Core.MainSlotMachine
                             betIndicatorTweenSettings.moveDuration));
             }
             
-            // EventManager.refreshUi.Raise();
+            EventManager.refreshUi.Raise();
         }
 
         public void RefreshLastBetIndicators()

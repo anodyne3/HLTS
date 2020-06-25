@@ -105,6 +105,7 @@ namespace Core.UI
             if (PlayerData.GetChestCount(_chestVariable.chestType) < 1) return;
 
             FirebaseFunctionality.ChestOpen(_chestVariable.chestType);
+            PanelManager.PunchButton(openChestButton.transform);
         }
 
         private static void OpenMergePanel()

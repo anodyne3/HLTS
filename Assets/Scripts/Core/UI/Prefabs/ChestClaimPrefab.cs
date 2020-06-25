@@ -21,14 +21,10 @@ namespace Core.UI.Prefabs
         private bool IsNextUpgrade =>
             _chestVariable.rank == UpgradeManager.GetUpgradeCurrentLevel(UpgradeTypes.ChestClaim);
 
-        // private ChestClaimPanelController _chestClaimPanel;
-
         private void Start()
         {
             chestClaimButton.onClick.RemoveAllListeners();
             chestClaimButton.onClick.AddListener(ClaimChest);
-
-            // _chestClaimPanel = PanelManager.GetPanel<ChestClaimPanelController>();
         }
 
         public void Init(ChestVariable chestType)

@@ -93,6 +93,7 @@ namespace Core.Managers
                     break;
                 case NarrativeTypes.CoinSlotUpgrade:
                     if (currentNarrativeSeen) return;
+                    currentNarrativeSeen = true;
                     PanelManager.OpenPanelOnHold<NarrativePanelController>(_payoutEventWait);
                     break;
                 case NarrativeTypes.UpgradeMerge:
@@ -128,7 +129,7 @@ namespace Core.Managers
             _openPanelBlock = false;
         }
 
-        private static void UpgradeRefreshTests()
+        private void UpgradeRefreshTests()
         {
             switch ((NarrativeTypes) PlayerData.narrativeProgress)
             {
@@ -142,6 +143,10 @@ namespace Core.Managers
                     break;
                 case NarrativeTypes.UpgradeClaim:
                     if (UpgradeManager.GetUpgradeCurrentLevel(UpgradeTypes.ChestClaim) > 0)
+                        FirebaseFunctionality.ProgressNarrativePoint();
+                    break;
+                case NarrativeTypes.Finale:
+                    if (UpgradeManager.SufficientProgress())
                         FirebaseFunctionality.ProgressNarrativePoint();
                     break;
             }

@@ -10,6 +10,7 @@ namespace Core.UI
         [SerializeField] private Button optionsButton;
         [SerializeField] private Button shirtStoreButton;
         [SerializeField] private Button creditsButton;
+        [SerializeField] private Button gamblingSupportButton;
 
         public override void Start()
         {
@@ -23,6 +24,8 @@ namespace Core.UI
             shirtStoreButton.onClick.AddListener(OpenShirtStore);
             creditsButton.onClick.RemoveAllListeners();
             creditsButton.onClick.AddListener(OpenLinkedIn);
+            gamblingSupportButton.onClick.RemoveAllListeners();
+            gamblingSupportButton.onClick.AddListener(OpenGamblingSupport);
         }
 
         private static void OpenAccountPanel()
@@ -43,6 +46,11 @@ namespace Core.UI
         private static void OpenLinkedIn()
         {
             Application.OpenURL(Constants.LinkedInUrl);
+        }
+        
+        private static void OpenGamblingSupport()
+        {
+            Application.OpenURL(Constants.GamblingSupport);
         }
     }
 }

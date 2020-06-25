@@ -296,6 +296,7 @@ namespace Core
         {
             if (narrativeCallBlock) return;
 
+            PlayerData.narrativeProgress++;
             narrativeCallBlock = true;
             await GetHttpsCallable(Constants.ProgressNarrativeFunction);
 
