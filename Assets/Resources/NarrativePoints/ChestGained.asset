@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: ChestGained
   m_EditorClassIdentifier: 
   id: 3
+  persistent: 1
   title: trunk in love
   narrativeShard:
   - textChunks:

@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: UpgradeClaim
   m_EditorClassIdentifier: 
   id: 9
+  persistent: 1
   title: do it!
   narrativeShard:
   - textChunks:

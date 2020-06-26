@@ -177,7 +177,7 @@ namespace Core
             var responseData = await GetHttpsCallable(betAmount.ToString(), Constants.ReelRollCloudFunction);
 
             if (responseData == null) return;
-            
+
             var payoutAmount = ProcessBasicResponseData<long>(responseData);
             SlotMachine.payoutAmount = payoutAmount;
         }
@@ -187,7 +187,7 @@ namespace Core
         #region Ads
 
         public AdType shownAd;
-        
+
         private async void ClaimAdReward()
         {
             shownAd = (AdType) Enum.Parse(typeof(AdType), AdManager.reward.Type);
@@ -208,7 +208,7 @@ namespace Core
                     return;
             }
         }
-        
+
         private void OnApplicationPause(bool pauseStatus)
         {
             if (pauseStatus || AdManager.reward == null) return;
@@ -230,7 +230,7 @@ namespace Core
                     AlertMessage.Init("Something went wrong with Ad Reward claim");
                     break;
             }
-            
+
             AdManager.reward = null;
         }
 
@@ -276,10 +276,10 @@ namespace Core
 
         #region Upgrades
 
-        public async void Upgrade(UpgradeVariable upgradeVariable)
+        public async void Upgrade(UpgradeTypes upgradeType)
         {
             PanelManager.WaitingForServerPanel();
-            var upgradeId = ((int) upgradeVariable.upgradeType).ToString();
+            var upgradeId = ((int) upgradeType).ToString();
             var responseData = await GetHttpsCallable(upgradeId, Constants.DoUpgradeCloudFunction);
 
             PanelManager.GetPanel<UpgradePanelController>()
@@ -291,22 +291,24 @@ namespace Core
         #region Narrative
 
         [HideInInspector] public bool narrativeCallBlock;
-        
-        public async void ProgressNarrativePoint()
+
+        public async void UpdateNarrativeProgress(NarrativeTypes narrativeType)
         {
             if (narrativeCallBlock) return;
 
-            PlayerData.narrativeProgress++;
             narrativeCallBlock = true;
-            await GetHttpsCallable(Constants.ProgressNarrativeFunction);
+
+            var narrativeState = NarrativeManager.UpdateNarrativeState(narrativeType);
+            
+            await GetHttpsCallable(narrativeState, Constants.ProgressNarrativeFunction);
 
             narrativeCallBlock = false;
             NarrativeManager.currentNarrativeSeen = false;
-            
+
             if (PlayerData.NarrativeIsComplete())
                 RemoveExistingNarrativeObjects();
         }
-        
+
         private static void RemoveExistingNarrativeObjects()
         {
             Destroy(HudManager.helpButton.gameObject);
@@ -336,9 +338,9 @@ namespace Core
         {
             var data = new Dictionary<string, object> {["text"] = sendData, ["push"] = true};
 
-            if (_firebaseFunc == null) 
+            if (_firebaseFunc == null)
                 return null;
-            
+
             var task = _firebaseFunc.GetHttpsCallable(callName).CallAsync(data);
 
             var response = await task;
@@ -353,22 +355,20 @@ namespace Core
             AlertMessage.Init(callName + " returned empty");
             return null;
         }
-        
-        private async Task<object> GetHttpsCallable(string callName)
+
+        private async Task GetHttpsCallable(string callName)
         {
-            if (_firebaseFunc == null) 
-                return null;
-            
+            if (_firebaseFunc == null)
+                return;
+
             var task = _firebaseFunc.GetHttpsCallable(callName).CallAsync();
 
             await task;
-            
+
             if (task.IsFaulted)
                 HandleFunctionError(task);
 
             PanelManager.WaitingForServerPanel(false);
-
-            return null;
         }
 
         private static void HandleFunctionError(Task httpsCallableResult)

@@ -8,6 +8,7 @@ namespace MyScriptableObjects
     public class NarrativePoint : ScriptableObject
     {
         public NarrativeTypes id;
+        public bool persistent;
         public string title;
         public NarrativeShard[] narrativeShard;
 

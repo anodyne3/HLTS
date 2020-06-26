@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Blueprints
   m_EditorClassIdentifier: 
   id: 4
+  persistent: 1
   title: planning ahead
   narrativeShard:
   - textChunks:

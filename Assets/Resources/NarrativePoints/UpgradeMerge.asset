@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: UpgradeMerge
   m_EditorClassIdentifier: 
   id: 8
+  persistent: 1
   title: fair trade?
   narrativeShard:
   - textChunks:

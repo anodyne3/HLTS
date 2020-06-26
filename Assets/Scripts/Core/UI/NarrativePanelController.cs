@@ -1,4 +1,5 @@
-﻿using Enums;
+﻿using Core.Managers;
+using Enums;
 using MyScriptableObjects;
 using TMPro;
 using UnityEngine;
@@ -38,7 +39,8 @@ namespace Core.UI
         {
             base.OpenPanel();
 
-            backgroundBlackoutImage.gameObject.SetActive(args.Length > 0);
+            backgroundBlackoutImage.gameObject.SetActive(args.Length > 1);
+            _narrativePoint = NarrativeManager.LoadNarrativePoint((NarrativeTypes) args[0]);
 
             SetupNarrativeStage();
             ResetCounters();
@@ -48,7 +50,6 @@ namespace Core.UI
         private void SetupNarrativeStage()
         {
             var stageCount = 0;
-            _narrativePoint = NarrativeManager.currentNarrativePoint;
 
             var narrativeShardLength = _narrativePoint.narrativeShard.Length;
             for (var i = 0; i < narrativeShardLength; i++)
@@ -125,17 +126,17 @@ namespace Core.UI
         {
             base.ClosePanel();
 
-            NarrativeManager.currentNarrativeSeen = true;
+            // NarrativeManager.currentNarrativeSeen = true;
 
             switch (_narrativePoint.id)
             {
                 case NarrativeTypes.Intro:
-                    FirebaseFunctionality.ProgressNarrativePoint();
+                    FirebaseFunctionality.UpdateNarrativeProgress(_narrativePoint.id);
                     CurrencyManager.HideCurrencies(false);
                     break;
                 case NarrativeTypes.UpgradeSlider:
                 case NarrativeTypes.Starfruits:
-                    FirebaseFunctionality.ProgressNarrativePoint();
+                    FirebaseFunctionality.UpdateNarrativeProgress(_narrativePoint.id);
                     break;
             }
 

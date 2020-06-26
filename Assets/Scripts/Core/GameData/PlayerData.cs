@@ -45,12 +45,12 @@ namespace Core.GameData
             _database = FirebaseDatabase.DefaultInstance;
             _userData = _database.GetReference(Constants.PlayerDataPrefix).Child(firebaseUser.UserId)
                 .Child(Constants.PlayerDataSuffix);
+            InitNarrativeData();
             
             _userData.Child(Constants.RollData).ValueChanged += OnRollDataChanged;
             _userData.Child(Constants.WalletData).ValueChanged += OnWalletDataChanged;
             _userData.Child(Constants.ChestData).ValueChanged += OnChestDataChanged;
             _userData.Child(Constants.UpgradeData).ValueChanged += OnUpgradeDataChanged;
-            _userData.Child(Constants.NarrativeData).ValueChanged += OnNarrativeDataChanged;
         }
 
         public void StopDatabaseListeners()
@@ -61,12 +61,19 @@ namespace Core.GameData
             _userData.Child(Constants.WalletData).ValueChanged -= OnWalletDataChanged;
             _userData.Child(Constants.ChestData).ValueChanged -= OnChestDataChanged;
             _userData.Child(Constants.UpgradeData).ValueChanged -= OnUpgradeDataChanged;
-            _userData.Child(Constants.NarrativeData).ValueChanged -= OnNarrativeDataChanged;
         }
 
         private void OnDisable()
         {
             StopDatabaseListeners();
+        }
+
+        private async void InitNarrativeData()
+        {
+            var responseData = await _userData.Child(Constants.NarrativeData).GetValueAsync();
+            PlayerData.narrativeProgress = (long)responseData.Value;
+            
+            NarrativeManager.Init();
         }
 
         private void OnRollDataChanged(object sender, ValueChangedEventArgs args)
@@ -117,7 +124,7 @@ namespace Core.GameData
             upgradeData = new GenericArrayDto(ProcessDataChanges(sender, args)).newDataArray;
         }
 
-        private void OnNarrativeDataChanged(object sender, ValueChangedEventArgs args)
+        /*private void OnNarrativeDataChanged(object sender, ValueChangedEventArgs args)
         {
             narrativeProgress = (long)args.Snapshot.Value;
 
@@ -129,13 +136,12 @@ namespace Core.GameData
             
             NarrativeManager.RefreshCurrentNarrativePoint();
             EventManager.narrativeRefresh.Raise();
-        }
+        }*/
 
-        public bool NarrativeIsComplete()
+        public static bool NarrativeIsComplete()
         {
-            return PlayerData.narrativeProgress >= Enum.GetNames(typeof(NarrativeTypes)).Length;
+            return PlayerData.narrativeProgress >= Math.Pow(Enum.GetNames(typeof(NarrativeTypes)).Length, 2) - 1;
         }
-        
 
         private static string ProcessDataChanges(object sender, ValueChangedEventArgs args)
         {

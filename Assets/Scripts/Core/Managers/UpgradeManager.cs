@@ -16,6 +16,7 @@ namespace Core.Managers
         private UpgradeVariable[] _upgradeVariables;
         private bool _sliderIsActive;
         private int _upgradeMaxCount;
+        public float SufficientProgress { get; private set; }
 
         public override void Awake()
         {
@@ -50,9 +51,9 @@ namespace Core.Managers
         {
             var upgradeVariablesLength = _upgradeVariables.Length;
             for (var i = 0; i < upgradeVariablesLength; i++)
-            {
                 _upgradeMaxCount += _upgradeVariables[i].maxLevel;
-            }
+
+            SufficientProgress = (_upgradeMaxCount - 1) / (float) _upgradeMaxCount;
         }
 
         public int GetUpgradeCurrentLevel(UpgradeTypes id)
@@ -143,9 +144,9 @@ namespace Core.Managers
             yield return null;
         }
 
-        public bool SufficientProgress()
+        public float CurrentProgress()
         {
-            return progressSlider.value > (_upgradeMaxCount - 1) / (float)_upgradeMaxCount;
+            return progressSlider.value;
         }
     }
 }

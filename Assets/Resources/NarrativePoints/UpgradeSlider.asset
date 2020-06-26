@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: UpgradeSlider
   m_EditorClassIdentifier: 
   id: 7
+  persistent: 1
   title: exit strategy
   narrativeShard:
   - textChunks:

@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: CoinSlotUpgrade
   m_EditorClassIdentifier: 
   id: 6
+  persistent: 1
   title: double vision
   narrativeShard:
   - textChunks:
