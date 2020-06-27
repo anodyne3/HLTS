@@ -1,5 +1,4 @@
-﻿using Core.GameData;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 namespace Core.UI
@@ -39,7 +38,7 @@ namespace Core.UI
 
         private static void OpenNarrativePanel()
         {
-            PanelManager.OpenPanelSolo<NarrativePanelController>();
+            PanelManager.OpenPanelSolo<NarrativePanelController>(NarrativeManager.currentNarrativePointType);
         } 
     }
 }

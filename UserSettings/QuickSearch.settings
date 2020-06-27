@@ -4,10 +4,10 @@ wantsMore = true
 dockable = false
 debug = false
 itemIconSize = 1
-assetIndexing = 2
 queryFolder = "Assets/Editor/Queries"
 onBoardingDoNotAskAgain = true
 showPackageIndexes = false
+debounceMs = 250
 filters = {
 	settings = true
 	scene = true
@@ -16,8 +16,8 @@ filters = {
 	asset = true
 }
 scopes = {
-	"last_search.AB59B443" = null
-	"last_search.000006DE" = ""
+	"last_search.AB59B443" = ""
+	"last_search.000006DE" = null
 }
 providers = {
 	asset = {
@@ -51,3 +51,4 @@ providers = {
 		defaultAction = null
 	}
 }
+assetIndexing = 2

@@ -11,7 +11,6 @@ using Firebase;
 using Firebase.Auth;
 using Firebase.Functions;
 using Firebase.Unity.Editor;
-using MyScriptableObjects;
 using UnityEngine;
 using Utils;
 
@@ -303,17 +302,6 @@ namespace Core
             await GetHttpsCallable(narrativeState, Constants.ProgressNarrativeFunction);
 
             narrativeCallBlock = false;
-            NarrativeManager.currentNarrativeSeen = false;
-
-            if (PlayerData.NarrativeIsComplete())
-                RemoveExistingNarrativeObjects();
-        }
-
-        private static void RemoveExistingNarrativeObjects()
-        {
-            Destroy(HudManager.helpButton.gameObject);
-            Destroy(PanelManager.GetPanel<NarrativePanelController>().gameObject);
-            GlobalComponents.Instance.RemoveGlobalComponent<NarrativeManager>();
         }
 
         #endregion
@@ -352,23 +340,10 @@ namespace Core
             if (response.Data != null)
                 return response.Data;
 
-            AlertMessage.Init(callName + " returned empty");
+            if (callName != Constants.ProgressNarrativeFunction)
+                AlertMessage.Init(callName + " returned empty");
+            
             return null;
-        }
-
-        private async Task GetHttpsCallable(string callName)
-        {
-            if (_firebaseFunc == null)
-                return;
-
-            var task = _firebaseFunc.GetHttpsCallable(callName).CallAsync();
-
-            await task;
-
-            if (task.IsFaulted)
-                HandleFunctionError(task);
-
-            PanelManager.WaitingForServerPanel(false);
         }
 
         private static void HandleFunctionError(Task httpsCallableResult)

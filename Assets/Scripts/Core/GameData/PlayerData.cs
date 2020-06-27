@@ -28,6 +28,7 @@ namespace Core.GameData
 
         private FirebaseDatabase _database;
         private DatabaseReference _userData;
+        private int _narrativeMaxProgress;
         
         public FirebaseUser firebaseUser;
         public static bool ConsentGiven =>
@@ -45,6 +46,7 @@ namespace Core.GameData
             _database = FirebaseDatabase.DefaultInstance;
             _userData = _database.GetReference(Constants.PlayerDataPrefix).Child(firebaseUser.UserId)
                 .Child(Constants.PlayerDataSuffix);
+            
             InitNarrativeData();
             
             _userData.Child(Constants.RollData).ValueChanged += OnRollDataChanged;
@@ -72,6 +74,7 @@ namespace Core.GameData
         {
             var responseData = await _userData.Child(Constants.NarrativeData).GetValueAsync();
             PlayerData.narrativeProgress = (long)responseData.Value;
+            _narrativeMaxProgress = (int)Math.Pow(2, Enum.GetNames(typeof(NarrativeTypes)).Length) - 1;
             
             NarrativeManager.Init();
         }
@@ -124,23 +127,11 @@ namespace Core.GameData
             upgradeData = new GenericArrayDto(ProcessDataChanges(sender, args)).newDataArray;
         }
 
-        /*private void OnNarrativeDataChanged(object sender, ValueChangedEventArgs args)
+        public bool NarrativeIsComplete()
         {
-            narrativeProgress = (long)args.Snapshot.Value;
-
-            if (NarrativeIsComplete())
-            {
-                _userData.Child(Constants.NarrativeData).ValueChanged -= OnNarrativeDataChanged;
-                return;
-            }
+            if (_narrativeMaxProgress == 0) return false;
             
-            NarrativeManager.RefreshCurrentNarrativePoint();
-            EventManager.narrativeRefresh.Raise();
-        }*/
-
-        public static bool NarrativeIsComplete()
-        {
-            return PlayerData.narrativeProgress >= Math.Pow(Enum.GetNames(typeof(NarrativeTypes)).Length, 2) - 1;
+            return PlayerData.narrativeProgress >= _narrativeMaxProgress;
         }
 
         private static string ProcessDataChanges(object sender, ValueChangedEventArgs args)

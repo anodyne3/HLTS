@@ -121,12 +121,19 @@ namespace Core.UI
 
             return endOfChunk;
         }
+        
+        private static void RemoveExistingNarrativeObjects()
+        {
+            Destroy(HudManager.helpButton.gameObject);
+            Destroy(PanelManager.GetPanel<NarrativePanelController>().gameObject);
+            GlobalComponents.Instance.RemoveGlobalComponent<NarrativeManager>();
+        }
 
         protected override void ClosePanel()
         {
             base.ClosePanel();
 
-            // NarrativeManager.currentNarrativeSeen = true;
+            NarrativeManager.currentNarrativeSeen = true;
 
             switch (_narrativePoint.id)
             {
@@ -137,6 +144,13 @@ namespace Core.UI
                 case NarrativeTypes.UpgradeSlider:
                 case NarrativeTypes.Starfruits:
                     FirebaseFunctionality.UpdateNarrativeProgress(_narrativePoint.id);
+                    break;
+                case NarrativeTypes.Finale:
+                    FirebaseFunctionality.UpdateNarrativeProgress(_narrativePoint.id);
+                    RemoveExistingNarrativeObjects();
+                    break;
+                default:
+                    NarrativeManager.currentNarrativePointType = _narrativePoint.id;
                     break;
             }
 
