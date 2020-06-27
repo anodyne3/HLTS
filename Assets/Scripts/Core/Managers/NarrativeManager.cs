@@ -163,9 +163,8 @@ namespace Core.Managers
                     break;
                 case NarrativeTypes.CoinSlotUpgrade:
                     if (currentNarrativeSeen) return;
-                    StartCoroutine(DelayedOpen(2.0f,
-                        () => PanelManager.OpenPanelOnHold<NarrativePanelController>(_payoutEventWait,
-                            narrativePoint)));
+                    PanelManager.OpenPanelOnHold<NarrativePanelController>(_payoutEventWait,
+                            narrativePoint);
                     break;
                 case NarrativeTypes.UpgradeSlider:
                     if (currentNarrativeSeen) return;
