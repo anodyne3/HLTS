@@ -64,7 +64,7 @@ namespace Core
         {
             if (_firebaseAuth.CurrentUser == null && !_signingIn)
             {
-                AlertMessage.Init("No user signed in");
+                // AlertMessage.Init("No user signed in");
                 SignIn();
                 return;
             }
@@ -120,7 +120,7 @@ namespace Core
 
             var newUser = task.Result;
             _signingIn = _firebaseAuth.CurrentUser != null;
-            AlertMessage.Init("User signed in successfully: " + newUser.DisplayName + " (" + newUser.UserId + ")");
+            // AlertMessage.Init("User signed in successfully: " + newUser.DisplayName + " (" + newUser.UserId + ")");
         }
 
         public void ResetAccount()

@@ -92,7 +92,7 @@ namespace Core.GameData
 
             if (string.IsNullOrEmpty(args.Snapshot.GetRawJsonValue()))
             {
-                AlertMessage.Init("Empty Snapshot: " + args.Snapshot.Key);
+                // AlertMessage.Init("Empty Snapshot: " + args.Snapshot.Key);
                 return;
             }
 
@@ -150,7 +150,7 @@ namespace Core.GameData
                 return args.Snapshot.GetRawJsonValue();
             }
 
-            AlertMessage.Init("Empty Snapshot: " + args.Snapshot.Key);
+            // AlertMessage.Init("Empty Snapshot: " + args.Snapshot.Key);
             return string.Empty;
         }
 
