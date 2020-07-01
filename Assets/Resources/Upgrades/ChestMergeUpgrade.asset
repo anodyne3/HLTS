@@ -16,7 +16,7 @@ MonoBehaviour:
   currentLevel: 0
   maxLevel: 6
   levelDetails:
-  - icon: {fileID: 3286163911610860551, guid: 4b3a5bf377ad08941b5cd00441c4955b, type: 3}
+  - icon: {fileID: 3286163911610860551, guid: 6e83c128771a9da4f9fa1ec401a9606f, type: 3}
     upgradeName: Chest Merge
     description: Merge three Bronze Chests into a Silver Chest.
     resourceRequirements:
@@ -24,7 +24,7 @@ MonoBehaviour:
       resourceType: 0
     - resourceAmount: 39
       resourceType: 1
-  - icon: {fileID: 3286163911610860551, guid: 4b3a5bf377ad08941b5cd00441c4955b, type: 3}
+  - icon: {fileID: 3286163911610860551, guid: 6e83c128771a9da4f9fa1ec401a9606f, type: 3}
     upgradeName: Chest Merge
     description: Merge five Bronze Chests into two Silver Chests.
     resourceRequirements:
@@ -32,7 +32,7 @@ MonoBehaviour:
       resourceType: 0
     - resourceAmount: 65
       resourceType: 1
-  - icon: {fileID: 3286163911610860551, guid: 4b3a5bf377ad08941b5cd00441c4955b, type: 3}
+  - icon: {fileID: 3286163911610860551, guid: 08c85f35b89ed3044827e0cdfb0d3a03, type: 3}
     upgradeName: Chest Merge
     description: Merge eight Bronze Chests into a Gold Chest.
     resourceRequirements:
@@ -40,7 +40,7 @@ MonoBehaviour:
       resourceType: 0
     - resourceAmount: 76
       resourceType: 1
-  - icon: {fileID: 3286163911610860551, guid: 4b3a5bf377ad08941b5cd00441c4955b, type: 3}
+  - icon: {fileID: 3286163911610860551, guid: 08c85f35b89ed3044827e0cdfb0d3a03, type: 3}
     upgradeName: Chest Merge
     description: Merge three Silver Chests into a Gold Chest.
     resourceRequirements:
@@ -48,7 +48,7 @@ MonoBehaviour:
       resourceType: 0
     - resourceAmount: 89
       resourceType: 1
-  - icon: {fileID: 3286163911610860551, guid: 4b3a5bf377ad08941b5cd00441c4955b, type: 3}
+  - icon: {fileID: 3286163911610860551, guid: 08c85f35b89ed3044827e0cdfb0d3a03, type: 3}
     upgradeName: Chest Merge
     description: Merge five Silver Chests into two Gold Chests.
     resourceRequirements:
@@ -56,7 +56,7 @@ MonoBehaviour:
       resourceType: 0
     - resourceAmount: 132
       resourceType: 1
-  - icon: {fileID: 3286163911610860551, guid: 4b3a5bf377ad08941b5cd00441c4955b, type: 3}
+  - icon: {fileID: 3286163911610860551, guid: 08c85f35b89ed3044827e0cdfb0d3a03, type: 3}
     upgradeName: Chest Merge
     description: Merge eight Silver Chests into three Gold Chests.
     resourceRequirements:

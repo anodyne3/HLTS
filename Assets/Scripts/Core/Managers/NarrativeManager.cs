@@ -163,6 +163,7 @@ namespace Core.Managers
                     break;
                 case NarrativeTypes.CoinSlotUpgrade:
                     if (currentNarrativeSeen) return;
+                    if (!GameManager.interactionEnabled) return;
                     PanelManager.OpenPanelOnHold<NarrativePanelController>(_payoutEventWait,
                             narrativePoint);
                     break;

@@ -60,7 +60,6 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 0.972549, b: 0.7882353, a: 1}
   m_RaycastTarget: 1
-  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -132,7 +131,6 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 0.7218741, b: 0.34800005, a: 1}
   m_RaycastTarget: 0
-  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -199,11 +197,10 @@ MonoBehaviour:
   m_Material: {fileID: 2100000, guid: 0b012844cadfbe541b20626331cf90a2, type: 2}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 0
-  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 3286163911610860551, guid: b73f7e30502e27c47b395e1d7bfd0e67,
+  m_Sprite: {fileID: 3286163911610860551, guid: 08c85f35b89ed3044827e0cdfb0d3a03,
     type: 3}
   m_PreserveAspect: 1
 --- !u!1 &7798704293394752121
@@ -266,7 +263,6 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 0.25490198, g: 0.5921569, b: 0.5294118, a: 1}
   m_RaycastTarget: 1
-  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -386,7 +382,6 @@ MonoBehaviour:
   chestAddedHolder: {fileID: 0}
   chestTypes: []
   chestMergeTypes: []
-  fillMaker: {fileID: 0}
 --- !u!222 &1486036065
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -410,7 +405,6 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
-  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []

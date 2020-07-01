@@ -75,6 +75,8 @@ namespace Core.GameData
             var responseData = await _userData.Child(Constants.NarrativeData).GetValueAsync();
             PlayerData.narrativeProgress = (long)responseData.Value;
             _narrativeMaxProgress = (int)Math.Pow(2, Enum.GetNames(typeof(NarrativeTypes)).Length) - 1;
+
+            if (NarrativeIsComplete()) return;
             
             NarrativeManager.Init();
         }

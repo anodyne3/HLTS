@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mergeUpgradeLevel: 5
   requiredType: 1
-  requiredAmount: 8
+  requiredAmount: 7
   receivedType: 2
   receivedAmount: 3

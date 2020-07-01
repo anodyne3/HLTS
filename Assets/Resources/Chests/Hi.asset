@@ -20,7 +20,7 @@ MonoBehaviour:
   chestOpenIcon: {fileID: 3286163911610860551, guid: 9d672c5018859594aa0884e172dc4af5,
     type: 3}
   rank: 2
-  threshold: 100
+  threshold: 70
   bcMax: 390
   bpMax: 45
   sfMax: 15

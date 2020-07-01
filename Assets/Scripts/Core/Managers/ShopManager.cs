@@ -20,7 +20,8 @@ namespace Core.Managers
             shopPanel = PanelManager.GetPanel<ShopPanelController>();
             
             LoadShopProducts();
-            NarrativeManager.GetNarrativeCheapestCoinsCost();
+            if (!PlayerData.NarrativeIsComplete())
+                NarrativeManager.GetNarrativeCheapestCoinsCost();
             
             if (_storeController != null) return;
             
