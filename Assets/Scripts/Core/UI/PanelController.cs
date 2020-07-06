@@ -15,8 +15,8 @@ namespace Core.UI
         [HideInInspector] public TweenPunchSetting closeButtonPunchSetting;
         [SerializeField] private float defaultLocalPositionY = 560.0f;
 
+        public bool isOpen;
         public RectTransform panelTransform;
-
 
         public virtual void Awake()
         {
@@ -45,6 +45,7 @@ namespace Core.UI
         public virtual void OpenPanel(params object[] args)
         {
             AudioManager.PlayClip(SoundEffectType.OpenPanel);
+            isOpen = true;
 
             panelTransform.localScale = PanelManager.closePanelTweenSettings.scaleStartValue;
             var panelOffset = PanelManager.OpenPanelCount() * PanelManager.openPanelTweenSettings.moveOffset +
@@ -87,6 +88,7 @@ namespace Core.UI
 
         protected virtual void ClosePanel()
         {
+            isOpen = false;
             if (closeButton != null)
                 closeButtonPunchSetting.DoPunch(closeButton.transform, false);
 

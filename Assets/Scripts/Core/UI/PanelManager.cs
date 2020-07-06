@@ -76,7 +76,10 @@ namespace Core.UI
                 if (panel.TryGetComponent(out T requiredPanel))
                     requiredPanel.OpenPanel(args);
                 else
+                {
+                    panel.isOpen = false;
                     panel.gameObject.SetActive(false);
+                }
             }
         }
 
@@ -101,7 +104,7 @@ namespace Core.UI
             for (var i = 0; i < allPanelsCount; i++)
             {
                 var panel = allPanels[i];
-                if (panel.isActiveAndEnabled)
+                if (panel.isOpen)
                     openPanelCount++;
             }
 
