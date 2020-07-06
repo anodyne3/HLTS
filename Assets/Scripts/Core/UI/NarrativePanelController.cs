@@ -133,7 +133,8 @@ namespace Core.UI
         {
             base.ClosePanel();
 
-            NarrativeManager.currentNarrativeSeen = true;
+            if (_narrativePoint.persistent)
+                NarrativeManager.currentNarrativeSeen = true;
 
             switch (_narrativePoint.id)
             {

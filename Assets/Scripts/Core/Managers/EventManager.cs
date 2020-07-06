@@ -21,7 +21,6 @@ namespace Core.Managers
         [HideInInspector] public GameEvent coinLoad;
         [HideInInspector] public GameEvent generateCoin;
         [HideInInspector] public GameEvent payoutFinish;
-        [HideInInspector] public GameEvent narrativeRefresh;
         [HideInInspector] public GameEvent payoutStart;
         [HideInInspector] public GameEvent refreshCurrency;
         [HideInInspector] public GameEvent refreshUi;
@@ -46,7 +45,6 @@ namespace Core.Managers
             coinDropped = Resources.Load<GameEvent>("Events/" + Constants.GameEvents.coinDroppedEvent);
             coinLoad = Resources.Load<GameEvent>("Events/" + Constants.GameEvents.coinLoadEvent);
             generateCoin = Resources.Load<GameEvent>("Events/" + Constants.GameEvents.generateCoinEvent);
-            narrativeRefresh = Resources.Load<GameEvent>("Events/" + Constants.GameEvents.narrativeRefreshEvent);
             payoutFinish = Resources.Load<GameEvent>("Events/" + Constants.GameEvents.payoutFinishEvent);
             payoutStart = Resources.Load<GameEvent>("Events/" + Constants.GameEvents.payoutStartEvent);
             refreshCurrency = Resources.Load<GameEvent>("Events/" + Constants.GameEvents.refreshCurrencyEvent);

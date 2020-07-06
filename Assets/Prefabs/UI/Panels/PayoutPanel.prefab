@@ -686,6 +686,7 @@ MonoBehaviour:
   payoutAmountText: {fileID: 5443219302182099646}
   payoutTypeText: {fileID: 4377467845544998232}
   doublePayoutForAdButton: {fileID: 318517020505372768}
+  punchSetting: {fileID: 11400000, guid: 8dfdc8aef530058459fb0d0715612334, type: 2}
 --- !u!1001 &8008384211672603985
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -697,6 +698,46 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: PayoutButtons
+      objectReference: {fileID: 0}
+    - target: {fileID: 2729961753918843564, guid: 997289add8d262945a0b100650464762,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2729961753918843564, guid: 997289add8d262945a0b100650464762,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2729961753918843564, guid: 997289add8d262945a0b100650464762,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2729961753918843564, guid: 997289add8d262945a0b100650464762,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5160868065714061121, guid: 997289add8d262945a0b100650464762,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5160868065714061121, guid: 997289add8d262945a0b100650464762,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5160868065714061121, guid: 997289add8d262945a0b100650464762,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5160868065714061121, guid: 997289add8d262945a0b100650464762,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9021340627834774094, guid: 997289add8d262945a0b100650464762,
         type: 3}

@@ -13,10 +13,11 @@ MonoBehaviour:
   m_Name: Starfruits
   m_EditorClassIdentifier: 
   id: 5
+  persistent: 0
   title: mmm! tasty!!
   narrativeShard:
   - textChunks:
-    - We've got enough "Starfruits" to buy some "Banana Coins"<br><br> ... unless
-      you were saving them for some special occassion...
+    - These "Starfruits" can be exchanged for "Banana Coins"<br><br> ... I suppose
+      that makes them valuable ...
     storyImage: {fileID: 3286163911610860551, guid: d824e6205bfd54048a540bf98727dc79,
       type: 3}

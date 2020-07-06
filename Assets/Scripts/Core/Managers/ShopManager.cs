@@ -21,7 +21,7 @@ namespace Core.Managers
             
             LoadShopProducts();
             if (!PlayerData.NarrativeIsComplete())
-                NarrativeManager.GetNarrativeCheapestCoinsCost();
+                NarrativeManager.CacheCheapestCoinsCost();
             
             if (_storeController != null) return;
             

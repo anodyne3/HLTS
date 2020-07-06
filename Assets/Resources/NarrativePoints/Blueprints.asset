@@ -17,7 +17,7 @@ MonoBehaviour:
   title: planning ahead
   narrativeShard:
   - textChunks:
-    - Okay! The Chests contain Blueprints.<br><br>These are used for upgrading the
+    - Okay! Some Chests contain Blueprints.<br><br>These are used for upgrading the
       machine.
     storyImage: {fileID: 3286163911610860551, guid: f34bbba08d65d5243b310dfcb3acf7a5,
       type: 3}

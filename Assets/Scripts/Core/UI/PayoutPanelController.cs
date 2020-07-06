@@ -1,6 +1,7 @@
 using System.Linq;
 using DG.Tweening;
 using Enums;
+using MyScriptableObjects;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,6 +15,7 @@ namespace Core.UI
         [SerializeField] private TMP_Text payoutAmountText;
         [SerializeField] private TMP_Text payoutTypeText;
         [SerializeField] private Button doublePayoutForAdButton;
+        [SerializeField] private TweenPunchSetting punchSetting; 
 
         private readonly Resource _payoutCurrency = new Resource(0, ResourceType.BananaCoins);
         private const AdType ThisAdType = AdType.DoublePayout;
@@ -62,8 +64,8 @@ namespace Core.UI
 
             _payoutCurrency.resourceAmount = SlotMachine.payoutAmount;
 
-            payoutAmountText.text = (_payoutCurrency.resourceAmount).ToString();
-            payoutAmountText.transform.DOPunchScale(new Vector3(1.1f, 1.1f,1.1f), 0.666f);
+            payoutAmountText.text = _payoutCurrency.resourceAmount.ToString();
+            punchSetting.DoPunch(payoutAmountText.transform);
 
             StartTextAnimations();
         }

@@ -27,7 +27,7 @@ MonoBehaviour:
       resourceType: 1
   - icon: {fileID: 3286163911610860551, guid: 08c85f35b89ed3044827e0cdfb0d3a03, type: 3}
     upgradeName: Gold Chest
-    description: Every 100 rolls you will receive a Gold Chest.<br><br>You can still
+    description: Every 70 rolls you will receive a Gold Chest.<br><br>You can still
       claim Silver and Bronze Chests.
     resourceRequirements:
     - resourceAmount: 10000

@@ -15,6 +15,7 @@ namespace Core.Managers
         private readonly Queue<NarrativeTypes> _persistentNarratives = new Queue<NarrativeTypes>();
         private readonly WaitUntil _gameManagerInteractionWait = new WaitUntil(() => GameManager.interactionEnabled);
         private readonly WaitUntil _payoutEventWait = new WaitUntil(() => !SlotMachine.wheelsAreRolling);
+
         private readonly WaitUntil _narrativeCallBlockWait =
             new WaitUntil(() => !FirebaseFunctionality.narrativeCallBlock);
 
@@ -25,6 +26,7 @@ namespace Core.Managers
         private bool _openPanelBlock;
         private Transform _persistentNarrativeEvents;
         private int _cheapestCoins;
+        private long _coinSlotBpCost;
         private bool[] _narrativeState;
 
         private void Start()
@@ -151,9 +153,11 @@ namespace Core.Managers
                 case NarrativeTypes.Blueprints:
                     if (currentNarrativeSeen)
                     {
-                        if (CurrencyManager.GetCurrencyAmount(ResourceType.BluePrints) > UpgradeManager
+                        if (_coinSlotBpCost == 0)
+                            _coinSlotBpCost = UpgradeManager
                                 .GetUpgradeVariable(UpgradeTypes.CoinSlot).CurrentResourceRequirements[1]
-                                .resourceAmount)
+                                .resourceAmount;
+                        if (CurrencyManager.GetCurrencyAmount(ResourceType.BluePrints) >= _coinSlotBpCost)
                             FirebaseFunctionality.UpdateNarrativeProgress(NarrativeTypes.Blueprints);
                     }
                     else
@@ -165,7 +169,7 @@ namespace Core.Managers
                     if (currentNarrativeSeen) return;
                     if (!GameManager.interactionEnabled) return;
                     PanelManager.OpenPanelOnHold<NarrativePanelController>(_payoutEventWait,
-                            narrativePoint);
+                        narrativePoint);
                     break;
                 case NarrativeTypes.UpgradeSlider:
                     if (currentNarrativeSeen) return;
@@ -290,7 +294,7 @@ namespace Core.Managers
             byteArray.CopyTo(_narrativeState, 0);
         }
 
-        public void GetNarrativeCheapestCoinsCost()
+        public void CacheCheapestCoinsCost()
         {
             var shopProductsLength = ShopManager.shopProducts.Length;
             for (var i = 0; i < shopProductsLength; i++)

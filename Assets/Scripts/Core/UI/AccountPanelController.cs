@@ -11,6 +11,7 @@ namespace Core.UI
         [SerializeField] private Button linkAccountButton;
         [SerializeField] private Button unlinkAccountButton;
         [SerializeField] private Button policiesButton;
+        [SerializeField] private Button uidButton;
 
         public TMP_Text userId;
 
@@ -26,6 +27,8 @@ namespace Core.UI
             unlinkAccountButton.onClick.AddListener(UnlinkAccount);
             policiesButton.onClick.RemoveAllListeners();
             policiesButton.onClick.AddListener(OpenPoliciesPanel);
+            uidButton.onClick.RemoveAllListeners();
+            uidButton.onClick.AddListener(CopyUidToClipboard);
         }
 
         public override void OpenPanel(params object[] args)
@@ -57,6 +60,12 @@ namespace Core.UI
         private static void OpenPoliciesPanel()
         {
             PanelManager.OpenSubPanel<PoliciesPanelController>();
+        }
+
+        private static void CopyUidToClipboard()
+        {
+            GUIUtility.systemCopyBuffer = PlayerData.firebaseUser.UserId;
+            AlertMessage.Init("User Id Copied to Clipboard");
         }
     }
 }
