@@ -3,6 +3,7 @@ using DG.Tweening;
 using Enums;
 using MyScriptableObjects;
 using TMPro;
+using Unity.VectorGraphics;
 using UnityEngine;
 using UnityEngine.UI;
 using Utils;

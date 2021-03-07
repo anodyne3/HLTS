@@ -1,4 +1,5 @@
 using TMPro;
+using Unity.VectorGraphics;
 using UnityEngine;
 using Utils;
 

@@ -1,4 +1,5 @@
 using Core.UI;
+using Unity.VectorGraphics;
 
 namespace Core.CustomParticleGenerator
 {

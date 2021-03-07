@@ -2,6 +2,7 @@ using System;
 using Core.UI.Prefabs;
 using MyScriptableObjects;
 using TMPro;
+using Unity.VectorGraphics;
 using UnityEngine;
 using UnityEngine.UI;
 

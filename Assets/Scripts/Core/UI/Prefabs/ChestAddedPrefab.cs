@@ -1,6 +1,7 @@
 using DG.Tweening;
 using Enums;
 using MyScriptableObjects;
+using Unity.VectorGraphics;
 using UnityEngine;
 
 namespace Core.UI.Prefabs

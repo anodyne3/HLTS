@@ -1,6 +1,7 @@
 using System;
 using MyScriptableObjects;
 using TMPro;
+using Unity.VectorGraphics;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;

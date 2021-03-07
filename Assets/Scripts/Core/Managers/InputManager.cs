@@ -1,9 +1,9 @@
 using System;
 using Core.Input;
-using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.EnhancedTouch;
 using Touch = UnityEngine.InputSystem.EnhancedTouch.Touch;
+using Vector2 = UnityEngine.Vector2;
 
 namespace Core.Managers
 {

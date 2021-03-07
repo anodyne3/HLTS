@@ -1,6 +1,7 @@
 ﻿using Core.Upgrades;
 using Enums;
 using TMPro;
+using Unity.VectorGraphics;
 using UnityEngine;
 using UnityEngine.UI;
 using Utils;

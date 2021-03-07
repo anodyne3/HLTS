@@ -1,5 +1,6 @@
 using Enums;
 using TMPro;
+using Unity.VectorGraphics;
 using UnityEngine;
 
 namespace Core.UI.Prefabs
