@@ -51,7 +51,7 @@ namespace Core.UI.Prefabs
         {
             if (IsUpgraded)
             {
-                FirebaseFunctionality.ClaimChest(_chestVariable.chestType);
+                FirebaseFunctionality.ClaimChest(_chestVariable.chestType).ConfigureAwait(false);
                 PanelManager.PunchButton(transform);
             }
             else

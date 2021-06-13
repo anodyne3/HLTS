@@ -1,7 +1,11 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
+using Core.CustomParticleGenerator;
 using Core.Managers;
 using Core.UI;
+using Enums;
 using MyScriptableObjects;
+using UnityEditor;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -66,9 +70,49 @@ namespace Core.CustomParticleGenerator
                 
                 if (fruitBurst.cycles > 0)
                     currentCycle++;
-                
+
                 yield return intervalWait;
+            }
+        }
+
+        [Serializable]
+        private class PayoutTest
+        {
+            public FruitType testFruitType;
+            public ParticleBurst testParticleBurst;
+        }
+
+        [SerializeField] private PayoutTest[] payoutTests;
+        
+        public void TestEmitter()
+        {
+            var testParticleBurstLength = payoutTests.Length;
+            for (var i = 0; i < testParticleBurstLength; i++)
+            {
+                var payoutSprite = ResourceManager.GetFruitParticleSprite(payoutTests[i].testFruitType);
+                StartCoroutine(EmitParticles(payoutTests[i].testParticleBurst, payoutSprite));
             }
         }
     }
 }
+
+
+#if UNITY_EDITOR
+[CustomEditor(typeof(CustomParticleGenerator))]
+public class CustomParticleGeneratorEditor : Editor
+{
+    public override void OnInspectorGUI()
+    {
+        base.OnInspectorGUI();
+        
+        if (!(target is CustomParticleGenerator customParticleGenerator)) return;
+        
+        if (GUILayout.Button("Start Emitter"))
+            customParticleGenerator.TestEmitter();
+        
+        if (GUILayout.Button("Stop Emitter"))
+            customParticleGenerator.StopEmitter();
+    }
+
+}
+#endif

@@ -22,6 +22,7 @@ namespace MyScriptableObjects
                 }
 
                 _tween.Kill(true);
+                _tween = null;
             }
 
             _tween = target.DOFade(fadeEndValue, fadeDuration);
@@ -41,6 +42,7 @@ namespace MyScriptableObjects
                 }
 
                 _tween.Kill(true);
+                _tween = null;
             }
 
             _tween = target.DOFade(fadeEndValue, fadeDuration);

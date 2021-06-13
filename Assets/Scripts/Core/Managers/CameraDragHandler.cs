@@ -18,7 +18,7 @@ namespace Core.Managers
         private float _zoomTotalRange;
         private float NewOrthographicSize { get; set; }
         private Vector3 _newLocalPosition;
-        
+
         //android properties
         private Vector2 _pinchPositionDelta;
         private float _pinchZoom;
@@ -40,8 +40,8 @@ namespace Core.Managers
 
         private void OnDisable()
         {
-            if (InputManager == null) return;
-            
+            if (!InputManager.Instance) return;
+
             InputManager.Scrolled -= OnScrolled;
             InputManager.Pressed -= OnPressed;
             InputManager.Dragged -= OnDragged;
@@ -52,7 +52,7 @@ namespace Core.Managers
         private void OnScrolled(float scrollAmount)
         {
             if (PanelManager.dragPinchDisabled) return;
-            
+
             CenterAsZoom(scrollAmount);
         }
 
@@ -83,7 +83,7 @@ namespace Core.Managers
         private void CameraPanning(Vector2 dragData)
         {
             if (_isPinching) return;
-            
+
             if (GameManager != null)
                 GameManager.interactionEnabled = false;
 
@@ -102,7 +102,8 @@ namespace Core.Managers
                 ? mainCameraOffsets.zoomMultiplier * (1.0f - _zoomPercent)
                 : mainCameraOffsets.zoomMultiplier;
             NewOrthographicSize = CameraManager.MainCamera.orthographicSize - zoomData * _adjustedZoomMultiplier;
-            NewOrthographicSize = Mathf.Clamp(NewOrthographicSize, mainCameraOffsets.zoomMin, mainCameraOffsets.zoomMax);
+            NewOrthographicSize =
+                Mathf.Clamp(NewOrthographicSize, mainCameraOffsets.zoomMin, mainCameraOffsets.zoomMax);
 
             _zoomCurrent = mainCameraOffsets.zoomMax - NewOrthographicSize;
             _zoomPercent = _zoomCurrent / _zoomTotalRange;
@@ -110,7 +111,8 @@ namespace Core.Managers
             _adjustedPanMultiplier = _zoomPercent > 0.0f
                 ? mainCameraOffsets.panMultiplier * (1.0f - _zoomPercent)
                 : mainCameraOffsets.panMultiplier;
-            _adjustedPanMultiplier = Mathf.Clamp(_adjustedPanMultiplier,1.0f, mainCameraOffsets.panMultiplier * (1.0f - _zoomPercent));
+            _adjustedPanMultiplier = Mathf.Clamp(_adjustedPanMultiplier, 1.0f,
+                mainCameraOffsets.panMultiplier * (1.0f - _zoomPercent));
 
             _adjustedPanRange = mainCameraOffsets.panRange * _zoomPercent;
 

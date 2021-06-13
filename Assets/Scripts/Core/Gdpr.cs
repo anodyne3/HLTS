@@ -1,4 +1,5 @@
 ﻿using Core.GameData;
+using Core.Managers;
 using Core.UI;
 using Enums;
 using TMPro;
@@ -25,7 +26,7 @@ namespace Core
 
         private void OnDisable()
         {
-            if (InputManager == null) return;
+            if (!InputManager.Instance) return;
 
             InputManager.Pressed -= OnPressed;
         }

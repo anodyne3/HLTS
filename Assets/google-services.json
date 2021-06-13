@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "185006518357",
+    "firebase_url": "https://he-loves-the-slots.firebaseio.com",
+    "project_id": "he-loves-the-slots",
+    "storage_bucket": "he-loves-the-slots.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:185006518357:android:d59b65d89f2ef97527a4dc",
+        "android_client_info": {
+          "package_name": "com.SethGames.HeLovesTheSlots"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "185006518357-5dqh4cd3ju2236pgojtqp9iult7p1b4d.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.SethGames.HeLovesTheSlots",
+            "certificate_hash": "592fcbc75587873ec78f8d55997da87b109fa003"
+          }
+        },
+        {
+          "client_id": "185006518357-cf09856ifrsu5akgb6j4a9t9br6mc43c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBVGlYvJ9-TdQxN0aPKyt5M3s8Mya-onUo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "185006518357-cf09856ifrsu5akgb6j4a9t9br6mc43c.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

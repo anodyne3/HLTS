@@ -23,6 +23,7 @@ namespace MyScriptableObjects
                 }
 
                 _punchTween.Kill(true);
+                _punchTween = null;
             }
 
             _punchTween = punchTarget.DOPunchScale(

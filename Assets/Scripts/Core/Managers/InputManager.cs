@@ -27,10 +27,8 @@ namespace Core.Managers
         public Vector2 startPosition;
         public Vector2 dragDelta;
 
-        private void Awake()
+        private void Start()
         {
-            _inputActions = new InputActions();
-
             _inputActions.Pointer.point.performed += OnAction;
             _inputActions.Pointer.point.canceled += OnAction;
             _inputActions.Pointer.point.performed += OnPinch;
@@ -40,10 +38,14 @@ namespace Core.Managers
             SyncBindingMask();
         }
 
-        private void Start()
+        private void OnEnable()
         {
             EnhancedTouchSupport.Enable();
 
+            if (_inputActions != null) return;
+         
+            _inputActions = new InputActions();
+            
             _inputActions.Enable();
         }
 
@@ -81,8 +83,8 @@ namespace Core.Managers
 
         private void OnScroll(InputAction.CallbackContext context)
         {
-            //sanity for development - remove on prod i guess
-            return;
+            //sanity for development - enable on prod i guess
+            //return;
             var control = context.control;
             var device = control.device;
 

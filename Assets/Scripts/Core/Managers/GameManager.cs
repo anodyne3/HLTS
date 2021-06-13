@@ -24,6 +24,7 @@ namespace Core.Managers
         public static void LoadMain()
         {
             SceneManager.LoadSceneAsynchronously(1);
+            AdManager.Init();
         }
     }
 }

@@ -8,16 +8,8 @@ namespace Core.GameData
 
         public GenericArrayDto(string fromJson)
         {
-            // if (isArray)
-            {
-                var jsonParsed = JsonConvert.DeserializeObject<int[]>(fromJson);
-                newDataArray = jsonParsed;
-            }
-            // else
-            {
-                // var jsonParsed = JsonUtility.FromJson<GenericArrayDto>(fromJson);
-                // newDataArray = jsonParsed.newDataArray;
-            }
+            var jsonParsed = JsonConvert.DeserializeObject<int[]>(fromJson);
+            newDataArray = jsonParsed;
         }
     }
 }

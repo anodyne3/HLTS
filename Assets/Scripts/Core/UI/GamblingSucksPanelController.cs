@@ -1,16 +1,14 @@
 ﻿using Core.GameData;
+using Core.Managers;
 using Enums;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Rendering;
-using UnityEngine.UI;
 using Utils;
 
 namespace Core.UI
 {
     public class GamblingSucksPanelController : PanelController
     {
-        [SerializeField] private Button readWarningButton;
         [SerializeField] private TMP_Text textComponent;
         
         public override void Start()
@@ -26,7 +24,7 @@ namespace Core.UI
         
         private void OnDisable()
         {
-            if (InputManager == null) return;
+            if (!InputManager.Instance) return;
 
             InputManager.Pressed -= OnPressed;
         }

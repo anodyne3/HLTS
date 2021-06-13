@@ -10,7 +10,6 @@ using Enums;
 using Firebase;
 using Firebase.Auth;
 using Firebase.Functions;
-using Firebase.Unity.Editor;
 using UnityEngine;
 using Utils;
 
@@ -19,7 +18,6 @@ namespace Core
     public class FirebaseFunctionality : Singleton<FirebaseFunctionality>
     {
         private static FirebaseAuth _firebaseAuth;
-        private FirebaseApp _firebaseApp;
         private FirebaseFunctions _firebaseFunc;
         private GameObject _gameEventListeners;
 
@@ -27,19 +25,17 @@ namespace Core
 
         public async void Init()
         {
-            var dependencyStatus = FirebaseApp.CheckAndFixDependenciesAsync();
-            await dependencyStatus;
+            var dependencyStatus = await FirebaseApp.CheckAndFixDependenciesAsync();
 
-            if (dependencyStatus.Result == DependencyStatus.Available)
+            if (dependencyStatus != DependencyStatus.Available)
             {
-                _firebaseApp = FirebaseApp.DefaultInstance;
-                firebaseReady = true;
-                CheckLogin();
+                AlertMessage.Init($"Could not resolve all Firebase dependencies: {dependencyStatus}");
+                return;
             }
-            else
-                AlertMessage.Init($"Could not resolve all Firebase dependencies: {dependencyStatus.Result}");
 
-            _firebaseApp.SetEditorDatabaseUrl(Constants.FirebaseDatabaseUrl);
+            firebaseReady = true;
+            CheckLogin();
+
             _firebaseFunc = FirebaseFunctions.DefaultInstance;
 
             _gameEventListeners = new GameObject("FirebaseGameEventListeners");
@@ -60,12 +56,12 @@ namespace Core
 
         private bool _signingIn;
 
-        private void AuthStateChanged(object sender, EventArgs eventArgs)
+        private async void AuthStateChanged(object sender, EventArgs eventArgs)
         {
             if (_firebaseAuth.CurrentUser == null && !_signingIn)
             {
                 // AlertMessage.Init("No user signed in");
-                SignIn();
+                await SignIn();
                 return;
             }
 
@@ -90,8 +86,9 @@ namespace Core
 
             PlayerData.firebaseUser = _firebaseAuth.CurrentUser;
 
-            if (signedIn)
-                StartCoroutine(PlayerData.OnLogin());
+            if (!signedIn) return;
+
+            StartCoroutine(PlayerData.OnLogin());
         }
 
         private void CheckLogin()
@@ -101,7 +98,7 @@ namespace Core
             AuthStateChanged(this, null);
         }
 
-        private async void SignIn()
+        private async Task SignIn()
         {
             _signingIn = true;
             var task = _firebaseAuth.SignInAnonymouslyAsync();
@@ -118,8 +115,8 @@ namespace Core
                 return;
             }
 
-            var newUser = task.Result;
             _signingIn = _firebaseAuth.CurrentUser != null;
+            // var newUser = task.Result;
             // AlertMessage.Init("User signed in successfully: " + newUser.DisplayName + " (" + newUser.UserId + ")");
         }
 
@@ -171,7 +168,7 @@ namespace Core
 
         #region slots
 
-        public async void RollReels(int betAmount)
+        public async Task RollReels(int betAmount)
         {
             var responseData = await GetHttpsCallable(betAmount.ToString(), Constants.ReelRollCloudFunction);
 
@@ -185,11 +182,12 @@ namespace Core
 
         #region Ads
 
-        public AdType shownAd;
+        public AdType shownAd = AdType.None;
 
         private async void ClaimAdReward()
         {
-            shownAd = (AdType) Enum.Parse(typeof(AdType), AdManager.reward.Type);
+            shownAd = AdManager.reward;
+
             var shownAdId = ((int) shownAd).ToString();
             var responseData = await GetHttpsCallable(shownAdId, Constants.AdRewardClaimCloudFunction);
 
@@ -198,46 +196,25 @@ namespace Core
                 case AdType.DoublePayout:
                     var payoutAmount = ProcessBasicResponseData<long>(responseData);
                     AlertMessage.Init("Extra " + payoutAmount + " Banana Coins awarded");
-                    return;
-                case AdType.DoubleChest:
-                    AlertMessage.Init("Additional Chest contents awarded");
-                    return;
-                default:
-                    AlertMessage.Init("Something went wrong with Ad Reward claim");
-                    return;
-            }
-        }
-
-        private void OnApplicationPause(bool pauseStatus)
-        {
-            if (pauseStatus || AdManager.reward == null) return;
-
-            ProcessReward();
-        }
-
-        private void ProcessReward()
-        {
-            switch (shownAd)
-            {
-                case AdType.DoublePayout:
                     PanelManager.GetPanel<PayoutPanelController>().ProcessAdReward();
                     break;
                 case AdType.DoubleChest:
+                    AlertMessage.Init("Additional Chest contents awarded");
                     PanelManager.GetPanel<ChestOpenPanelController>().ProcessAdReward();
-                    break;
+                    return;
                 default:
                     AlertMessage.Init("Something went wrong with Ad Reward claim");
-                    break;
+                    return;
             }
-
-            AdManager.reward = null;
+            
+            shownAd = AdType.None;
         }
 
         #endregion
 
         #region Chests
 
-        public async void ClaimChest(ChestType claimedChest)
+        public async Task ClaimChest(ChestType claimedChest)
         {
             PanelManager.WaitingForServerPanel();
             var chestClaimId = claimedChest.ToString();
@@ -247,11 +224,11 @@ namespace Core
             ChestManager.ChestClaimed((ChestType) chestId);
         }
 
-        public async void ChestOpen(ChestType chestType)
+        public async Task ChestOpen(ChestType chestType)
         {
             PanelManager.WaitingForServerPanel();
             var chestOpenId = ((int) chestType).ToString();
-            var responseData = await GetHttpsCallable((chestOpenId), Constants.ChestOpenCloudFunction);
+            var responseData = await GetHttpsCallable(chestOpenId, Constants.ChestOpenCloudFunction);
 
             if (responseData == null)
             {
@@ -262,7 +239,7 @@ namespace Core
             ChestManager.OpenChestPayoutPanel(new ChestRewardDto(responseData));
         }
 
-        public async void ChestMerge(string chestMergeLevel)
+        public async Task ChestMerge(string chestMergeLevel)
         {
             PanelManager.WaitingForServerPanel();
             var responseData = await GetHttpsCallable(chestMergeLevel, Constants.ChestMergeCloudFunction);
@@ -275,7 +252,7 @@ namespace Core
 
         #region Upgrades
 
-        public async void Upgrade(UpgradeTypes upgradeType)
+        public async Task Upgrade(UpgradeTypes upgradeType)
         {
             PanelManager.WaitingForServerPanel();
             var upgradeId = ((int) upgradeType).ToString();
@@ -298,7 +275,7 @@ namespace Core
             narrativeCallBlock = true;
 
             var narrativeState = NarrativeManager.UpdateNarrativeState(narrativeType);
-            
+
             await GetHttpsCallable(narrativeState, Constants.ProgressNarrativeFunction);
 
             narrativeCallBlock = false;
@@ -308,7 +285,7 @@ namespace Core
 
         #region Shop
 
-        public async void PurchaseProduct(string shopProductId)
+        public async Task PurchaseProduct(string shopProductId)
         {
             PanelManager.WaitingForServerPanel();
             var responseData = await GetHttpsCallable(shopProductId, Constants.ProductPurchaseFunction);
@@ -342,7 +319,7 @@ namespace Core
 
             if (callName != Constants.ProgressNarrativeFunction)
                 AlertMessage.Init(callName + " returned empty");
-            
+
             return null;
         }
 

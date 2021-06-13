@@ -1,138 +1,74 @@
-using System;
 using Enums;
-using GoogleMobileAds.Api;
+using Yodo1.MAS;
 
 namespace Core.Managers
 {
     public class AdManager : Singleton<AdManager>
     {
-        private RewardedAd _doublePayoutAd;
-        private RewardedAd _doubleChestAd;
-        public static Reward reward;
-        private EventManager _eventManager;
+        public AdType reward;
         
-
-#if UNITY_ANDROID
-        private const string DoublePayoutAdId = "ca-app-pub-6539801580858512/6919681000";
-        private const string DoubleChestAdId = "ca-app-pub-6539801580858512/5059218664";
-
-#elif UNITY_IPHONE
-        private const string TestRewardedAdId = "ca-app-pub-3940256099942544/1712485313";
-#else
-        string adUnitId = "unexpected_platform";
-#endif
-
-        private void Start()
+        public static void Init()
         {
-            MobileAds.Initialize(initStatus =>
-            {
-                InitAllAds();
-            });
-
-            _eventManager = EventManager;
+            Yodo1U3dMas.SetInitializeDelegate(InitializeDelegate);
+            Yodo1U3dMas.InitializeSdk();
+            Yodo1U3dMas.SetRewardedAdDelegate(RewardedAdDelegate);
         }
 
-        private void InitAllAds()
+        private static void InitializeDelegate(bool success, Yodo1U3dAdError error)
         {
-            _doublePayoutAd = CreateAndLoadRewardedAd(AdType.DoublePayout);
-            _doubleChestAd = CreateAndLoadRewardedAd(AdType.DoubleChest);
+            if (success) return;
+            
+            AlertMessage.Init("Ads Initialisation Failure: " + error);
+        }
+
+        private static void RewardedAdDelegate(Yodo1U3dAdEvent adEvent, Yodo1U3dAdError error)
+        {
+            // AlertMessage.Init("[Yodo1 Mas] RewardVideoDelegate:" + adEvent + "\n" + error);
+            switch (adEvent)
+            {
+                case Yodo1U3dAdEvent.AdClosed:
+                    // AlertMessage.Init("[Yodo1 Mas] Reward video ad has been closed.");
+                    break;
+                case Yodo1U3dAdEvent.AdOpened:
+                    // AlertMessage.Init("[Yodo1 Mas] Reward video ad has shown successful.");
+                    break;
+                case Yodo1U3dAdEvent.AdError:
+                    AlertMessage.Init("ad failed to load, " + error);
+                    break;
+                case Yodo1U3dAdEvent.AdReward:
+                    EventManager.userEarnedReward.Raise();
+                    // AlertMessage.Init("[Yodo1 Mas] Reward video ad reward, give rewards to the player.");
+                    break;
+                default:
+                    AlertMessage.Init("Unrecognized adEvent: " + nameof(adEvent) + ", " + adEvent);
+                    break;
+            }
         }
 
         public void ShowRewardedAd(AdType adType)
         {
-            var rewardedAd = GetAdByType(adType);
-            
-            if (rewardedAd == null || !rewardedAd.IsLoaded()) return;
-            
-            rewardedAd.Show();
-            // FirebaseFunctionality.shownAd = adType;
-        }
-
-        private RewardedAd CreateAndLoadRewardedAd(AdType adType)
-        {
-            string rewardedAdName;
+            reward = adType;
             
             switch (adType)
             {
-                case AdType.DoublePayout:
-                    rewardedAdName = DoublePayoutAdId;
-                    break;
                 case AdType.DoubleChest:
-                    rewardedAdName = DoubleChestAdId;
+                case AdType.DoublePayout:
+                    Yodo1U3dMas.ShowRewardedAd();
                     break;
                 default:
-                    AlertMessage.Init(adType + " ad type does not exist");
-                    return null;
-            }
-            
-            var rewardedAd = new RewardedAd(rewardedAdName);
-            
-            rewardedAd.OnAdLoaded += HandleRewardedAdLoaded;
-            rewardedAd.OnUserEarnedReward += HandleUserEarnedReward;
-            rewardedAd.OnAdClosed += HandleRewardedAdClosed;
-            rewardedAd.OnAdFailedToLoad += HandleRewardedAdFailedToLoad;
-            rewardedAd.OnAdFailedToShow += HandleRewardedAdFailedToShow;
-
-            rewardedAd.LoadAd(new AdRequest.Builder().Build());
-
-            return rewardedAd;
-        }
-
-        private void HandleRewardedAdLoaded(object sender, EventArgs args)
-        {
-            // AlertMessage.Init("HandleRewardedAdLoaded " + sender);
-        }
-
-        private void HandleUserEarnedReward(object sender, Reward e)
-        {
-            reward = e;
-            _eventManager.userEarnedReward.Raise();
-        }
-
-        private void HandleRewardedAdFailedToLoad(object sender, AdErrorEventArgs e)
-        {
-            AlertMessage.Init("ad failed to load");
-        }
-
-        private void HandleRewardedAdFailedToShow(object sender, AdErrorEventArgs e)
-        {
-            AlertMessage.Init("ad failed to show");
-        }
-
-        private void HandleRewardedAdClosed(object sender, EventArgs e)
-        {
-            switch (FirebaseFunctionality.shownAd)
-            {
-                case AdType.DoublePayout:
-                    _doublePayoutAd = CreateAndLoadRewardedAd(FirebaseFunctionality.shownAd);
-                    return;
-                case AdType.DoubleChest:
-                    _doubleChestAd = CreateAndLoadRewardedAd(FirebaseFunctionality.shownAd);
-                    return;
-                default:
-                    AlertMessage.Init(FirebaseFunctionality.shownAd + " ad does not exist");
                     return;
             }
         }
 
-        public bool AdIsLoaded(AdType adType)
-        {
-            var requestedAd = GetAdByType(adType);
-
-            return requestedAd != null && requestedAd.IsLoaded();
-        }
-
-        private RewardedAd GetAdByType(AdType adType)
+        public static bool AdIsLoaded(AdType adType)
         {
             switch (adType)
             {
-                case AdType.DoublePayout:
-                    return _doublePayoutAd;
                 case AdType.DoubleChest:
-                    return _doubleChestAd;
+                case AdType.DoublePayout:
+                    return Yodo1U3dMas.IsRewardedAdLoaded();
                 default:
-                    AlertMessage.Init(adType + " ad does not exist");
-                    return null;
+                    return false;
             }
         }
     }

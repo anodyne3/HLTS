@@ -23,6 +23,7 @@ namespace MyScriptableObjects
                 }
 
                 _rotateTween.Kill(true);
+                _rotateTween = null;
             }
 
             _rotateTween = rotateTarget.DORotate(
@@ -38,6 +39,7 @@ namespace MyScriptableObjects
         public void Kill()
         {
             _rotateTween?.Kill(true);
+            _rotateTween = null;
         }
     }
 }

@@ -86,7 +86,7 @@ namespace Core.UI
 
         private void Upgrade()
         {
-            FirebaseFunctionality.Upgrade(_upgradeVariable.upgradeType);
+            FirebaseFunctionality.Upgrade(_upgradeVariable.upgradeType).ConfigureAwait(false);
         }
 
         public void UpgradeComplete(long productId)

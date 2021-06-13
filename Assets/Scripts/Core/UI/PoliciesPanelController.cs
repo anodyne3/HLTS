@@ -1,4 +1,5 @@
-﻿using Enums;
+﻿using Core.Managers;
+using Enums;
 using UnityEngine;
 using TMPro;
 using Utils;
@@ -18,7 +19,7 @@ namespace Core.UI
         
         private void OnDisable()
         {
-            if (InputManager == null) return;
+            if (!InputManager.Instance) return;
 
             InputManager.Pressed -= OnPressed;
         }

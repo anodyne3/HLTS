@@ -8,7 +8,7 @@ namespace Core.CustomParticleGenerator
     public abstract class CustomParticle : GlobalAccess
     {
         public ParticleSettings particleSettings;
-        
+
         [HideInInspector] public Rigidbody2D rigidBody2D;
         [HideInInspector] public Sprite sprite;
         [HideInInspector] public float lifeSpan;

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Core.GameData;
+using Core.Managers;
 using Core.UI.Prefabs;
 using DG.Tweening;
 using Enums;
@@ -139,7 +140,7 @@ namespace Core.UI
         private void FlipContinueTextVisibility(bool value)
         {
             clickToContinueText.gameObject.SetActive(value);
-            doublePayoutForAdButton.gameObject.SetActive(AdManager.AdIsLoaded(ThisAdType));
+            doublePayoutForAdButton.gameObject.SetActive(AdManager.AdIsLoaded(ThisAdType)/* && FirebaseFunctionality.shownAd != AdType.None*/);
             continueButtonsHolder.gameObject.SetActive(!value);
         }
 

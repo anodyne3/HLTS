@@ -1,10 +1,14 @@
 using System;
 using System.Collections;
+using System.Threading.Tasks;
 using Core.Managers;
 using Core.UI;
 using Enums;
+using Firebase;
 using Firebase.Auth;
 using Firebase.Database;
+using Firebase.Extensions;
+using JetBrains.Annotations;
 using UnityEngine;
 using Utils;
 
@@ -12,12 +16,12 @@ namespace Core.GameData
 {
     public class PlayerData : Singleton<PlayerData>
     {
-        [HideInInspector] public int[] chestData = {1,2,3};
+        [HideInInspector] public int[] chestData = {1, 2, 3};
         [HideInInspector] public int currentChestRoll;
         [HideInInspector] public int[] lastResult;
         [HideInInspector] public int[] nextResult;
         [HideInInspector] public int[] upgradeData;
-        [HideInInspector] public long narrativeProgress;
+        [HideInInspector] public long narrativeProgress = -1;
 
         public Resource[] wallet =
         {
@@ -29,13 +33,15 @@ namespace Core.GameData
         private FirebaseDatabase _database;
         private DatabaseReference _userData;
         private int _narrativeMaxProgress;
-        
+
         public FirebaseUser firebaseUser;
+
         public static bool ConsentGiven =>
             PlayerPrefs.HasKey(Constants.ConsentKey) && PlayerPrefs.GetInt(Constants.ConsentKey) == 1;
+
         public static bool WarningRead =>
             PlayerPrefs.HasKey(Constants.WarningKey) && PlayerPrefs.GetInt(Constants.WarningKey) == 1;
-        
+
         //for testing
         private static long _bcAmount = 100;
         private static long _bpAmount = 10;
@@ -46,9 +52,7 @@ namespace Core.GameData
             _database = FirebaseDatabase.DefaultInstance;
             _userData = _database.GetReference(Constants.PlayerDataPrefix).Child(firebaseUser.UserId)
                 .Child(Constants.PlayerDataSuffix);
-            
-            InitNarrativeData();
-            
+
             _userData.Child(Constants.RollData).ValueChanged += OnRollDataChanged;
             _userData.Child(Constants.WalletData).ValueChanged += OnWalletDataChanged;
             _userData.Child(Constants.ChestData).ValueChanged += OnChestDataChanged;
@@ -70,15 +74,24 @@ namespace Core.GameData
             StopDatabaseListeners();
         }
 
-        private async void InitNarrativeData()
+        private void InitNarrativeData()
         {
-            var responseData = await _userData.Child(Constants.NarrativeData).GetValueAsync();
-            PlayerData.narrativeProgress = (long)responseData.Value;
-            _narrativeMaxProgress = (int)Math.Pow(2, Enum.GetNames(typeof(NarrativeTypes)).Length) - 1;
+            _userData.Child(Constants.NarrativeData).GetValueAsync().ContinueWithOnMainThread(initTask =>
+            {
+                if (initTask.Result == null) return;
+                
+                if (initTask.Result.Value == null)
+                    AlertMessage.Init("NarrativeData was null");
+                else
+                {
+                    narrativeProgress = (long) initTask.Result.Value;
+                    _narrativeMaxProgress = (int) Math.Pow(2, Enum.GetNames(typeof(NarrativeTypes)).Length) - 1;
 
-            if (NarrativeIsComplete()) return;
-            
-            NarrativeManager.Init();
+                    if (NarrativeIsComplete()) return;
+
+                    NarrativeManager.Init();
+                }
+            });
         }
 
         private void OnRollDataChanged(object sender, ValueChangedEventArgs args)
@@ -112,15 +125,19 @@ namespace Core.GameData
         private void OnWalletDataChanged(object sender, ValueChangedEventArgs args)
         {
             var walletData = new GenericArrayDto(ProcessDataChanges(sender, args)).newDataArray;
+
+            if (walletData == null) return;
+            
             for (var i = 0; i < wallet.Length; i++)
-            {
                 wallet[i].resourceAmount = walletData[i];
-            }
         }
 
         private void OnChestDataChanged(object sender, ValueChangedEventArgs args)
         {
             chestData = new GenericArrayDto(ProcessDataChanges(sender, args)).newDataArray;
+
+            if (chestData == null) return;
+            
             EventManager.chestRefresh.Raise();
         }
 
@@ -161,6 +178,8 @@ namespace Core.GameData
             StartDatabaseListeners();
 
             yield return new WaitUntil(() => lastResult != null);
+            
+            InitNarrativeData();
 
             GameManager.LoadMain();
         }

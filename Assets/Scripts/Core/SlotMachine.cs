@@ -77,7 +77,7 @@ namespace Core
         {
             wheelsAreRolling = true;
             EventManager.wheelRoll.Raise();
-            FirebaseFunctionality.RollReels(lastBetAmount);
+            FirebaseFunctionality.RollReels(lastBetAmount).ConfigureAwait(false);
         }
 
         private void WheelResult()

@@ -72,7 +72,6 @@ namespace Core.Managers
             
             if (product != null)
                 _storeController.ConfirmPendingPurchase(product);
-
             
             AlertMessage.Init(Constants.PurchaseMessage);
 
@@ -110,7 +109,7 @@ namespace Core.Managers
 
             if (validPurchase)
             {
-                FirebaseFunctionality.PurchaseProduct(e.purchasedProduct.definition.id);
+                FirebaseFunctionality.PurchaseProduct(e.purchasedProduct.definition.id).ConfigureAwait(false);
             }
 
             return PurchaseProcessingResult.Pending;

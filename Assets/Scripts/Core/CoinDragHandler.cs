@@ -1,3 +1,4 @@
+using Core.Managers;
 using UnityEngine;
 using Utils;
 
@@ -29,7 +30,7 @@ namespace Core
 
         private void OnDestroy()
         {
-            if (InputManager == null) return;
+            if (!InputManager.Instance) return;
             
             InputManager.Pressed -= OnPressed;
             InputManager.Dragged -= OnDragged;

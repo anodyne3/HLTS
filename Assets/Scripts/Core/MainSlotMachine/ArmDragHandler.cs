@@ -1,4 +1,5 @@
 using System.Collections;
+using Core.Managers;
 using UnityEngine;
 using Utils;
 
@@ -28,7 +29,7 @@ namespace Core.MainSlotMachine
 
         private void OnDestroy()
         {
-            if (InputManager == null) return;
+            if (!InputManager.Instance) return;
 
             InputManager.Pressed -= OnPressed;
             InputManager.Dragged -= OnDragged;

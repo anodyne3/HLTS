@@ -48,7 +48,7 @@ namespace Core.UI
         {
             punchSetting.DoPunch(confirmButton.transform, false);
             
-            FirebaseFunctionality.PurchaseProduct(_shopProduct.productId);
+            FirebaseFunctionality.PurchaseProduct(_shopProduct.productId).ConfigureAwait(false);
 
             base.ClosePanel();
         }

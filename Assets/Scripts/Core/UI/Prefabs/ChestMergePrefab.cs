@@ -61,7 +61,7 @@ namespace Core.UI.Prefabs
             if (IsUpgraded)
             {
                 if (PlayerData.GetChestCount(_chestMerge.requiredType) >= _chestMerge.requiredAmount)
-                    FirebaseFunctionality.ChestMerge(_chestMerge.mergeUpgradeLevel.ToString());
+                    FirebaseFunctionality.ChestMerge(_chestMerge.mergeUpgradeLevel.ToString()).ConfigureAwait(false);
                 else
                     AlertMessage.Init("Not Enough Chests");
                 

@@ -47,7 +47,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3296289877636462021}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d89a3a2d35446a5aa46f65cc546a419, type: 3}
+  m_Script: {fileID: 11500000, guid: f77d02a82753c11428518251886b9cbd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   currencyIcon: {fileID: 6176729597827016310}

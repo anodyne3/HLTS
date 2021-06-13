@@ -105,7 +105,7 @@ namespace Core.UI
         {
             if (PlayerData.GetChestCount(_chestVariable.chestType) < 1) return;
 
-            FirebaseFunctionality.ChestOpen(_chestVariable.chestType);
+            FirebaseFunctionality.ChestOpen(_chestVariable.chestType).ConfigureAwait(false);
             PanelManager.PunchButton(openChestButton.transform);
         }
 

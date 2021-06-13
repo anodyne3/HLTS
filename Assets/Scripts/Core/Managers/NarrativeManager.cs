@@ -197,7 +197,7 @@ namespace Core.Managers
             if (_narrativePanel == null)
                 _narrativePanel = PanelManager.GetPanel<NarrativePanelController>();
 
-            return _narrativePanel.gameObject.activeInHierarchy;
+            return _narrativePanel != null && _narrativePanel.gameObject.activeInHierarchy;
         }
 
         private void ArmPullTests()

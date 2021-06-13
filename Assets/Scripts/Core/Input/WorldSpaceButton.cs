@@ -1,4 +1,5 @@
 using System;
+using Core.Managers;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -33,7 +34,7 @@ namespace Core.Input
 
         private void OnDestroy()
         {
-            if (InputManager == null) return;
+            if (!InputManager.Instance) return;
 
             InputManager.Pressed -= OnPressed;
             InputManager.Released -= OnReleased;
